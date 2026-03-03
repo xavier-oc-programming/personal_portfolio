@@ -1,0 +1,10 @@
+{% extends "base.html" %} {% block title %}Project Detail{% endblock %} {% block
+content %}
+<h1>Project Detail</h1>
+
+<p>This is the project detail page.</p>
+
+<p>Slug: {{ slug }}</p>
+
+<a href="{{ url_for('projects') }}">Back to Projects</a>
+{% endblock %}
