@@ -1,10 +1,149 @@
-{% extends "base.html" %} {% block title %}Project Detail{% endblock %} {% block
-content %}
-<h1>Project Detail</h1>
+{% extends "base.html" %}
 
-<p>This is the project detail page.</p>
+{% block title %}
+  {% if project and project.title %}
+    {{ project.title }}
+  {% else %}
+    Project Detail
+  {% endif %}
+{% endblock %}
 
-<p>Slug: {{ slug }}</p>
+{% block content %}
 
-<a href="{{ url_for('projects') }}">Back to Projects</a>
+  <!-- Page Header -->
+  <section class="mb-5">
+    <div class="d-flex flex-column gap-2">
+      <h1 class="mb-0">
+        {% if project and project.title %}
+          {{ project.title }}
+        {% else %}
+          Project Detail
+        {% endif %}
+      </h1>
+
+      <p class="text-secondary mb-0">
+        {% if project and project.description %}
+          {{ project.description }}
+        {% else %}
+          This page will display details for a single project. In later phases, content will come from structured project data.
+        {% endif %}
+      </p>
+
+      <div class="d-flex flex-wrap gap-2 mt-2">
+        {% if project and project.primary_category %}
+          <span class="badge text-bg-dark">{{ project.primary_category }}</span>
+        {% endif %}
+
+        {% if project and project.tags %}
+          {% for tag in project.tags %}
+            <span class="badge text-bg-secondary">{{ tag }}</span>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Detail Layout -->
+  <section class="mb-5">
+    <div class="row g-4">
+      <!-- Main Column -->
+      <div class="col-12 col-lg-8">
+        <div class="border rounded-3 p-4">
+          <h2 class="h4 mb-3">Overview</h2>
+
+          <div class="mb-4">
+            <h3 class="h5 mb-2">Problem</h3>
+            <p class="text-secondary mb-0">
+              {% if project and project.problem %}
+                {{ project.problem }}
+              {% else %}
+                Placeholder: describe the problem this project solves.
+              {% endif %}
+            </p>
+          </div>
+
+          <div class="mb-4">
+            <h3 class="h5 mb-2">Solution</h3>
+            <p class="text-secondary mb-0">
+              {% if project and project.solution %}
+                {{ project.solution }}
+              {% else %}
+                Placeholder: summarize your approach and what you built.
+              {% endif %}
+            </p>
+          </div>
+
+          <div class="mb-4">
+            <h3 class="h5 mb-2">Challenges</h3>
+            <p class="text-secondary mb-0">
+              {% if project and project.challenges %}
+                {{ project.challenges }}
+              {% else %}
+                Placeholder: note the main technical challenges and how you overcame them.
+              {% endif %}
+            </p>
+          </div>
+
+          <div>
+            <h3 class="h5 mb-2">Results / Metrics</h3>
+            <p class="text-secondary mb-0">
+              {% if project and project.results %}
+                {{ project.results }}
+              {% else %}
+                Placeholder: include outcomes, improvements, performance, or what you learned.
+              {% endif %}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-12 col-lg-4">
+        <div class="border rounded-3 p-4 bg-body-tertiary">
+          <h2 class="h4 mb-3">Quick Facts</h2>
+
+          <p class="mb-2">
+            <strong>Slug:</strong> <span class="text-secondary">{{ slug }}</span>
+          </p>
+
+          {% if project and project.tech_stack_preview %}
+            <p class="mb-3">
+              <strong>Tech:</strong>
+              <span class="text-secondary">{{ project.tech_stack_preview }}</span>
+            </p>
+          {% else %}
+            <p class="mb-3">
+              <strong>Tech:</strong>
+              <span class="text-secondary">Placeholder (add tech stack preview later)</span>
+            </p>
+          {% endif %}
+
+          <div class="d-flex flex-wrap gap-2">
+            {% if project and project.github_url %}
+              <a class="btn btn-outline-dark btn-sm" href="{{ project.github_url }}" target="_blank" rel="noopener">
+                GitHub
+              </a>
+            {% else %}
+              <button class="btn btn-outline-dark btn-sm" type="button" disabled>
+                GitHub
+              </button>
+            {% endif %}
+
+            <a class="btn btn-dark btn-sm" href="{{ url_for('projects') }}">Back to Projects</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Screenshots (placeholder layout) -->
+  <section>
+    <div class="border rounded-3 p-4">
+      <h2 class="h4 mb-3">Screenshots</h2>
+      <p class="text-secondary mb-0">
+        Placeholder: add screenshots or media here later. This section is already laid out for future content.
+      </p>
+    </div>
+  </section>
+
 {% endblock %}
