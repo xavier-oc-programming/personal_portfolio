@@ -1,0 +1,31 @@
+/* styles.css
+   MVP baseline: small overrides only.
+*/
+
+:root {
+  --page-max-width: 1100px;
+}
+
+main .container {
+  max-width: var(--page-max-width);
+}
+
+/* ==========================================
+   Layout helpers
+========================================== */
+
+.page-section {
+  margin-bottom: 3rem;
+}
+
+/* ==========================================
+   Links
+========================================== */
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
