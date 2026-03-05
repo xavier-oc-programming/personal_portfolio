@@ -1,10 +1,60 @@
-{% extends "base.html" %} {% block title %}Project Detail{% endblock %} {% block
-content %}
-<h1>Project Detail</h1>
+{% extends "base.html" %}
 
-<p>This is the project detail page.</p>
+{% block title %}Project Detail{% endblock %}
 
-<p>Slug: {{ slug }}</p>
+{% block content %}
+  <section class="py-3">
+    <h1 class="mb-2">Project Detail</h1>
+    <p class="text-muted mb-0">
+      This page will display details for a single project. In later phases, content will come from structured project data.
+    </p>
+  </section>
 
-<a href="{{ url_for('projects') }}">Back to Projects</a>
+  <section class="py-3">
+    <h2 class="h4 mb-3">Requested Project</h2>
+
+    <div class="border rounded p-3">
+      <p class="mb-2"><strong>Slug:</strong> {{ slug }}</p>
+
+      {# Optional: ready for later when you pass a full "project" object #}
+      {% if project %}
+        {% if project.title %}
+          <p class="mb-2"><strong>Title:</strong> {{ project.title }}</p>
+        {% endif %}
+
+        {% if project.description %}
+          <p class="mb-2"><strong>Description:</strong> {{ project.description }}</p>
+        {% endif %}
+
+        {% if project.primary_category %}
+          <p class="mb-2"><strong>Category:</strong> {{ project.primary_category }}</p>
+        {% endif %}
+
+        {% if project.tags %}
+          <p class="mb-2"><strong>Tags:</strong>
+            {% for tag in project.tags %}
+              <span class="badge text-bg-secondary">{{ tag }}</span>
+            {% endfor %}
+          </p>
+        {% endif %}
+
+        {% if project.github_url %}
+          <p class="mb-0">
+            <a href="{{ project.github_url }}" target="_blank" rel="noopener">View on GitHub</a>
+          </p>
+        {% endif %}
+      {% else %}
+        <p class="mb-0">
+          Project data is not connected yet. You are viewing the placeholder detail layout.
+        </p>
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="py-3">
+    <div class="d-flex gap-2">
+      <a class="btn btn-outline-dark" href="{{ url_for('projects') }}">Back to Projects</a>
+      <a class="btn btn-dark" href="{{ url_for('home') }}">Home</a>
+    </div>
+  </section>
 {% endblock %}

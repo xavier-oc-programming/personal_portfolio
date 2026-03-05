@@ -1,5 +1,21 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
-%}
-<h1>Home</h1>
-<p>Welcome to the portfolio website.</p>
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+  <section class="py-3">
+    <h1 class="mb-2">Portfolio</h1>
+    <p class="lead">
+      A full-stack demonstration platform showcasing my work across web development, data, and software projects.
+    </p>
+  </section>
+
+  <section class="py-3">
+    <h2 class="h4 mb-3">What you’ll find here</h2>
+    <ul class="mb-0">
+      <li>Flask applications with clean Jinja architecture</li>
+      <li>Data projects using Python, Pandas, and visualization</li>
+      <li>Automation and software builds with strong structure</li>
+    </ul>
+  </section>
 {% endblock %}

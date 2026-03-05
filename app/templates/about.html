@@ -1,5 +1,22 @@
-{% extends "base.html" %} {% block title %}About{% endblock %} {% block content
-%}
-<h1>About</h1>
-<p>This page will describe background, skills, and experience.</p>
+{% extends "base.html" %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+  <section class="py-3">
+    <h1 class="mb-2">About</h1>
+    <p>
+      I’m transitioning from audio engineering into development and data. This portfolio documents my learning process
+      and the projects I build while developing professional skills in Python and web development.
+    </p>
+  </section>
+
+  <section class="py-3">
+    <h2 class="h4 mb-3">Focus Areas</h2>
+    <ul class="mb-0">
+      <li>Flask + Jinja template systems</li>
+      <li>Databases and data modeling (SQL and Python)</li>
+      <li>Data analysis and visualization workflows</li>
+    </ul>
+  </section>
 {% endblock %}
