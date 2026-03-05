@@ -1,5 +1,64 @@
-{% extends "base.html" %} {% block title %}Contact{% endblock %} {% block
-content %}
-<h1>Contact</h1>
-<p>Contact form will be implemented in a later phase.</p>
+{% extends "base.html" %}
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+
+  <!-- Page Header -->
+  <section class="mb-5">
+    <h1 class="mb-2">Contact</h1>
+    <p class="text-secondary mb-0">
+      If you’d like to reach out about opportunities, collaboration, or questions, you can contact me using the info below.
+    </p>
+  </section>
+
+  <!-- Contact Layout -->
+  <section>
+    <div class="row g-4">
+      <div class="col-12 col-lg-7">
+        <div class="border rounded-3 p-4 h-100">
+          <h2 class="h4 mb-3">Message</h2>
+          <p class="text-secondary mb-0">
+            In later phases, this section will include a contact form. For now, please use email or my profiles below.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-5">
+        <div class="border rounded-3 p-4 bg-body-tertiary h-100">
+          <h2 class="h4 mb-3">Details</h2>
+
+          <ul class="mb-0">
+            <li class="mb-2">
+              Email:
+              <a href="mailto:xocap@icloud.com">xocap@icloud.com</a>
+            </li>
+
+            <li class="mb-2">
+              GitHub:
+              <a
+                href="https://github.com/xavier-oc-programming"
+                target="_blank"
+                rel="noopener"
+              >
+                github.com/xavier-oc-programming
+              </a>
+            </li>
+
+            <li>
+              LinkedIn:
+              <a
+                href="https://www.linkedin.com/in/xavier-ocon-capdeville/"
+                target="_blank"
+                rel="noopener"
+              >
+                linkedin.com/in/xavier-ocon-capdeville
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
 {% endblock %}

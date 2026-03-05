@@ -1,5 +1,80 @@
-{% extends "base.html" %} {% block title %}About{% endblock %} {% block content
-%}
-<h1>About</h1>
-<p>This page will describe background, skills, and experience.</p>
+{% extends "base.html" %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+
+  <!-- Page Header -->
+  <section class="mb-5">
+    <div class="row g-4 align-items-start">
+      <div class="col-12 col-lg-8">
+        <h1 class="mb-2">About</h1>
+        <p class="text-secondary mb-0">
+          I’m transitioning from audio engineering into development and data. This portfolio documents my learning
+          process and the projects I build while developing professional skills in Python and web development.
+        </p>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="border rounded-3 p-4 bg-body-tertiary">
+          <p class="fw-semibold mb-2">Working focus</p>
+          <p class="text-secondary mb-0">
+            Building a hybrid portfolio across Web, Data, and Software with clean architecture and strong fundamentals.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Focus Areas -->
+  <section class="mb-5">
+    <h2 class="h4 mb-3">Focus Areas</h2>
+
+    <div class="row g-4">
+      <div class="col-12 col-md-4">
+        <div class="border rounded-3 p-4 h-100">
+          <h3 class="h5 mb-2">Web</h3>
+          <ul class="mb-0 text-secondary">
+            <li>Flask + Jinja template systems</li>
+            <li>Reusable components and clean routing</li>
+            <li>Bootstrap layout discipline</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <div class="border rounded-3 p-4 h-100">
+          <h3 class="h5 mb-2">Data</h3>
+          <ul class="mb-0 text-secondary">
+            <li>Data analysis workflows in Python</li>
+            <li>Pandas for cleaning and transformation</li>
+            <li>Visualization and reporting</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <div class="border rounded-3 p-4 h-100">
+          <h3 class="h5 mb-2">Software</h3>
+          <ul class="mb-0 text-secondary">
+            <li>Modular Python projects</li>
+            <li>Automation scripts and tooling</li>
+            <li>Readable, maintainable code structure</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Highlights -->
+  <section>
+    <div class="border rounded-3 p-4 bg-body-tertiary">
+      <h2 class="h5 mb-2">Why this portfolio exists</h2>
+      <p class="text-secondary mb-0">
+        My goal is to show strong fundamentals and real project structure. Each project is tagged and categorized to
+        reflect how my work spans Web, Data, and Software without forcing everything into a single box.
+      </p>
+    </div>
+  </section>
+
 {% endblock %}
