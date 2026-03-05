@@ -3,19 +3,84 @@
 {% block title %}Projects{% endblock %}
 
 {% block content %}
-  <section class="py-3">
+
+  <!-- Header -->
+  <section class="page-section">
     <h1 class="mb-2">Projects</h1>
-    <p class="text-muted mb-0">
-      This is the projects hub. In later phases, projects will render dynamically from a structured data source.
+    <p class="text-secondary mb-0">
+      Browse my work across Web, Data, and Software. Filtering and sorting will become dynamic in later phases.
     </p>
   </section>
 
-  <section class="py-3">
-    <h2 class="h4 mb-3">Planned Features</h2>
-    <ul class="mb-0">
-      <li>Project cards with tags and primary category</li>
-      <li>Filtering and sorting by category and tags</li>
-      <li>Dedicated project detail pages</li>
-    </ul>
+  <!-- Controls (layout-only MVP) -->
+  <section class="page-section">
+    <div class="border rounded-3 p-3 p-md-4">
+      <div class="row g-3 align-items-center">
+        <div class="col-12 col-lg-8">
+          <div class="d-flex flex-wrap gap-2">
+            <button class="btn btn-dark btn-sm" type="button">All</button>
+            <button class="btn btn-outline-dark btn-sm" type="button">Web</button>
+            <button class="btn btn-outline-dark btn-sm" type="button">Data</button>
+            <button class="btn btn-outline-dark btn-sm" type="button">Software</button>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-4">
+          <div class="d-flex justify-content-lg-end">
+            <select class="form-select form-select-sm w-auto" aria-label="Sort projects" disabled>
+              <option selected>Sort (coming soon)</option>
+              <option value="newest">Newest</option>
+              <option value="name">Name</option>
+              <option value="category">Category</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
+
+  {# Temporary projects list (static placeholders for Phase 2).
+     Later: route passes a real projects list.
+  #}
+  {% set projects = [
+    {
+      "title": "Portfolio Website",
+      "slug": "portfolio-website",
+      "description": "Flask + Jinja portfolio with reusable components and clean architecture.",
+      "primary_category": "Web",
+      "tech_stack_preview": "Flask, Jinja, Bootstrap",
+      "tags": ["flask", "jinja", "bootstrap"],
+      "github_url": "https://github.com/xavier-oc-programming/personal_portfolio"
+    },
+    {
+      "title": "Morse Code Converter",
+      "slug": "morse-code-converter",
+      "description": "CLI application converting text to Morse code with clean modular structure.",
+      "primary_category": "Software",
+      "tech_stack_preview": "Python",
+      "tags": ["python", "cli"],
+      "github_url": ""
+    },
+    {
+      "title": "Data Project Placeholder",
+      "slug": "data-project-placeholder",
+      "description": "A data analysis project using Python, Pandas, and visualization.",
+      "primary_category": "Data",
+      "tech_stack_preview": "Pandas, Matplotlib",
+      "tags": ["pandas", "data-viz"],
+      "github_url": ""
+    }
+  ] %}
+
+  <!-- Projects Grid -->
+  <section>
+    <div class="row g-4">
+      {% for project in projects %}
+        <div class="col-12 col-md-6 col-lg-4">
+          {% include "components/project_card.html" %}
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
 {% endblock %}

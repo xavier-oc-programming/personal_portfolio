@@ -3,19 +3,133 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-  <section class="py-3">
-    <h1 class="mb-2">Portfolio</h1>
-    <p class="lead">
-      A full-stack demonstration platform showcasing my work across web development, data, and software projects.
-    </p>
+
+  <!-- Hero -->
+  <section class="mb-5">
+    <div class="row align-items-center g-4">
+      <div class="col-12 col-lg-8">
+        <h1 class="display-6 mb-3">Portfolio</h1>
+        <p class="lead mb-4">
+          A full-stack demonstration platform showcasing my work across web development, data, and software projects.
+        </p>
+
+        <div class="d-flex flex-wrap gap-2">
+          <a class="btn btn-dark" href="{{ url_for('projects') }}">View Projects</a>
+          <a class="btn btn-outline-dark" href="{{ url_for('contact') }}">Contact</a>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="border rounded-3 p-4 bg-body-tertiary">
+          <p class="mb-2 fw-semibold">Skills snapshot</p>
+          <p class="mb-0 text-secondary">
+            Flask, Jinja, Python, SQL, Pandas, automation, clean architecture.
+          </p>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section class="py-3">
+  <!-- Featured Projects -->
+  <section class="mb-5">
+    <div class="d-flex justify-content-between align-items-end gap-3 mb-3">
+      <div>
+        <h2 class="h4 mb-1">Featured Projects</h2>
+        <p class="text-secondary mb-0">A few highlights from across Web, Data, and Software.</p>
+      </div>
+
+      <a class="btn btn-outline-dark btn-sm" href="{{ url_for('projects') }}">View all</a>
+    </div>
+
+    {# Temporary featured projects (static placeholders for Phase 2).
+       Later: replace with real data passed from your route.
+    #}
+    {% set featured_projects = [
+      {
+        "title": "Portfolio Website",
+        "slug": "portfolio-website",
+        "description": "Flask + Jinja portfolio with reusable components and clean architecture.",
+        "primary_category": "Web",
+        "tech_stack_preview": "Flask, Jinja, Bootstrap",
+        "tags": ["flask", "jinja", "bootstrap"],
+        "github_url": "https://github.com/xavier-oc-programming/personal_portfolio"
+      },
+      {
+        "title": "Morse Code Converter",
+        "slug": "morse-code-converter",
+        "description": "CLI application converting text to Morse code with clean modular structure.",
+        "primary_category": "Software",
+        "tech_stack_preview": "Python",
+        "tags": ["python", "cli"],
+        "github_url": ""
+      },
+      {
+        "title": "Data Project Placeholder",
+        "slug": "data-project-placeholder",
+        "description": "A data analysis project using Python, Pandas, and visualization.",
+        "primary_category": "Data",
+        "tech_stack_preview": "Pandas, Matplotlib",
+        "tags": ["pandas", "data-viz"],
+        "github_url": ""
+      }
+    ] %}
+
+    <div class="row g-4">
+      {% for project in featured_projects %}
+        <div class="col-12 col-md-6 col-lg-4">
+          {% include "components/project_card.html" %}
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- What you’ll find here -->
+  <section class="mb-5">
     <h2 class="h4 mb-3">What you’ll find here</h2>
-    <ul class="mb-0">
+    <ul class="mb-0 text-secondary">
       <li>Flask applications with clean Jinja architecture</li>
       <li>Data projects using Python, Pandas, and visualization</li>
       <li>Automation and software builds with strong structure</li>
     </ul>
   </section>
+
+  <!-- Pillars / Skills grouped -->
+  <section class="mb-5">
+    <h2 class="h4 mb-3">Focus areas</h2>
+
+    <div class="row g-4">
+      <div class="col-12 col-md-4">
+        <div class="border rounded-3 p-4 h-100">
+          <h3 class="h5 mb-2">Web</h3>
+          <p class="text-secondary mb-0">Flask, Jinja, routing, templates, Bootstrap layout discipline.</p>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <div class="border rounded-3 p-4 h-100">
+          <h3 class="h5 mb-2">Data</h3>
+          <p class="text-secondary mb-0">Pandas workflows, cleaning, analysis, visualization, reporting.</p>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <div class="border rounded-3 p-4 h-100">
+          <h3 class="h5 mb-2">Software</h3>
+          <p class="text-secondary mb-0">Python structure, automation scripts, clean interfaces and logic.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section>
+    <div class="border rounded-3 p-4 bg-body-tertiary d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+      <div>
+        <h2 class="h5 mb-1">Want to see everything?</h2>
+        <p class="text-secondary mb-0">Browse the full projects hub with categories and tags.</p>
+      </div>
+      <a class="btn btn-dark" href="{{ url_for('projects') }}">Browse Projects</a>
+    </div>
+  </section>
+
 {% endblock %}

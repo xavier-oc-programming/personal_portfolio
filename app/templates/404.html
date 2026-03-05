@@ -3,24 +3,31 @@
 {% block title %}404 - Not Found{% endblock %}
 
 {% block content %}
-  <section class="py-3">
+
+  <!-- Page Header -->
+  <section class="mb-5">
     <h1 class="mb-2">404 — Page Not Found</h1>
     <p class="lead mb-0">
       The page you’re looking for doesn’t exist or may have been moved.
     </p>
   </section>
 
-  <section class="py-3">
-    <h2 class="h4 mb-3">What you can do</h2>
-    <ul class="mb-3">
-      <li>Check the URL for typos.</li>
-      <li>Use the navigation menu to go to a main section.</li>
-      <li>Return to the home page and continue browsing.</li>
-    </ul>
+  <!-- Actions -->
+  <section>
+    <div class="border rounded-3 p-4">
+      <h2 class="h4 mb-3">What you can do</h2>
 
-    <div class="d-flex gap-2">
-      <a class="btn btn-dark" href="{{ url_for('home') }}">Return Home</a>
-      <a class="btn btn-outline-dark" href="{{ url_for('projects') }}">Browse Projects</a>
+      <ul class="mb-4 text-secondary">
+        <li>Check the URL for typos.</li>
+        <li>Use the navigation menu to go to a main section.</li>
+        <li>Return to the home page and continue browsing.</li>
+      </ul>
+
+      <div class="d-flex flex-wrap gap-2">
+        <a class="btn btn-dark" href="{{ url_for('home') }}">Return Home</a>
+        <a class="btn btn-outline-dark" href="{{ url_for('projects') }}">Browse Projects</a>
+      </div>
     </div>
   </section>
+
 {% endblock %}
