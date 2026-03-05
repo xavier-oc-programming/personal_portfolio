@@ -22,16 +22,7 @@
 
   <body>
     <!-- Header / Navigation -->
-    <header>
-      <nav>
-        <ul>
-          <li><a href="{{ url_for('home') }}">Home</a></li>
-          <li><a href="{{ url_for('about') }}">About</a></li>
-          <li><a href="{{ url_for('projects') }}">Projects</a></li>
-          <li><a href="{{ url_for('contact') }}">Contact</a></li>
-        </ul>
-      </nav>
-    </header>
+    {% include "components/navbar.html" %}
 
     <hr />
 
@@ -41,9 +32,7 @@
     <hr />
 
     <!-- Footer -->
-    <footer>
-      <p>&copy; {{ current_year }} Xavier O</p>
-    </footer>
+    {% include "components/footer.html" %}
 
     <!-- Bootstrap JS Bundle (optional but included for completeness) -->
     <script

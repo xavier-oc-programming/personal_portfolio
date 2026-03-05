@@ -1,5 +1,21 @@
-{% extends "base.html" %} {% block title %}Projects{% endblock %} {% block
-content %}
-<h1>Projects</h1>
-<p>This is the projects hub. Project cards will be rendered here in Phase 2.</p>
+{% extends "base.html" %}
+
+{% block title %}Projects{% endblock %}
+
+{% block content %}
+  <section class="py-3">
+    <h1 class="mb-2">Projects</h1>
+    <p class="text-muted mb-0">
+      This is the projects hub. In later phases, projects will render dynamically from a structured data source.
+    </p>
+  </section>
+
+  <section class="py-3">
+    <h2 class="h4 mb-3">Planned Features</h2>
+    <ul class="mb-0">
+      <li>Project cards with tags and primary category</li>
+      <li>Filtering and sorting by category and tags</li>
+      <li>Dedicated project detail pages</li>
+    </ul>
+  </section>
 {% endblock %}
