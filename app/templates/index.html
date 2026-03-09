@@ -1,3 +1,5 @@
+<!-- app/templates/index.html -->
+
 {% extends "base.html" %}
 
 {% block title %}Home{% endblock %}
@@ -41,46 +43,19 @@
       <a class="btn btn-outline-dark btn-sm" href="{{ url_for('projects') }}">View all</a>
     </div>
 
-    {# Temporary featured projects (static placeholders for Phase 2).
-       Later: replace with real data passed from your route.
-    #}
-    {% set featured_projects = [
-      {
-        "title": "Portfolio Website",
-        "slug": "portfolio-website",
-        "description": "Flask + Jinja portfolio with reusable components and clean architecture.",
-        "primary_category": "Web",
-        "tech_stack_preview": "Flask, Jinja, Bootstrap",
-        "tags": ["flask", "jinja", "bootstrap"],
-        "github_url": "https://github.com/xavier-oc-programming/personal_portfolio"
-      },
-      {
-        "title": "Morse Code Converter",
-        "slug": "morse-code-converter",
-        "description": "CLI application converting text to Morse code with clean modular structure.",
-        "primary_category": "Software",
-        "tech_stack_preview": "Python",
-        "tags": ["python", "cli"],
-        "github_url": ""
-      },
-      {
-        "title": "Data Project Placeholder",
-        "slug": "data-project-placeholder",
-        "description": "A data analysis project using Python, Pandas, and visualization.",
-        "primary_category": "Data",
-        "tech_stack_preview": "Pandas, Matplotlib",
-        "tags": ["pandas", "data-viz"],
-        "github_url": ""
-      }
-    ] %}
-
-    <div class="row g-4">
-      {% for project in featured_projects %}
-        <div class="col-12 col-md-6 col-lg-4">
-          {% include "components/project_card.html" %}
-        </div>
-      {% endfor %}
-    </div>
+    {% if featured_projects %}
+      <div class="row g-4">
+        {% for project in featured_projects %}
+          <div class="col-12 col-md-6 col-lg-4">
+            {% include "components/project_card.html" %}
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="border rounded-3 p-4">
+        <p class="text-secondary mb-0">No featured projects yet.</p>
+      </div>
+    {% endif %}
   </section>
 
   <!-- What you’ll find here -->
@@ -93,7 +68,7 @@
     </ul>
   </section>
 
-  <!-- Pillars / Skills grouped -->
+  <!-- Focus Areas -->
   <section class="page-section">
     <h2 class="h4 mb-3">Focus areas</h2>
 

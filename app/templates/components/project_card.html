@@ -1,71 +1,70 @@
-{# components/project_card.html
+<!-- app/templates/components/project_card.html -->
 
-   Expected variable: project (dict-like)
-   Safe defaults are included so the card renders even if fields are missing.
+{# components/project_card.html Expected variable: project (dict-like) project
+fields used: - title - slug - short_description - primary_category - tech_stack
+- tags - links.repo - media.card_image #}
 
-   project fields used:
-   - title
-   - slug
-   - description
-   - primary_category
-   - tech_stack_preview (string, optional)
-   - tags (list of strings)
-   - github_url (optional)
-#}
+<div class="card h-100 project-card">
+  {% if project.media and project.media.card_image %}
+  <img
+    src="{{ url_for('static', filename=project.media.card_image) }}"
+    class="card-img-top project-card-img"
+    alt="{{ project.title }} cover image"
+  />
+  {% endif %}
 
-<div class="card h-100">
   <div class="card-body d-flex flex-column p-4">
     <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
       <h3 class="h5 mb-0">{{ project.title or "Untitled Project" }}</h3>
 
       {% if project.primary_category %}
-        <span class="badge text-bg-dark">{{ project.primary_category }}</span>
+      <span class="badge text-bg-dark"
+        >{{ project.primary_category|capitalize }}</span
+      >
       {% endif %}
     </div>
 
-    {% if project.description %}
-      <p class="text-secondary mb-3">
-        {{ project.description }}
-      </p>
+    {% if project.short_description %}
+    <p class="text-secondary mb-3">{{ project.short_description }}</p>
     {% else %}
-      <p class="text-secondary mb-3">
-        Short project summary will go here.
-      </p>
-    {% endif %}
-
-    {% if project.tech_stack_preview %}
-      <p class="small text-muted mb-3">
-        <strong>Tech:</strong> {{ project.tech_stack_preview }}
-      </p>
-    {% endif %}
-
-    {% if project.tags %}
-      <div class="d-flex flex-wrap gap-2 mb-4">
-        {% for tag in project.tags %}
-          <span class="badge text-bg-secondary">{{ tag }}</span>
-        {% endfor %}
-      </div>
+    <p class="text-secondary mb-3">Short project summary will go here.</p>
+    {% endif %} {% if project.tech_stack %}
+    <p class="small text-muted mb-3">
+      <strong>Tech:</strong> {{ project.tech_stack | join(", ") }}
+    </p>
+    {% endif %} {% if project.tags %}
+    <div class="d-flex flex-wrap gap-2 mb-4">
+      {% for tag in project.tags %}
+      <span class="badge text-bg-secondary">{{ tag }}</span>
+      {% endfor %}
+    </div>
     {% endif %}
 
     <div class="mt-auto d-flex gap-2">
-      {% if project.github_url %}
-        <a class="btn btn-outline-dark btn-sm" href="{{ project.github_url }}" target="_blank" rel="noopener">
-          GitHub
-        </a>
+      {% if project.links and project.links.repo %}
+      <a
+        class="btn btn-outline-dark btn-sm"
+        href="{{ project.links.repo }}"
+        target="_blank"
+        rel="noopener"
+      >
+        GitHub
+      </a>
       {% else %}
-        <button class="btn btn-outline-dark btn-sm" type="button" disabled>
-          GitHub
-        </button>
-      {% endif %}
-
-      {% if project.slug %}
-        <a class="btn btn-dark btn-sm" href="{{ url_for('project_detail', slug=project.slug) }}">
-          Details
-        </a>
+      <button class="btn btn-outline-dark btn-sm" type="button" disabled>
+        GitHub
+      </button>
+      {% endif %} {% if project.slug %}
+      <a
+        class="btn btn-dark btn-sm"
+        href="{{ url_for('project_detail', slug=project.slug) }}"
+      >
+        Details
+      </a>
       {% else %}
-        <button class="btn btn-dark btn-sm" type="button" disabled>
-          Details
-        </button>
+      <button class="btn btn-dark btn-sm" type="button" disabled>
+        Details
+      </button>
       {% endif %}
     </div>
   </div>
