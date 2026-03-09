@@ -29,3 +29,23 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+/* ==========================================
+   Project cards
+========================================== */
+
+.project-card {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
+}
+
+.project-card-img {
+  height: 220px;
+  object-fit: cover;
+}
