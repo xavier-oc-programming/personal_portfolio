@@ -1,4 +1,6 @@
 <!-- app/templates/projects.html -->
+<!-- Projects hub page template. -->
+<!-- Displays the full project collection, dedicated category views, sorting controls, tag filters, and reusable project cards. -->
 
 {% extends "base.html" %}
 
@@ -8,75 +10,157 @@
 
   <!-- Header -->
   <section class="page-section">
-    <h1 class="mb-2">Projects</h1>
+    <h1 class="mb-2">
+      {% if active_category %}
+        {{ active_category|capitalize }} Projects
+      {% else %}
+        Projects
+      {% endif %}
+    </h1>
+
     <p class="text-secondary mb-0">
-      Browse my work across Web, Data, and Software.
+      {% if active_category and active_tag %}
+        Browse my {{ active_category }} work tagged with "{{ active_tag }}".
+      {% elif active_category %}
+        Browse my {{ active_category }} work.
+      {% elif active_tag %}
+        Browse projects tagged with "{{ active_tag }}".
+      {% else %}
+        Browse my work across Web, Data, and Software.
+      {% endif %}
     </p>
   </section>
 
-  <!-- Controls -->
+  <!-- Category Controls -->
   <section class="page-section">
     <div class="border rounded-3 p-3 p-md-4">
-      <form method="get">
-        <div class="row g-3 align-items-center">
+      <div class="row g-3 align-items-center">
 
-          <div class="col-12 col-lg-8">
-            <div class="d-flex flex-wrap gap-2">
+        <div class="col-12 col-lg-8">
+          <div class="d-flex flex-wrap gap-2">
 
-              <a
-                class="btn btn-sm {% if not active_category %}btn-dark{% else %}btn-outline-dark{% endif %}"
-                href="{{ url_for('projects', sort=active_sort) }}"
-              >
-                All ({{ category_counts['all'] }})
-              </a>
+            <a
+              class="btn btn-sm {% if not active_category %}btn-dark{% else %}btn-outline-dark{% endif %}"
+              href="{{ url_for('projects', sort=active_sort, tag=active_tag) }}"
+            >
+              All ({{ category_counts['all'] }})
+            </a>
 
-              <a
-                class="btn btn-sm {% if active_category == 'web' %}btn-dark{% else %}btn-outline-dark{% endif %}"
-                href="{{ url_for('projects', category='web', sort=active_sort) }}"
-              >
-                Web ({{ category_counts['web'] }})
-              </a>
+            <a
+              class="btn btn-sm {% if active_category == 'web' %}btn-dark{% else %}btn-outline-dark{% endif %}"
+              href="{{ url_for('projects_web', sort=active_sort, tag=active_tag) }}"
+            >
+              Web ({{ category_counts['web'] }})
+            </a>
 
-              <a
-                class="btn btn-sm {% if active_category == 'data' %}btn-dark{% else %}btn-outline-dark{% endif %}"
-                href="{{ url_for('projects', category='data', sort=active_sort) }}"
-              >
-                Data ({{ category_counts['data'] }})
-              </a>
+            <a
+              class="btn btn-sm {% if active_category == 'data' %}btn-dark{% else %}btn-outline-dark{% endif %}"
+              href="{{ url_for('projects_data', sort=active_sort, tag=active_tag) }}"
+            >
+              Data ({{ category_counts['data'] }})
+            </a>
 
-              <a
-                class="btn btn-sm {% if active_category == 'software' %}btn-dark{% else %}btn-outline-dark{% endif %}"
-                href="{{ url_for('projects', category='software', sort=active_sort) }}"
-              >
-                Software ({{ category_counts['software'] }})
-              </a>
+            <a
+              class="btn btn-sm {% if active_category == 'software' %}btn-dark{% else %}btn-outline-dark{% endif %}"
+              href="{{ url_for('projects_software', sort=active_sort, tag=active_tag) }}"
+            >
+              Software ({{ category_counts['software'] }})
+            </a>
 
-            </div>
           </div>
-
-          <div class="col-12 col-lg-4">
-            <div class="d-flex justify-content-lg-end">
-
-              <select
-                class="form-select form-select-sm w-auto"
-                name="sort"
-                aria-label="Sort projects"
-                onchange="this.form.submit()"
-              >
-                <option value="az" {% if active_sort == "az" %}selected{% endif %}>A–Z</option>
-                <option value="newest" {% if active_sort == "newest" %}selected{% endif %}>Newest</option>
-                <option value="oldest" {% if active_sort == "oldest" %}selected{% endif %}>Oldest</option>
-              </select>
-
-              {% if active_category %}
-                <input type="hidden" name="category" value="{{ active_category }}">
-              {% endif %}
-
-            </div>
-          </div>
-
         </div>
-      </form>
+
+        <div class="col-12 col-lg-4">
+          <form method="get" class="d-flex justify-content-lg-end">
+            <select
+              class="form-select form-select-sm w-auto"
+              name="sort"
+              aria-label="Sort projects"
+              onchange="this.form.submit()"
+            >
+              <option value="az" {% if active_sort == "az" %}selected{% endif %}>A–Z</option>
+              <option value="newest" {% if active_sort == "newest" %}selected{% endif %}>Newest</option>
+              <option value="oldest" {% if active_sort == "oldest" %}selected{% endif %}>Oldest</option>
+            </select>
+
+            {% if active_tag %}
+              <input type="hidden" name="tag" value="{{ active_tag }}">
+            {% endif %}
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Tag Controls -->
+  <section class="page-section">
+    <div class="border rounded-3 p-3 p-md-4">
+      <div class="d-flex flex-wrap gap-2 align-items-center">
+        <span class="fw-semibold me-1">Tags:</span>
+
+        {% if active_category == "web" %}
+          <a
+            class="btn btn-sm {% if not active_tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
+            href="{{ url_for('projects_web', sort=active_sort) }}"
+          >
+            All Tags
+          </a>
+        {% elif active_category == "data" %}
+          <a
+            class="btn btn-sm {% if not active_tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
+            href="{{ url_for('projects_data', sort=active_sort) }}"
+          >
+            All Tags
+          </a>
+        {% elif active_category == "software" %}
+          <a
+            class="btn btn-sm {% if not active_tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
+            href="{{ url_for('projects_software', sort=active_sort) }}"
+          >
+            All Tags
+          </a>
+        {% else %}
+          <a
+            class="btn btn-sm {% if not active_tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
+            href="{{ url_for('projects', sort=active_sort) }}"
+          >
+            All Tags
+          </a>
+        {% endif %}
+
+        {% for tag in available_tags %}
+          {% if active_category == "web" %}
+            <a
+              class="btn btn-sm {% if active_tag == tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
+              href="{{ url_for('projects_web', tag=tag, sort=active_sort) }}"
+            >
+              {{ tag }}
+            </a>
+          {% elif active_category == "data" %}
+            <a
+              class="btn btn-sm {% if active_tag == tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
+              href="{{ url_for('projects_data', tag=tag, sort=active_sort) }}"
+            >
+              {{ tag }}
+            </a>
+          {% elif active_category == "software" %}
+            <a
+              class="btn btn-sm {% if active_tag == tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
+              href="{{ url_for('projects_software', tag=tag, sort=active_sort) }}"
+            >
+              {{ tag }}
+            </a>
+          {% else %}
+            <a
+              class="btn btn-sm {% if active_tag == tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
+              href="{{ url_for('projects', tag=tag, sort=active_sort) }}"
+            >
+              {{ tag }}
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
     </div>
   </section>
 
