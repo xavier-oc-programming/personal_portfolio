@@ -1,8 +1,18 @@
 <!-- app/templates/components/project_card.html -->
+<!-- Reusable project card component. -->
+<!-- Displays a project's summary information, tech stack, clickable tags, and links to GitHub and the detail page. -->
 
-{# components/project_card.html Expected variable: project (dict-like) project
-fields used: - title - slug - short_description - primary_category - tech_stack
-- tags - links.repo - media.card_image #}
+{# Expected variable: project (dict-like)
+   Project fields used:
+   - title
+   - slug
+   - short_description
+   - primary_category
+   - tech_stack
+   - tags
+   - links.repo
+   - media.card_image
+#}
 
 <div class="card h-100 project-card">
   {% if project.media and project.media.card_image %}
@@ -18,9 +28,9 @@ fields used: - title - slug - short_description - primary_category - tech_stack
       <h3 class="h5 mb-0">{{ project.title or "Untitled Project" }}</h3>
 
       {% if project.primary_category %}
-      <span class="badge text-bg-dark"
-        >{{ project.primary_category|capitalize }}</span
-      >
+      <span class="badge text-bg-dark">
+        {{ project.primary_category|capitalize }}
+      </span>
       {% endif %}
     </div>
 
@@ -28,14 +38,46 @@ fields used: - title - slug - short_description - primary_category - tech_stack
     <p class="text-secondary mb-3">{{ project.short_description }}</p>
     {% else %}
     <p class="text-secondary mb-3">Short project summary will go here.</p>
-    {% endif %} {% if project.tech_stack %}
+    {% endif %}
+
+    {% if project.tech_stack %}
     <p class="small text-muted mb-3">
       <strong>Tech:</strong> {{ project.tech_stack | join(", ") }}
     </p>
-    {% endif %} {% if project.tags %}
+    {% endif %}
+
+    {% if project.tags %}
     <div class="d-flex flex-wrap gap-2 mb-4">
       {% for tag in project.tags %}
-      <span class="badge text-bg-secondary">{{ tag }}</span>
+        {% if project.primary_category == "web" %}
+          <a
+            class="badge text-bg-secondary"
+            href="{{ url_for('projects_web', tag=tag) }}"
+          >
+            {{ tag }}
+          </a>
+        {% elif project.primary_category == "data" %}
+          <a
+            class="badge text-bg-secondary"
+            href="{{ url_for('projects_data', tag=tag) }}"
+          >
+            {{ tag }}
+          </a>
+        {% elif project.primary_category == "software" %}
+          <a
+            class="badge text-bg-secondary"
+            href="{{ url_for('projects_software', tag=tag) }}"
+          >
+            {{ tag }}
+          </a>
+        {% else %}
+          <a
+            class="badge text-bg-secondary"
+            href="{{ url_for('projects', tag=tag) }}"
+          >
+            {{ tag }}
+          </a>
+        {% endif %}
       {% endfor %}
     </div>
     {% endif %}
@@ -54,7 +96,9 @@ fields used: - title - slug - short_description - primary_category - tech_stack
       <button class="btn btn-outline-dark btn-sm" type="button" disabled>
         GitHub
       </button>
-      {% endif %} {% if project.slug %}
+      {% endif %}
+
+      {% if project.slug %}
       <a
         class="btn btn-dark btn-sm"
         href="{{ url_for('project_detail', slug=project.slug) }}"
