@@ -1,4 +1,6 @@
 <!-- app/templates/project_detail.html -->
+<!-- Project detail page template. -->
+<!-- Displays a single project's full overview, quick facts, screenshots, videos, and navigation back to the relevant project list. -->
 
 {% extends "base.html" %}
 
@@ -119,7 +121,15 @@
               </button>
             {% endif %}
 
-            <a class="btn btn-dark btn-sm" href="{{ url_for('projects') }}">Back to Projects</a>
+            {% if project and project.primary_category == "web" %}
+              <a class="btn btn-dark btn-sm" href="{{ url_for('projects_web') }}">Back to Web Projects</a>
+            {% elif project and project.primary_category == "data" %}
+              <a class="btn btn-dark btn-sm" href="{{ url_for('projects_data') }}">Back to Data Projects</a>
+            {% elif project and project.primary_category == "software" %}
+              <a class="btn btn-dark btn-sm" href="{{ url_for('projects_software') }}">Back to Software Projects</a>
+            {% else %}
+              <a class="btn btn-dark btn-sm" href="{{ url_for('projects') }}">Back to Projects</a>
+            {% endif %}
           </div>
         </div>
       </div>

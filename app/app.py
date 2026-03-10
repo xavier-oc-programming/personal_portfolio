@@ -44,7 +44,8 @@ def _apply_category_filter(
 
     Parameters:
         projects (list[dict[str, Any]]): Full project list.
-        category (str | None): Requested category from querystring.
+        category (str | None): Requested category from querystring
+            or route-level helper input.
 
     Returns:
         tuple[list[dict[str, Any]], str | None]:
@@ -66,6 +67,42 @@ def _apply_category_filter(
     ]
 
     return filtered_projects, normalized_category
+
+
+def _apply_tag_filter(
+    projects: list[dict[str, Any]],
+    tag: str | None,
+) -> tuple[list[dict[str, Any]], str | None]:
+    """
+    Filter projects by tag.
+
+    Parameters:
+        projects (list[dict[str, Any]]): Project list to filter.
+        tag (str | None): Requested tag from querystring.
+
+    Returns:
+        tuple[list[dict[str, Any]], str | None]:
+            - Filtered project list
+            - Normalized active tag, or None if missing
+    """
+    if not tag:
+        return projects, None
+
+    normalized_tag = tag.strip().lower()
+
+    if not normalized_tag:
+        return projects, None
+
+    filtered_projects = [
+        project
+        for project in projects
+        if normalized_tag in [
+            str(project_tag).strip().lower()
+            for project_tag in project.get("tags", [])
+        ]
+    ]
+
+    return filtered_projects, normalized_tag
 
 
 def _apply_sort(
@@ -114,6 +151,83 @@ def _apply_sort(
         key=lambda project: str(project.get("date", "")),
     )
     return sorted_projects, normalized_sort
+
+
+def _get_available_tags(projects: list[dict[str, Any]]) -> list[str]:
+    """
+    Collect all unique tags from the full project dataset.
+
+    Parameters:
+        projects (list[dict[str, Any]]): Full project list.
+
+    Returns:
+        list[str]: Alphabetically sorted unique tags.
+    """
+    tag_set = {
+        str(tag).strip().lower()
+        for project in projects
+        for tag in project.get("tags", [])
+        if str(tag).strip()
+    }
+
+    return sorted(tag_set)
+
+
+def _build_projects_page_context(
+    category: str | None = None,
+    tag: str | None = None,
+    sort_key: str | None = None,
+) -> dict[str, Any]:
+    """
+    Build the shared template context for the Projects hub
+    and dedicated category pages.
+
+    Parameters:
+        category (str | None): Requested category filter.
+        tag (str | None): Requested tag filter.
+        sort_key (str | None): Requested sort option.
+
+    Returns:
+        dict[str, Any]: Context passed into projects.html.
+    """
+    all_projects = get_all_projects()
+
+    category_filtered_projects, active_category = _apply_category_filter(
+        all_projects,
+        category,
+    )
+    tag_filtered_projects, active_tag = _apply_tag_filter(
+        category_filtered_projects,
+        tag,
+    )
+    sorted_projects, active_sort = _apply_sort(tag_filtered_projects, sort_key)
+
+    category_counts = {
+        "all": len(all_projects),
+        "web": sum(
+            1 for project in all_projects
+            if project.get("primary_category") == "web"
+        ),
+        "data": sum(
+            1 for project in all_projects
+            if project.get("primary_category") == "data"
+        ),
+        "software": sum(
+            1 for project in all_projects
+            if project.get("primary_category") == "software"
+        ),
+    }
+
+    available_tags = _get_available_tags(all_projects)
+
+    return {
+        "projects": sorted_projects,
+        "active_category": active_category,
+        "active_tag": active_tag,
+        "active_sort": active_sort,
+        "category_counts": category_counts,
+        "available_tags": available_tags,
+    }
 
 
 def create_app() -> Flask:
@@ -170,30 +284,57 @@ def create_app() -> Flask:
 
     @app.get("/projects")
     def projects():
-        all_projects = get_all_projects()
-
         category = request.args.get("category")
+        tag = request.args.get("tag")
         sort_key = request.args.get("sort")
 
-        filtered_projects, active_category = _apply_category_filter(all_projects, category)
-        sorted_projects, active_sort = _apply_sort(filtered_projects, sort_key)
-
-        # Count projects per category
-        category_counts = {
-            "all": len(all_projects),
-            "web": sum(1 for p in all_projects if p["primary_category"] == "web"),
-            "data": sum(1 for p in all_projects if p["primary_category"] == "data"),
-            "software": sum(1 for p in all_projects if p["primary_category"] == "software"),
-        }
-
-        return render_template(
-            "projects.html",
-            projects=sorted_projects,
-            active_category=active_category,
-            active_sort=active_sort,
-            category_counts=category_counts
+        context = _build_projects_page_context(
+            category=category,
+            tag=tag,
+            sort_key=sort_key,
         )
-    
+
+        return render_template("projects.html", **context)
+
+    @app.get("/projects/web")
+    def projects_web():
+        tag = request.args.get("tag")
+        sort_key = request.args.get("sort")
+
+        context = _build_projects_page_context(
+            category="web",
+            tag=tag,
+            sort_key=sort_key,
+        )
+
+        return render_template("projects.html", **context)
+
+    @app.get("/projects/data")
+    def projects_data():
+        tag = request.args.get("tag")
+        sort_key = request.args.get("sort")
+
+        context = _build_projects_page_context(
+            category="data",
+            tag=tag,
+            sort_key=sort_key,
+        )
+
+        return render_template("projects.html", **context)
+
+    @app.get("/projects/software")
+    def projects_software():
+        tag = request.args.get("tag")
+        sort_key = request.args.get("sort")
+
+        context = _build_projects_page_context(
+            category="software",
+            tag=tag,
+            sort_key=sort_key,
+        )
+
+        return render_template("projects.html", **context)
+
     @app.get("/projects/<slug>")
     def project_detail(slug: str):
         project = get_project_by_slug(slug)
