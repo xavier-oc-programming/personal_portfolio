@@ -1,6 +1,6 @@
 <!-- app/templates/contact.html -->
 <!-- Contact page template. -->
-<!-- Shows current contact information and reserves space for a future contact form. -->
+<!-- Shows a real contact form and stores submitted messages in the database. -->
 
 {% extends "base.html" %}
 
@@ -12,19 +12,61 @@
   <section class="page-section">
     <h1 class="mb-2">Contact</h1>
     <p class="text-secondary mb-0">
-      If you’d like to reach out about opportunities, collaboration, or questions, you can contact me using the info below.
+      If you’d like to reach out about opportunities, collaboration, or questions, send a message using the form below.
     </p>
   </section>
+
+  {% if submitted %}
+    <section class="page-section">
+      <div class="alert alert-success mb-0" role="alert">
+        Your message was submitted successfully.
+      </div>
+    </section>
+  {% endif %}
 
   <!-- Contact Layout -->
   <section>
     <div class="row g-4">
       <div class="col-12 col-lg-7">
         <div class="border rounded-3 p-4 h-100">
-          <h2 class="h4 mb-3">Message</h2>
-          <p class="text-secondary mb-0">
-            In later phases, this section will include a contact form. For now, please use email or my profiles below.
-          </p>
+          <h2 class="h4 mb-3">Send a Message</h2>
+
+          <form method="post" action="{{ url_for('contact') }}">
+            <div class="mb-3">
+              <label for="name" class="form-label">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                name="name"
+                required
+              >
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                required
+              >
+            </div>
+
+            <div class="mb-3">
+              <label for="message" class="form-label">Message</label>
+              <textarea
+                class="form-control"
+                id="message"
+                name="message"
+                rows="6"
+                required
+              ></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-dark">Send Message</button>
+          </form>
         </div>
       </div>
 
