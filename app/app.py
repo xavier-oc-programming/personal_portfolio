@@ -9,9 +9,9 @@ Key responsibilities:
 - Define the core navigation routes.
 - Provide a single, reliable local run command.
 - Inject global template variables shared across all pages.
-- Serve project data from an in-memory dataset during Phase 2.
-- Prepare the SQLite database directory/file strategy for Phase 3.
-- Initialize SQLAlchemy as the ORM layer for future database integration.
+- Serve project data from the database during Phase 3.
+- Prepare the SQLite database directory/file strategy.
+- Initialize SQLAlchemy as the ORM layer.
 - Create database tables that match the unified project schema.
 
 Run locally (from repo root):
@@ -24,12 +24,11 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from flask import Flask, abort, render_template, request
 from dotenv import load_dotenv
+from flask import Flask, abort, render_template, request
 
 from config import get_config_class
-from data.projects import get_all_projects, get_project_by_slug
-from models.models import db
+from models.models import Project, db
 
 
 # Load environment variables from .env (development only)
@@ -40,82 +39,102 @@ ALLOWED_CATEGORIES = {"web", "data", "software"}
 ALLOWED_SORTS = {"az", "newest", "oldest"}
 
 
-def _apply_category_filter(
-    projects: list[dict[str, Any]],
-    category: str | None,
-) -> tuple[list[dict[str, Any]], str | None]:
+def _normalize_category(category: str | None) -> str | None:
     """
-    Filter projects by primary_category.
+    Normalize and validate a category value.
 
     Parameters:
-        projects (list[dict[str, Any]]): Full project list.
-        category (str | None): Requested category from querystring
-            or route-level helper input.
+        category (str | None): Raw category input.
 
     Returns:
-        tuple[list[dict[str, Any]], str | None]:
-            - Filtered project list
-            - Normalized active category, or None if invalid/missing
+        str | None: Normalized category if valid, otherwise None.
     """
     if not category:
-        return projects, None
+        return None
 
     normalized_category = category.strip().lower()
 
     if normalized_category not in ALLOWED_CATEGORIES:
-        return projects, None
+        return None
 
-    filtered_projects = [
-        project
-        for project in projects
-        if str(project.get("primary_category", "")).strip().lower() == normalized_category
-    ]
-
-    return filtered_projects, normalized_category
+    return normalized_category
 
 
-def _apply_tag_filter(
-    projects: list[dict[str, Any]],
-    tag: str | None,
-) -> tuple[list[dict[str, Any]], str | None]:
+def _normalize_tag(tag: str | None) -> str | None:
     """
-    Filter projects by tag.
+    Normalize a tag value.
 
     Parameters:
-        projects (list[dict[str, Any]]): Project list to filter.
-        tag (str | None): Requested tag from querystring.
+        tag (str | None): Raw tag input.
 
     Returns:
-        tuple[list[dict[str, Any]], str | None]:
-            - Filtered project list
-            - Normalized active tag, or None if missing
+        str | None: Normalized tag or None if empty.
     """
     if not tag:
-        return projects, None
+        return None
 
     normalized_tag = tag.strip().lower()
 
     if not normalized_tag:
-        return projects, None
+        return None
 
-    filtered_projects = [
-        project
-        for project in projects
-        if normalized_tag in [
-            str(project_tag).strip().lower()
-            for project_tag in project.get("tags", [])
-        ]
-    ]
-
-    return filtered_projects, normalized_tag
+    return normalized_tag
 
 
-def _apply_sort(
-    projects: list[dict[str, Any]],
-    sort_key: str | None,
-) -> tuple[list[dict[str, Any]], str]:
+def _normalize_sort(sort_key: str | None) -> str:
     """
-    Sort projects at the route level.
+    Normalize and validate a sort key.
+
+    Parameters:
+        sort_key (str | None): Raw sort input.
+
+    Returns:
+        str: One of the allowed sort options.
+    """
+    normalized_sort = (sort_key or "az").strip().lower()
+
+    if normalized_sort not in ALLOWED_SORTS:
+        return "az"
+
+    return normalized_sort
+
+
+def _apply_database_filters(
+    category: str | None = None,
+    tag: str | None = None,
+):
+    """
+    Build the base database query for projects.
+
+    Parameters:
+        category (str | None): Optional project category filter.
+        tag (str | None): Optional tag filter.
+
+    Returns:
+        BaseQuery: Filtered SQLAlchemy query object.
+    """
+    normalized_category = _normalize_category(category)
+    normalized_tag = _normalize_tag(tag)
+
+    query = Project.query
+
+    if normalized_category:
+        query = query.filter(Project.primary_category == normalized_category)
+
+    if normalized_tag:
+        # tags are stored as JSON text like:
+        # ["flask", "jinja", "bootstrap"]
+        #
+        # Matching with %"tag"% helps match the full JSON string value
+        # instead of a loose substring inside another word.
+        query = query.filter(Project.tags_json.ilike(f'%"{normalized_tag}"%'))
+
+    return query
+
+
+def _apply_sort(query, sort_key: str | None):
+    """
+    Apply sorting to a SQLAlchemy query.
 
     Supported sorting:
     - az
@@ -123,59 +142,59 @@ def _apply_sort(
     - oldest
 
     Parameters:
-        projects (list[dict[str, Any]]): Project list to sort.
+        query: SQLAlchemy query object.
         sort_key (str | None): Sort option from querystring.
 
     Returns:
-        tuple[list[dict[str, Any]], str]:
-            - Sorted project list
+        tuple:
+            - Sorted SQLAlchemy query object
             - Normalized active sort key
     """
-    normalized_sort = (sort_key or "az").strip().lower()
-
-    if normalized_sort not in ALLOWED_SORTS:
-        normalized_sort = "az"
+    normalized_sort = _normalize_sort(sort_key)
 
     if normalized_sort == "az":
-        sorted_projects = sorted(
-            projects,
-            key=lambda project: str(project.get("title", "")).lower()
-        )
-        return sorted_projects, normalized_sort
+        return query.order_by(Project.title.asc()), normalized_sort
 
     if normalized_sort == "newest":
-        sorted_projects = sorted(
-            projects,
-            key=lambda project: str(project.get("date", "")),
-            reverse=True,
-        )
-        return sorted_projects, normalized_sort
+        return query.order_by(Project.date.desc(), Project.title.asc()), normalized_sort
 
-    sorted_projects = sorted(
-        projects,
-        key=lambda project: str(project.get("date", "")),
-    )
-    return sorted_projects, normalized_sort
+    return query.order_by(Project.date.asc(), Project.title.asc()), normalized_sort
 
 
-def _get_available_tags(projects: list[dict[str, Any]]) -> list[str]:
+def _get_available_tags() -> list[str]:
     """
-    Collect all unique tags from the full project dataset.
-
-    Parameters:
-        projects (list[dict[str, Any]]): Full project list.
+    Collect all unique tags from all projects stored in the database.
 
     Returns:
         list[str]: Alphabetically sorted unique tags.
     """
-    tag_set = {
-        str(tag).strip().lower()
-        for project in projects
-        for tag in project.get("tags", [])
-        if str(tag).strip()
-    }
+    tag_set: set[str] = set()
+
+    all_projects = Project.query.all()
+
+    for project in all_projects:
+        for tag in project.tags:
+            normalized_tag = str(tag).strip().lower()
+
+            if normalized_tag:
+                tag_set.add(normalized_tag)
 
     return sorted(tag_set)
+
+
+def _get_category_counts() -> dict[str, int]:
+    """
+    Compute total counts for each category.
+
+    Returns:
+        dict[str, int]: Counts for all/web/data/software.
+    """
+    return {
+        "all": Project.query.count(),
+        "web": Project.query.filter_by(primary_category="web").count(),
+        "data": Project.query.filter_by(primary_category="data").count(),
+        "software": Project.query.filter_by(primary_category="software").count(),
+    }
 
 
 def _build_projects_page_context(
@@ -195,53 +214,30 @@ def _build_projects_page_context(
     Returns:
         dict[str, Any]: Context passed into projects.html.
     """
-    all_projects = get_all_projects()
+    active_category = _normalize_category(category)
+    active_tag = _normalize_tag(tag)
 
-    category_filtered_projects, active_category = _apply_category_filter(
-        all_projects,
-        category,
+    query = _apply_database_filters(
+        category=active_category,
+        tag=active_tag,
     )
-    tag_filtered_projects, active_tag = _apply_tag_filter(
-        category_filtered_projects,
-        tag,
-    )
-    sorted_projects, active_sort = _apply_sort(tag_filtered_projects, sort_key)
 
-    category_counts = {
-        "all": len(all_projects),
-        "web": sum(
-            1 for project in all_projects
-            if project.get("primary_category") == "web"
-        ),
-        "data": sum(
-            1 for project in all_projects
-            if project.get("primary_category") == "data"
-        ),
-        "software": sum(
-            1 for project in all_projects
-            if project.get("primary_category") == "software"
-        ),
-    }
-
-    available_tags = _get_available_tags(all_projects)
+    sorted_query, active_sort = _apply_sort(query, sort_key)
+    projects = sorted_query.all()
 
     return {
-        "projects": sorted_projects,
+        "projects": projects,
         "active_category": active_category,
         "active_tag": active_tag,
         "active_sort": active_sort,
-        "category_counts": category_counts,
-        "available_tags": available_tags,
+        "category_counts": _get_category_counts(),
+        "available_tags": _get_available_tags(),
     }
 
 
 def _ensure_database_directory_and_file(app: Flask) -> None:
     """
     Ensure the configured SQLite database directory exists.
-
-    For Phase 3 Section 1.1, we are only formalizing the database
-    file strategy. This helper guarantees that the folder exists and
-    creates an empty .db file if missing, without creating tables yet.
 
     Parameters:
         app (Flask): Configured Flask application instance.
@@ -270,15 +266,12 @@ def create_app() -> Flask:
     # Load config (DevelopmentConfig or ProductionConfig)
     app.config.from_object(get_config_class())
 
-    # Phase 3 Section 1.1:
     # Ensure the SQLite database directory/file exists.
     _ensure_database_directory_and_file(app)
 
-    # Phase 3 Section 1.2:
     # Initialize SQLAlchemy ORM with the Flask app.
     db.init_app(app)
 
-    # Phase 3 Section 1.3:
     # Create all database tables defined by ORM models.
     with app.app_context():
         db.create_all()
@@ -305,14 +298,12 @@ def create_app() -> Flask:
 
     @app.get("/")
     def home():
-        all_projects = get_all_projects()
-
-        featured_projects = [
-            project for project in all_projects
-            if project.get("featured") is True
-        ]
-
-        featured_projects, _ = _apply_sort(featured_projects, "newest")
+        featured_projects = (
+            Project.query
+            .filter_by(featured=True)
+            .order_by(Project.date.desc(), Project.title.asc())
+            .all()
+        )
 
         return render_template(
             "index.html",
@@ -378,7 +369,9 @@ def create_app() -> Flask:
 
     @app.get("/projects/<slug>")
     def project_detail(slug: str):
-        project = get_project_by_slug(slug)
+        normalized_slug = (slug or "").strip().lower()
+
+        project = Project.query.filter_by(slug=normalized_slug).first()
 
         if project is None:
             abort(404)
