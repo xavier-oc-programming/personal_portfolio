@@ -9,14 +9,16 @@ Key responsibilities:
 - Represent the unified project schema in table form.
 - Store list-like fields as JSON strings while exposing them
   to Python as normal lists.
+- Persist contact form submissions for the portfolio site.
 
 Usage:
-    from models.models import db, Project
+    from models.models import db, Project, ContactMessage
 """
 
 from __future__ import annotations
 
 import json
+from datetime import datetime
 
 from flask_sqlalchemy import SQLAlchemy
 
@@ -53,7 +55,6 @@ class Project(db.Model):
     challenges = db.Column(db.Text, nullable=True)
     results = db.Column(db.Text, nullable=True)
 
-    # Stored in SQLite as JSON strings.
     tags_json = db.Column("tags", db.Text, nullable=True)
     tech_stack_json = db.Column("tech_stack", db.Text, nullable=True)
     screenshots_json = db.Column("screenshots", db.Text, nullable=True)
@@ -75,13 +76,6 @@ class Project(db.Model):
     def _loads_json_list(value: str | None) -> list[str]:
         """
         Convert a JSON string from the database into a Python list.
-
-        Parameters:
-            value (str | None): JSON string stored in the database.
-
-        Returns:
-            list[str]: Parsed Python list. Returns an empty list if
-            the value is missing or invalid.
         """
         if not value:
             return []
@@ -100,12 +94,6 @@ class Project(db.Model):
     def _dumps_json_list(value: list[str] | None) -> str:
         """
         Convert a Python list into a JSON string for database storage.
-
-        Parameters:
-            value (list[str] | None): Python list to serialize.
-
-        Returns:
-            str: JSON string representation of the list.
         """
         if not value:
             return json.dumps([])
@@ -114,68 +102,48 @@ class Project(db.Model):
 
     @property
     def tags(self) -> list[str]:
-        """
-        Return tags as a normal Python list.
-        """
+        """Return tags as a normal Python list."""
         return self._loads_json_list(self.tags_json)
 
     @tags.setter
     def tags(self, value: list[str] | None) -> None:
-        """
-        Accept a Python list of tags and store it as JSON text.
-        """
+        """Accept a Python list of tags and store it as JSON text."""
         self.tags_json = self._dumps_json_list(value)
 
     @property
     def tech_stack(self) -> list[str]:
-        """
-        Return tech_stack as a normal Python list.
-        """
+        """Return tech_stack as a normal Python list."""
         return self._loads_json_list(self.tech_stack_json)
 
     @tech_stack.setter
     def tech_stack(self, value: list[str] | None) -> None:
-        """
-        Accept a Python list of tech stack items and store it as JSON text.
-        """
+        """Accept a Python list of tech stack items and store it as JSON text."""
         self.tech_stack_json = self._dumps_json_list(value)
 
     @property
     def screenshots(self) -> list[str]:
-        """
-        Return screenshots as a normal Python list.
-        """
+        """Return screenshots as a normal Python list."""
         return self._loads_json_list(self.screenshots_json)
 
     @screenshots.setter
     def screenshots(self, value: list[str] | None) -> None:
-        """
-        Accept a Python list of screenshot paths and store it as JSON text.
-        """
+        """Accept a Python list of screenshot paths and store it as JSON text."""
         self.screenshots_json = self._dumps_json_list(value)
 
     @property
     def videos(self) -> list[str]:
-        """
-        Return videos as a normal Python list.
-        """
+        """Return videos as a normal Python list."""
         return self._loads_json_list(self.videos_json)
 
     @videos.setter
     def videos(self, value: list[str] | None) -> None:
-        """
-        Accept a Python list of video paths and store it as JSON text.
-        """
+        """Accept a Python list of video paths and store it as JSON text."""
         self.videos_json = self._dumps_json_list(value)
 
     @property
     def links(self) -> dict[str, str | None]:
         """
         Compatibility helper for existing templates.
-
-        Returns:
-            dict[str, str | None]: Repo/live/demo links in the same
-            structure used by the Phase 2 in-memory dataset.
         """
         return {
             "repo": self.repo_url,
@@ -187,13 +155,32 @@ class Project(db.Model):
     def media(self) -> dict[str, str | list[str] | None]:
         """
         Compatibility helper for existing templates.
-
-        Returns:
-            dict[str, Any]: Media structure matching the earlier
-            in-memory project schema.
         """
         return {
             "card_image": self.card_image,
             "screenshots": self.screenshots,
             "videos": self.videos,
         }
+
+
+class ContactMessage(db.Model):
+    """
+    ORM model representing a contact form submission.
+
+    This table stores messages submitted through the portfolio's
+    contact page so they persist in the SQLite database.
+    """
+
+    __tablename__ = "contact_messages"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), nullable=False)
+    email = db.Column(db.String(255), nullable=False)
+    message = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+
+    def __repr__(self) -> str:
+        """
+        Developer-friendly string representation of a ContactMessage instance.
+        """
+        return f"<ContactMessage id={self.id} email='{self.email}'>"
