@@ -10,6 +10,9 @@ Key responsibilities:
 - Provide a single, reliable local run command.
 - Inject global template variables shared across all pages.
 - Serve project data from an in-memory dataset during Phase 2.
+- Prepare the SQLite database directory/file strategy for Phase 3.
+- Initialize SQLAlchemy as the ORM layer for future database integration.
+- Create database tables that match the unified project schema.
 
 Run locally (from repo root):
     python app/app.py
@@ -18,6 +21,7 @@ Run locally (from repo root):
 from __future__ import annotations
 
 from datetime import datetime
+from pathlib import Path
 from typing import Any
 
 from flask import Flask, abort, render_template, request
@@ -25,6 +29,7 @@ from dotenv import load_dotenv
 
 from config import get_config_class
 from data.projects import get_all_projects, get_project_by_slug
+from models.models import db
 
 
 # Load environment variables from .env (development only)
@@ -230,6 +235,29 @@ def _build_projects_page_context(
     }
 
 
+def _ensure_database_directory_and_file(app: Flask) -> None:
+    """
+    Ensure the configured SQLite database directory exists.
+
+    For Phase 3 Section 1.1, we are only formalizing the database
+    file strategy. This helper guarantees that the folder exists and
+    creates an empty .db file if missing, without creating tables yet.
+
+    Parameters:
+        app (Flask): Configured Flask application instance.
+    """
+    database_path = app.config.get("DATABASE_PATH")
+
+    if not database_path:
+        return
+
+    if isinstance(database_path, str):
+        database_path = Path(database_path)
+
+    database_path.parent.mkdir(parents=True, exist_ok=True)
+    database_path.touch(exist_ok=True)
+
+
 def create_app() -> Flask:
     """
     Application factory.
@@ -241,6 +269,19 @@ def create_app() -> Flask:
 
     # Load config (DevelopmentConfig or ProductionConfig)
     app.config.from_object(get_config_class())
+
+    # Phase 3 Section 1.1:
+    # Ensure the SQLite database directory/file exists.
+    _ensure_database_directory_and_file(app)
+
+    # Phase 3 Section 1.2:
+    # Initialize SQLAlchemy ORM with the Flask app.
+    db.init_app(app)
+
+    # Phase 3 Section 1.3:
+    # Create all database tables defined by ORM models.
+    with app.app_context():
+        db.create_all()
 
     # ---------------------------------
     # Global Template Context

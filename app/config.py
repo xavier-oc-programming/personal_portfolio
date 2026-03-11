@@ -5,7 +5,7 @@ Central configuration for the Flask application.
 
 Key responsibilities:
 - Provide environment-based configuration (Development vs Production).
-- Define core settings such as SECRET_KEY and DEBUG.
+- Define core settings such as SECRET_KEY, DEBUG, and database path.
 - Keep configuration logic out of app initialization and routes.
 
 Environment Variables supported:
@@ -21,6 +21,12 @@ Usage:
 from __future__ import annotations
 
 import os
+from pathlib import Path
+
+
+BASE_DIR = Path(__file__).resolve().parent
+DATABASE_DIR = BASE_DIR / "database"
+DATABASE_FILE = DATABASE_DIR / "portfolio.db"
 
 
 class BaseConfig:
@@ -28,12 +34,12 @@ class BaseConfig:
     Base configuration shared across environments.
     """
 
-    # Default to a non-empty value so Flask sessions don't break locally.
-    # In production, you must set SECRET_KEY as an environment variable.
     SECRET_KEY: str = os.environ.get("SECRET_KEY", "dev-only-change-me")
-
-    # Keep JSON output stable if you ever use jsonify later.
     JSON_SORT_KEYS: bool = False
+
+    DATABASE_PATH: Path = DATABASE_FILE
+    SQLALCHEMY_DATABASE_URI: str = f"sqlite:///{DATABASE_FILE}"
+    SQLALCHEMY_TRACK_MODIFICATIONS: bool = False
 
 
 class DevelopmentConfig(BaseConfig):
@@ -59,10 +65,7 @@ def get_config_class():
     Returns:
         type: A configuration class (DevelopmentConfig or ProductionConfig).
     """
-    # FLASK_ENV is commonly used. We'll support it for clarity.
     flask_env = os.environ.get("FLASK_ENV", "").strip().lower()
-
-    # FLASK_DEBUG can override behavior when set explicitly.
     flask_debug = os.environ.get("FLASK_DEBUG", "").strip()
 
     if flask_debug == "1":
@@ -71,5 +74,4 @@ def get_config_class():
     if flask_env == "production":
         return ProductionConfig
 
-    # Default to development for local work.
     return DevelopmentConfig
