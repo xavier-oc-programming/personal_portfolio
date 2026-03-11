@@ -167,3 +167,33 @@ class Project(db.Model):
         Accept a Python list of video paths and store it as JSON text.
         """
         self.videos_json = self._dumps_json_list(value)
+
+    @property
+    def links(self) -> dict[str, str | None]:
+        """
+        Compatibility helper for existing templates.
+
+        Returns:
+            dict[str, str | None]: Repo/live/demo links in the same
+            structure used by the Phase 2 in-memory dataset.
+        """
+        return {
+            "repo": self.repo_url,
+            "live": self.live_url,
+            "demo": self.demo_url,
+        }
+
+    @property
+    def media(self) -> dict[str, str | list[str] | None]:
+        """
+        Compatibility helper for existing templates.
+
+        Returns:
+            dict[str, Any]: Media structure matching the earlier
+            in-memory project schema.
+        """
+        return {
+            "card_image": self.card_image,
+            "screenshots": self.screenshots,
+            "videos": self.videos,
+        }
