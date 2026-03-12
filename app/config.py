@@ -41,6 +41,8 @@ class BaseConfig:
     SQLALCHEMY_DATABASE_URI: str = f"sqlite:///{DATABASE_FILE}"
     SQLALCHEMY_TRACK_MODIFICATIONS: bool = False
 
+    WTF_CSRF_ENABLED: bool = True
+
 
 class DevelopmentConfig(BaseConfig):
     """
@@ -56,6 +58,9 @@ class ProductionConfig(BaseConfig):
     """
 
     DEBUG: bool = False
+    SESSION_COOKIE_SECURE: bool = True
+    SESSION_COOKIE_HTTPONLY: bool = True
+    SESSION_COOKIE_SAMESITE: str = "Lax"
 
 
 def get_config_class():
