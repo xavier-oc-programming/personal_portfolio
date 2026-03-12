@@ -21,13 +21,14 @@ Run locally (from repo root):
 
 from __future__ import annotations
 
+import time
 from datetime import datetime
 from html import escape
 from pathlib import Path
 from typing import Any
 
 from dotenv import load_dotenv
-from flask import Flask, abort, flash, redirect, render_template, request, url_for
+from flask import Flask, abort, flash, redirect, render_template, request, session, url_for
 
 from config import get_config_class
 from forms import ContactForm, MAX_EMAIL_LENGTH, MAX_MESSAGE_LENGTH, MAX_NAME_LENGTH
@@ -39,6 +40,9 @@ load_dotenv()
 
 ALLOWED_CATEGORIES = {"web", "data", "software"}
 ALLOWED_SORTS = {"az", "newest", "oldest"}
+
+MIN_FORM_FILL_SECONDS = 3
+CONTACT_RATE_LIMIT_SECONDS = 3
 
 
 def _normalize_category(category: str | None) -> str | None:
@@ -304,6 +308,31 @@ def create_app() -> Flask:
     def contact():
         form = ContactForm()
 
+        if request.method == "GET":
+            session["contact_form_loaded_at"] = time.time()
+            return render_template("contact.html", form=form)
+
+        if form.company.data:
+            flash("Invalid submission detected.", "danger")
+            session["contact_form_loaded_at"] = time.time()
+            return render_template("contact.html", form=form), 400
+
+        form_loaded_at = session.get("contact_form_loaded_at")
+
+        if form_loaded_at is None or (time.time() - form_loaded_at) < MIN_FORM_FILL_SECONDS:
+            flash("Please wait a moment before submitting the form.", "danger")
+            session["contact_form_loaded_at"] = time.time()
+            return render_template("contact.html", form=form), 400
+
+        last_submission_at = session.get("last_contact_submission_at")
+
+        if (
+            last_submission_at is not None
+            and (time.time() - last_submission_at) < CONTACT_RATE_LIMIT_SECONDS
+        ):
+            flash("Please wait a minute before sending another message.", "danger")
+            return render_template("contact.html", form=form), 429
+
         if form.validate_on_submit():
             sanitized_name = _sanitize_text_input(
                 form.name.data,
@@ -327,10 +356,12 @@ def create_app() -> Flask:
             db.session.add(contact_message)
             db.session.commit()
 
+            session["last_contact_submission_at"] = time.time()
+
             flash("Your message was sent successfully.", "success")
             return redirect(url_for("contact"))
 
-        if form.is_submitted() and form.errors:
+        if form.errors:
             for field_errors in form.errors.values():
                 for error_message in field_errors:
                     flash(error_message, "danger")
