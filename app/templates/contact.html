@@ -26,6 +26,11 @@
           <form method="post" action="{{ url_for('contact') }}" novalidate>
             {{ form.hidden_tag() }}
 
+            <div class="contact-honeypot" aria-hidden="true">
+              <label for="{{ form.company.id }}">{{ form.company.label.text }}</label>
+              {{ form.company() }}
+            </div>
+
             <div class="mb-3">
               <label for="{{ form.name.id }}" class="form-label">{{ form.name.label.text }}</label>
               {{ form.name() }}

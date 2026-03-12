@@ -6,7 +6,7 @@ Form definitions for the Portfolio Website.
 Key responsibilities:
 - Define Flask-WTF forms used by the application.
 - Centralize field structure and validation rules.
-- Provide built-in CSRF protection through Flask-WTF.
+- Provide CSRF-protected form handling through Flask-WTF.
 
 Usage:
     from forms import ContactForm
@@ -16,7 +16,7 @@ from __future__ import annotations
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField
-from wtforms.validators import DataRequired, Email, Length
+from wtforms.validators import DataRequired, Email, Length, Optional
 
 
 MIN_NAME_LENGTH = 2
@@ -32,6 +32,16 @@ class ContactForm(FlaskForm):
     """
     Contact form used on the portfolio contact page.
     """
+
+    company = StringField(
+        "Company",
+        validators=[Optional()],
+        render_kw={
+            "class": "form-control",
+            "autocomplete": "organization",
+            "tabindex": "-1",
+        },
+    )
 
     name = StringField(
         "Name",
