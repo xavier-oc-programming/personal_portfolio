@@ -1,6 +1,6 @@
 <!-- app/templates/contact.html -->
 <!-- Contact page template. -->
-<!-- Shows a real contact form and stores submitted messages in the database. -->
+<!-- Shows a real contact form with client-side constraints, server-side validation feedback, and database-backed submission handling. -->
 
 {% extends "base.html" %}
 
@@ -16,14 +16,6 @@
     </p>
   </section>
 
-  {% if submitted %}
-    <section class="page-section">
-      <div class="alert alert-success mb-0" role="alert">
-        Your message was submitted successfully.
-      </div>
-    </section>
-  {% endif %}
-
   <!-- Contact Layout -->
   <section>
     <div class="row g-4">
@@ -31,7 +23,7 @@
         <div class="border rounded-3 p-4 h-100">
           <h2 class="h4 mb-3">Send a Message</h2>
 
-          <form method="post" action="{{ url_for('contact') }}">
+          <form method="post" action="{{ url_for('contact') }}" novalidate>
             <div class="mb-3">
               <label for="name" class="form-label">Name</label>
               <input
@@ -39,8 +31,15 @@
                 class="form-control"
                 id="name"
                 name="name"
+                value="{{ form_data.name if form_data else '' }}"
                 required
+                minlength="2"
+                maxlength="{{ MAX_NAME_LENGTH }}"
+                autocomplete="name"
               >
+              <div class="form-text">
+                Please enter your full name.
+              </div>
             </div>
 
             <div class="mb-3">
@@ -50,8 +49,15 @@
                 class="form-control"
                 id="email"
                 name="email"
+                value="{{ form_data.email if form_data else '' }}"
                 required
+                maxlength="{{ MAX_EMAIL_LENGTH }}"
+                autocomplete="email"
+                inputmode="email"
               >
+              <div class="form-text">
+                Use a valid email address so I can reply.
+              </div>
             </div>
 
             <div class="mb-3">
@@ -62,7 +68,12 @@
                 name="message"
                 rows="6"
                 required
-              ></textarea>
+                minlength="10"
+                maxlength="{{ MAX_MESSAGE_LENGTH }}"
+              >{{ form_data.message if form_data else '' }}</textarea>
+              <div class="form-text">
+                Please include enough detail to explain your message clearly.
+              </div>
             </div>
 
             <button type="submit" class="btn btn-dark">Send Message</button>
