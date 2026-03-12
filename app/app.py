@@ -21,7 +21,6 @@ Run locally (from repo root):
 
 from __future__ import annotations
 
-import re
 from datetime import datetime
 from html import escape
 from pathlib import Path
@@ -31,6 +30,7 @@ from dotenv import load_dotenv
 from flask import Flask, abort, flash, redirect, render_template, request, url_for
 
 from config import get_config_class
+from forms import ContactForm, MAX_EMAIL_LENGTH, MAX_MESSAGE_LENGTH, MAX_NAME_LENGTH
 from models.models import ContactMessage, Project, db
 
 
@@ -39,12 +39,6 @@ load_dotenv()
 
 ALLOWED_CATEGORIES = {"web", "data", "software"}
 ALLOWED_SORTS = {"az", "newest", "oldest"}
-
-EMAIL_REGEX = re.compile(r"^[^\s@]+@[^\s@]+\.[^\s@]+$")
-
-MAX_NAME_LENGTH = 60
-MAX_EMAIL_LENGTH = 254
-MAX_MESSAGE_LENGTH = 2000
 
 
 def _normalize_category(category: str | None) -> str | None:
@@ -175,13 +169,7 @@ def _ensure_database_directory_and_file(app: Flask) -> None:
 
 def _sanitize_text_input(value: str, *, max_length: int | None = None) -> str:
     """
-    Normalize, trim, and safely sanitize user text input.
-
-    What this function does:
-    - Replaces repeated whitespace/newlines with single spaces between words.
-    - Strips leading and trailing whitespace.
-    - Escapes HTML-sensitive characters.
-    - Optionally truncates to a maximum allowed length.
+    Normalize, trim, and safely sanitize short user text input.
     """
     normalized_value = " ".join((value or "").strip().split())
     sanitized_value = escape(normalized_value)
@@ -194,15 +182,8 @@ def _sanitize_text_input(value: str, *, max_length: int | None = None) -> str:
 
 def _sanitize_message_input(value: str, *, max_length: int | None = None) -> str:
     """
-    Normalize and sanitize multi-line message content.
-
-    Unlike short one-line fields such as name/email, messages should preserve
-    paragraph breaks. This function:
-    - Strips leading/trailing whitespace.
-    - Normalizes line-by-line spacing.
-    - Preserves intentional newlines.
-    - Escapes HTML-sensitive characters.
-    - Optionally truncates to a maximum length.
+    Normalize and sanitize multi-line message content while preserving
+    intentional line breaks.
     """
     raw_value = (value or "").strip()
 
@@ -215,62 +196,6 @@ def _sanitize_message_input(value: str, *, max_length: int | None = None) -> str
         return sanitized_value[:max_length]
 
     return sanitized_value
-
-
-def _is_valid_email(email: str) -> bool:
-    """
-    Validate email format with a simple production-appropriate regex.
-    """
-    if not email:
-        return False
-
-    return EMAIL_REGEX.fullmatch(email) is not None
-
-
-def _get_contact_form_data() -> dict[str, str]:
-    """
-    Read raw contact form values from the request and return a clean dict
-    suitable for re-rendering the form after validation errors.
-    """
-    return {
-        "name": (request.form.get("name") or "").strip(),
-        "email": (request.form.get("email") or "").strip(),
-        "message": (request.form.get("message") or "").strip(),
-    }
-
-
-def _validate_contact_form(form_data: dict[str, str]) -> list[str]:
-    """
-    Validate the contact form and return a list of human-readable error messages.
-    """
-    errors: list[str] = []
-
-    name = form_data["name"]
-    email = form_data["email"]
-    message = form_data["message"]
-
-    if not name:
-        errors.append("Name is required.")
-    elif len(name) < 2:
-        errors.append("Name must be at least 2 characters.")
-    elif len(name) > MAX_NAME_LENGTH:
-        errors.append(f"Name must be {MAX_NAME_LENGTH} characters or fewer.")
-
-    if not email:
-        errors.append("Email is required.")
-    elif not _is_valid_email(email):
-        errors.append("Please enter a valid email address.")
-    elif len(email) > MAX_EMAIL_LENGTH:
-        errors.append(f"Email must be {MAX_EMAIL_LENGTH} characters or fewer.")
-
-    if not message:
-        errors.append("Message is required.")
-    elif len(message) < 10:
-        errors.append("Message must be at least 10 characters.")
-    elif len(message) > MAX_MESSAGE_LENGTH:
-        errors.append(f"Message must be {MAX_MESSAGE_LENGTH} characters or fewer.")
-
-    return errors
 
 
 def create_app() -> Flask:
@@ -377,38 +302,19 @@ def create_app() -> Flask:
 
     @app.route("/contact", methods=["GET", "POST"])
     def contact():
-        form_data = {
-            "name": "",
-            "email": "",
-            "message": "",
-        }
+        form = ContactForm()
 
-        if request.method == "POST":
-            form_data = _get_contact_form_data()
-            validation_errors = _validate_contact_form(form_data)
-
-            if validation_errors:
-                for error_message in validation_errors:
-                    flash(error_message, "danger")
-
-                return render_template(
-                    "contact.html",
-                    form_data=form_data,
-                    MAX_NAME_LENGTH=MAX_NAME_LENGTH,
-                    MAX_EMAIL_LENGTH=MAX_EMAIL_LENGTH,
-                    MAX_MESSAGE_LENGTH=MAX_MESSAGE_LENGTH,
-                ), 400
-
+        if form.validate_on_submit():
             sanitized_name = _sanitize_text_input(
-                form_data["name"],
+                form.name.data,
                 max_length=MAX_NAME_LENGTH,
             )
             sanitized_email = _sanitize_text_input(
-                form_data["email"],
+                form.email.data,
                 max_length=MAX_EMAIL_LENGTH,
             )
             sanitized_message = _sanitize_message_input(
-                form_data["message"],
+                form.message.data,
                 max_length=MAX_MESSAGE_LENGTH,
             )
 
@@ -424,13 +330,14 @@ def create_app() -> Flask:
             flash("Your message was sent successfully.", "success")
             return redirect(url_for("contact"))
 
-        return render_template(
-            "contact.html",
-            form_data=form_data,
-            MAX_NAME_LENGTH=MAX_NAME_LENGTH,
-            MAX_EMAIL_LENGTH=MAX_EMAIL_LENGTH,
-            MAX_MESSAGE_LENGTH=MAX_MESSAGE_LENGTH,
-        )
+        if form.is_submitted() and form.errors:
+            for field_errors in form.errors.values():
+                for error_message in field_errors:
+                    flash(error_message, "danger")
+
+            return render_template("contact.html", form=form), 400
+
+        return render_template("contact.html", form=form)
 
     @app.errorhandler(404)
     def page_not_found(error):
