@@ -16,34 +16,32 @@
 
   <!-- Page Header -->
   <section class="page-section">
-    <div class="d-flex flex-column gap-2">
-      <h1 class="mb-0">
-        {% if project and project.title %}
-          {{ project.title }}
-        {% else %}
-          Project Detail
-        {% endif %}
-      </h1>
+    {% set eyebrow = "Project Detail" %}
+    {% if project and project.title %}
+      {% set title = project.title %}
+    {% else %}
+      {% set title = "Project Detail" %}
+    {% endif %}
 
-      <p class="text-secondary mb-0">
-        {% if project and project.full_description %}
-          {{ project.full_description }}
-        {% else %}
-          This page displays details for a single project.
-        {% endif %}
-      </p>
+    {% if project and project.full_description %}
+      {% set description = project.full_description %}
+    {% else %}
+      {% set description = "This page displays details for a single project." %}
+    {% endif %}
 
-      <div class="d-flex flex-wrap gap-2 mt-2">
-        {% if project and project.primary_category %}
-          <span class="badge text-bg-dark">{{ project.primary_category|capitalize }}</span>
-        {% endif %}
+    {% set centered = false %}
+    {% include "components/section_header.html" %}
 
-        {% if project and project.tags %}
-          {% for tag in project.tags %}
-            <span class="badge text-bg-secondary">{{ tag }}</span>
-          {% endfor %}
-        {% endif %}
-      </div>
+    <div class="d-flex flex-wrap gap-2 mt-3">
+      {% if project and project.primary_category %}
+        <span class="badge text-bg-dark">{{ project.primary_category|capitalize }}</span>
+      {% endif %}
+
+      {% if project and project.tags %}
+        {% for tag in project.tags %}
+          <span class="badge text-bg-secondary">{{ tag }}</span>
+        {% endfor %}
+      {% endif %}
     </div>
   </section>
 
@@ -51,8 +49,8 @@
   <section class="page-section">
     <div class="row g-4">
       <div class="col-12 col-lg-8">
-        <div class="border rounded-3 p-4">
-          <h2 class="h4 mb-3">Overview</h2>
+        <div class="surface-card p-4">
+          <h2 class="h4 mb-4">Overview</h2>
 
           <div class="mb-4">
             <h3 class="h5 mb-2">Problem</h3>
@@ -85,7 +83,7 @@
       </div>
 
       <div class="col-12 col-lg-4">
-        <div class="border rounded-3 p-4 bg-body-tertiary">
+        <div class="surface-card-muted p-4 h-100">
           <h2 class="h4 mb-3">Quick Facts</h2>
 
           <p class="mb-2">
@@ -138,12 +136,11 @@
 
   <!-- Screenshots -->
   <section class="page-section">
-    <div class="border rounded-3 p-4">
+    <div class="surface-card p-4">
       <h2 class="h4 mb-3">Screenshots</h2>
 
       {% if (project.media and project.media.card_image) or (project.media and project.media.screenshots) %}
         <div class="row g-3">
-
           {% if project.media and project.media.card_image %}
             <div class="col-12 col-md-6">
               <img
@@ -165,7 +162,6 @@
               </div>
             {% endfor %}
           {% endif %}
-
         </div>
       {% else %}
         <p class="text-secondary mb-0">
@@ -177,7 +173,7 @@
 
   <!-- Videos -->
   <section>
-    <div class="border rounded-3 p-4">
+    <div class="surface-card p-4">
       <h2 class="h4 mb-3">Videos</h2>
 
       {% if project.media and project.media.videos %}

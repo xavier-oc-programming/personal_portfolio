@@ -10,35 +10,33 @@
 
   <!-- Header -->
   <section class="page-section">
-    <h1 class="mb-2">
-      {% if active_category %}
-        {{ active_category|capitalize }} Projects
-      {% else %}
-        Projects
-      {% endif %}
-    </h1>
+    {% set eyebrow = "Projects" %}
+    {% if active_category %}
+      {% set title = active_category|capitalize ~ " Projects" %}
+    {% else %}
+      {% set title = "Browse Projects" %}
+    {% endif %}
 
-    <p class="text-secondary mb-0">
-      {% if active_category and active_tag %}
-        Browse my {{ active_category }} work tagged with "{{ active_tag }}".
-      {% elif active_category %}
-        Browse my {{ active_category }} work.
-      {% elif active_tag %}
-        Browse projects tagged with "{{ active_tag }}".
-      {% else %}
-        Browse my work across Web, Data, and Software.
-      {% endif %}
-    </p>
+    {% if active_category and active_tag %}
+      {% set description = "Browse my " ~ active_category ~ " work tagged with \"" ~ active_tag ~ "\"." %}
+    {% elif active_category %}
+      {% set description = "Browse my " ~ active_category ~ " work." %}
+    {% elif active_tag %}
+      {% set description = "Browse projects tagged with \"" ~ active_tag ~ "\"." %}
+    {% else %}
+      {% set description = "Browse my work across Web, Data, and Software." %}
+    {% endif %}
+
+    {% set centered = false %}
+    {% include "components/section_header.html" %}
   </section>
 
   <!-- Category Controls -->
   <section class="page-section">
-    <div class="border rounded-3 p-3 p-md-4">
+    <div class="surface-card p-3 p-md-4">
       <div class="row g-3 align-items-center">
-
         <div class="col-12 col-lg-8">
           <div class="d-flex flex-wrap gap-2">
-
             <a
               class="btn btn-sm {% if not active_category %}btn-dark{% else %}btn-outline-dark{% endif %}"
               href="{{ url_for('projects', sort=active_sort, tag=active_tag) }}"
@@ -66,7 +64,6 @@
             >
               Software ({{ category_counts['software'] }})
             </a>
-
           </div>
         </div>
 
@@ -88,14 +85,13 @@
             {% endif %}
           </form>
         </div>
-
       </div>
     </div>
   </section>
 
   <!-- Tag Controls -->
   <section class="page-section">
-    <div class="border rounded-3 p-3 p-md-4">
+    <div class="surface-card p-3 p-md-4">
       <div class="d-flex flex-wrap gap-2 align-items-center">
         <span class="fw-semibold me-1">Tags:</span>
 
@@ -175,7 +171,7 @@
         {% endfor %}
       </div>
     {% else %}
-      <div class="border rounded-3 p-4">
+      <div class="surface-card p-4">
         <h2 class="h5 mb-2">No projects found</h2>
         <p class="text-secondary mb-0">
           No projects match the current filter.

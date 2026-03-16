@@ -16,99 +16,99 @@
 
 <div class="card h-100 project-card">
   {% if project.media and project.media.card_image %}
-  <img
-    src="{{ url_for('static', filename=project.media.card_image) }}"
-    class="card-img-top project-card-img"
-    alt="{{ project.title }} cover image"
-  />
+    <img
+      src="{{ url_for('static', filename=project.media.card_image) }}"
+      class="card-img-top project-card-img"
+      alt="{{ project.title }} cover image"
+    />
   {% endif %}
 
-  <div class="card-body d-flex flex-column p-4">
-    <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+  <div class="card-body d-flex flex-column">
+    <div class="d-flex justify-content-between align-items-start gap-2 mb-3">
       <h3 class="h5 mb-0">{{ project.title or "Untitled Project" }}</h3>
 
       {% if project.primary_category %}
-      <span class="badge text-bg-dark">
-        {{ project.primary_category|capitalize }}
-      </span>
+        <span class="badge text-bg-dark">
+          {{ project.primary_category|capitalize }}
+        </span>
       {% endif %}
     </div>
 
     {% if project.short_description %}
-    <p class="text-secondary mb-3">{{ project.short_description }}</p>
+      <p class="text-secondary mb-3">{{ project.short_description }}</p>
     {% else %}
-    <p class="text-secondary mb-3">Short project summary will go here.</p>
+      <p class="text-secondary mb-3">Short project summary will go here.</p>
     {% endif %}
 
     {% if project.tech_stack %}
-    <p class="small text-muted mb-3">
-      <strong>Tech:</strong> {{ project.tech_stack | join(", ") }}
-    </p>
+      <p class="small text-muted mb-3">
+        <strong>Tech:</strong> {{ project.tech_stack | join(", ") }}
+      </p>
     {% endif %}
 
     {% if project.tags %}
-    <div class="d-flex flex-wrap gap-2 mb-4">
-      {% for tag in project.tags %}
-        {% if project.primary_category == "web" %}
-          <a
-            class="badge text-bg-secondary"
-            href="{{ url_for('projects_web', tag=tag) }}"
-          >
-            {{ tag }}
-          </a>
-        {% elif project.primary_category == "data" %}
-          <a
-            class="badge text-bg-secondary"
-            href="{{ url_for('projects_data', tag=tag) }}"
-          >
-            {{ tag }}
-          </a>
-        {% elif project.primary_category == "software" %}
-          <a
-            class="badge text-bg-secondary"
-            href="{{ url_for('projects_software', tag=tag) }}"
-          >
-            {{ tag }}
-          </a>
-        {% else %}
-          <a
-            class="badge text-bg-secondary"
-            href="{{ url_for('projects', tag=tag) }}"
-          >
-            {{ tag }}
-          </a>
-        {% endif %}
-      {% endfor %}
-    </div>
+      <div class="d-flex flex-wrap gap-2 mb-4">
+        {% for tag in project.tags %}
+          {% if project.primary_category == "web" %}
+            <a
+              class="badge text-bg-secondary"
+              href="{{ url_for('projects_web', tag=tag) }}"
+            >
+              {{ tag }}
+            </a>
+          {% elif project.primary_category == "data" %}
+            <a
+              class="badge text-bg-secondary"
+              href="{{ url_for('projects_data', tag=tag) }}"
+            >
+              {{ tag }}
+            </a>
+          {% elif project.primary_category == "software" %}
+            <a
+              class="badge text-bg-secondary"
+              href="{{ url_for('projects_software', tag=tag) }}"
+            >
+              {{ tag }}
+            </a>
+          {% else %}
+            <a
+              class="badge text-bg-secondary"
+              href="{{ url_for('projects', tag=tag) }}"
+            >
+              {{ tag }}
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
     {% endif %}
 
     <div class="mt-auto d-flex gap-2">
       {% if project.links and project.links.repo %}
-      <a
-        class="btn btn-outline-dark btn-sm"
-        href="{{ project.links.repo }}"
-        target="_blank"
-        rel="noopener"
-      >
-        GitHub
-      </a>
+        <a
+          class="btn btn-outline-dark btn-sm"
+          href="{{ project.links.repo }}"
+          target="_blank"
+          rel="noopener"
+        >
+          GitHub
+        </a>
       {% else %}
-      <button class="btn btn-outline-dark btn-sm" type="button" disabled>
-        GitHub
-      </button>
+        <button class="btn btn-outline-dark btn-sm" type="button" disabled>
+          GitHub
+        </button>
       {% endif %}
 
       {% if project.slug %}
-      <a
-        class="btn btn-dark btn-sm"
-        href="{{ url_for('project_detail', slug=project.slug) }}"
-      >
-        Details
-      </a>
+        <a
+          class="btn btn-dark btn-sm"
+          href="{{ url_for('project_detail', slug=project.slug) }}"
+        >
+          Details
+        </a>
       {% else %}
-      <button class="btn btn-dark btn-sm" type="button" disabled>
-        Details
-      </button>
+        <button class="btn btn-dark btn-sm" type="button" disabled>
+          Details
+        </button>
       {% endif %}
     </div>
   </div>

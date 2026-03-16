@@ -1,0 +1,22 @@
+<!-- app/templates/components/section_header.html -->
+<!-- Reusable section header component. -->
+<!-- Expected variables:
+     - eyebrow (optional)
+     - title (required)
+     - description (optional)
+     - centered (optional boolean)
+-->
+
+<div
+  class="section-header {% if centered %}section-header--centered{% endif %}"
+>
+  {% if eyebrow %}
+  <span class="eyebrow">{{ eyebrow }}</span>
+  {% endif %}
+
+  <h1 class="mb-3">{{ title }}</h1>
+
+  {% if description %}
+  <p class="section-intro text-secondary mb-0">{{ description }}</p>
+  {% endif %}
+</div>

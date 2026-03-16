@@ -10,17 +10,18 @@
 
   <!-- Page Header -->
   <section class="page-section">
-    <h1 class="mb-2">Contact</h1>
-    <p class="text-secondary mb-0">
-      If you’d like to reach out about opportunities, collaboration, or questions, send a message using the form below.
-    </p>
+    {% set eyebrow = "Contact" %}
+    {% set title = "Let’s connect" %}
+    {% set description = "If you’d like to reach out about opportunities, collaboration, or questions, send a message using the form below." %}
+    {% set centered = false %}
+    {% include "components/section_header.html" %}
   </section>
 
   <!-- Contact Layout -->
   <section>
     <div class="row g-4">
       <div class="col-12 col-lg-7">
-        <div class="border rounded-3 p-4 h-100">
+        <div class="surface-card p-4 h-100">
           <h2 class="h4 mb-3">Send a Message</h2>
 
           <form method="post" action="{{ url_for('contact') }}" novalidate>
@@ -31,29 +32,19 @@
               {{ form.company() }}
             </div>
 
-            <div class="mb-3">
-              <label for="{{ form.name.id }}" class="form-label">{{ form.name.label.text }}</label>
-              {{ form.name() }}
-              <div class="form-text">
-                Please enter your full name.
-              </div>
-            </div>
+            {% set field = form.name %}
+            {% set help_text = "Please enter your full name." %}
+            {% include "components/form_field.html" %}
 
-            <div class="mb-3">
-              <label for="{{ form.email.id }}" class="form-label">{{ form.email.label.text }}</label>
-              {{ form.email(type="email") }}
-              <div class="form-text">
-                Use a valid email address so I can reply.
-              </div>
-            </div>
+            {% set field = form.email %}
+            {% set help_text = "Use a valid email address so I can reply." %}
+            {% set field_type = "email" %}
+            {% include "components/form_field.html" %}
+            {% set field_type = none %}
 
-            <div class="mb-3">
-              <label for="{{ form.message.id }}" class="form-label">{{ form.message.label.text }}</label>
-              {{ form.message() }}
-              <div class="form-text">
-                Please include enough detail to explain your message clearly.
-              </div>
-            </div>
+            {% set field = form.message %}
+            {% set help_text = "Please include enough detail to explain your message clearly." %}
+            {% include "components/form_field.html" %}
 
             {{ form.submit() }}
           </form>
@@ -61,17 +52,17 @@
       </div>
 
       <div class="col-12 col-lg-5">
-        <div class="border rounded-3 p-4 bg-body-tertiary h-100">
+        <div class="surface-card-muted p-4 h-100">
           <h2 class="h4 mb-3">Details</h2>
 
-          <ul class="mb-0">
-            <li class="mb-2">
-              Email:
+          <ul class="info-list">
+            <li>
+              <span class="meta-label">Email:</span>
               <a href="mailto:xocap@icloud.com">xocap@icloud.com</a>
             </li>
 
-            <li class="mb-2">
-              GitHub:
+            <li>
+              <span class="meta-label">GitHub:</span>
               <a
                 href="https://github.com/xavier-oc-programming"
                 target="_blank"
@@ -82,7 +73,7 @@
             </li>
 
             <li>
-              LinkedIn:
+              <span class="meta-label">LinkedIn:</span>
               <a
                 href="https://www.linkedin.com/in/xavier-ocon-capdeville/"
                 target="_blank"
