@@ -25,35 +25,15 @@
   </head>
 
   <body class="d-flex flex-column min-vh-100">
-    <!-- Header / Navigation -->
     {% include "components/navbar.html" %}
 
-    <!-- Main Content -->
     <main class="flex-grow-1">
       <div class="container py-5">
-        {% with messages = get_flashed_messages(with_categories=true) %} {% if
-        messages %}
-        <section class="page-section">
-          {% for category, message in messages %}
-          <div
-            class="alert alert-{{ category }} alert-dismissible fade show"
-            role="alert"
-          >
-            {{ message }}
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="alert"
-              aria-label="Close"
-            ></button>
-          </div>
-          {% endfor %}
-        </section>
-        {% endif %} {% endwith %} {% block content %}{% endblock %}
+        {% include "components/flash_messages.html" %}
+        {% block content %}{% endblock %}
       </div>
     </main>
 
-    <!-- Footer -->
     {% include "components/footer.html" %}
 
     <!-- Bootstrap JS Bundle -->

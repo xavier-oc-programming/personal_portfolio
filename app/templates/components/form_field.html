@@ -1,0 +1,23 @@
+<!-- app/templates/components/form_field.html -->
+<!-- Reusable single form field block. -->
+<!-- Expected variables:
+     - field (required)
+     - help_text (optional)
+     - field_type (optional)
+-->
+
+<div class="form-field">
+  <label for="{{ field.id }}" class="form-label">{{ field.label.text }}</label>
+
+  {% if field_type %}
+    {{ field(type=field_type) }}
+  {% else %}
+    {{ field() }}
+  {% endif %}
+
+  {% if help_text %}
+    <div class="form-text">
+      {{ help_text }}
+    </div>
+  {% endif %}
+</div>
