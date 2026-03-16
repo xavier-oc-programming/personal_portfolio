@@ -10,15 +10,16 @@
 
   <!-- Page Header -->
   <section class="page-section">
-    <h1 class="mb-2">404 — Page Not Found</h1>
-    <p class="lead mb-0">
-      The page you’re looking for doesn’t exist or may have been moved.
-    </p>
+    {% set eyebrow = "Error" %}
+    {% set title = "404 — Page Not Found" %}
+    {% set description = "The page you’re looking for doesn’t exist or may have been moved." %}
+    {% set centered = false %}
+    {% include "components/section_header.html" %}
   </section>
 
   <!-- Actions -->
   <section>
-    <div class="border rounded-3 p-4">
+    <div class="surface-card p-4">
       <h2 class="h4 mb-3">What you can do</h2>
 
       <ul class="mb-4 text-secondary">
