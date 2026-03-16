@@ -1,0 +1,24 @@
+<!-- app/templates/components/flash_messages.html -->
+<!-- Reusable flash message renderer. -->
+<!-- Displays flashed messages with Bootstrap dismissible alerts. -->
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <section class="page-section">
+      {% for category, message in messages %}
+        <div
+          class="alert alert-{{ category }} alert-dismissible fade show"
+          role="alert"
+        >
+          {{ message }}
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+      {% endfor %}
+    </section>
+  {% endif %}
+{% endwith %}

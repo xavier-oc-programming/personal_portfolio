@@ -12,19 +12,20 @@
   <section class="page-section">
     <div class="row align-items-center g-4">
       <div class="col-12 col-lg-8">
-        <h1 class="display-6 mb-3">Portfolio</h1>
-        <p class="lead mb-4">
-          A full-stack demonstration platform showcasing my work across web development, data, and software projects.
-        </p>
+        {% set eyebrow = "Portfolio" %}
+        {% set title = "Web, Data, and Software Projects" %}
+        {% set description = "A full-stack demonstration platform showcasing my work across web development, data, and software projects." %}
+        {% set centered = false %}
+        {% include "components/section_header.html" %}
 
-        <div class="d-flex flex-wrap gap-2">
+        <div class="d-flex flex-wrap gap-2 mt-4">
           <a class="btn btn-dark" href="{{ url_for('projects') }}">View Projects</a>
           <a class="btn btn-outline-dark" href="{{ url_for('contact') }}">Contact</a>
         </div>
       </div>
 
       <div class="col-12 col-lg-4">
-        <div class="border rounded-3 p-4 bg-body-tertiary">
+        <div class="surface-card-muted p-4 h-100">
           <p class="mb-2 fw-semibold">Skills snapshot</p>
           <p class="mb-0 text-secondary">
             Flask, Jinja, Python, SQL, Pandas, automation, clean architecture.
@@ -36,9 +37,10 @@
 
   <!-- Featured Projects -->
   <section class="page-section">
-    <div class="d-flex justify-content-between align-items-end gap-3 mb-3">
+    <div class="d-flex justify-content-between align-items-end gap-3 mb-4 flex-wrap">
       <div>
-        <h2 class="h4 mb-1">Featured Projects</h2>
+        <span class="eyebrow">Highlights</span>
+        <h2 class="mb-1">Featured Projects</h2>
         <p class="text-secondary mb-0">A few highlights from across Web, Data, and Software.</p>
       </div>
 
@@ -54,7 +56,7 @@
         {% endfor %}
       </div>
     {% else %}
-      <div class="border rounded-3 p-4">
+      <div class="surface-card p-4">
         <p class="text-secondary mb-0">No featured projects yet.</p>
       </div>
     {% endif %}
@@ -62,35 +64,44 @@
 
   <!-- What you’ll find here -->
   <section class="page-section">
-    <h2 class="h4 mb-3">What you’ll find here</h2>
-    <ul class="mb-0 text-secondary">
-      <li>Flask applications with clean Jinja architecture</li>
-      <li>Data projects using Python, Pandas, and visualization</li>
-      <li>Automation and software builds with strong structure</li>
-    </ul>
+    <div class="section-heading">
+      <span class="eyebrow">Overview</span>
+      <h2 class="mb-2">What you’ll find here</h2>
+    </div>
+
+    <div class="surface-card p-4">
+      <ul class="mb-0 text-secondary">
+        <li>Flask applications with clean Jinja architecture</li>
+        <li>Data projects using Python, Pandas, and visualization</li>
+        <li>Automation and software builds with strong structure</li>
+      </ul>
+    </div>
   </section>
 
   <!-- Focus Areas -->
   <section class="page-section">
-    <h2 class="h4 mb-3">Focus areas</h2>
+    <div class="section-heading">
+      <span class="eyebrow">Core categories</span>
+      <h2 class="mb-2">Focus areas</h2>
+    </div>
 
     <div class="row g-4">
       <div class="col-12 col-md-4">
-        <div class="border rounded-3 p-4 h-100">
+        <div class="surface-card p-4 h-100">
           <h3 class="h5 mb-2">Web</h3>
           <p class="text-secondary mb-0">Flask, Jinja, routing, templates, Bootstrap layout discipline.</p>
         </div>
       </div>
 
       <div class="col-12 col-md-4">
-        <div class="border rounded-3 p-4 h-100">
+        <div class="surface-card p-4 h-100">
           <h3 class="h5 mb-2">Data</h3>
           <p class="text-secondary mb-0">Pandas workflows, cleaning, analysis, visualization, reporting.</p>
         </div>
       </div>
 
       <div class="col-12 col-md-4">
-        <div class="border rounded-3 p-4 h-100">
+        <div class="surface-card p-4 h-100">
           <h3 class="h5 mb-2">Software</h3>
           <p class="text-secondary mb-0">Python structure, automation scripts, clean interfaces and logic.</p>
         </div>
@@ -100,9 +111,9 @@
 
   <!-- CTA -->
   <section>
-    <div class="border rounded-3 p-4 bg-body-tertiary d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+    <div class="surface-card-muted p-4 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
       <div>
-        <h2 class="h5 mb-1">Want to see everything?</h2>
+        <h2 class="h4 mb-1">Want to see everything?</h2>
         <p class="text-secondary mb-0">Browse the full projects hub with categories and tags.</p>
       </div>
       <a class="btn btn-dark" href="{{ url_for('projects') }}">Browse Projects</a>
