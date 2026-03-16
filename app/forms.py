@@ -38,7 +38,7 @@ class ContactForm(FlaskForm):
         validators=[Optional()],
         render_kw={
             "class": "form-control",
-            "autocomplete": "organization",
+            "autocomplete": "off",
             "tabindex": "-1",
         },
     )
