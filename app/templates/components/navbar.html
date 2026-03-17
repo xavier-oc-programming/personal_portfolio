@@ -1,9 +1,10 @@
 <!-- app/templates/components/navbar.html -->
 <!-- Shared navigation bar component. -->
 <!-- Provides the main site navigation and highlights the active page based on the current route. -->
+<!-- Phase 6 Section 2 update: improves accessibility, mobile navigation structure, and responsive behavior. -->
 
 <header class="site-header border-bottom">
-  <nav class="navbar navbar-expand-lg">
+  <nav class="navbar navbar-expand-lg" aria-label="Primary site navigation">
     <div class="container">
       <a class="navbar-brand fw-semibold" href="{{ url_for('home') }}">
         Xavier O
@@ -16,7 +17,7 @@
         data-bs-target="#mainNavbar"
         aria-controls="mainNavbar"
         aria-expanded="false"
-        aria-label="Toggle navigation"
+        aria-label="Toggle navigation menu"
       >
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -27,6 +28,7 @@
             <a
               class="nav-link {% if request.path == '/' %}active fw-semibold{% endif %}"
               href="{{ url_for('home') }}"
+              {% if request.path == '/' %}aria-current="page"{% endif %}
             >
               Home
             </a>
@@ -36,6 +38,7 @@
             <a
               class="nav-link {% if request.path.startswith('/about') %}active fw-semibold{% endif %}"
               href="{{ url_for('about') }}"
+              {% if request.path.startswith('/about') %}aria-current="page"{% endif %}
             >
               About
             </a>
@@ -45,6 +48,7 @@
             <a
               class="nav-link {% if request.path.startswith('/projects') %}active fw-semibold{% endif %}"
               href="{{ url_for('projects') }}"
+              {% if request.path.startswith('/projects') %}aria-current="page"{% endif %}
             >
               Projects
             </a>
@@ -54,6 +58,7 @@
             <a
               class="nav-link {% if request.path.startswith('/contact') %}active fw-semibold{% endif %}"
               href="{{ url_for('contact') }}"
+              {% if request.path.startswith('/contact') %}aria-current="page"{% endif %}
             >
               Contact
             </a>

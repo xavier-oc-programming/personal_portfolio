@@ -1,6 +1,7 @@
 <!-- app/templates/project_detail.html -->
 <!-- Project detail page template. -->
 <!-- Displays a single project's full overview, quick facts, screenshots, videos, and navigation back to the relevant project list. -->
+<!-- Phase 6 Section 2 update: improves responsive media presentation, preserves full screenshots, and adds click-to-enlarge support. -->
 
 {% extends "base.html" %}
 
@@ -49,7 +50,7 @@
   <section class="page-section">
     <div class="row g-4">
       <div class="col-12 col-lg-8">
-        <div class="surface-card p-4">
+        <div class="surface-card p-4 h-100">
           <h2 class="h4 mb-4">Overview</h2>
 
           <div class="mb-4">
@@ -137,28 +138,51 @@
   <!-- Screenshots -->
   <section class="page-section">
     <div class="surface-card p-4">
-      <h2 class="h4 mb-3">Screenshots</h2>
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-3">
+        <h2 class="h4 mb-0">Screenshots</h2>
+        <p class="small text-muted mb-0">Click any image to enlarge.</p>
+      </div>
 
       {% if (project.media and project.media.card_image) or (project.media and project.media.screenshots) %}
         <div class="row g-3">
           {% if project.media and project.media.card_image %}
             <div class="col-12 col-md-6">
-              <img
-                src="{{ url_for('static', filename=project.media.card_image) }}"
-                class="img-fluid rounded"
-                alt="{{ project.title }} cover image"
+              <button
+                type="button"
+                class="detail-media-trigger"
+                data-bs-toggle="modal"
+                data-bs-target="#imagePreviewModal"
+                data-image-src="{{ url_for('static', filename=project.media.card_image) }}"
+                data-image-alt="{{ project.title }} cover image"
               >
+                <img
+                  src="{{ url_for('static', filename=project.media.card_image) }}"
+                  class="img-fluid rounded w-100 detail-media-image"
+                  alt="{{ project.title }} cover image"
+                  loading="lazy"
+                >
+              </button>
             </div>
           {% endif %}
 
           {% if project.media and project.media.screenshots %}
             {% for screenshot in project.media.screenshots %}
               <div class="col-12 col-md-6">
-                <img
-                  src="{{ url_for('static', filename=screenshot) }}"
-                  class="img-fluid rounded"
-                  alt="{{ project.title }} screenshot {{ loop.index }}"
+                <button
+                  type="button"
+                  class="detail-media-trigger"
+                  data-bs-toggle="modal"
+                  data-bs-target="#imagePreviewModal"
+                  data-image-src="{{ url_for('static', filename=screenshot) }}"
+                  data-image-alt="{{ project.title }} screenshot {{ loop.index }}"
                 >
+                  <img
+                    src="{{ url_for('static', filename=screenshot) }}"
+                    class="img-fluid rounded w-100 detail-media-image"
+                    alt="{{ project.title }} screenshot {{ loop.index }}"
+                    loading="lazy"
+                  >
+                </button>
               </div>
             {% endfor %}
           {% endif %}
@@ -179,7 +203,7 @@
       {% if project.media and project.media.videos %}
         <div class="d-flex flex-column gap-3">
           {% for video in project.media.videos %}
-            <video class="w-100 rounded" controls>
+            <video class="w-100 rounded" controls preload="metadata">
               <source src="{{ url_for('static', filename=video) }}" type="video/mp4">
               Your browser does not support the video tag.
             </video>
@@ -192,5 +216,36 @@
       {% endif %}
     </div>
   </section>
+
+  <!-- Image Preview Modal -->
+  <div
+    class="modal fade"
+    id="imagePreviewModal"
+    tabindex="-1"
+    aria-labelledby="imagePreviewModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content detail-image-modal">
+        <div class="modal-header border-0 pb-0">
+          <h2 class="modal-title h5" id="imagePreviewModalLabel">Image Preview</h2>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close image preview"
+          ></button>
+        </div>
+        <div class="modal-body pt-2">
+          <img
+            id="imagePreviewModalImg"
+            class="img-fluid w-100 rounded"
+            src=""
+            alt=""
+          >
+        </div>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}
