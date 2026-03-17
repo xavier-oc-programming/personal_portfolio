@@ -8,6 +8,10 @@
  * - Provide a thin interaction layer on top of the server-rendered UI.
  * - Add scroll-to-top functionality.
  * - Add click-to-enlarge behavior for project detail screenshots.
+ *
+ * Phase 6 Section 3 updates:
+ * - Improves scroll listener efficiency using passive events.
+ * - Uses class-based visibility toggling instead of repeated inline style updates.
  */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -51,13 +55,12 @@ function initScrollToTop() {
     return;
   }
 
-  window.addEventListener("scroll", function () {
-    if (window.scrollY > 300) {
-      btn.style.display = "block";
-    } else {
-      btn.style.display = "none";
-    }
-  });
+  function toggleButtonVisibility() {
+    btn.classList.toggle("is-visible", window.scrollY > 300);
+  }
+
+  window.addEventListener("scroll", toggleButtonVisibility, { passive: true });
+  toggleButtonVisibility();
 
   btn.addEventListener("click", function () {
     window.scrollTo({
