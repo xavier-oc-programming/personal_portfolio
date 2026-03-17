@@ -2,6 +2,7 @@
 <!-- Project detail page template. -->
 <!-- Displays a single project's full overview, quick facts, screenshots, videos, and navigation back to the relevant project list. -->
 <!-- Phase 6 Section 2 update: improves responsive media presentation, preserves full screenshots, and adds click-to-enlarge support. -->
+<!-- Phase 6 Section 3 update: improves image loading efficiency with async decoding. -->
 
 {% extends "base.html" %}
 
@@ -160,6 +161,7 @@
                   class="img-fluid rounded w-100 detail-media-image"
                   alt="{{ project.title }} cover image"
                   loading="lazy"
+                  decoding="async"
                 >
               </button>
             </div>
@@ -181,6 +183,7 @@
                     class="img-fluid rounded w-100 detail-media-image"
                     alt="{{ project.title }} screenshot {{ loop.index }}"
                     loading="lazy"
+                    decoding="async"
                   >
                 </button>
               </div>

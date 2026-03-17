@@ -2,6 +2,7 @@
 <!-- Base layout template shared by all pages. -->
 <!-- Defines the HTML skeleton, loads Bootstrap and local CSS, and includes the global navbar and footer. -->
 <!-- Phase 6 Section 2: includes JS enhancements and centered scroll-to-top button. -->
+<!-- Phase 6 Section 3: adds CDN connection hints for improved resource loading performance. -->
 
 <!doctype html>
 <html lang="en">
@@ -9,6 +10,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}Portfolio{% endblock %}</title>
+
+    <!-- Connection hints for faster CDN loading -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
     <!-- Bootstrap CSS -->
     <link

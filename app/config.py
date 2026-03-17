@@ -7,6 +7,7 @@ Key responsibilities:
 - Provide environment-based configuration (Development vs Production).
 - Define core settings such as SECRET_KEY, DEBUG, and database path.
 - Define Flask-Mail settings for contact form notifications.
+- Configure static file caching for better performance.
 - Keep configuration logic out of app initialization and routes.
 
 Environment Variables supported:
@@ -32,6 +33,7 @@ Usage:
 from __future__ import annotations
 
 import os
+from datetime import timedelta
 from pathlib import Path
 
 
@@ -56,6 +58,7 @@ class BaseConfig:
 
     SECRET_KEY: str = os.environ.get("SECRET_KEY", "dev-only-change-me")
     JSON_SORT_KEYS: bool = False
+    SEND_FILE_MAX_AGE_DEFAULT = timedelta(days=30)
 
     DATABASE_PATH: Path = DATABASE_FILE
     SQLALCHEMY_DATABASE_URI: str = f"sqlite:///{DATABASE_FILE}"
