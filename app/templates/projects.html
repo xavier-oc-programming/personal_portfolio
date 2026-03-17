@@ -1,6 +1,7 @@
 <!-- app/templates/projects.html -->
 <!-- Projects hub page template. -->
 <!-- Displays the full project collection, dedicated category views, sorting controls, tag filters, and reusable project cards. -->
+<!-- Phase 6 Section 2 update: improves responsive card layout scaling and small-screen control behavior. -->
 
 {% extends "base.html" %}
 
@@ -165,7 +166,7 @@
     {% if projects %}
       <div class="row g-4">
         {% for project in projects %}
-          <div class="col-12 col-md-6 col-lg-4">
+          <div class="col-12 col-md-6 col-lg-4 d-flex">
             {% include "components/project_card.html" %}
           </div>
         {% endfor %}
