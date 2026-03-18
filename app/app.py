@@ -16,6 +16,7 @@ Key responsibilities:
 - Prepare the SQLite database directory/file strategy.
 - Initialize SQLAlchemy as the ORM layer.
 - Create database tables that match the unified project schema.
+- Expose global SEO and analytics metadata for templates.
 
 Run locally (from repo root):
     python -m app.app
@@ -40,10 +41,6 @@ mail = Mail()
 
 ALLOWED_CATEGORIES = {"web", "data", "software"}
 ALLOWED_SORTS = {"az", "newest", "oldest"}
-
-# ------------------------------------------
-# Contact form anti-spam timing controls
-# ------------------------------------------
 
 MIN_FORM_FILL_SECONDS = 8
 CONTACT_RATE_LIMIT_SECONDS = 60
@@ -281,8 +278,23 @@ def create_app() -> Flask:
 
     @app.context_processor
     def inject_global_template_vars():
+        site_url = app.config["SITE_URL"]
+
+        current_url = request.url
+        canonical_url = current_url.split("?")[0]
+
+        default_og_image = f"{site_url}{url_for('static', filename='images/og/default-og-image.png')}"
+
         return {
             "current_year": datetime.now().year,
+            "site_url": site_url,
+            "site_name": app.config["SITE_NAME"],
+            "default_meta_description": app.config["DEFAULT_META_DESCRIPTION"],
+            "google_analytics_id": app.config.get("GOOGLE_ANALYTICS_ID"),
+            "canonical_url": canonical_url,
+            "default_og_type": "website",
+            "default_og_image": default_og_image,
+            "request_path": request.path,
         }
 
     @app.get("/")

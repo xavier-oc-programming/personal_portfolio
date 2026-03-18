@@ -1,19 +1,51 @@
 <!-- app/templates/base.html -->
 <!-- Base layout template shared by all pages. -->
 <!-- Defines the HTML skeleton, loads Bootstrap and local CSS, and includes the global navbar and footer. -->
-<!-- Phase 6 Section 2: includes JS enhancements and centered scroll-to-top button. -->
-<!-- Phase 6 Section 3: adds CDN connection hints for improved resource loading performance. -->
+<!-- Includes SEO metadata blocks, Open Graph support, canonical URL support, Google Analytics integration, and reusable event tracking support. -->
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}Portfolio{% endblock %}</title>
+
+    <title>{% block title %}{{ site_name }}{% endblock %}</title>
+
+    <meta
+      name="description"
+      content="{% block meta_description %}{{ default_meta_description }}{% endblock %}"
+    />
+
+    <link
+      rel="canonical"
+      href="{% block canonical_href %}{{ canonical_url }}{% endblock %}"
+    />
+
+    <meta property="og:site_name" content="{{ site_name }}" />
+    <meta
+      property="og:title"
+      content="{% block og_title %}{{ site_name }}{% endblock %}"
+    />
+    <meta
+      property="og:description"
+      content="{% block og_description %}{{ default_meta_description }}{% endblock %}"
+    />
+    <meta
+      property="og:type"
+      content="{% block og_type %}{{ default_og_type }}{% endblock %}"
+    />
+    <meta
+      property="og:url"
+      content="{% block og_url %}{{ canonical_url }}{% endblock %}"
+    />
+    <meta
+      property="og:image"
+      content="{% block og_image %}{{ default_og_image }}{% endblock %}"
+    />
 
     <!-- Connection hints for faster CDN loading -->
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
 
     <!-- Bootstrap CSS -->
     <link
@@ -26,6 +58,30 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/styles.css') }}"
     />
+
+    {% if google_analytics_id %}
+      <!-- Google Analytics 4 -->
+      <script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id={{ google_analytics_id }}"
+      ></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+
+        gtag("js", new Date());
+        gtag("config", "{{ google_analytics_id }}");
+
+        function trackEvent(eventName, eventParams = {}) {
+          if (typeof gtag === "function") {
+            gtag("event", eventName, eventParams);
+          }
+        }
+      </script>
+    {% endif %}
   </head>
 
   <body class="d-flex flex-column min-vh-100">

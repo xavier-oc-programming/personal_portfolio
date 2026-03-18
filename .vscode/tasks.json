@@ -2,12 +2,12 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Run Current Python File (.venv)",
+      "label": "Run Flask App (.venv)",
       "type": "shell",
       "command": "${workspaceFolder}/.venv/bin/python",
-      "args": ["${file}"],
+      "args": ["-m", "app.app"],
       "options": {
-        "cwd": "${fileDirname}"
+        "cwd": "${workspaceFolder}"
       },
       "presentation": {
         "reveal": "always",
@@ -16,12 +16,12 @@
       "group": "build"
     },
     {
-      "label": "Run Current Python File (VS Code Interpreter)",
+      "label": "Run Flask App (VS Code Interpreter)",
       "type": "shell",
       "command": "${command:python.interpreterPath}",
-      "args": ["${file}"],
+      "args": ["-m", "app.app"],
       "options": {
-        "cwd": "${fileDirname}"
+        "cwd": "${workspaceFolder}"
       },
       "presentation": {
         "reveal": "always",
