@@ -12,8 +12,7 @@ Key responsibilities:
 
 Environment Variables supported:
 - FLASK_ENV: "development" or "production" (optional)
-- FLASK_DEBUG: "1" or "0" (optional)
-- SECRET_KEY: any long random string (recommended)
+- SECRET_KEY: any long random string (required)
 
 Mail-related variables:
 - MAIL_SERVER
@@ -36,6 +35,12 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+
+# Load environment variables EARLY (critical for config)
+load_dotenv()
+
 
 BASE_DIR = Path(__file__).resolve().parent
 DATABASE_DIR = BASE_DIR / "database"
@@ -43,6 +48,9 @@ DATABASE_FILE = DATABASE_DIR / "portfolio.db"
 
 
 def _get_bool_env(var_name: str, default: bool = False) -> bool:
+    """
+    Read a boolean environment variable using common truthy string values.
+    """
     value = os.environ.get(var_name, "").strip().lower()
 
     if not value:
@@ -56,7 +64,13 @@ class BaseConfig:
     Base configuration shared across environments.
     """
 
-    SECRET_KEY: str = os.environ.get("SECRET_KEY", "dev-only-change-me")
+    SECRET_KEY: str | None = os.environ.get("SECRET_KEY")
+
+    if not SECRET_KEY:
+        raise ValueError("SECRET_KEY is not set in environment variables.")
+
+    ENV: str = os.environ.get("FLASK_ENV", "development").strip().lower()
+
     JSON_SORT_KEYS: bool = False
     SEND_FILE_MAX_AGE_DEFAULT = timedelta(days=30)
 
@@ -80,7 +94,6 @@ class DevelopmentConfig(BaseConfig):
     """
     Local development configuration.
     """
-
     DEBUG: bool = True
 
 
@@ -88,7 +101,6 @@ class ProductionConfig(BaseConfig):
     """
     Production configuration.
     """
-
     DEBUG: bool = False
     SESSION_COOKIE_SECURE: bool = True
     SESSION_COOKIE_HTTPONLY: bool = True
@@ -98,15 +110,8 @@ class ProductionConfig(BaseConfig):
 def get_config_class():
     """
     Decide which config class to use based on environment variables.
-
-    Returns:
-        type: A configuration class (DevelopmentConfig or ProductionConfig).
     """
-    flask_env = os.environ.get("FLASK_ENV", "").strip().lower()
-    flask_debug = os.environ.get("FLASK_DEBUG", "").strip()
-
-    if flask_debug == "1":
-        return DevelopmentConfig
+    flask_env = os.environ.get("FLASK_ENV", "development").strip().lower()
 
     if flask_env == "production":
         return ProductionConfig
