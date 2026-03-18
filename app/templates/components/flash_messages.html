@@ -1,6 +1,7 @@
 <!-- app/templates/components/flash_messages.html -->
 <!-- Reusable flash message renderer. -->
 <!-- Displays flashed messages with Bootstrap dismissible alerts. -->
+<!-- Phase 7 Section 4 update: adds analytics event tracking for successful contact submissions. -->
 
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
@@ -18,6 +19,24 @@
             aria-label="Close"
           ></button>
         </div>
+
+        {% if category == "success" and message == "Your message was sent successfully." %}
+          <script>
+            trackEvent("contact_form_submit_success", {
+              form_name: "contact",
+              page_path: "{{ request.path }}"
+            });
+          </script>
+        {% endif %}
+
+        {% if category == "warning" and message == "Your message was saved successfully, but the email notification could not be sent." %}
+          <script>
+            trackEvent("contact_form_submit_partial_success", {
+              form_name: "contact",
+              page_path: "{{ request.path }}"
+            });
+          </script>
+        {% endif %}
       {% endfor %}
     </section>
   {% endif %}

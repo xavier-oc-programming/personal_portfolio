@@ -4,7 +4,10 @@
 
 {% extends "base.html" %}
 
-{% block title %}Home{% endblock %}
+{% block meta_description %}Portfolio of Xavier OC — Flask web apps, data projects, automation, and software development with Python.{% endblock %}
+{% block og_title %}Xavier OC | Python Developer Portfolio{% endblock %}
+{% block og_description %}Portfolio of Xavier OC — Flask web apps, data projects, automation, and software development with Python.{% endblock %}
+{% block canonical_href %}{{ site_url ~ url_for('home') }}{% endblock %}
 
 {% block content %}
 

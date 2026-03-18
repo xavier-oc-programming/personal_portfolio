@@ -8,11 +8,16 @@ Key responsibilities:
 - Define core settings such as SECRET_KEY, DEBUG, and database path.
 - Define Flask-Mail settings for contact form notifications.
 - Configure static file caching for better performance.
+- Configure production metadata and analytics settings.
 - Keep configuration logic out of app initialization and routes.
 
 Environment Variables supported:
 - FLASK_ENV: "development" or "production" (optional)
 - SECRET_KEY: any long random string (required)
+- SITE_URL: public base URL for the portfolio
+- SITE_NAME: branding name for SEO and metadata
+- DEFAULT_META_DESCRIPTION: default SEO description
+- GOOGLE_ANALYTICS_ID: GA4 measurement ID (optional)
 
 Mail-related variables:
 - MAIL_SERVER
@@ -25,7 +30,7 @@ Mail-related variables:
 - CONTACT_NOTIFICATION_EMAIL
 
 Usage:
-    from config import get_config_class
+    from app.config import get_config_class
     app.config.from_object(get_config_class())
 """
 
@@ -38,7 +43,6 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 
-# Load environment variables EARLY (critical for config)
 load_dotenv()
 
 
@@ -89,11 +93,23 @@ class BaseConfig:
     MAIL_DEFAULT_SENDER: str | None = os.environ.get("MAIL_DEFAULT_SENDER")
     CONTACT_NOTIFICATION_EMAIL: str | None = os.environ.get("CONTACT_NOTIFICATION_EMAIL")
 
+    SITE_URL: str = os.environ.get("SITE_URL", "http://127.0.0.1:5000").rstrip("/")
+    SITE_NAME: str = os.environ.get("SITE_NAME", "Xavier OC | Portfolio")
+    DEFAULT_META_DESCRIPTION: str = os.environ.get(
+        "DEFAULT_META_DESCRIPTION",
+        (
+            "Portfolio of Xavier OC — Python Developer specializing in Flask, "
+            "data analysis, automation, and structured web application development."
+        ),
+    )
+    GOOGLE_ANALYTICS_ID: str | None = os.environ.get("GOOGLE_ANALYTICS_ID")
+
 
 class DevelopmentConfig(BaseConfig):
     """
     Local development configuration.
     """
+
     DEBUG: bool = True
 
 
@@ -101,6 +117,7 @@ class ProductionConfig(BaseConfig):
     """
     Production configuration.
     """
+
     DEBUG: bool = False
     SESSION_COOKIE_SECURE: bool = True
     SESSION_COOKIE_HTTPONLY: bool = True

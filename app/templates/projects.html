@@ -5,7 +5,11 @@
 
 {% extends "base.html" %}
 
-{% block title %}Projects{% endblock %}
+{% block title %}Projects | Xavier OC {% endblock %}
+{% block meta_description %}Explore web, data, and software projects built with Python, Flask, Pandas, and automation tools.{% endblock %}
+{% block og_title %}Projects | Xavier OC Portfolio{% endblock %}
+{% block og_description %}Explore web, data, and software projects built with Python, Flask, Pandas, and automation tools.{% endblock %}
+{% block canonical_href %}{{ site_url ~ url_for('projects') }}{% endblock %}
 
 {% block content %}
 

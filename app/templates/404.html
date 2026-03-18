@@ -1,14 +1,16 @@
 <!-- app/templates/404.html -->
 <!-- 404 error page template. -->
-<!-- Displays a user-friendly not-found message with navigation back to key pages. -->
 
 {% extends "base.html" %}
 
-{% block title %}404 - Not Found{% endblock %}
+{% set page_title = "404 | Page Not Found | Xavier OC" %}
+{% set meta_description = "The page you are looking for could not be found on Xavier OC's portfolio website." %}
+{% set og_title = page_title %}
+{% set og_description = meta_description %}
+{% set canonical_href = canonical_url %}
 
 {% block content %}
 
-  <!-- Page Header -->
   <section class="page-section">
     {% set eyebrow = "Error" %}
     {% set title = "404 — Page Not Found" %}
@@ -17,7 +19,6 @@
     {% include "components/section_header.html" %}
   </section>
 
-  <!-- Actions -->
   <section>
     <div class="surface-card p-4">
       <h2 class="h4 mb-3">What you can do</h2>

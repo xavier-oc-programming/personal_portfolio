@@ -3,14 +3,47 @@
 <!-- Displays a single project's full overview, quick facts, screenshots, videos, and navigation back to the relevant project list. -->
 <!-- Phase 6 Section 2 update: improves responsive media presentation, preserves full screenshots, and adds click-to-enlarge support. -->
 <!-- Phase 6 Section 3 update: improves image loading efficiency with async decoding. -->
+<!-- Phase 7 Section 4 update: adds SEO metadata overrides and analytics event tracking. -->
 
 {% extends "base.html" %}
 
 {% block title %}
   {% if project and project.title %}
-    {{ project.title }}
+    {{ project.title }} | Xavier OC | Dev Portfolio
   {% else %}
-    Project Detail
+    Project Detail | Xavier OC | Dev Portfolio
+  {% endif %}
+{% endblock %}
+
+{% block meta_description %}
+  {% if project and project.short_description %}
+    {{ project.short_description }}
+  {% else %}
+    Project built with Python, Flask, and modern development practices.
+  {% endif %}
+{% endblock %}
+
+{% block og_title %}
+  {% if project and project.title %}
+    {{ project.title }} | Xavier OC | Dev Portfolio
+  {% else %}
+    Project Detail | Xavier OC | Dev Portfolio
+  {% endif %}
+{% endblock %}
+
+{% block og_description %}
+  {% if project and project.short_description %}
+    {{ project.short_description }}
+  {% else %}
+    Project built with Python, Flask, and modern development practices.
+  {% endif %}
+{% endblock %}
+
+{% block canonical_href %}
+  {% if project and project.slug %}
+    {{ site_url ~ url_for('project_detail', slug=project.slug) }}
+  {% else %}
+    {{ site_url ~ url_for('projects') }}
   {% endif %}
 {% endblock %}
 
@@ -112,6 +145,12 @@
                 href="{{ project.links.repo }}"
                 target="_blank"
                 rel="noopener"
+                onclick="trackEvent('project_repo_click', {
+                  project_slug: '{{ project.slug }}',
+                  project_title: '{{ project.title|e }}',
+                  project_category: '{{ project.primary_category }}',
+                  click_location: 'project_detail'
+                })"
               >
                 GitHub
               </a>
