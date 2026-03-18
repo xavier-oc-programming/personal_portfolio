@@ -2,6 +2,7 @@
 <!-- Reusable project card component. -->
 <!-- Displays a project's summary information, tech stack, clickable tags, and links to GitHub and the detail page. -->
 <!-- Phase 6 Section 2 update: preserves large cropped images while improving layout stability. -->
+<!-- Phase 7 Section 4 update: adds analytics event tracking for project interactions. -->
 
 {# Expected variable: project (dict-like)
    Project fields used:
@@ -74,7 +75,18 @@
 
     <div class="mt-auto d-flex gap-2">
       {% if project.links and project.links.repo %}
-        <a class="btn btn-outline-dark btn-sm" href="{{ project.links.repo }}" target="_blank" rel="noopener">
+        <a
+          class="btn btn-outline-dark btn-sm"
+          href="{{ project.links.repo }}"
+          target="_blank"
+          rel="noopener"
+          onclick="trackEvent('project_repo_click', {
+            project_slug: '{{ project.slug }}',
+            project_title: '{{ project.title|e }}',
+            project_category: '{{ project.primary_category }}',
+            click_location: 'project_card'
+          })"
+        >
           GitHub
         </a>
       {% else %}
@@ -84,7 +96,16 @@
       {% endif %}
 
       {% if project.slug %}
-        <a class="btn btn-dark btn-sm" href="{{ url_for('project_detail', slug=project.slug) }}">
+        <a
+          class="btn btn-dark btn-sm"
+          href="{{ url_for('project_detail', slug=project.slug) }}"
+          onclick="trackEvent('project_detail_click', {
+            project_slug: '{{ project.slug }}',
+            project_title: '{{ project.title|e }}',
+            project_category: '{{ project.primary_category }}',
+            click_location: 'project_card'
+          })"
+        >
           Details
         </a>
       {% else %}

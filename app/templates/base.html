@@ -1,7 +1,7 @@
 <!-- app/templates/base.html -->
 <!-- Base layout template shared by all pages. -->
 <!-- Defines the HTML skeleton, loads Bootstrap and local CSS, and includes the global navbar and footer. -->
-<!-- Includes SEO metadata blocks, Open Graph support, canonical URL support, and optional Google Analytics integration. -->
+<!-- Includes SEO metadata blocks, Open Graph support, canonical URL support, Google Analytics integration, and reusable event tracking support. -->
 
 <!doctype html>
 <html lang="en">
@@ -67,11 +67,19 @@
       ></script>
       <script>
         window.dataLayer = window.dataLayer || [];
+
         function gtag() {
           dataLayer.push(arguments);
         }
+
         gtag("js", new Date());
         gtag("config", "{{ google_analytics_id }}");
+
+        function trackEvent(eventName, eventParams = {}) {
+          if (typeof gtag === "function") {
+            gtag("event", eventName, eventParams);
+          }
+        }
       </script>
     {% endif %}
   </head>
