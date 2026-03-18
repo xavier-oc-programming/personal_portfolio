@@ -18,7 +18,7 @@ Key responsibilities:
 - Create database tables that match the unified project schema.
 
 Run locally (from repo root):
-    python app/app.py
+    python -m app.app
 """
 
 from __future__ import annotations
@@ -28,16 +28,12 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from dotenv import load_dotenv
 from flask import Flask, abort, flash, redirect, render_template, request, session, url_for
 from flask_mail import Mail, Message
 
-from config import get_config_class
-from forms import ContactForm, MAX_EMAIL_LENGTH, MAX_MESSAGE_LENGTH, MAX_NAME_LENGTH
-from models.models import ContactMessage, Project, db
-
-
-load_dotenv()
+from app.config import get_config_class
+from app.forms import ContactForm, MAX_EMAIL_LENGTH, MAX_MESSAGE_LENGTH, MAX_NAME_LENGTH
+from app.models.models import ContactMessage, Project, db
 
 
 mail = Mail()
@@ -46,16 +42,10 @@ ALLOWED_CATEGORIES = {"web", "data", "software"}
 ALLOWED_SORTS = {"az", "newest", "oldest"}
 
 # ------------------------------------------
-# -------------------------
 # Contact form anti-spam timing controls
-# -------------------------------------------------------------------
+# ------------------------------------------
 
-# Minimum time a user must spend on the contact page before submitting.
-# Helps detect bots that submit forms instantly.
 MIN_FORM_FILL_SECONDS = 8
-
-# Minimum time between successful contact submissions from the same session.
-# Helps reduce repeated rapid submissions.
 CONTACT_RATE_LIMIT_SECONDS = 60
 
 
@@ -186,13 +176,6 @@ def _ensure_database_directory_and_file(app: Flask) -> None:
 
 
 def _normalize_text_input(value: str, *, max_length: int | None = None) -> str:
-    """
-    Normalize and trim short single-line text input.
-
-    This is used for fields such as name and email before storing them
-    in the database. It removes excessive internal whitespace while
-    preserving the actual textual content.
-    """
     normalized_value = " ".join((value or "").strip().split())
 
     if max_length is not None:
@@ -202,12 +185,6 @@ def _normalize_text_input(value: str, *, max_length: int | None = None) -> str:
 
 
 def _normalize_message_input(value: str, *, max_length: int | None = None) -> str:
-    """
-    Normalize multi-line message content while preserving intentional
-    line breaks between paragraphs.
-
-    Empty lines are removed and each retained line is trimmed.
-    """
     raw_value = (value or "").strip()
 
     cleaned_lines = [line.strip() for line in raw_value.splitlines()]
@@ -220,24 +197,14 @@ def _normalize_message_input(value: str, *, max_length: int | None = None) -> st
 
 
 def _start_contact_form_timer() -> None:
-    """
-    Record the moment the contact form was served to the user.
-    """
     session["contact_form_loaded_at"] = time.time()
 
 
 def _is_honeypot_triggered(form: ContactForm) -> bool:
-    """
-    Return True when the hidden honeypot field contains data.
-    """
     return bool((form.company.data or "").strip())
 
 
 def _is_form_submitted_too_quickly() -> bool:
-    """
-    Return True when the form was submitted faster than the minimum
-    allowed human completion time.
-    """
     form_loaded_at = session.get("contact_form_loaded_at")
 
     if form_loaded_at is None:
@@ -247,10 +214,6 @@ def _is_form_submitted_too_quickly() -> bool:
 
 
 def _is_rate_limited() -> bool:
-    """
-    Return True when the current session has submitted a contact form
-    too recently.
-    """
     last_submission_at = session.get("last_contact_submission_at")
 
     if last_submission_at is None:
@@ -260,9 +223,6 @@ def _is_rate_limited() -> bool:
 
 
 def _mark_contact_submission_time() -> None:
-    """
-    Record the timestamp of a successful contact form submission.
-    """
     session["last_contact_submission_at"] = time.time()
 
 
@@ -274,13 +234,6 @@ def _send_contact_notification(
     message_body: str,
     submitted_at: datetime,
 ) -> bool:
-    """
-    Send an internal notification email after a contact message
-    has been successfully stored in the database.
-
-    Returns:
-        bool: True if the email was sent successfully, otherwise False.
-    """
     recipient = app.config.get("CONTACT_NOTIFICATION_EMAIL")
 
     if not recipient:
@@ -524,6 +477,12 @@ def create_app() -> Flask:
     return app
 
 
+app = create_app()
+
+
 if __name__ == "__main__":
-    app = create_app()
-    app.run(host="127.0.0.1", port=5000, debug=app.debug)
+    app.run(
+        host="127.0.0.1",
+        port=5000,
+        debug=app.config["DEBUG"],
+    )
