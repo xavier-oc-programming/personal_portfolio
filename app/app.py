@@ -46,9 +46,8 @@ ALLOWED_CATEGORIES = {"web", "data", "software"}
 ALLOWED_SORTS = {"az", "newest", "oldest"}
 
 # ------------------------------------------
-# -------------------------
 # Contact form anti-spam timing controls
-# -------------------------------------------------------------------
+# ------------------------------------------
 
 # Minimum time a user must spend on the contact page before submitting.
 # Helps detect bots that submit forms instantly.
@@ -524,6 +523,8 @@ def create_app() -> Flask:
     return app
 
 
+app = create_app()
+
+
 if __name__ == "__main__":
-    app = create_app()
-    app.run(host="127.0.0.1", port=5000, debug=app.debug)
+    app.run(host="127.0.0.1", port=5000)
