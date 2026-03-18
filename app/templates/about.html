@@ -4,7 +4,11 @@
 
 {% extends "base.html" %}
 
-{% block title %}About{% endblock %}
+{% block title %}About | Xavier OC{% endblock %}
+{% block meta_description %}Learn more about Xavier OC, a Python developer building web, data, and software projects with Flask, Pandas, and automation tools.{% endblock %}
+{% block og_title %}About | Xavier OC{% endblock %}
+{% block og_description %}Learn more about Xavier OC, a Python developer building web, data, and software projects with Flask, Pandas, and automation tools.{% endblock %}
+{% block canonical_href %}{{ site_url ~ url_for('about') }}{% endblock %}
 
 {% block content %}
 
@@ -23,7 +27,8 @@
         <div class="surface-card-muted p-4 h-100">
           <p class="fw-semibold mb-2">Working focus</p>
           <p class="text-secondary mb-0">
-            Building a hybrid portfolio across Web, Data, and Software with clean architecture and strong fundamentals.
+            Building a hybrid portfolio across Web, Data, and Software with clean
+            architecture and strong fundamentals.
           </p>
         </div>
       </div>
@@ -78,8 +83,9 @@
     <div class="surface-card-muted p-4">
       <h2 class="h4 mb-2">Why this portfolio exists</h2>
       <p class="text-secondary mb-0">
-        My goal is to show strong fundamentals and real project structure. Each project is tagged and categorized to
-        reflect how my work spans Web, Data, and Software without forcing everything into a single box.
+        My goal is to show strong fundamentals and real project structure. Each
+        project is tagged and categorized to reflect how my work spans Web, Data,
+        and Software without forcing everything into a single box.
       </p>
     </div>
   </section>
