@@ -35,6 +35,12 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+
+# Load environment variables EARLY (critical for config)
+load_dotenv()
+
 
 BASE_DIR = Path(__file__).resolve().parent
 DATABASE_DIR = BASE_DIR / "database"
@@ -88,7 +94,6 @@ class DevelopmentConfig(BaseConfig):
     """
     Local development configuration.
     """
-
     DEBUG: bool = True
 
 
@@ -96,7 +101,6 @@ class ProductionConfig(BaseConfig):
     """
     Production configuration.
     """
-
     DEBUG: bool = False
     SESSION_COOKIE_SECURE: bool = True
     SESSION_COOKIE_HTTPONLY: bool = True
@@ -106,9 +110,6 @@ class ProductionConfig(BaseConfig):
 def get_config_class():
     """
     Decide which config class to use based on environment variables.
-
-    Returns:
-        type: A configuration class (DevelopmentConfig or ProductionConfig).
     """
     flask_env = os.environ.get("FLASK_ENV", "development").strip().lower()
 
