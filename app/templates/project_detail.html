@@ -8,9 +8,41 @@
 
 {% block title %}
   {% if project and project.title %}
-    {{ project.title }}
+    {{ project.title }} | Xavier OC
   {% else %}
-    Project Detail
+    Project Detail | Xavier OC
+  {% endif %}
+{% endblock %}
+
+{% block meta_description %}
+  {% if project and project.short_description %}
+    {{ project.short_description }}
+  {% else %}
+    Project built with Python, Flask, and modern development practices.
+  {% endif %}
+{% endblock %}
+
+{% block og_title %}
+  {% if project and project.title %}
+    {{ project.title }} | Xavier OC
+  {% else %}
+    Project Detail | Xavier OC
+  {% endif %}
+{% endblock %}
+
+{% block og_description %}
+  {% if project and project.short_description %}
+    {{ project.short_description }}
+  {% else %}
+    Project built with Python, Flask, and modern development practices.
+  {% endif %}
+{% endblock %}
+
+{% block canonical_href %}
+  {% if project and project.slug %}
+    {{ site_url ~ url_for('project_detail', slug=project.slug) }}
+  {% else %}
+    {{ site_url ~ url_for('projects') }}
   {% endif %}
 {% endblock %}
 

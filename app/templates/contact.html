@@ -4,7 +4,11 @@
 
 {% extends "base.html" %}
 
-{% block title %}Contact{% endblock %}
+{% block title %}Contact | Xavier OC{% endblock %}
+{% block meta_description %}Get in touch with Xavier OC for opportunities, collaborations, or questions regarding web, data, and Python development projects.{% endblock %}
+{% block og_title %}Contact | Xavier OC{% endblock %}
+{% block og_description %}Reach out for opportunities, collaborations, or questions about Python development and projects.{% endblock %}
+{% block canonical_href %}{{ site_url ~ url_for('contact') }}{% endblock %}
 
 {% block content %}
 
