@@ -14,9 +14,9 @@ Run from repo root:
 
 from __future__ import annotations
 
-from app import create_app
-from data.projects import PROJECTS
-from models.models import Project, db
+from app.app import create_app
+from app.data.projects import PROJECTS
+from app.models.models import Project, db
 
 
 def seed_projects() -> None:

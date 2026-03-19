@@ -1,0 +1,51 @@
+{% extends "admin/base.html" %}
+{% block title %}Messages{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="fw-bold mb-0">Messages <span class="badge bg-secondary fs-6">{{ messages | length }}</span></h2>
+</div>
+
+{% if messages %}
+  <div class="card">
+    <div class="card-body p-0">
+      <table class="table table-hover mb-0 align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Message</th>
+            <th>Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for msg in messages %}
+            <tr>
+              <td class="fw-semibold">{{ msg.name }}</td>
+              <td><a href="mailto:{{ msg.email }}">{{ msg.email }}</a></td>
+              <td>
+                <span title="{{ msg.message }}">
+                  {{ msg.message[:100] }}{% if msg.message | length > 100 %}…{% endif %}
+                </span>
+              </td>
+              <td class="text-muted small text-nowrap">{{ msg.created_at.strftime('%b %d, %Y %H:%M') }}</td>
+              <td class="text-end">
+                <form method="POST" action="{{ url_for('admin.message_delete', message_id=msg.id) }}"
+                      onsubmit="return confirm('Delete this message?')">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                  <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% else %}
+  <div class="text-center text-muted py-5">
+    <p class="fs-5">No messages yet.</p>
+  </div>
+{% endif %}
+{% endblock %}

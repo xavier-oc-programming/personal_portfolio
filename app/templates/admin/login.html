@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  </head>
+  <body class="bg-dark d-flex align-items-center justify-content-center min-vh-100">
+    <div class="card shadow" style="width: 360px;">
+      <div class="card-body p-4">
+        <h4 class="mb-4 text-center fw-bold">Portfolio Admin</h4>
+
+        {% if error %}
+          <div class="alert alert-danger py-2">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Password</label>
+            <input type="password" name="password" class="form-control" autofocus required />
+          </div>
+          <button type="submit" class="btn btn-dark w-100">Log In</button>
+        </form>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

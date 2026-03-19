@@ -1,0 +1,99 @@
+{% extends "admin/base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h2 class="mb-4 fw-bold">Dashboard</h2>
+
+<!-- Stats row -->
+<div class="row g-3 mb-4">
+  <div class="col-sm-6 col-lg-3">
+    <div class="card stat-card blue h-100">
+      <div class="card-body">
+        <div class="text-muted small">Total Projects</div>
+        <div class="fs-2 fw-bold">{{ total_projects }}</div>
+        <a href="{{ url_for('admin.projects') }}" class="small">View all &rarr;</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-lg-3">
+    <div class="card stat-card yellow h-100">
+      <div class="card-body">
+        <div class="text-muted small">Featured</div>
+        <div class="fs-2 fw-bold">{{ featured_count }}</div>
+        <a href="{{ url_for('admin.projects') }}?category=" class="small">Manage &rarr;</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-lg-3">
+    <div class="card stat-card green h-100">
+      <div class="card-body">
+        <div class="text-muted small">With Card Image</div>
+        <div class="fs-2 fw-bold">{{ projects_with_card }} <span class="fs-6 text-muted">/ {{ total_projects }}</span></div>
+        <span class="small text-muted">{{ ((projects_with_card / total_projects) * 100) | int }}% complete</span>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-lg-3">
+    <div class="card stat-card red h-100">
+      <div class="card-body">
+        <div class="text-muted small">Messages</div>
+        <div class="fs-2 fw-bold">{{ total_messages }}</div>
+        <a href="{{ url_for('admin.messages') }}" class="small">View all &rarr;</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Category breakdown + recent messages -->
+<div class="row g-3">
+  <div class="col-md-4">
+    <div class="card h-100">
+      <div class="card-header fw-semibold">Projects by Category</div>
+      <div class="card-body">
+        {% for cat, count in category_counts.items() %}
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="text-capitalize">{{ cat }}</span>
+            <span class="badge bg-secondary">{{ count }}</span>
+          </div>
+          <div class="progress mb-3" style="height:6px;">
+            <div class="progress-bar" style="width: {{ ((count / total_projects) * 100) | int }}%"></div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-8">
+    <div class="card h-100">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <span class="fw-semibold">Recent Messages</span>
+        <a href="{{ url_for('admin.messages') }}" class="btn btn-sm btn-outline-secondary">View all</a>
+      </div>
+      <div class="card-body p-0">
+        {% if recent_messages %}
+          <table class="table table-sm table-hover mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for msg in recent_messages %}
+                <tr>
+                  <td>{{ msg.name }}</td>
+                  <td><a href="mailto:{{ msg.email }}">{{ msg.email }}</a></td>
+                  <td class="text-muted small">{{ msg.created_at.strftime('%b %d, %Y') }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <p class="text-muted p-3 mb-0">No messages yet.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
