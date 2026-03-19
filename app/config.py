@@ -69,6 +69,8 @@ class BaseConfig:
     RESEND_API_KEY: str | None = os.environ.get("RESEND_API_KEY")
     CONTACT_NOTIFICATION_EMAIL: str | None = os.environ.get("CONTACT_NOTIFICATION_EMAIL")
 
+    ADMIN_PASSWORD: str = os.environ.get("ADMIN_PASSWORD", "admin")
+
     SITE_URL: str = os.environ.get("SITE_URL", "http://127.0.0.1:5000").rstrip("/")
     SITE_NAME: str = os.environ.get("SITE_NAME", "Xavier OC | Portfolio")
     DEFAULT_META_DESCRIPTION: str = os.environ.get(

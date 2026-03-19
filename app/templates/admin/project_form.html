@@ -1,0 +1,139 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ 'Edit' if project else 'New' }} Project{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <a href="{{ url_for('admin.projects') }}" class="text-muted text-decoration-none small">&larr; All Projects</a>
+    <h2 class="fw-bold mb-0">{{ 'Edit: ' + project.title if project else 'New Project' }}</h2>
+  </div>
+  {% if project %}
+    <div class="d-flex gap-2">
+      <a href="{{ url_for('admin.project_media', slug=project.slug) }}" class="btn btn-outline-secondary">Manage Media</a>
+      <a href="{{ url_for('project_detail', slug=project.slug) }}" target="_blank" class="btn btn-outline-dark">View on Site</a>
+    </div>
+  {% endif %}
+</div>
+
+<form method="POST">
+  {{ form.hidden_tag() }}
+
+  <div class="row g-4">
+    <!-- Left column: core fields -->
+    <div class="col-lg-8">
+      <div class="card mb-3">
+        <div class="card-header fw-semibold">Basic Info</div>
+        <div class="card-body">
+          <div class="mb-3">
+            {{ form.title.label(class="form-label fw-semibold") }}
+            {{ form.title(class="form-control") }}
+          </div>
+          <div class="row g-3">
+            <div class="col-md-6">
+              {{ form.slug.label(class="form-label fw-semibold") }}
+              {{ form.slug(class="form-control font-monospace") }}
+              <div class="form-text">URL-safe, lowercase, hyphens only.</div>
+            </div>
+            <div class="col-md-6">
+              {{ form.primary_category.label(class="form-label fw-semibold") }}
+              {{ form.primary_category(class="form-select") }}
+            </div>
+          </div>
+          <div class="mb-3 mt-3">
+            {{ form.short_description.label(class="form-label fw-semibold") }}
+            {{ form.short_description(class="form-control", maxlength=300) }}
+            <div class="form-text">Max 300 characters — shown on project cards.</div>
+          </div>
+          <div class="mb-3">
+            {{ form.full_description.label(class="form-label fw-semibold") }}
+            {{ form.full_description(class="form-control", rows=4) }}
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-header fw-semibold">Narrative</div>
+        <div class="card-body">
+          <div class="mb-3">
+            {{ form.problem.label(class="form-label fw-semibold") }}
+            {{ form.problem(class="form-control", rows=3) }}
+          </div>
+          <div class="mb-3">
+            {{ form.solution.label(class="form-label fw-semibold") }}
+            {{ form.solution(class="form-control", rows=3) }}
+          </div>
+          <div class="mb-3">
+            {{ form.challenges.label(class="form-label fw-semibold") }}
+            {{ form.challenges(class="form-control", rows=3) }}
+          </div>
+          <div class="mb-3">
+            {{ form.results.label(class="form-label fw-semibold") }}
+            {{ form.results(class="form-control", rows=3) }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right column: metadata -->
+    <div class="col-lg-4">
+      <div class="card mb-3">
+        <div class="card-header fw-semibold">Settings</div>
+        <div class="card-body">
+          <div class="mb-3">
+            {{ form.date.label(class="form-label fw-semibold") }}
+            {{ form.date(class="form-control", placeholder="YYYY-MM-DD") }}
+          </div>
+          <div class="form-check mb-3">
+            {{ form.featured(class="form-check-input") }}
+            {{ form.featured.label(class="form-check-label") }}
+            <div class="form-text">Show on the homepage.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-header fw-semibold">Tags & Tech Stack</div>
+        <div class="card-body">
+          <div class="mb-3">
+            {{ form.tags.label(class="form-label fw-semibold") }}
+            {{ form.tags(class="form-control", placeholder="python, flask, sqlite") }}
+          </div>
+          <div class="mb-3">
+            {{ form.tech_stack.label(class="form-label fw-semibold") }}
+            {{ form.tech_stack(class="form-control", placeholder="Python, Flask, Bootstrap") }}
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-header fw-semibold">Links</div>
+        <div class="card-body">
+          <div class="mb-3">
+            {{ form.repo_url.label(class="form-label fw-semibold") }}
+            {{ form.repo_url(class="form-control", placeholder="https://github.com/...") }}
+          </div>
+          <div class="mb-3">
+            {{ form.live_url.label(class="form-label fw-semibold") }}
+            {{ form.live_url(class="form-control", placeholder="https://...") }}
+          </div>
+          <div class="mb-3">
+            {{ form.demo_url.label(class="form-label fw-semibold") }}
+            {{ form.demo_url(class="form-control", placeholder="https://...") }}
+          </div>
+        </div>
+      </div>
+
+      <div class="d-grid gap-2">
+        {{ form.submit(class="btn btn-dark btn-lg") }}
+        {% if project %}
+          <form method="POST" action="{{ url_for('admin.project_delete', slug=project.slug) }}"
+                onsubmit="return confirm('Delete {{ project.title }}? This cannot be undone.')">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+            <button type="submit" class="btn btn-outline-danger w-100">Delete Project</button>
+          </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock %}

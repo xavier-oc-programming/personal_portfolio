@@ -1,0 +1,124 @@
+{% extends "admin/base.html" %}
+{% block title %}Media — {{ project.title }}{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+  <a href="{{ url_for('admin.projects') }}" class="text-muted text-decoration-none small">&larr; All Projects</a>
+  <div class="d-flex justify-content-between align-items-center">
+    <h2 class="fw-bold mb-0">Media: {{ project.title }}</h2>
+    <a href="{{ url_for('admin.project_edit', slug=project.slug) }}" class="btn btn-outline-secondary">Edit Details</a>
+  </div>
+</div>
+
+<div class="row g-4">
+
+  <!-- Card Image -->
+  <div class="col-md-4">
+    <div class="card h-100">
+      <div class="card-header fw-semibold">Card Image</div>
+      <div class="card-body">
+        {% if project.card_image %}
+          <img src="{{ url_for('static', filename=project.card_image) }}"
+               class="img-fluid rounded mb-3 w-100"
+               style="max-height:200px;object-fit:cover;" alt="Card image">
+          <form method="POST" action="{{ url_for('admin.media_delete', slug=project.slug) }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+            <input type="hidden" name="type" value="card" />
+            <input type="hidden" name="path" value="{{ project.card_image }}" />
+            <button type="submit" class="btn btn-sm btn-outline-danger w-100"
+                    onclick="return confirm('Remove card image?')">Remove</button>
+          </form>
+        {% else %}
+          <p class="text-muted small mb-3">No card image yet.</p>
+        {% endif %}
+
+        <hr>
+        <form method="POST" action="{{ url_for('admin.media_upload_card', slug=project.slug) }}"
+              enctype="multipart/form-data">
+          {{ card_form.hidden_tag() }}
+          <div class="mb-2">
+            {{ card_form.card_image(class="form-control form-control-sm") }}
+          </div>
+          {{ card_form.submit(class="btn btn-dark btn-sm w-100") }}
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screenshots -->
+  <div class="col-md-8">
+    <div class="card mb-4">
+      <div class="card-header fw-semibold">Screenshots ({{ project.screenshots | length }})</div>
+      <div class="card-body">
+        {% if project.screenshots %}
+          <div class="row g-2 mb-3">
+            {% for shot in project.screenshots %}
+              <div class="col-6 col-sm-4 position-relative">
+                <img src="{{ url_for('static', filename=shot) }}"
+                     class="img-fluid rounded w-100"
+                     style="height:110px;object-fit:cover;" alt="Screenshot">
+                <form method="POST" action="{{ url_for('admin.media_delete', slug=project.slug) }}"
+                      class="position-absolute top-0 end-0 m-1">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                  <input type="hidden" name="type" value="screenshot" />
+                  <input type="hidden" name="path" value="{{ shot }}" />
+                  <button type="submit" class="btn btn-sm btn-danger py-0 px-1"
+                          style="font-size:.7rem;" onclick="return confirm('Remove screenshot?')">&times;</button>
+                </form>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <p class="text-muted small mb-3">No screenshots yet.</p>
+        {% endif %}
+
+        <form method="POST" action="{{ url_for('admin.media_upload_screenshot', slug=project.slug) }}"
+              enctype="multipart/form-data" class="d-flex gap-2 align-items-end">
+          {{ screenshot_form.hidden_tag() }}
+          <div class="flex-grow-1">
+            {{ screenshot_form.screenshot(class="form-control form-control-sm") }}
+          </div>
+          {{ screenshot_form.submit(class="btn btn-dark btn-sm") }}
+        </form>
+      </div>
+    </div>
+
+    <!-- Videos -->
+    <div class="card">
+      <div class="card-header fw-semibold">Videos ({{ project.videos | length }})</div>
+      <div class="card-body">
+        {% if project.videos %}
+          <div class="row g-2 mb-3">
+            {% for vid in project.videos %}
+              <div class="col-12 col-sm-6">
+                <div class="border rounded p-2 d-flex align-items-center gap-2">
+                  <span class="text-muted small text-truncate flex-grow-1" title="{{ vid }}">{{ vid.split('/')[-1] }}</span>
+                  <form method="POST" action="{{ url_for('admin.media_delete', slug=project.slug) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                    <input type="hidden" name="type" value="video" />
+                    <input type="hidden" name="path" value="{{ vid }}" />
+                    <button type="submit" class="btn btn-sm btn-outline-danger py-0 px-1"
+                            onclick="return confirm('Remove video?')">&times;</button>
+                  </form>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <p class="text-muted small mb-3">No videos yet.</p>
+        {% endif %}
+
+        <form method="POST" action="{{ url_for('admin.media_upload_video', slug=project.slug) }}"
+              enctype="multipart/form-data" class="d-flex gap-2 align-items-end">
+          {{ video_form.hidden_tag() }}
+          <div class="flex-grow-1">
+            {{ video_form.video(class="form-control form-control-sm") }}
+          </div>
+          {{ video_form.submit(class="btn btn-dark btn-sm") }}
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

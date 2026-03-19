@@ -32,7 +32,9 @@ from typing import Any
 import resend
 
 from flask import Flask, abort, flash, redirect, render_template, request, session, url_for
+from flask_wtf.csrf import CSRFProtect
 
+from app.admin import admin_bp
 from app.config import get_config_class
 from app.forms import ContactForm, MAX_EMAIL_LENGTH, MAX_MESSAGE_LENGTH, MAX_NAME_LENGTH
 from app.models.models import ContactMessage, Project, db
@@ -270,6 +272,10 @@ def create_app() -> Flask:
     _ensure_database_directory_and_file(app)
 
     db.init_app(app)
+
+    CSRFProtect(app)
+
+    app.register_blueprint(admin_bp)
 
     with app.app_context():
         db.create_all()
