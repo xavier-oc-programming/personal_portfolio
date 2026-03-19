@@ -44,6 +44,13 @@ BASE_DIR = Path(__file__).resolve().parent
 DATABASE_DIR = BASE_DIR / "database"
 DATABASE_FILE = DATABASE_DIR / "portfolio.db"
 
+_DATABASE_URL = os.environ.get("DATABASE_URL", "")
+
+# Supabase (and some other providers) return "postgres://" which SQLAlchemy
+# requires as "postgresql://"
+if _DATABASE_URL.startswith("postgres://"):
+    _DATABASE_URL = _DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
 
 class BaseConfig:
     """
@@ -60,14 +67,23 @@ class BaseConfig:
     JSON_SORT_KEYS: bool = False
     SEND_FILE_MAX_AGE_DEFAULT = timedelta(days=30)
 
-    DATABASE_PATH: Path = DATABASE_FILE
-    SQLALCHEMY_DATABASE_URI: str = f"sqlite:///{DATABASE_FILE}"
+    if _DATABASE_URL:
+        DATABASE_PATH: Path | None = None
+        SQLALCHEMY_DATABASE_URI: str = _DATABASE_URL
+    else:
+        DATABASE_PATH = DATABASE_FILE
+        SQLALCHEMY_DATABASE_URI = f"sqlite:///{DATABASE_FILE}"
+
     SQLALCHEMY_TRACK_MODIFICATIONS: bool = False
 
     WTF_CSRF_ENABLED: bool = True
 
     RESEND_API_KEY: str | None = os.environ.get("RESEND_API_KEY")
     CONTACT_NOTIFICATION_EMAIL: str | None = os.environ.get("CONTACT_NOTIFICATION_EMAIL")
+
+    SUPABASE_URL: str = os.environ.get("SUPABASE_URL", "")
+    SUPABASE_SERVICE_KEY: str = os.environ.get("SUPABASE_SERVICE_KEY", "")
+    SUPABASE_STORAGE_BUCKET: str = os.environ.get("SUPABASE_STORAGE_BUCKET", "project-media")
 
     ADMIN_PASSWORD: str = os.environ.get("ADMIN_PASSWORD", "admin")
 
