@@ -6,7 +6,7 @@ Central configuration for the Flask application.
 Key responsibilities:
 - Provide environment-based configuration (Development vs Production).
 - Define core settings such as SECRET_KEY, DEBUG, and database path.
-- Define Flask-Mail settings for contact form notifications.
+- Define Resend settings for contact form notifications.
 - Configure static file caching for better performance.
 - Configure production metadata and analytics settings.
 - Keep configuration logic out of app initialization and routes.
@@ -19,14 +19,8 @@ Environment Variables supported:
 - DEFAULT_META_DESCRIPTION: default SEO description
 - GOOGLE_ANALYTICS_ID: GA4 measurement ID (optional)
 
-Mail-related variables:
-- MAIL_SERVER
-- MAIL_PORT
-- MAIL_USE_TLS
-- MAIL_USE_SSL
-- MAIL_USERNAME
-- MAIL_PASSWORD
-- MAIL_DEFAULT_SENDER
+Resend-related variables:
+- RESEND_API_KEY
 - CONTACT_NOTIFICATION_EMAIL
 
 Usage:
@@ -51,18 +45,6 @@ DATABASE_DIR = BASE_DIR / "database"
 DATABASE_FILE = DATABASE_DIR / "portfolio.db"
 
 
-def _get_bool_env(var_name: str, default: bool = False) -> bool:
-    """
-    Read a boolean environment variable using common truthy string values.
-    """
-    value = os.environ.get(var_name, "").strip().lower()
-
-    if not value:
-        return default
-
-    return value in {"1", "true", "yes", "on"}
-
-
 class BaseConfig:
     """
     Base configuration shared across environments.
@@ -84,13 +66,7 @@ class BaseConfig:
 
     WTF_CSRF_ENABLED: bool = True
 
-    MAIL_SERVER: str = os.environ.get("MAIL_SERVER", "localhost")
-    MAIL_PORT: int = int(os.environ.get("MAIL_PORT", 25))
-    MAIL_USE_TLS: bool = _get_bool_env("MAIL_USE_TLS", False)
-    MAIL_USE_SSL: bool = _get_bool_env("MAIL_USE_SSL", False)
-    MAIL_USERNAME: str | None = os.environ.get("MAIL_USERNAME")
-    MAIL_PASSWORD: str | None = os.environ.get("MAIL_PASSWORD")
-    MAIL_DEFAULT_SENDER: str | None = os.environ.get("MAIL_DEFAULT_SENDER")
+    RESEND_API_KEY: str | None = os.environ.get("RESEND_API_KEY")
     CONTACT_NOTIFICATION_EMAIL: str | None = os.environ.get("CONTACT_NOTIFICATION_EMAIL")
 
     SITE_URL: str = os.environ.get("SITE_URL", "http://127.0.0.1:5000").rstrip("/")
