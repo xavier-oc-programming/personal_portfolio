@@ -11,7 +11,7 @@ Key responsibilities:
 - Inject global template variables shared across all pages.
 - Serve project data from the database during Phase 3.
 - Persist contact form submissions to the database.
-- Send email notifications for new contact submissions.
+- Send email notifications for new contact submissions via Resend.
 - Apply spam-mitigation protections to the contact form.
 - Prepare the SQLite database directory/file strategy.
 - Initialize SQLAlchemy as the ORM layer.
@@ -29,15 +29,13 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+import resend
+
 from flask import Flask, abort, flash, redirect, render_template, request, session, url_for
-from flask_mail import Mail, Message
 
 from app.config import get_config_class
 from app.forms import ContactForm, MAX_EMAIL_LENGTH, MAX_MESSAGE_LENGTH, MAX_NAME_LENGTH
 from app.models.models import ContactMessage, Project, db
-
-
-mail = Mail()
 
 ALLOWED_CATEGORIES = {"web", "data", "software"}
 ALLOWED_SORTS = {"az", "newest", "oldest"}
@@ -240,13 +238,9 @@ def _send_contact_notification(
         )
         return False
 
-    email_message = Message(
-        subject="New portfolio contact message",
-        recipients=[recipient],
-        reply_to=sender_email,
-    )
+    resend.api_key = app.config.get("RESEND_API_KEY")
 
-    email_message.body = (
+    body = (
         "A new message was submitted through your portfolio contact form.\n\n"
         f"Name: {sender_name}\n"
         f"Email: {sender_email}\n"
@@ -257,7 +251,12 @@ def _send_contact_notification(
     )
 
     try:
-        mail.send(email_message)
+        resend.Emails.send({
+            "from": "portfolio@xavieroc.dev",
+            "to": recipient,
+            "subject": "New portfolio contact message",
+            "text": body,
+        })
         return True
     except Exception:
         app.logger.exception("Failed to send contact notification email.")
@@ -271,7 +270,6 @@ def create_app() -> Flask:
     _ensure_database_directory_and_file(app)
 
     db.init_app(app)
-    mail.init_app(app)
 
     with app.app_context():
         db.create_all()
