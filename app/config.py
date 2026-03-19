@@ -81,10 +81,6 @@ class BaseConfig:
     RESEND_API_KEY: str | None = os.environ.get("RESEND_API_KEY")
     CONTACT_NOTIFICATION_EMAIL: str | None = os.environ.get("CONTACT_NOTIFICATION_EMAIL")
 
-    SUPABASE_URL: str = os.environ.get("SUPABASE_URL", "")
-    SUPABASE_SERVICE_KEY: str = os.environ.get("SUPABASE_SERVICE_KEY", "")
-    SUPABASE_STORAGE_BUCKET: str = os.environ.get("SUPABASE_STORAGE_BUCKET", "project-media")
-
     ADMIN_PASSWORD: str = os.environ.get("ADMIN_PASSWORD", "admin")
 
     SITE_URL: str = os.environ.get("SITE_URL", "http://127.0.0.1:5000").rstrip("/")

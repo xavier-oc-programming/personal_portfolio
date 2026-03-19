@@ -192,11 +192,11 @@
                 class="detail-media-trigger"
                 data-bs-toggle="modal"
                 data-bs-target="#imagePreviewModal"
-                data-image-src="{{ project.media.card_image | media_url }}"
+                data-image-src="{{ url_for('static', filename=project.media.card_image) }}"
                 data-image-alt="{{ project.title }} cover image"
               >
                 <img
-                  src="{{ project.media.card_image | media_url }}"
+                  src="{{ url_for('static', filename=project.media.card_image) }}"
                   class="img-fluid rounded w-100 detail-media-image"
                   alt="{{ project.title }} cover image"
                   loading="lazy"
@@ -214,11 +214,11 @@
                   class="detail-media-trigger"
                   data-bs-toggle="modal"
                   data-bs-target="#imagePreviewModal"
-                  data-image-src="{{ screenshot | media_url }}"
+                  data-image-src="{{ url_for('static', filename=screenshot) }}"
                   data-image-alt="{{ project.title }} screenshot {{ loop.index }}"
                 >
                   <img
-                    src="{{ screenshot | media_url }}"
+                    src="{{ url_for('static', filename=screenshot) }}"
                     class="img-fluid rounded w-100 detail-media-image"
                     alt="{{ project.title }} screenshot {{ loop.index }}"
                     loading="lazy"
@@ -246,7 +246,7 @@
         <div class="d-flex flex-column gap-3">
           {% for video in project.media.videos %}
             <video class="w-100 rounded" controls preload="metadata">
-              <source src="{{ video | media_url }}" type="video/mp4">
+              <source src="{{ url_for('static', filename=video) }}" type="video/mp4">
               Your browser does not support the video tag.
             </video>
           {% endfor %}
