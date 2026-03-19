@@ -21,12 +21,15 @@ from app.models.models import Project, db
 
 def seed_projects() -> None:
     """
-    Clear the existing projects table and repopulate it from PROJECTS.
+    Populate the projects table from PROJECTS if it is currently empty.
+    Skips seeding if rows already exist to preserve any live edits.
     """
     app = create_app()
 
     with app.app_context():
-        db.session.query(Project).delete()
+        if Project.query.count() > 0:
+            print("Database already seeded — skipping.")
+            return
 
         for project_data in PROJECTS:
             links = project_data.get("links", {})
