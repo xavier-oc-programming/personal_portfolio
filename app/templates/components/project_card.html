@@ -43,12 +43,6 @@
       <p class="text-secondary mb-3">Short project summary will go here.</p>
     {% endif %}
 
-    {% if project.tech_stack %}
-      <p class="small text-muted mb-3">
-        <strong>Tech:</strong> {{ project.tech_stack | join(", ") }}
-      </p>
-    {% endif %}
-
     {% if project.tags %}
       <div class="d-flex flex-wrap gap-2 mb-4">
         {% for tag in project.tags %}
