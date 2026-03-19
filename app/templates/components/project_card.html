@@ -19,7 +19,7 @@
 <div class="card h-100 project-card">
   {% if project.media and project.media.card_image %}
     <img
-      src="{{ project.media.card_image | media_url }}"
+      src="{{ url_for('static', filename=project.media.card_image) }}"
       class="card-img-top project-card-img"
       alt="{{ project.title }} cover image"
       loading="lazy"

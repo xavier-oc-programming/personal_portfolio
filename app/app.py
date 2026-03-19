@@ -277,14 +277,6 @@ def create_app() -> Flask:
 
     app.register_blueprint(admin_bp)
 
-    @app.template_filter("media_url")
-    def media_url_filter(value: str | None) -> str:
-        if not value:
-            return ""
-        if value.startswith("http://") or value.startswith("https://"):
-            return value
-        return url_for("static", filename=value)
-
     with app.app_context():
         db.create_all()
 

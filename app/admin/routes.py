@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import os
 from functools import wraps
+from pathlib import Path
 
 from flask import (
     abort,
@@ -38,7 +39,6 @@ from flask import (
     session,
     url_for,
 )
-from supabase import create_client
 from werkzeug.utils import secure_filename
 
 from app.admin import admin_bp
@@ -64,38 +64,26 @@ def _split_csv(value: str) -> list[str]:
     return [item.strip() for item in (value or "").split(",") if item.strip()]
 
 
-def _get_supabase_client():
-    return create_client(
-        current_app.config["SUPABASE_URL"],
-        current_app.config["SUPABASE_SERVICE_KEY"],
-    )
+def _get_project_static_dir(slug: str) -> Path:
+    static_dir = Path(current_app.root_path) / "static"
+    return static_dir / "images" / "projects" / slug
 
 
-def _upload_to_storage(file, storage_path: str) -> str:
-    """Upload a file to Supabase Storage and return its public URL."""
-    bucket = current_app.config["SUPABASE_STORAGE_BUCKET"]
+def _get_project_video_dir(slug: str) -> Path:
+    static_dir = Path(current_app.root_path) / "static"
+    return static_dir / "videos" / "projects" / slug
+
+
+def _save_file(file, dest_dir: Path) -> str:
+    dest_dir.mkdir(parents=True, exist_ok=True)
     filename = secure_filename(file.filename)
-    full_path = f"{storage_path}/{filename}"
-    file_bytes = file.read()
-    content_type = file.content_type or "application/octet-stream"
-
-    client = _get_supabase_client()
-    client.storage.from_(bucket).upload(
-        path=full_path,
-        file=file_bytes,
-        file_options={"content-type": content_type, "upsert": "true"},
-    )
-    return client.storage.from_(bucket).get_public_url(full_path)
+    file.save(dest_dir / filename)
+    return filename
 
 
-def _delete_from_storage(url: str) -> None:
-    """Delete a file from Supabase Storage given its public URL."""
-    bucket = current_app.config["SUPABASE_STORAGE_BUCKET"]
-    marker = f"/object/public/{bucket}/"
-    if marker not in url:
-        return
-    storage_path = url.split(marker, 1)[1]
-    _get_supabase_client().storage.from_(bucket).remove([storage_path])
+def _static_rel(path: Path) -> str:
+    static_dir = Path(current_app.root_path) / "static"
+    return str(path.relative_to(static_dir)).replace("\\", "/")
 
 
 def _populate_project_from_form(project: Project, form: ProjectForm) -> None:
@@ -332,11 +320,9 @@ def media_upload_card(slug: str):
     form = CardImageForm()
 
     if form.validate_on_submit() and form.card_image.data:
-        public_url = _upload_to_storage(
-            form.card_image.data,
-            f"projects/{slug}/card",
-        )
-        project.card_image = public_url
+        dest = _get_project_static_dir(slug) / "card"
+        filename = _save_file(form.card_image.data, dest)
+        project.card_image = _static_rel(dest / filename)
         db.session.commit()
         flash("Card image uploaded.", "success")
     else:
@@ -352,13 +338,12 @@ def media_upload_screenshot(slug: str):
     form = ScreenshotForm()
 
     if form.validate_on_submit() and form.screenshot.data:
-        public_url = _upload_to_storage(
-            form.screenshot.data,
-            f"projects/{slug}/screenshots",
-        )
+        dest = _get_project_static_dir(slug) / "screenshots"
+        filename = _save_file(form.screenshot.data, dest)
+        rel_path = _static_rel(dest / filename)
         shots = project.screenshots
-        if public_url not in shots:
-            shots.append(public_url)
+        if rel_path not in shots:
+            shots.append(rel_path)
             project.screenshots = shots
             db.session.commit()
         flash("Screenshot uploaded.", "success")
@@ -375,13 +360,14 @@ def media_upload_video(slug: str):
     form = VideoForm()
 
     if form.validate_on_submit() and form.video.data:
-        public_url = _upload_to_storage(
-            form.video.data,
-            f"projects/{slug}/videos",
-        )
+        dest = _get_project_video_dir(slug)
+        filename = _save_file(form.video.data, dest)
+        rel_path = str((dest / filename).relative_to(
+            Path(current_app.root_path) / "static"
+        )).replace("\\", "/")
         vids = project.videos
-        if public_url not in vids:
-            vids.append(public_url)
+        if rel_path not in vids:
+            vids.append(rel_path)
             project.videos = vids
             db.session.commit()
         flash("Video uploaded.", "success")
@@ -395,25 +381,31 @@ def media_upload_video(slug: str):
 @_require_admin
 def media_delete(slug: str):
     project = Project.query.filter_by(slug=slug).first_or_404()
-    media_type = request.form.get("type")  # "card", "screenshot", "video"
-    path = request.form.get("path", "")
+    media_type = request.form.get("type")
+    rel_path = request.form.get("path", "")
+
+    static_dir = Path(current_app.root_path) / "static"
+    abs_path = static_dir / rel_path
 
     if media_type == "card":
-        _delete_from_storage(path)
         project.card_image = None
         db.session.commit()
+        if abs_path.exists():
+            abs_path.unlink()
         flash("Card image removed.", "success")
 
     elif media_type == "screenshot":
-        _delete_from_storage(path)
-        project.screenshots = [s for s in project.screenshots if s != path]
+        project.screenshots = [s for s in project.screenshots if s != rel_path]
         db.session.commit()
+        if abs_path.exists():
+            abs_path.unlink()
         flash("Screenshot removed.", "success")
 
     elif media_type == "video":
-        _delete_from_storage(path)
-        project.videos = [v for v in project.videos if v != path]
+        project.videos = [v for v in project.videos if v != rel_path]
         db.session.commit()
+        if abs_path.exists():
+            abs_path.unlink()
         flash("Video removed.", "success")
 
     else:
