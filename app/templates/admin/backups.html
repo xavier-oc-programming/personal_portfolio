@@ -1,0 +1,51 @@
+{% extends "admin/base.html" %}
+{% block title %}Backups{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="fw-bold mb-0">Backups</h2>
+  <span class="text-muted small">{{ backups|length }} snapshot{{ 's' if backups|length != 1 }} (3 max retained)</span>
+</div>
+
+{% if backups %}
+  <div class="card">
+    <div class="card-body p-0">
+      <table class="table table-hover mb-0 align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Filename</th>
+            <th style="width:120px;">Size</th>
+            <th style="width:200px;">Created</th>
+            <th style="width:100px;"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for backup in backups %}
+            <tr>
+              <td class="font-monospace small">{{ backup.filename }}</td>
+              <td class="text-muted small">{{ backup.size_kb }} KB</td>
+              <td class="text-muted small">{{ backup.modified }}</td>
+              <td>
+                <form
+                  method="POST"
+                  action="{{ url_for('admin.backup_restore', filename=backup.filename) }}"
+                  onsubmit="return confirm('Restore from {{ backup.filename }}? A safety snapshot will be taken first.')"
+                >
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                  <button type="submit" class="btn btn-sm btn-outline-warning">Restore</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% else %}
+  <div class="card">
+    <div class="card-body text-center text-muted py-5">
+      No backups yet. Backups are created automatically when projects are saved or deleted.
+    </div>
+  </div>
+{% endif %}
+{% endblock %}

@@ -21,6 +21,11 @@ Routes:
     POST /admin/projects/<slug>/media/delete   - Delete a media file
     GET  /admin/messages           - List contact messages
     POST /admin/messages/<id>/delete - Delete a message
+    GET  /admin/tags               - List all tags with project counts
+    POST /admin/tags/add           - Add a new tag to selected projects
+    POST /admin/tags/assign        - Set exactly which projects carry a tag
+    POST /admin/tags/rename        - Rename a tag across all projects
+    POST /admin/tags/delete        - Delete a tag from all projects
 """
 
 from __future__ import annotations
@@ -550,3 +555,129 @@ def backup_restore(filename: str):
     db.session.commit()
     flash(f"Restored {len(data)} projects from {filename}.", "success")
     return redirect(url_for("admin.backups"))
+
+
+# ---------------------------------------------------------------------------
+# Tags
+# ---------------------------------------------------------------------------
+
+def _get_tag_counts() -> list[dict]:
+    """Return all tags sorted alphabetically with a count of projects using each."""
+    counts: dict[str, int] = {}
+    for project in Project.query.all():
+        for tag in project.tags:
+            counts[tag] = counts.get(tag, 0) + 1
+    return [{"tag": t, "count": c} for t, c in sorted(counts.items())]
+
+
+@admin_bp.get("/tags")
+@_require_admin
+def tags():
+    all_projects = Project.query.order_by(Project.title.asc()).all()
+    project_tags = {p.slug: p.tags for p in all_projects}
+    return render_template(
+        "admin/tags.html",
+        tags=_get_tag_counts(),
+        all_projects=all_projects,
+        project_tags=project_tags,
+    )
+
+
+@admin_bp.post("/tags/add")
+@_require_admin
+def tag_add():
+    tag = request.form.get("tag", "").strip()
+    slugs = request.form.getlist("slugs")
+
+    if not tag:
+        flash("Tag name is required.", "danger")
+        return redirect(url_for("admin.tags"))
+
+    if not slugs:
+        flash("Select at least one project.", "danger")
+        return redirect(url_for("admin.tags"))
+
+    updated = 0
+    for project in Project.query.filter(Project.slug.in_(slugs)).all():
+        if tag not in project.tags:
+            project.tags = project.tags + [tag]
+            updated += 1
+
+    db.session.commit()
+    _backup_projects()
+    flash(f"Added tag '{tag}' to {updated} project(s).", "success")
+    return redirect(url_for("admin.tags"))
+
+
+@admin_bp.post("/tags/assign")
+@_require_admin
+def tag_assign():
+    tag = request.form.get("tag", "").strip()
+    selected_slugs = set(request.form.getlist("slugs"))
+
+    if not tag:
+        flash("No tag specified.", "danger")
+        return redirect(url_for("admin.tags"))
+
+    added = removed = 0
+    for project in Project.query.all():
+        has_tag = tag in project.tags
+        should_have = project.slug in selected_slugs
+        if should_have and not has_tag:
+            project.tags = project.tags + [tag]
+            added += 1
+        elif not should_have and has_tag:
+            project.tags = [t for t in project.tags if t != tag]
+            removed += 1
+
+    db.session.commit()
+    _backup_projects()
+    flash(f"Tag '{tag}': {added} added, {removed} removed.", "success")
+    return redirect(url_for("admin.tags"))
+
+
+@admin_bp.post("/tags/rename")
+@_require_admin
+def tag_rename():
+    old_tag = request.form.get("old_tag", "").strip()
+    new_tag = request.form.get("new_tag", "").strip()
+
+    if not old_tag or not new_tag:
+        flash("Both old and new tag names are required.", "danger")
+        return redirect(url_for("admin.tags"))
+
+    if old_tag == new_tag:
+        flash("New tag name is the same as the old one.", "warning")
+        return redirect(url_for("admin.tags"))
+
+    updated = 0
+    for project in Project.query.all():
+        if old_tag in project.tags:
+            project.tags = [new_tag if t == old_tag else t for t in project.tags]
+            updated += 1
+
+    db.session.commit()
+    _backup_projects()
+    flash(f"Renamed '{old_tag}' → '{new_tag}' across {updated} project(s).", "success")
+    return redirect(url_for("admin.tags"))
+
+
+@admin_bp.post("/tags/delete")
+@_require_admin
+def tag_delete():
+    tag = request.form.get("tag", "").strip()
+
+    if not tag:
+        flash("No tag specified.", "danger")
+        return redirect(url_for("admin.tags"))
+
+    updated = 0
+    for project in Project.query.all():
+        if tag in project.tags:
+            project.tags = [t for t in project.tags if t != tag]
+            updated += 1
+
+    db.session.commit()
+    _backup_projects()
+    flash(f"Deleted tag '{tag}' from {updated} project(s).", "success")
+    return redirect(url_for("admin.tags"))
