@@ -1,0 +1,39 @@
+<!-- app/templates/components/api_try_it.html -->
+<!-- Reusable "Try it" widget for the API docs page. -->
+<!-- Expected: try_url (string) — URL to prefill. -->
+<!-- Optional: try_examples (list of {label, url}) — clickable example URLs. -->
+
+<div class="api-try-it mt-3">
+  <div class="d-flex gap-2 mb-2">
+    <input
+      type="text"
+      class="form-control form-control-sm font-monospace api-try-url"
+      value="{{ try_url }}"
+      aria-label="API endpoint URL"
+      spellcheck="false"
+    />
+    <button
+      type="button"
+      class="btn btn-dark btn-sm api-try-run flex-shrink-0"
+    >
+      Run
+    </button>
+  </div>
+
+  {% if try_examples is defined and try_examples %}
+    <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+      <span class="text-secondary small">Examples:</span>
+      {% for ex in try_examples %}
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-secondary api-try-example"
+          data-url="{{ ex.url }}"
+        >
+          {{ ex.label }}
+        </button>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <pre class="bg-dark text-light rounded p-3 small mb-0 api-try-output d-none" style="max-height: 320px; overflow-y: auto;"><code></code></pre>
+</div>

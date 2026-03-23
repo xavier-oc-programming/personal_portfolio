@@ -85,6 +85,7 @@
   </head>
 
   <body class="d-flex flex-column min-vh-100">
+    <div id="nav-load-bar" class="load-bar d-none"><div class="load-bar-fill"></div></div>
     {% include "components/navbar.html" %}
 
     <main class="flex-grow-1">
@@ -111,5 +112,7 @@
 
     <!-- Local JS -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    {% block scripts %}{% endblock %}
   </body>
 </html>

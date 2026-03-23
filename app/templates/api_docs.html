@@ -1,0 +1,194 @@
+<!-- app/templates/api_docs.html -->
+<!-- Public REST API documentation page. -->
+<!-- Lists all available endpoints with descriptions, parameters, and a live "Try it" widget. -->
+
+{% extends "base.html" %}
+
+{% block title %}API | Xavier OC{% endblock %}
+{% block meta_description %}Public REST API for the Xavier OC portfolio — versioned endpoints for projects, categories, and tags.{% endblock %}
+{% block og_title %}REST API | Xavier OC Portfolio{% endblock %}
+{% block og_description %}Public REST API for the Xavier OC portfolio — versioned endpoints for projects, categories, and tags.{% endblock %}
+{% block canonical_href %}{{ site_url ~ url_for('api_docs') }}{% endblock %}
+
+{% block content %}
+
+  <!-- Header -->
+  <section class="page-section">
+    {% set eyebrow = "Developer" %}
+    {% set title = "REST API" %}
+    {% set description = "This portfolio exposes its project data through a public, versioned REST API. All endpoints are read-only and require no authentication." %}
+    {% set centered = false %}
+    {% include "components/section_header.html" %}
+  </section>
+
+  <!-- Base URL -->
+  <section class="page-section">
+    <div class="surface-card p-3 p-md-4">
+      <div class="row align-items-center g-3">
+        <div class="col-12 col-md-auto">
+          <span class="fw-semibold">Base URL</span>
+        </div>
+        <div class="col-12 col-md">
+          <code class="fs-6">{{ site_url }}/api/v1</code>
+        </div>
+        <div class="col-12 col-md-auto">
+          <div class="d-flex flex-wrap gap-2 text-secondary small">
+            <span>Read-only</span>
+            <span>·</span>
+            <span>No auth required</span>
+            <span>·</span>
+            <span>JSON responses</span>
+            <span>·</span>
+            <span>CORS enabled</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Response envelope -->
+  <section class="page-section">
+    <h2 class="h5 mb-3">Response format</h2>
+    <div class="surface-card p-3 p-md-4">
+      <p class="text-secondary mb-3">Every response shares the same outer shape regardless of the endpoint.</p>
+      <div class="row g-3">
+        <div class="col-12 col-md-4">
+          <p class="small fw-semibold mb-1">Single resource</p>
+          <pre class="bg-dark text-light rounded p-3 small mb-0"><code>&#123;
+  "success": true,
+  "data": &#123; ... &#125;
+&#125;</code></pre>
+        </div>
+        <div class="col-12 col-md-4">
+          <p class="small fw-semibold mb-1">Collection</p>
+          <pre class="bg-dark text-light rounded p-3 small mb-0"><code>&#123;
+  "success": true,
+  "data": [ ... ],
+  "count": 12
+&#125;</code></pre>
+        </div>
+        <div class="col-12 col-md-4">
+          <p class="small fw-semibold mb-1">Error</p>
+          <pre class="bg-dark text-light rounded p-3 small mb-0"><code>&#123;
+  "success": false,
+  "error": "..."
+&#125;</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Endpoints -->
+  <section class="page-section">
+    <h2 class="h5 mb-3">Endpoints</h2>
+
+    <div class="d-flex flex-column gap-4">
+
+      <!-- Projects collection -->
+      <div class="surface-card p-3 p-md-4" id="endpoint-projects">
+        <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+          <span class="badge text-bg-dark">GET</span>
+          <code class="fs-6">/api/v1/projects</code>
+        </div>
+        <p class="text-secondary mb-3">Returns all projects. Supports optional filtering by category, tag, or featured status.</p>
+        <table class="table table-sm mb-0">
+          <thead>
+            <tr>
+              <th class="text-secondary fw-normal small">Parameter</th>
+              <th class="text-secondary fw-normal small">Type</th>
+              <th class="text-secondary fw-normal small">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>category</code></td>
+              <td class="text-secondary small">string</td>
+              <td class="text-secondary small">Filter by category. One of <code>web</code>, <code>data</code>, <code>software</code>.</td>
+            </tr>
+            <tr>
+              <td><code>tag</code></td>
+              <td class="text-secondary small">string</td>
+              <td class="text-secondary small">Filter by tag slug, e.g. <code>web-app</code>, <code>machine-learning</code>.</td>
+            </tr>
+            <tr>
+              <td><code>featured</code></td>
+              <td class="text-secondary small">boolean</td>
+              <td class="text-secondary small">Pass <code>true</code> to return only featured projects.</td>
+            </tr>
+          </tbody>
+        </table>
+        {% set try_url = "/api/v1/projects" %}
+        {% set try_examples = [
+          {"label": "All",              "url": "/api/v1/projects"},
+          {"label": "category=web",     "url": "/api/v1/projects?category=web"},
+          {"label": "category=data",    "url": "/api/v1/projects?category=data"},
+          {"label": "category=software","url": "/api/v1/projects?category=software"},
+          {"label": "featured=true",    "url": "/api/v1/projects?featured=true"},
+          {"label": "tag=web-app",      "url": "/api/v1/projects?tag=web-app"},
+          {"label": "tag=machine-learning", "url": "/api/v1/projects?tag=machine-learning"},
+          {"label": "category=data&tag=visualisation", "url": "/api/v1/projects?category=data&tag=visualisation"},
+        ] %}
+        {% include "components/api_try_it.html" %}
+      </div>
+
+      <!-- Single project -->
+      <div class="surface-card p-3 p-md-4" id="endpoint-project-slug">
+        <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+          <span class="badge text-bg-dark">GET</span>
+          <code class="fs-6">/api/v1/projects/&lt;slug&gt;</code>
+        </div>
+        <p class="text-secondary mb-3">Returns a single project by its URL slug. Returns <code>404</code> with a JSON error body if the slug does not exist.</p>
+        {% set try_url = "/api/v1/projects/higher-lower-web-game" %}
+        {% set try_examples = [
+          {"label": "higher-lower-web-game", "url": "/api/v1/projects/higher-lower-web-game"},
+          {"label": "404 example",           "url": "/api/v1/projects/does-not-exist"},
+        ] %}
+        {% include "components/api_try_it.html" %}
+      </div>
+
+      <!-- Categories -->
+      <div class="surface-card p-3 p-md-4" id="endpoint-categories">
+        <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+          <span class="badge text-bg-dark">GET</span>
+          <code class="fs-6">/api/v1/categories</code>
+        </div>
+        <p class="text-secondary mb-3">Returns all project categories with the number of projects in each.</p>
+        {% set try_url = "/api/v1/categories" %}
+        {% set try_examples = [] %}
+        {% include "components/api_try_it.html" %}
+      </div>
+
+      <!-- Tags -->
+      <div class="surface-card p-3 p-md-4" id="endpoint-tags">
+        <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+          <span class="badge text-bg-dark">GET</span>
+          <code class="fs-6">/api/v1/tags</code>
+        </div>
+        <p class="text-secondary mb-3">Returns all tags alphabetically with the number of projects using each.</p>
+        {% set try_url = "/api/v1/tags" %}
+        {% set try_examples = [] %}
+        {% include "components/api_try_it.html" %}
+      </div>
+
+    </div>
+  </section>
+
+  <!-- curl examples -->
+  <section class="page-section">
+    <h2 class="h5 mb-3">curl examples</h2>
+    <div class="surface-card p-3 p-md-4">
+      <pre class="bg-dark text-light rounded p-3 small mb-0"><code>curl {{ site_url }}/api/v1/projects
+curl {{ site_url }}/api/v1/projects?category=web
+curl {{ site_url }}/api/v1/projects?tag=machine-learning
+curl {{ site_url }}/api/v1/projects?featured=true
+curl {{ site_url }}/api/v1/projects/higher-lower-web-game
+curl {{ site_url }}/api/v1/categories
+curl {{ site_url }}/api/v1/tags</code></pre>
+    </div>
+  </section>
+
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/api-docs.js') }}"></script>
+{% endblock %}

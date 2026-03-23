@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
   handleMobileNavbar();
   initScrollToTop();
   initDetailImageModal();
+  initNavLoadBar();
 });
 
 /**
@@ -99,5 +100,41 @@ function initDetailImageModal() {
   modal.addEventListener("hidden.bs.modal", function () {
     modalImg.src = "";
     modalImg.alt = "";
+  });
+}
+
+/**
+ * Show a progress bar at the top of the page on every internal link navigation.
+ */
+function initNavLoadBar() {
+  const bar = document.getElementById("nav-load-bar");
+
+  if (!bar) return;
+
+  const fill = bar.querySelector(".load-bar-fill");
+
+  document.addEventListener("click", function (e) {
+    const link = e.target.closest("a[href]");
+    if (!link) return;
+
+    const href = link.getAttribute("href");
+
+    // Skip external links, anchors, and javascript: links
+    if (
+      !href ||
+      href.startsWith("#") ||
+      href.startsWith("http") ||
+      href.startsWith("mailto") ||
+      href.startsWith("javascript") ||
+      link.target === "_blank"
+    ) return;
+
+    // Skip links that JS handles without a page load (filter/sort buttons)
+    if (link.hasAttribute("data-category-btn") || link.hasAttribute("data-tag-btn")) return;
+
+    bar.classList.remove("d-none");
+    fill.style.animation = "none";
+    void fill.offsetWidth;
+    fill.style.animation = "";
   });
 }
