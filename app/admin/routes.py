@@ -67,19 +67,16 @@ def _split_csv(value: str) -> list[str]:
 
 
 def _get_project_static_dir(slug: str) -> Path:
-    """Return the absolute path to app/static/images/projects/<slug>/."""
     static_dir = Path(current_app.root_path) / "static"
     return static_dir / "images" / "projects" / slug
 
 
 def _get_project_video_dir(slug: str) -> Path:
-    """Return the absolute path to app/static/videos/projects/<slug>/."""
     static_dir = Path(current_app.root_path) / "static"
     return static_dir / "videos" / "projects" / slug
 
 
 def _save_file(file, dest_dir: Path) -> str:
-    """Save an uploaded file to dest_dir and return the filename."""
     dest_dir.mkdir(parents=True, exist_ok=True)
     filename = secure_filename(file.filename)
     file.save(dest_dir / filename)
@@ -132,7 +129,6 @@ def _backup_projects() -> None:
 
 
 def _static_rel(path: Path) -> str:
-    """Convert an absolute path inside static/ to a relative path for url_for('static', ...)."""
     static_dir = Path(current_app.root_path) / "static"
     return str(path.relative_to(static_dir)).replace("\\", "/")
 
@@ -416,12 +412,9 @@ def media_upload_video(slug: str):
     if form.validate_on_submit() and form.video.data:
         dest = _get_project_video_dir(slug)
         filename = _save_file(form.video.data, dest)
-
-        static_dir = Path(current_app.root_path) / "static"
-        # videos live outside images/ — compute relative to static parent
-        videos_static_dir = Path(current_app.root_path) / "static"
-        rel_path = str((dest / filename).relative_to(videos_static_dir)).replace("\\", "/")
-
+        rel_path = str((dest / filename).relative_to(
+            Path(current_app.root_path) / "static"
+        )).replace("\\", "/")
         vids = project.videos
         if rel_path not in vids:
             vids.append(rel_path)
@@ -438,7 +431,7 @@ def media_upload_video(slug: str):
 @_require_admin
 def media_delete(slug: str):
     project = Project.query.filter_by(slug=slug).first_or_404()
-    media_type = request.form.get("type")  # "card", "screenshot", "video"
+    media_type = request.form.get("type")
     rel_path = request.form.get("path", "")
 
     static_dir = Path(current_app.root_path) / "static"
@@ -452,16 +445,14 @@ def media_delete(slug: str):
         flash("Card image removed.", "success")
 
     elif media_type == "screenshot":
-        shots = [s for s in project.screenshots if s != rel_path]
-        project.screenshots = shots
+        project.screenshots = [s for s in project.screenshots if s != rel_path]
         db.session.commit()
         if abs_path.exists():
             abs_path.unlink()
         flash("Screenshot removed.", "success")
 
     elif media_type == "video":
-        vids = [v for v in project.videos if v != rel_path]
-        project.videos = vids
+        project.videos = [v for v in project.videos if v != rel_path]
         db.session.commit()
         if abs_path.exists():
             abs_path.unlink()
