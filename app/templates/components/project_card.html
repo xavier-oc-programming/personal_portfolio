@@ -43,6 +43,14 @@
       <p class="text-secondary mb-3">Short project summary will go here.</p>
     {% endif %}
 
+    {% if project.tech_stack %}
+      <div class="d-flex flex-wrap gap-1 mb-3">
+        {% for tech in project.tech_stack %}
+          <span class="badge text-bg-light border">{{ tech }}</span>
+        {% endfor %}
+      </div>
+    {% endif %}
+
     {% if project.tags %}
       <div class="d-flex flex-wrap gap-2 mb-4">
         {% for tag in project.tags %}
@@ -87,6 +95,23 @@
         <button class="btn btn-outline-dark btn-sm" type="button" disabled>
           GitHub
         </button>
+      {% endif %}
+
+      {% if project.links and project.links.live %}
+        <a
+          class="btn btn-outline-dark btn-sm"
+          href="{{ project.links.live }}"
+          target="_blank"
+          rel="noopener"
+          onclick="trackEvent('project_live_click', {
+            project_slug: '{{ project.slug }}',
+            project_title: '{{ project.title|e }}',
+            project_category: '{{ project.primary_category }}',
+            click_location: 'project_card'
+          })"
+        >
+          Live
+        </a>
       {% endif %}
 
       {% if project.slug %}
