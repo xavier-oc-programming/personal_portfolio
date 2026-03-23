@@ -7,6 +7,34 @@
   <span class="text-muted small">{{ tags|length }} tag{{ 's' if tags|length != 1 }}</span>
 </div>
 
+<!-- Add new tag -->
+<div class="card mb-4">
+  <div class="card-header fw-semibold">Add New Tag</div>
+  <div class="card-body">
+    <form method="POST" action="{{ url_for('admin.tag_add') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+      <div class="row g-3 align-items-end">
+        <div class="col-12 col-md-4">
+          <label class="form-label small fw-semibold">Tag name</label>
+          <input type="text" name="tag" class="form-control" placeholder="e.g. web-app" required />
+        </div>
+        <div class="col-12 col-md-6">
+          <label class="form-label small fw-semibold">Apply to projects</label>
+          <select name="slugs" class="form-select" multiple size="5" required>
+            {% for project in all_projects %}
+              <option value="{{ project.slug }}">{{ project.title }}</option>
+            {% endfor %}
+          </select>
+          <div class="form-text">Hold Cmd / Ctrl to select multiple.</div>
+        </div>
+        <div class="col-12 col-md-2">
+          <button type="submit" class="btn btn-dark w-100">Add Tag</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
 {% if tags %}
   <div class="card">
     <div class="card-body p-0">
@@ -48,7 +76,7 @@
                 <form
                   method="POST"
                   action="{{ url_for('admin.tag_delete') }}"
-                  onsubmit="return confirm('Delete tag \'{{ item.tag }}\' from {{ item.count }} project{{ \'s\' if item.count != 1 }}?')"
+                  onsubmit="return confirm('Delete tag {{ item.tag }} from {{ item.count }} project(s)?')"
                 >
                   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                   <input type="hidden" name="tag" value="{{ item.tag }}" />

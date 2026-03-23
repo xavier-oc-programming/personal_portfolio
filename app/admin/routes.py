@@ -22,6 +22,7 @@ Routes:
     GET  /admin/messages           - List contact messages
     POST /admin/messages/<id>/delete - Delete a message
     GET  /admin/tags               - List all tags with project counts
+    POST /admin/tags/add           - Add a new tag to selected projects
     POST /admin/tags/rename        - Rename a tag across all projects
     POST /admin/tags/delete        - Delete a tag from all projects
 """
@@ -571,7 +572,34 @@ def _get_tag_counts() -> list[dict]:
 @admin_bp.get("/tags")
 @_require_admin
 def tags():
-    return render_template("admin/tags.html", tags=_get_tag_counts())
+    all_projects = Project.query.order_by(Project.title.asc()).all()
+    return render_template("admin/tags.html", tags=_get_tag_counts(), all_projects=all_projects)
+
+
+@admin_bp.post("/tags/add")
+@_require_admin
+def tag_add():
+    tag = request.form.get("tag", "").strip()
+    slugs = request.form.getlist("slugs")
+
+    if not tag:
+        flash("Tag name is required.", "danger")
+        return redirect(url_for("admin.tags"))
+
+    if not slugs:
+        flash("Select at least one project.", "danger")
+        return redirect(url_for("admin.tags"))
+
+    updated = 0
+    for project in Project.query.filter(Project.slug.in_(slugs)).all():
+        if tag not in project.tags:
+            project.tags = project.tags + [tag]
+            updated += 1
+
+    db.session.commit()
+    _backup_projects()
+    flash(f"Added tag '{tag}' to {updated} project(s).", "success")
+    return redirect(url_for("admin.tags"))
 
 
 @admin_bp.post("/tags/rename")
