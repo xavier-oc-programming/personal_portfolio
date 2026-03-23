@@ -25,7 +25,9 @@ Routes:
 
 from __future__ import annotations
 
+import json
 import os
+from datetime import datetime
 from functools import wraps
 from pathlib import Path
 
@@ -79,6 +81,51 @@ def _save_file(file, dest_dir: Path) -> str:
     filename = secure_filename(file.filename)
     file.save(dest_dir / filename)
     return filename
+
+
+def _backup_dir() -> Path:
+    """Return the absolute path to the local backup directory."""
+    return Path(current_app.root_path).parent / "data" / "backup"
+
+
+def _backup_projects() -> None:
+    """Write a timestamped snapshot of all projects to data/backup/."""
+    backup_dir = _backup_dir()
+    backup_dir.mkdir(parents=True, exist_ok=True)
+    timestamp = datetime.now().strftime("%Y-%m-%dT%H-%M-%S")
+    backup_path = backup_dir / f"projects_{timestamp}.json"
+    projects = Project.query.order_by(Project.id.asc()).all()
+    data = [
+        {
+            "id": p.id,
+            "slug": p.slug,
+            "title": p.title,
+            "primary_category": p.primary_category,
+            "short_description": p.short_description,
+            "full_description": p.full_description,
+            "featured": p.featured,
+            "date": p.date,
+            "problem": p.problem,
+            "solution": p.solution,
+            "challenges": p.challenges,
+            "results": p.results,
+            "tags": p.tags,
+            "tech_stack": p.tech_stack,
+            "screenshots": p.screenshots,
+            "videos": p.videos,
+            "card_image": p.card_image,
+            "repo_url": p.repo_url,
+            "live_url": p.live_url,
+            "demo_url": p.demo_url,
+        }
+        for p in projects
+    ]
+    backup_path.write_text(json.dumps(data, indent=2, ensure_ascii=False))
+
+    # Keep only the 3 most recent backups
+    existing = sorted(backup_dir.glob("projects_*.json"))
+    for old in existing[:-3]:
+        old.unlink()
 
 
 def _static_rel(path: Path) -> str:
@@ -233,6 +280,7 @@ def project_new():
 
         db.session.add(project)
         db.session.commit()
+        _backup_projects()
 
         flash(f"Project '{project.title}' created.", "success")
         return redirect(url_for("admin.project_edit", slug=project.slug))
@@ -268,6 +316,7 @@ def project_edit(slug: str):
 
         _populate_project_from_form(project, form)
         db.session.commit()
+        _backup_projects()
 
         flash(f"Project '{project.title}' updated.", "success")
         return redirect(url_for("admin.project_edit", slug=project.slug))
@@ -291,6 +340,7 @@ def project_delete(slug: str):
     title = project.title
     db.session.delete(project)
     db.session.commit()
+    _backup_projects()
     flash(f"Project '{title}' deleted.", "success")
     return redirect(url_for("admin.projects"))
 
@@ -433,3 +483,70 @@ def message_delete(message_id: int):
     db.session.commit()
     flash("Message deleted.", "success")
     return redirect(url_for("admin.messages"))
+
+
+# ---------------------------------------------------------------------------
+# Backups
+# ---------------------------------------------------------------------------
+
+@admin_bp.get("/backups")
+@_require_admin
+def backups():
+    backup_dir = _backup_dir()
+    files = []
+    if backup_dir.exists():
+        for f in sorted(backup_dir.glob("projects_*.json"), reverse=True):
+            files.append({
+                "filename": f.name,
+                "size_kb": round(f.stat().st_size / 1024, 1),
+                "modified": datetime.fromtimestamp(f.stat().st_mtime).strftime("%Y-%m-%d %H:%M:%S"),
+            })
+    return render_template("admin/backups.html", backups=files)
+
+
+@admin_bp.post("/backups/restore/<filename>")
+@_require_admin
+def backup_restore(filename: str):
+    backup_dir = _backup_dir()
+    backup_path = backup_dir / filename
+
+    if not backup_path.exists() or not filename.startswith("projects_") or not filename.endswith(".json"):
+        flash("Invalid backup file.", "danger")
+        return redirect(url_for("admin.backups"))
+
+    try:
+        data = json.loads(backup_path.read_text())
+    except (json.JSONDecodeError, OSError):
+        flash("Could not read backup file.", "danger")
+        return redirect(url_for("admin.backups"))
+
+    _backup_projects()
+
+    for entry in data:
+        project = Project.query.filter_by(slug=entry["slug"]).first()
+        if project is None:
+            project = Project()
+            db.session.add(project)
+        project.slug = entry["slug"]
+        project.title = entry["title"]
+        project.primary_category = entry["primary_category"]
+        project.short_description = entry["short_description"]
+        project.full_description = entry["full_description"]
+        project.featured = entry["featured"]
+        project.date = entry.get("date")
+        project.problem = entry.get("problem")
+        project.solution = entry.get("solution")
+        project.challenges = entry.get("challenges")
+        project.results = entry.get("results")
+        project.tags = entry.get("tags", [])
+        project.tech_stack = entry.get("tech_stack", [])
+        project.screenshots = entry.get("screenshots", [])
+        project.videos = entry.get("videos", [])
+        project.card_image = entry.get("card_image")
+        project.repo_url = entry.get("repo_url")
+        project.live_url = entry.get("live_url")
+        project.demo_url = entry.get("demo_url")
+
+    db.session.commit()
+    flash(f"Restored {len(data)} projects from {filename}.", "success")
+    return redirect(url_for("admin.backups"))
