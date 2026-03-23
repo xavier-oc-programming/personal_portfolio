@@ -4,37 +4,13 @@
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
   <h2 class="fw-bold mb-0">Tags</h2>
-  <span class="text-muted small">{{ tags|length }} tag{{ 's' if tags|length != 1 }}</span>
-</div>
-
-<!-- Add new tag -->
-<div class="card mb-4">
-  <div class="card-header fw-semibold">Add New Tag</div>
-  <div class="card-body">
-    <form method="POST" action="{{ url_for('admin.tag_add') }}">
-      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-      <div class="row g-3 align-items-end">
-        <div class="col-12 col-md-4">
-          <label class="form-label small fw-semibold">Tag name</label>
-          <input type="text" name="tag" class="form-control" placeholder="e.g. web-app" required />
-        </div>
-        <div class="col-12 col-md-6">
-          <label class="form-label small fw-semibold">Apply to projects</label>
-          <select name="slugs" class="form-select" multiple size="5" required>
-            {% for project in all_projects %}
-              <option value="{{ project.slug }}">{{ project.title }}</option>
-            {% endfor %}
-          </select>
-          <div class="form-text">Hold Cmd / Ctrl to select multiple.</div>
-        </div>
-        <div class="col-12 col-md-2">
-          <button type="submit" class="btn btn-dark w-100">Add Tag</button>
-        </div>
-      </div>
-    </form>
+  <div class="d-flex align-items-center gap-3">
+    <span class="text-muted small">{{ tags|length }} tag{{ 's' if tags|length != 1 }}</span>
+    <button class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#addTagModal">+ Add Tag</button>
   </div>
 </div>
 
+<!-- Tag table -->
 {% if tags %}
   <div class="card">
     <div class="card-body p-0">
@@ -42,8 +18,8 @@
         <thead class="table-light">
           <tr>
             <th>Tag</th>
-            <th style="width:120px;">Projects</th>
-            <th style="width:300px;">Rename</th>
+            <th style="width:100px;">Projects</th>
+            <th style="width:320px;">Rename</th>
             <th style="width:80px;"></th>
           </tr>
         </thead>
@@ -55,23 +31,15 @@
               </td>
               <td class="text-muted">{{ item.count }}</td>
 
-              <!-- Rename inline form -->
               <td>
                 <form method="POST" action="{{ url_for('admin.tag_rename') }}" class="d-flex gap-2">
                   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                   <input type="hidden" name="old_tag" value="{{ item.tag }}" />
-                  <input
-                    type="text"
-                    name="new_tag"
-                    value="{{ item.tag }}"
-                    class="form-control form-control-sm"
-                    required
-                  />
+                  <input type="text" name="new_tag" value="{{ item.tag }}" class="form-control form-control-sm" required />
                   <button type="submit" class="btn btn-sm btn-outline-primary text-nowrap">Rename</button>
                 </form>
               </td>
 
-              <!-- Delete form -->
               <td>
                 <form
                   method="POST"
@@ -92,8 +60,80 @@
 {% else %}
   <div class="card">
     <div class="card-body text-center text-muted py-5">
-      No tags found. Add tags to projects via the project edit form.
+      No tags yet. Use the <strong>+ Add Tag</strong> button to create one.
     </div>
   </div>
 {% endif %}
+
+
+<!-- Add Tag Modal -->
+<div class="modal fade" id="addTagModal" tabindex="-1" aria-labelledby="addTagModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form method="POST" action="{{ url_for('admin.tag_add') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="addTagModalLabel">Add New Tag</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+          <!-- Tag name -->
+          <div class="mb-4">
+            <label class="form-label fw-semibold">Tag name</label>
+            <input type="text" name="tag" class="form-control" placeholder="e.g. web-app" required />
+          </div>
+
+          <!-- Project checkboxes grouped by category -->
+          <div class="mb-1 d-flex justify-content-between align-items-center">
+            <label class="form-label fw-semibold mb-0">Apply to projects</label>
+            <div class="d-flex gap-3">
+              <a href="#" class="small" id="selectAll">Select all</a>
+              <a href="#" class="small" id="clearAll">Clear</a>
+            </div>
+          </div>
+
+          {% set categories = [('web', 'Web'), ('data', 'Data'), ('software', 'Software')] %}
+          {% for cat_key, cat_label in categories %}
+            {% set cat_projects = all_projects | selectattr('primary_category', 'equalto', cat_key) | list %}
+            {% if cat_projects %}
+              <div class="mb-3">
+                <div class="text-muted small fw-semibold text-uppercase mb-2" style="letter-spacing:.05em;">{{ cat_label }}</div>
+                <div class="row g-1">
+                  {% for project in cat_projects %}
+                    <div class="col-12 col-md-6">
+                      <div class="form-check">
+                        <input class="form-check-input project-checkbox" type="checkbox" name="slugs" value="{{ project.slug }}" id="slug_{{ project.slug }}" />
+                        <label class="form-check-label small" for="slug_{{ project.slug }}">{{ project.title }}</label>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-dark">Add Tag</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.getElementById('selectAll').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.querySelectorAll('.project-checkbox').forEach(cb => cb.checked = true);
+  });
+  document.getElementById('clearAll').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.querySelectorAll('.project-checkbox').forEach(cb => cb.checked = false);
+  });
+</script>
 {% endblock %}
