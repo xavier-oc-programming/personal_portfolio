@@ -43,14 +43,6 @@
       <p class="text-secondary mb-3">Short project summary will go here.</p>
     {% endif %}
 
-    {% if project.tech_stack %}
-      <div class="d-flex flex-wrap gap-1 mb-3">
-        {% for tech in project.tech_stack %}
-          <span class="badge text-bg-light border">{{ tech }}</span>
-        {% endfor %}
-      </div>
-    {% endif %}
-
     {% if project.tags %}
       <div class="d-flex flex-wrap gap-2 mb-4">
         {% for tag in project.tags %}
