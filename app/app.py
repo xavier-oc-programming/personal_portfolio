@@ -78,6 +78,7 @@ def _normalize_sort(sort_key: str | None) -> str:
     normalized_sort = (sort_key or "az").strip().lower()
 
     if normalized_sort not in ALLOWED_SORTS:
+        
         return "az"
 
     return normalized_sort
