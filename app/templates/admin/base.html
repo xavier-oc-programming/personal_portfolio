@@ -35,6 +35,7 @@
         <a href="{{ url_for('admin.dashboard') }}" class="{{ 'active' if request_path == '/admin/' else '' }}">Dashboard</a>
         <a href="{{ url_for('admin.projects') }}" class="{{ 'active' if '/admin/projects' in request_path else '' }}">Projects</a>
         <a href="{{ url_for('admin.messages') }}" class="{{ 'active' if '/admin/messages' in request_path else '' }}">Messages</a>
+        <a href="{{ url_for('admin.backups') }}" class="{{ 'active' if '/admin/backups' in request_path else '' }}">Backups</a>
         <hr style="border-color:#333;">
         <a href="{{ url_for('home') }}" target="_blank">View Site</a>
         <a href="{{ url_for('admin.logout') }}" class="text-danger">Logout</a>
