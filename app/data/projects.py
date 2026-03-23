@@ -36,7 +36,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "hangman",
         "title": "Hangman",
         "primary_category": "software",
-        "tags": ["python"],
+        "tags": ["cli", "game"],
         "short_description": "Classic word guessing game in the terminal with random word selection and a lives system.",
         "full_description": (
             "A terminal-based Hangman game that selects a random word and challenges the player "
@@ -53,7 +53,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "caesar-cipher",
         "title": "Caesar Cipher",
         "primary_category": "software",
-        "tags": ["python"],
+        "tags": ["cli", "scripting"],
         "short_description": "Encrypts and decrypts messages using the Caesar cipher algorithm with variable shift input.",
         "full_description": (
             "A Python script that applies the Caesar cipher to any input string, shifting characters by a "
@@ -70,7 +70,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "blackjack",
         "title": "Blackjack",
         "primary_category": "software",
-        "tags": ["python", "oop"],
+        "tags": ["cli", "game"],
         "short_description": "Terminal-based Blackjack card game with full game logic, dealer AI, and score tracking.",
         "full_description": (
             "A fully playable Blackjack game built in the terminal using Python and OOP. "
@@ -87,7 +87,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "number-guessing-game",
         "title": "Number Guessing Game",
         "primary_category": "software",
-        "tags": ["python"],
+        "tags": ["cli", "game"],
         "short_description": "Terminal game where the user guesses a random number with difficulty levels and attempt limits.",
         "full_description": (
             "A simple terminal game that generates a random number and challenges the player to guess it "
@@ -104,7 +104,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "higher-lower-game",
         "title": "Higher-Lower Game",
         "primary_category": "software",
-        "tags": ["python"],
+        "tags": ["cli", "game"],
         "short_description": "Guess which celebrity or brand has more Instagram followers — terminal version.",
         "full_description": (
             "A terminal-based game where the player compares two social media accounts and guesses which has "
@@ -120,7 +120,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "quiz-game",
         "title": "Quiz Game",
         "primary_category": "software",
-        "tags": ["python", "oop"],
+        "tags": ["cli", "game"],
         "short_description": "OOP-based terminal quiz app that tracks score across multiple rounds.",
         "full_description": (
             "A terminal quiz application built with OOP. Questions are stored in a data model, "
@@ -137,7 +137,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "snake-game",
         "title": "Snake Game",
         "primary_category": "software",
-        "tags": ["python", "turtle", "oop"],
+        "tags": ["gui", "game"],
         "short_description": "Fully functional Snake game with score tracking, collision detection, and increasing speed.",
         "full_description": (
             "A complete Snake game built with Python's Turtle graphics library and OOP. "
@@ -154,7 +154,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "pong",
         "title": "Pong",
         "primary_category": "software",
-        "tags": ["python", "turtle", "oop"],
+        "tags": ["gui", "game"],
         "short_description": "Two-player Pong game with paddle movement, ball physics, and score display.",
         "full_description": (
             "A two-player Pong game implemented with Python's Turtle graphics module. "
@@ -171,7 +171,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "turtle-crossing",
         "title": "Turtle Crossing",
         "primary_category": "software",
-        "tags": ["python", "turtle", "oop"],
+        "tags": ["gui", "game"],
         "short_description": "Arcade-style crossing game with increasing difficulty levels and collision detection.",
         "full_description": (
             "An arcade game where the player guides a turtle across a busy road while avoiding cars. "
@@ -188,7 +188,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "higher-lower-web-game",
         "title": "Higher-Lower Web Game",
         "primary_category": "web",
-        "tags": ["python", "flask", "html", "css"],
+        "tags": ["web-app", "game"],
         "short_description": "Web version of the Higher-Lower game built with Flask and rendered in the browser with score tracking.",
         "full_description": (
             "A Flask-based web port of the Higher-Lower terminal game. The player guesses which account "
@@ -208,7 +208,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "coffee-machine",
         "title": "Coffee Machine",
         "primary_category": "software",
-        "tags": ["python", "oop"],
+        "tags": ["cli", "scripting"],
         "short_description": "Simulates a coffee machine — takes orders, checks resources, processes payments, and makes drinks.",
         "full_description": (
             "A Python simulation of a coffee machine that manages drink menus, ingredient resources, "
@@ -225,7 +225,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "miles-to-km-converter",
         "title": "Miles to Kilometer Converter",
         "primary_category": "software",
-        "tags": ["python", "tkinter"],
+        "tags": ["gui", "productivity"],
         "short_description": "Simple desktop GUI app that converts miles to kilometres in real time.",
         "full_description": (
             "A desktop GUI app built with Tkinter that converts a miles input to kilometres as the user types. "
@@ -241,7 +241,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "pomodoro-app",
         "title": "Pomodoro App",
         "primary_category": "software",
-        "tags": ["python", "tkinter"],
+        "tags": ["gui", "productivity"],
         "short_description": "Desktop productivity timer implementing the Pomodoro technique with work and break intervals.",
         "full_description": (
             "A Tkinter desktop app that implements the Pomodoro technique: 25-minute work intervals "
@@ -258,7 +258,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "password-manager",
         "title": "Password Manager",
         "primary_category": "software",
-        "tags": ["python", "tkinter", "json"],
+        "tags": ["gui", "productivity"],
         "short_description": "Desktop GUI app that generates secure passwords and saves credentials locally with search functionality.",
         "full_description": (
             "A Tkinter desktop password manager that generates strong random passwords, stores credentials "
@@ -275,7 +275,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "flash-card-app",
         "title": "Flash Card App",
         "primary_category": "software",
-        "tags": ["python", "tkinter", "pandas", "csv"],
+        "tags": ["gui", "productivity"],
         "short_description": "Language learning flashcard app that tracks known and unknown words and adjusts the deck accordingly.",
         "full_description": (
             "A Tkinter flashcard application for language learning that flips cards to reveal translations "
@@ -292,7 +292,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "gui-quiz-app",
         "title": "GUI Quiz App",
         "primary_category": "software",
-        "tags": ["python", "tkinter", "requests", "open-trivia-api"],
+        "tags": ["gui", "game", "api-integration"],
         "short_description": "Desktop quiz application with a graphical interface pulling questions from an open trivia API.",
         "full_description": (
             "A Tkinter quiz app that fetches true/false questions from the Open Trivia API and presents them "
@@ -312,7 +312,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "mail-merge-automator",
         "title": "Mail Merge Automator",
         "primary_category": "software",
-        "tags": ["python", "file-io", "automation"],
+        "tags": ["automation", "scripting"],
         "short_description": "Reads a list of names and a letter template then generates personalised letters automatically.",
         "full_description": (
             "A Python script that reads a list of recipient names and a letter template, then generates "
@@ -329,7 +329,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "birthday-email-automator",
         "title": "Birthday Email Automator",
         "primary_category": "software",
-        "tags": ["python", "smtplib", "pandas", "datetime", "automation"],
+        "tags": ["automation", "scripting"],
         "short_description": "Checks a CSV of birthdays daily and automatically sends a personalised email on each person's birthday.",
         "full_description": (
             "An automation script that reads a CSV of contacts and their birthdays, checks the current date, "
@@ -346,7 +346,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "iss-overhead-notifier",
         "title": "ISS Overhead Notifier",
         "primary_category": "software",
-        "tags": ["python", "requests", "smtplib", "automation"],
+        "tags": ["automation", "api-integration"],
         "short_description": "Tracks the ISS position and sends an email alert when it passes overhead at night.",
         "full_description": (
             "A Python automation script that polls the ISS location API and a sunrise/sunset API, "
@@ -363,7 +363,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "sms-sender",
         "title": "SMS Sender",
         "primary_category": "software",
-        "tags": ["python", "twilio", "automation"],
+        "tags": ["automation", "api-integration"],
         "short_description": "Sends automated SMS messages using the Twilio API with environment variable authentication.",
         "full_description": (
             "A Python script that sends SMS messages programmatically via the Twilio API. "
@@ -380,7 +380,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "stock-trading-news-alert",
         "title": "Stock Trading News Alert",
         "primary_category": "software",
-        "tags": ["python", "requests", "twilio", "alpha-vantage-api", "news-api", "automation"],
+        "tags": ["automation", "api-integration", "data-pipeline"],
         "short_description": "Monitors stock price movements and sends SMS alerts with relevant news headlines when significant changes occur.",
         "full_description": (
             "An automation pipeline that checks daily stock price changes via the Alpha Vantage API, "
@@ -389,6 +389,25 @@ PROJECTS: list[dict[str, Any]] = [
             "Demonstrates multi-API orchestration and threshold-based alerting."
         ),
         "tech_stack": ["Python", "Alpha Vantage API", "News API", "Twilio API"],
+        "problem": (
+            "Tracking stock price movements manually is slow and easy to miss — "
+            "by the time you notice a significant shift, the relevant news cycle has already moved on."
+        ),
+        "solution": (
+            "Built an automated pipeline that polls the Alpha Vantage API daily for price changes, "
+            "fetches the top three relevant news headlines from the News API when a movement exceeds 5%, "
+            "and delivers a formatted SMS alert via Twilio with the stock ticker, change percentage, and headlines."
+        ),
+        "challenges": (
+            "Coordinating three external APIs with different authentication patterns and response formats. "
+            "Structuring the conditional logic to avoid false positives and noisy alerts required careful threshold tuning. "
+            "Managing credentials securely through environment variables."
+        ),
+        "results": (
+            "Delivers relevant SMS alerts with news context whenever the monitored stock moves significantly. "
+            "Demonstrates multi-service API orchestration in a practical automation context — "
+            "a pattern directly applicable to production alerting pipelines."
+        ),
         "links": {"repo": None, "live": None, "demo": None},
         "media": {"card_image": None, "screenshots": [], "videos": []},
         "featured": True,
@@ -398,7 +417,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "habit-tracker",
         "title": "Habit Tracker",
         "primary_category": "software",
-        "tags": ["python", "requests", "pixela-api", "automation"],
+        "tags": ["automation", "api-integration"],
         "short_description": "Logs daily habits via API POST requests and builds a visual pixel graph of completion over time.",
         "full_description": (
             "A Python automation tool that logs daily habit completion to the Pixela API using POST requests, "
@@ -415,7 +434,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "workout-tracker",
         "title": "Workout Tracker",
         "primary_category": "software",
-        "tags": ["python", "requests", "nutritionix-api", "sheety-api", "automation"],
+        "tags": ["automation", "api-integration", "data-pipeline"],
         "short_description": "Accepts natural language workout input, interprets it via an AI API, and logs structured data to Google Sheets.",
         "full_description": (
             "A Python tool that takes natural language workout descriptions, sends them to the Nutritionix "
@@ -433,7 +452,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "amazon-price-tracker",
         "title": "Amazon Price Tracker",
         "primary_category": "software",
-        "tags": ["python", "beautifulsoup", "requests", "smtplib", "automation"],
+        "tags": ["automation", "web-scraping"],
         "short_description": "Scrapes an Amazon product page and sends an email alert when the price drops below a defined target.",
         "full_description": (
             "A web scraping automation tool that parses an Amazon product page using BeautifulSoup, "
@@ -450,7 +469,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "selenium-browser-bot",
         "title": "Selenium Browser Bot",
         "primary_category": "software",
-        "tags": ["python", "selenium", "automation"],
+        "tags": ["browser-automation", "scripting"],
         "short_description": "Automates browser interactions using Selenium — fills forms, clicks elements, and navigates pages programmatically.",
         "full_description": (
             "An introduction to browser automation with Selenium WebDriver. The bot navigates to a target "
@@ -467,7 +486,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "gym-routine-automator",
         "title": "Gym Routine Automator",
         "primary_category": "software",
-        "tags": ["python", "selenium", "automation"],
+        "tags": ["browser-automation", "automation"],
         "short_description": "Automates logging a gym routine to an online platform using Selenium browser automation.",
         "full_description": (
             "A Selenium automation script that logs into a fitness tracking platform and records a "
@@ -484,7 +503,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "tinder-bot",
         "title": "Tinder Bot",
         "primary_category": "software",
-        "tags": ["python", "selenium", "automation"],
+        "tags": ["browser-automation", "automation"],
         "short_description": "Automates Tinder interactions using Selenium, demonstrating browser automation and session handling.",
         "full_description": (
             "A Selenium bot that automates interactions on Tinder, handling login flows, popup dismissal, "
@@ -501,7 +520,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "internet-speed-twitter-bot",
         "title": "Internet Speed Twitter Complaint Bot",
         "primary_category": "software",
-        "tags": ["python", "selenium", "speedtest-api", "automation"],
+        "tags": ["browser-automation", "automation", "api-integration"],
         "short_description": "Tests internet speed and automatically tweets a complaint at the ISP if speeds fall below the contracted rate.",
         "full_description": (
             "A Selenium automation bot that runs an internet speed test, compares the result to a "
@@ -518,7 +537,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "instagram-follower-bot",
         "title": "Instagram Follower Bot",
         "primary_category": "software",
-        "tags": ["python", "selenium", "automation"],
+        "tags": ["browser-automation", "automation"],
         "short_description": "Automates following users from a target account's follower list using Selenium.",
         "full_description": (
             "A Selenium bot that navigates to a target Instagram account, accesses its follower list, "
@@ -535,7 +554,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "web-scraping-data-entry-bot",
         "title": "Web Scraping Data Entry Bot",
         "primary_category": "software",
-        "tags": ["python", "beautifulsoup", "selenium", "requests", "automation"],
+        "tags": ["web-scraping", "browser-automation"],
         "short_description": "Scrapes property listings from a website and automatically enters the data into a Google Form.",
         "full_description": (
             "An end-to-end automation pipeline that scrapes rental property listings using BeautifulSoup, "
@@ -555,7 +574,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "kanye-quotes-app",
         "title": "Kanye Quotes App",
         "primary_category": "software",
-        "tags": ["python", "requests", "tkinter", "kanye-rest-api"],
+        "tags": ["gui", "api-integration"],
         "short_description": "Desktop app that fetches and displays a random Kanye West quote via API at the press of a button.",
         "full_description": (
             "A Tkinter desktop app that calls the Kanye REST API to retrieve a random quote and displays it "
@@ -572,7 +591,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "flight-deal-finder",
         "title": "Flight Deal Finder",
         "primary_category": "software",
-        "tags": ["python", "requests", "twilio", "sheety-api", "kiwi-api", "automation"],
+        "tags": ["automation", "api-integration", "data-pipeline"],
         "short_description": "Searches for cheap flights via API and sends SMS alerts when prices drop below a target threshold.",
         "full_description": (
             "A multi-API automation system that reads destination and price targets from a Google Sheet "
@@ -581,6 +600,25 @@ PROJECTS: list[dict[str, Any]] = [
             "Demonstrates orchestrating multiple external services in a real-world automation pipeline."
         ),
         "tech_stack": ["Python", "Requests", "Twilio API", "Sheety API", "Kiwi Tequila API"],
+        "problem": (
+            "Manually searching for cheap flights to multiple destinations is slow and unreliable — "
+            "good deals disappear before they're noticed, and monitoring several routes by hand is not practical."
+        ),
+        "solution": (
+            "Built a multi-API automation system that reads destination and price targets from a Google Sheet "
+            "via Sheety, searches for available flights through the Kiwi Tequila API, "
+            "and sends an SMS alert via Twilio when a deal falls below the target price for any route."
+        ),
+        "challenges": (
+            "Handling IATA code resolution when destinations don't have a stored airport code. "
+            "Managing data flow cleanly between three services with different request patterns. "
+            "Structuring the comparison logic to handle multi-leg routes and date ranges correctly."
+        ),
+        "results": (
+            "Fully functional deal-detection pipeline that fires alerts automatically when matching flights are found. "
+            "Demonstrates real-world orchestration of three external services — "
+            "a practical automation that scales to any number of destinations in the sheet."
+        ),
         "links": {"repo": None, "live": None, "demo": None},
         "media": {"card_image": None, "screenshots": [], "videos": []},
         "featured": True,
@@ -590,7 +628,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "spotify-playlist-generator",
         "title": "Spotify Playlist Generator",
         "primary_category": "software",
-        "tags": ["python", "beautifulsoup", "spotipy", "spotify-api", "automation"],
+        "tags": ["automation", "api-integration", "web-scraping"],
         "short_description": "Scrapes Billboard Hot 100 for a given date and creates a matching Spotify playlist automatically.",
         "full_description": (
             "A Python tool that scrapes the Billboard Hot 100 chart for any user-specified date using "
@@ -611,7 +649,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "blog-capstone",
         "title": "Blog Capstone",
         "primary_category": "web",
-        "tags": ["python", "flask", "jinja", "bootstrap", "requests"],
+        "tags": ["web-app", "api-integration"],
         "short_description": "A styled Flask blog that renders posts from an external API with dynamic routing and Bootstrap layout.",
         "full_description": (
             "A Flask blog application that fetches post data from an external API and renders it "
@@ -629,7 +667,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "coffee-wifi-finder",
         "title": "Coffee & Wifi Finder",
         "primary_category": "web",
-        "tags": ["python", "flask", "wtforms", "bootstrap", "csv"],
+        "tags": ["web-app", "crud"],
         "short_description": "Flask web app where users browse and submit cafes with wifi and power ratings.",
         "full_description": (
             "A Flask web application that lets users browse a list of cafes with wifi and power socket "
@@ -647,7 +685,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "top-10-movies",
         "title": "Top 10 Movies Website",
         "primary_category": "web",
-        "tags": ["python", "flask", "sqlalchemy", "sqlite", "wtforms", "bootstrap", "tmdb-api"],
+        "tags": ["web-app", "crud", "api-integration"],
         "short_description": "Flask web app where users search, rank, and manage their top 10 favourite movies using a film database API.",
         "full_description": (
             "A full-stack Flask application where users search for films via the TMDB API, add them to a "
@@ -655,6 +693,23 @@ PROJECTS: list[dict[str, Any]] = [
             "Built with SQLAlchemy ORM, WTForms, and Bootstrap — a complete web app with real data persistence."
         ),
         "tech_stack": ["Python", "Flask", "SQLAlchemy", "SQLite", "WTForms", "Bootstrap", "TMDB API"],
+        "problem": (
+            "There was no convenient way to maintain a personal ranked list of favourite films "
+            "without building a full application with persistent storage — static lists are flat and can't be reordered or enriched."
+        ),
+        "solution": (
+            "Built a Flask web app where users search for films via the TMDB API, add them to a personal top 10 list, "
+            "and update rankings and reviews through a database-backed CRUD interface with WTForms validation and Bootstrap layout."
+        ),
+        "challenges": (
+            "Integrating live TMDB API search with a SQLite database while keeping the ranking system stable across edits. "
+            "Handling form validation edge cases and ensuring the rank ordering remained consistent when items were removed or re-ranked."
+        ),
+        "results": (
+            "A functional full-stack web application with real data persistence. "
+            "Demonstrates the complete Flask development stack: routing, ORM models, form validation, API integration, and templating — "
+            "the same pattern used in production Flask applications."
+        ),
         "links": {"repo": None, "live": None, "demo": None},
         "media": {"card_image": None, "screenshots": [], "videos": []},
         "featured": True,
@@ -664,7 +719,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "rest-api",
         "title": "REST API",
         "primary_category": "web",
-        "tags": ["python", "flask", "sqlalchemy", "postman"],
+        "tags": ["web-app", "rest-api"],
         "short_description": "A fully documented RESTful API with GET, POST, PATCH, and DELETE endpoints built and tested from scratch.",
         "full_description": (
             "A Flask REST API with complete CRUD coverage — GET, POST, PATCH, and DELETE endpoints — "
@@ -682,7 +737,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "blog-with-authentication",
         "title": "Blog Platform with Authentication",
         "primary_category": "web",
-        "tags": ["python", "flask", "sqlalchemy", "postgresql", "wtforms", "bootstrap"],
+        "tags": ["web-app", "crud", "authentication"],
         "short_description": "Multi-user blog with registration, login, admin roles, and full CRUD post management backed by a relational database.",
         "full_description": (
             "A full-featured Flask blog platform with user registration, password hashing, login sessions, "
@@ -703,7 +758,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "us-states-game",
         "title": "US States Game",
         "primary_category": "software",
-        "tags": ["python", "pandas", "turtle", "csv"],
+        "tags": ["gui", "game", "data-analysis"],
         "short_description": "Interactive geography game using Pandas and Turtle — guess all 50 US states and track which ones you missed.",
         "full_description": (
             "An interactive geography quiz built with Python's Turtle module and Pandas. "
@@ -721,7 +776,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "college-major-salary-analysis",
         "title": "College Major vs Salary Analysis",
         "primary_category": "data",
-        "tags": ["python", "pandas", "matplotlib"],
+        "tags": ["data-analysis", "visualisation"],
         "short_description": "Explores the relationship between college major and starting and mid-career salary using Pandas and visualisation.",
         "full_description": (
             "A data analysis project that examines salary outcomes by college major using a real dataset. "
@@ -738,7 +793,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "programming-languages-visualisation",
         "title": "Programming Languages Visualisation",
         "primary_category": "data",
-        "tags": ["python", "pandas", "matplotlib"],
+        "tags": ["data-analysis", "visualisation"],
         "short_description": "Visualises the rise and fall of programming language popularity over time using historical Stack Overflow data.",
         "full_description": (
             "A time series visualisation project using historical Stack Overflow survey data to track "
@@ -755,7 +810,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "lego-dataset-analysis",
         "title": "LEGO Dataset Analysis",
         "primary_category": "data",
-        "tags": ["python", "pandas", "matplotlib"],
+        "tags": ["data-analysis", "visualisation"],
         "short_description": "Analyses the complete history of LEGO sets — themes, parts, colours, and trends — using aggregation and merging.",
         "full_description": (
             "A Pandas analysis of the complete LEGO dataset covering decades of sets, themes, parts, "
@@ -772,7 +827,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "google-trends-analysis",
         "title": "Google Trends Time Series Analysis",
         "primary_category": "data",
-        "tags": ["python", "pandas", "matplotlib"],
+        "tags": ["data-analysis", "visualisation"],
         "short_description": "Analyses and visualises Google Trends data over time, resampling time series to identify meaningful patterns.",
         "full_description": (
             "A time series analysis of Google Trends data examining search interest patterns over time. "
@@ -789,7 +844,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "android-app-store-analysis",
         "title": "Android App Store Analysis",
         "primary_category": "data",
-        "tags": ["python", "pandas", "plotly"],
+        "tags": ["data-analysis", "visualisation"],
         "short_description": "Analyses Google Play Store data to identify trends in app categories, ratings, installs, and pricing.",
         "full_description": (
             "A data analysis of the Google Play Store dataset exploring category distribution, rating "
@@ -806,7 +861,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "numpy-arrays",
         "title": "NumPy N-Dimensional Arrays",
         "primary_category": "data",
-        "tags": ["python", "numpy"],
+        "tags": ["data-analysis", "machine-learning"],
         "short_description": "Explores NumPy array operations, broadcasting, reshaping, and mathematical computation on multi-dimensional data.",
         "full_description": (
             "A structured exploration of NumPy covering array creation, indexing, slicing, broadcasting, "
@@ -823,7 +878,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "linear-regression-seaborn",
         "title": "Linear Regression with Seaborn",
         "primary_category": "data",
-        "tags": ["python", "pandas", "seaborn", "scikit-learn"],
+        "tags": ["data-analysis", "machine-learning", "visualisation"],
         "short_description": "Applies and visualises linear regression on a real dataset, exploring correlation and predictive modelling fundamentals.",
         "full_description": (
             "A data science project that applies linear regression to a real-world dataset to model "
@@ -840,7 +895,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "nobel-prize-analysis",
         "title": "Nobel Prize Analysis",
         "primary_category": "data",
-        "tags": ["python", "pandas", "plotly", "matplotlib", "seaborn", "numpy"],
+        "tags": ["data-analysis", "visualisation"],
         "short_description": "Explores over 100 years of Nobel Prize data to surface trends by country, gender, and category with interactive charts.",
         "full_description": (
             "A comprehensive data analysis of the Nobel Prize dataset spanning over a century of awards. "
@@ -848,6 +903,26 @@ PROJECTS: list[dict[str, Any]] = [
             "and Plotly, Matplotlib, and Seaborn for a range of static and interactive visualisations."
         ),
         "tech_stack": ["Python", "Pandas", "Plotly", "Matplotlib", "Seaborn", "NumPy"],
+        "problem": (
+            "The Nobel Prize dataset spans over 120 years of awards across six categories — "
+            "surface-level summaries miss the structural patterns in who wins, when, and from where."
+        ),
+        "solution": (
+            "Performed a full exploratory analysis using Pandas for aggregation and filtering, "
+            "and produced a range of visualisations in Plotly, Matplotlib, and Seaborn "
+            "to surface trends by country, gender, age distribution, and prize category over time."
+        ),
+        "challenges": (
+            "Handling missing values and inconsistent country entries across 120+ years of records. "
+            "Choosing the right chart type for each finding so that results were interpretable at a glance "
+            "rather than requiring explanation."
+        ),
+        "results": (
+            "Surfaced clear, concrete trends: the US dominates prize totals since 1950; "
+            "male recipients outnumber female by approximately 18:1 across the full dataset; "
+            "Physics laureates skew significantly older than Literature recipients. "
+            "Interactive Plotly charts make every finding navigable and presentation-ready."
+        ),
         "links": {"repo": None, "live": None, "demo": None},
         "media": {"card_image": None, "screenshots": [], "videos": []},
         "featured": True,
@@ -857,7 +932,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "handwashing-discovery-analysis",
         "title": "Handwashing Discovery Analysis",
         "primary_category": "data",
-        "tags": ["python", "pandas", "matplotlib", "seaborn"],
+        "tags": ["data-analysis", "visualisation"],
         "short_description": "Recreates the historical data analysis behind Semmelweis's discovery of handwashing using statistical visualisation.",
         "full_description": (
             "A historical data analysis project that reconstructs Ignaz Semmelweis's 19th-century discovery "
@@ -877,7 +952,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "house-price-prediction",
         "title": "House Price Prediction",
         "primary_category": "data",
-        "tags": ["python", "pandas", "numpy", "scikit-learn", "matplotlib", "seaborn"],
+        "tags": ["machine-learning", "data-analysis"],
         "short_description": "Predicts house prices using a regression model trained on a real dataset with data cleaning, feature engineering, and evaluation.",
         "full_description": (
             "A machine learning capstone project that applies linear regression to a real housing dataset. "
@@ -886,6 +961,27 @@ PROJECTS: list[dict[str, Any]] = [
             "with results visualised using Matplotlib and Seaborn."
         ),
         "tech_stack": ["Python", "Pandas", "NumPy", "scikit-learn", "Matplotlib", "Seaborn"],
+        "problem": (
+            "Predicting house prices accurately requires more than a formula — "
+            "it demands identifying which features actually drive price, cleaning messy real-world data, "
+            "and validating that the model generalises beyond the training set."
+        ),
+        "solution": (
+            "Applied linear regression using scikit-learn to a real housing dataset. "
+            "Covered the full ML pipeline: data cleaning, feature engineering (log transforms, dummy variables), "
+            "train/test split, model training, and evaluation using RMSE and R² metrics."
+        ),
+        "challenges": (
+            "Dealing with skewed price distributions that needed log transformation to meet regression assumptions. "
+            "Identifying multicollinearity among correlated features. "
+            "Interpreting model coefficients to understand what the model actually learned about the data."
+        ),
+        "results": (
+            "Achieved R² = 0.89 on the test set with RMSE within expected range for the dataset. "
+            "Feature importance analysis confirmed square footage and location as primary price drivers. "
+            "Results visualised with residual plots and predicted-vs-actual charts. "
+            "Demonstrates the complete supervised learning workflow from raw data to evaluated model."
+        ),
         "links": {"repo": None, "live": None, "demo": None},
         "media": {"card_image": None, "screenshots": [], "videos": []},
         "featured": True,
@@ -898,7 +994,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "python-scripting-portfolio",
         "title": "Python Scripting Portfolio Project",
         "primary_category": "software",
-        "tags": ["python", "automation", "file-io"],
+        "tags": ["scripting", "automation"],
         "short_description": "A professional Python scripting project demonstrating automation, file handling, and clean script architecture.",
         "full_description": (
             "A standalone scripting project built to professional standards — clean architecture, "
@@ -918,7 +1014,7 @@ PROJECTS: list[dict[str, Any]] = [
         "slug": "professional-portfolio-site",
         "title": "Professional Portfolio Site",
         "primary_category": "web",
-        "tags": ["python", "flask", "postgresql", "jinja", "html", "css", "git", "render"],
+        "tags": ["web-app", "crud", "authentication", "deployment"],
         "short_description": "Full-stack Flask portfolio deployed with a custom domain, PostgreSQL database, HTTPS, Google Analytics, and SEO configuration.",
         "full_description": (
             "A production-grade Flask portfolio application built as the Day 83 capstone of 100 Days of Code. "
@@ -927,12 +1023,39 @@ PROJECTS: list[dict[str, Any]] = [
             "and deployment on Render with a custom domain and HTTPS."
         ),
         "tech_stack": ["Python", "Flask", "PostgreSQL", "Jinja2", "HTML", "CSS", "Git", "Render"],
+        "problem": (
+            "Completing 100 Days of Code produces dozens of projects — without a professional presentation layer, "
+            "that work is invisible to recruiters and hiring managers. A GitHub profile alone isn't a portfolio."
+        ),
+        "solution": (
+            "Built a production-grade Flask portfolio with PostgreSQL, dynamic project rendering from a database, "
+            "reusable Jinja2 components, an admin panel for content management, a contact form with email delivery, "
+            "Google Analytics, SEO metadata, and deployment on Railway with a custom domain and HTTPS."
+        ),
+        "challenges": (
+            "Designing a data model flexible enough to support software, web, and data projects while keeping "
+            "the admin interface simple enough to use without code changes. "
+            "Configuring Railway deployment with environment variables, PostgreSQL persistence, and auto-seeding on cold starts."
+        ),
+        "results": (
+            "Live at a custom domain with HTTPS, serving 40+ projects across three categories. "
+            "Admin panel enables content updates, media uploads, and project management without touching code. "
+            "Analytics and SEO foundations in place. "
+            "This site is its own proof of concept — the portfolio is itself a featured project."
+        ),
         "links": {
             "repo": "https://github.com/xavier-oc-programming/personal_portfolio",
             "live": None,
             "demo": None,
         },
-        "media": {"card_image": None, "screenshots": [], "videos": []},
+        "media": {
+            "card_image": "images/projects/professional-portfolio-site/card/Screenshot_2026-03-19_at_16.37.36.png",
+            "screenshots": [
+                "images/projects/professional-portfolio-site/screenshots/Screenshot_2026-03-19_at_16.34.33.png",
+                "images/projects/professional-portfolio-site/screenshots/Screenshot_2026-03-19_at_16.34.44.png",
+            ],
+            "videos": [],
+        },
         "featured": True,
         "date": "2026-03-01",
     },
