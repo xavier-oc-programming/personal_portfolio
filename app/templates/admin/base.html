@@ -34,6 +34,7 @@
         <div class="brand">Portfolio Admin</div>
         <a href="{{ url_for('admin.dashboard') }}" class="{{ 'active' if request_path == '/admin/' else '' }}">Dashboard</a>
         <a href="{{ url_for('admin.projects') }}" class="{{ 'active' if '/admin/projects' in request_path else '' }}">Projects</a>
+        <a href="{{ url_for('admin.tags') }}" class="{{ 'active' if '/admin/tags' in request_path else '' }}">Tags</a>
         <a href="{{ url_for('admin.messages') }}" class="{{ 'active' if '/admin/messages' in request_path else '' }}">Messages</a>
         <a href="{{ url_for('admin.backups') }}" class="{{ 'active' if '/admin/backups' in request_path else '' }}">Backups</a>
         <hr style="border-color:#333;">
