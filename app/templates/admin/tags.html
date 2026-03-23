@@ -1,0 +1,71 @@
+{% extends "admin/base.html" %}
+{% block title %}Tags{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="fw-bold mb-0">Tags</h2>
+  <span class="text-muted small">{{ tags|length }} tag{{ 's' if tags|length != 1 }}</span>
+</div>
+
+{% if tags %}
+  <div class="card">
+    <div class="card-body p-0">
+      <table class="table table-hover mb-0 align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Tag</th>
+            <th style="width:120px;">Projects</th>
+            <th style="width:300px;">Rename</th>
+            <th style="width:80px;"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in tags %}
+            <tr>
+              <td>
+                <span class="badge text-bg-secondary fs-6 fw-normal">{{ item.tag }}</span>
+              </td>
+              <td class="text-muted">{{ item.count }}</td>
+
+              <!-- Rename inline form -->
+              <td>
+                <form method="POST" action="{{ url_for('admin.tag_rename') }}" class="d-flex gap-2">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                  <input type="hidden" name="old_tag" value="{{ item.tag }}" />
+                  <input
+                    type="text"
+                    name="new_tag"
+                    value="{{ item.tag }}"
+                    class="form-control form-control-sm"
+                    required
+                  />
+                  <button type="submit" class="btn btn-sm btn-outline-primary text-nowrap">Rename</button>
+                </form>
+              </td>
+
+              <!-- Delete form -->
+              <td>
+                <form
+                  method="POST"
+                  action="{{ url_for('admin.tag_delete') }}"
+                  onsubmit="return confirm('Delete tag \'{{ item.tag }}\' from {{ item.count }} project{{ \'s\' if item.count != 1 }}?')"
+                >
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                  <input type="hidden" name="tag" value="{{ item.tag }}" />
+                  <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% else %}
+  <div class="card">
+    <div class="card-body text-center text-muted py-5">
+      No tags found. Add tags to projects via the project edit form.
+    </div>
+  </div>
+{% endif %}
+{% endblock %}
