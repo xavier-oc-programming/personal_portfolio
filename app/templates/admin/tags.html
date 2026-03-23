@@ -86,26 +86,29 @@
           </div>
 
           <!-- Project checkboxes grouped by category -->
-          <div class="mb-1 d-flex justify-content-between align-items-center">
+          <div class="mb-2 d-flex justify-content-between align-items-center">
             <label class="form-label fw-semibold mb-0">Apply to projects</label>
             <div class="d-flex gap-3">
               <a href="#" class="small" id="selectAll">Select all</a>
               <a href="#" class="small" id="clearAll">Clear</a>
             </div>
           </div>
+          <div class="mb-3">
+            <input type="text" id="projectSearch" class="form-control form-control-sm" placeholder="Search projects..." autocomplete="off" />
+          </div>
 
           {% set categories = [('web', 'Web'), ('data', 'Data'), ('software', 'Software')] %}
           {% for cat_key, cat_label in categories %}
             {% set cat_projects = all_projects | selectattr('primary_category', 'equalto', cat_key) | list %}
             {% if cat_projects %}
-              <div class="mb-3">
+              <div class="mb-3 category-group">
                 <div class="text-muted small fw-semibold text-uppercase mb-2" style="letter-spacing:.05em;">{{ cat_label }}</div>
                 <div class="row g-1">
                   {% for project in cat_projects %}
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-6 project-row">
                       <div class="form-check">
                         <input class="form-check-input project-checkbox" type="checkbox" name="slugs" value="{{ project.slug }}" id="slug_{{ project.slug }}" />
-                        <label class="form-check-label small" for="slug_{{ project.slug }}">{{ project.title }}</label>
+                        <label class="form-check-label small project-label" for="slug_{{ project.slug }}" data-title="{{ project.title }}">{{ project.title }}</label>
                       </div>
                     </div>
                   {% endfor %}
@@ -131,9 +134,54 @@
     e.preventDefault();
     document.querySelectorAll('.project-checkbox').forEach(cb => cb.checked = true);
   });
+
   document.getElementById('clearAll').addEventListener('click', function(e) {
     e.preventDefault();
     document.querySelectorAll('.project-checkbox').forEach(cb => cb.checked = false);
+  });
+
+  // Search + highlight
+  document.getElementById('projectSearch').addEventListener('input', function() {
+    const query = this.value.trim().toLowerCase();
+    const rows = document.querySelectorAll('.project-row');
+
+    rows.forEach(function(row) {
+      const label = row.querySelector('.project-label');
+      const title = label.dataset.title;
+
+      if (!query) {
+        // Reset: show all, remove highlights
+        row.style.opacity = '';
+        label.innerHTML = title;
+        return;
+      }
+
+      const idx = title.toLowerCase().indexOf(query);
+      if (idx === -1) {
+        row.style.opacity = '0.25';
+        label.innerHTML = title;
+      } else {
+        row.style.opacity = '1';
+        label.innerHTML =
+          title.slice(0, idx) +
+          '<mark class="px-0">' + title.slice(idx, idx + query.length) + '</mark>' +
+          title.slice(idx + query.length);
+      }
+    });
+
+    // Hide category headers that have no visible projects
+    document.querySelectorAll('.category-group').forEach(function(group) {
+      const anyVisible = Array.from(group.querySelectorAll('.project-row'))
+        .some(r => r.style.opacity !== '0.25');
+      group.style.display = (!query || anyVisible) ? '' : 'none';
+    });
+  });
+
+  // Clear search when modal closes
+  document.getElementById('addTagModal').addEventListener('hidden.bs.modal', function() {
+    const search = document.getElementById('projectSearch');
+    search.value = '';
+    search.dispatchEvent(new Event('input'));
   });
 </script>
 {% endblock %}
