@@ -24,12 +24,16 @@
 
     {% if active_category and active_tag %}
       {% set description = "Browse my " ~ active_category ~ " work tagged with \"" ~ active_tag ~ "\"." %}
-    {% elif active_category %}
-      {% set description = "Browse my " ~ active_category ~ " work." %}
+    {% elif active_category == "web" %}
+      {% set description = "Full-stack Flask applications — from local builds to deployed production apps with databases, authentication, and clean architecture." %}
+    {% elif active_category == "data" %}
+      {% set description = "Python data projects — cleaning and analysis with Pandas, visualization with Matplotlib and Seaborn, and predictive models with scikit-learn." %}
+    {% elif active_category == "software" %}
+      {% set description = "CLI tools, automation scripts, web scrapers, and desktop apps — modular Python with readable logic and clean structure." %}
     {% elif active_tag %}
       {% set description = "Browse projects tagged with \"" ~ active_tag ~ "\"." %}
     {% else %}
-      {% set description = "Browse my work across Web, Data, and Software." %}
+      {% set description = "Everything I've built — web applications, data analysis, and software tools. All in Python, all built to a real standard." %}
     {% endif %}
 
     {% set centered = false %}
