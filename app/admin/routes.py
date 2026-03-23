@@ -23,6 +23,7 @@ Routes:
     POST /admin/messages/<id>/delete - Delete a message
     GET  /admin/tags               - List all tags with project counts
     POST /admin/tags/add           - Add a new tag to selected projects
+    POST /admin/tags/assign        - Set exactly which projects carry a tag
     POST /admin/tags/rename        - Rename a tag across all projects
     POST /admin/tags/delete        - Delete a tag from all projects
 """
@@ -573,7 +574,13 @@ def _get_tag_counts() -> list[dict]:
 @_require_admin
 def tags():
     all_projects = Project.query.order_by(Project.title.asc()).all()
-    return render_template("admin/tags.html", tags=_get_tag_counts(), all_projects=all_projects)
+    project_tags = {p.slug: p.tags for p in all_projects}
+    return render_template(
+        "admin/tags.html",
+        tags=_get_tag_counts(),
+        all_projects=all_projects,
+        project_tags=project_tags,
+    )
 
 
 @admin_bp.post("/tags/add")
@@ -599,6 +606,33 @@ def tag_add():
     db.session.commit()
     _backup_projects()
     flash(f"Added tag '{tag}' to {updated} project(s).", "success")
+    return redirect(url_for("admin.tags"))
+
+
+@admin_bp.post("/tags/assign")
+@_require_admin
+def tag_assign():
+    tag = request.form.get("tag", "").strip()
+    selected_slugs = set(request.form.getlist("slugs"))
+
+    if not tag:
+        flash("No tag specified.", "danger")
+        return redirect(url_for("admin.tags"))
+
+    added = removed = 0
+    for project in Project.query.all():
+        has_tag = tag in project.tags
+        should_have = project.slug in selected_slugs
+        if should_have and not has_tag:
+            project.tags = project.tags + [tag]
+            added += 1
+        elif not should_have and has_tag:
+            project.tags = [t for t in project.tags if t != tag]
+            removed += 1
+
+    db.session.commit()
+    _backup_projects()
+    flash(f"Tag '{tag}': {added} added, {removed} removed.", "success")
     return redirect(url_for("admin.tags"))
 
 
