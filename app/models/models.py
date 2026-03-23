@@ -162,6 +162,34 @@ class Project(db.Model):
             "videos": self.videos,
         }
 
+    def to_dict(self) -> dict:
+        """
+        Serialise this project to a plain dictionary for API responses.
+
+        Only public-facing fields are included. Internal IDs are omitted.
+        """
+        return {
+            "title": self.title,
+            "slug": self.slug,
+            "summary": self.short_description,
+            "description": self.full_description,
+            "category": self.primary_category,
+            "tags": self.tags,
+            "tech_stack": self.tech_stack,
+            "github_url": self.repo_url,
+            "live_url": self.live_url,
+            "demo_url": self.demo_url,
+            "featured": self.featured,
+            "card_image": self.card_image,
+            "screenshots": self.screenshots,
+            "videos": self.videos,
+            "date": self.date,
+            "problem": self.problem,
+            "solution": self.solution,
+            "challenges": self.challenges,
+            "results": self.results,
+        }
+
 
 class ContactMessage(db.Model):
     """

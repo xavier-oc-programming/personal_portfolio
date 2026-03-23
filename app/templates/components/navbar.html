@@ -63,6 +63,16 @@
               Contact
             </a>
           </li>
+
+          <li class="nav-item">
+            <a
+              class="nav-link {% if request.path.startswith('/api') %}active fw-semibold{% endif %}"
+              href="{{ url_for('api_docs') }}"
+              {% if request.path.startswith('/api') %}aria-current="page"{% endif %}
+            >
+              API
+            </a>
+          </li>
         </ul>
       </div>
     </div>

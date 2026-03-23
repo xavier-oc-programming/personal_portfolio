@@ -32,9 +32,11 @@ from typing import Any
 import resend
 
 from flask import Flask, abort, flash, redirect, render_template, request, session, url_for
+from flask_cors import CORS
 from flask_wtf.csrf import CSRFProtect
 
 from app.admin import admin_bp
+from app.api import api_bp
 from app.config import get_config_class
 from app.forms import ContactForm, MAX_EMAIL_LENGTH, MAX_MESSAGE_LENGTH, MAX_NAME_LENGTH
 from app.models.models import ContactMessage, Project, db
@@ -55,6 +57,7 @@ def _normalize_category(category: str | None) -> str | None:
     if normalized_category not in ALLOWED_CATEGORIES:
         return None
 
+
     return normalized_category
 
 
@@ -65,6 +68,7 @@ def _normalize_tag(tag: str | None) -> str | None:
     normalized_tag = tag.strip().lower()
 
     if not normalized_tag:
+
         return None
 
     return normalized_tag
@@ -274,8 +278,10 @@ def create_app() -> Flask:
     db.init_app(app)
 
     CSRFProtect(app)
+    CORS(app, resources={r"/api/*": {"origins": "*"}})
 
     app.register_blueprint(admin_bp)
+    app.register_blueprint(api_bp)
 
     with app.app_context():
         db.create_all()
@@ -485,6 +491,10 @@ def create_app() -> Flask:
 
         _start_contact_form_timer()
         return render_template("contact.html", form=form)
+
+    @app.get("/api")
+    def api_docs():
+        return render_template("api_docs.html")
 
     @app.errorhandler(404)
     def page_not_found(error):

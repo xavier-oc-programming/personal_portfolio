@@ -2,6 +2,7 @@
 <!-- Projects hub page template. -->
 <!-- Displays the full project collection, dedicated category views, sorting controls, tag filters, and reusable project cards. -->
 <!-- Phase 6 Section 2 update: improves responsive card layout scaling and small-screen control behavior. -->
+<!-- Phase 9 Section 2 update: live filtering via /api/v1/projects — no full page reload on category/tag/sort changes. -->
 
 {% extends "base.html" %}
 
@@ -12,6 +13,15 @@
 {% block canonical_href %}{{ site_url ~ url_for('projects') }}{% endblock %}
 
 {% block content %}
+
+  <!-- Filter state — read by projects-filter.js to initialise without an extra API call -->
+  <div
+    id="projects-filter-state"
+    data-active-category="{{ active_category or '' }}"
+    data-active-tag="{{ active_tag or '' }}"
+    data-active-sort="{{ active_sort }}"
+    hidden
+  ></div>
 
   <!-- Header -->
   <section class="page-section">
@@ -49,6 +59,7 @@
             <a
               class="btn btn-sm {% if not active_category %}btn-dark{% else %}btn-outline-dark{% endif %}"
               href="{{ url_for('projects', sort=active_sort, tag=active_tag) }}"
+              data-category-btn=""
             >
               All ({{ category_counts['all'] }})
             </a>
@@ -56,6 +67,7 @@
             <a
               class="btn btn-sm {% if active_category == 'web' %}btn-dark{% else %}btn-outline-dark{% endif %}"
               href="{{ url_for('projects_web', sort=active_sort, tag=active_tag) }}"
+              data-category-btn="web"
             >
               Web ({{ category_counts['web'] }})
             </a>
@@ -63,6 +75,7 @@
             <a
               class="btn btn-sm {% if active_category == 'data' %}btn-dark{% else %}btn-outline-dark{% endif %}"
               href="{{ url_for('projects_data', sort=active_sort, tag=active_tag) }}"
+              data-category-btn="data"
             >
               Data ({{ category_counts['data'] }})
             </a>
@@ -70,6 +83,7 @@
             <a
               class="btn btn-sm {% if active_category == 'software' %}btn-dark{% else %}btn-outline-dark{% endif %}"
               href="{{ url_for('projects_software', sort=active_sort, tag=active_tag) }}"
+              data-category-btn="software"
             >
               Software ({{ category_counts['software'] }})
             </a>
@@ -77,12 +91,12 @@
         </div>
 
         <div class="col-12 col-lg-4">
-          <form method="get" class="d-flex justify-content-lg-end">
+          <form id="sort-form" method="get" class="d-flex justify-content-lg-end">
             <select
+              id="sort-select"
               class="form-select form-select-sm w-auto"
               name="sort"
               aria-label="Sort projects"
-              onchange="this.form.submit()"
             >
               <option value="az" {% if active_sort == "az" %}selected{% endif %}>A–Z</option>
               <option value="newest" {% if active_sort == "newest" %}selected{% endif %}>Newest</option>
@@ -108,6 +122,7 @@
           <a
             class="btn btn-sm {% if not active_tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
             href="{{ url_for('projects_web', sort=active_sort) }}"
+            data-tag-btn=""
           >
             All Tags
           </a>
@@ -115,6 +130,7 @@
           <a
             class="btn btn-sm {% if not active_tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
             href="{{ url_for('projects_data', sort=active_sort) }}"
+            data-tag-btn=""
           >
             All Tags
           </a>
@@ -122,6 +138,7 @@
           <a
             class="btn btn-sm {% if not active_tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
             href="{{ url_for('projects_software', sort=active_sort) }}"
+            data-tag-btn=""
           >
             All Tags
           </a>
@@ -129,6 +146,7 @@
           <a
             class="btn btn-sm {% if not active_tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
             href="{{ url_for('projects', sort=active_sort) }}"
+            data-tag-btn=""
           >
             All Tags
           </a>
@@ -139,6 +157,7 @@
             <a
               class="btn btn-sm {% if active_tag == tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
               href="{{ url_for('projects_web', tag=tag, sort=active_sort) }}"
+              data-tag-btn="{{ tag }}"
             >
               {{ tag }}
             </a>
@@ -146,6 +165,7 @@
             <a
               class="btn btn-sm {% if active_tag == tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
               href="{{ url_for('projects_data', tag=tag, sort=active_sort) }}"
+              data-tag-btn="{{ tag }}"
             >
               {{ tag }}
             </a>
@@ -153,6 +173,7 @@
             <a
               class="btn btn-sm {% if active_tag == tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
               href="{{ url_for('projects_software', tag=tag, sort=active_sort) }}"
+              data-tag-btn="{{ tag }}"
             >
               {{ tag }}
             </a>
@@ -160,6 +181,7 @@
             <a
               class="btn btn-sm {% if active_tag == tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
               href="{{ url_for('projects', tag=tag, sort=active_sort) }}"
+              data-tag-btn="{{ tag }}"
             >
               {{ tag }}
             </a>
@@ -169,10 +191,34 @@
     </div>
   </section>
 
+  <!-- LOADING OPTION 1: Progress bar (thin bar at top of page) -->
+  <div id="load-bar" class="load-bar d-none"><div class="load-bar-fill"></div></div>
+
+  <!-- LOADING OPTION 2: Spinner (centred in the grid area) -->
+  <div id="load-spinner" class="load-spinner d-none">
+    <div class="load-spinner-ring"></div>
+  </div>
+
+  <!-- LOADING OPTION 3: Skeleton cards (placeholder shimmer cards) -->
+  <div id="load-skeleton" class="row g-4 d-none">
+    {% for _ in range(6) %}
+      <div class="col-12 col-md-6 col-lg-4 d-flex">
+        <div class="skeleton-card w-100">
+          <div class="skeleton-img"></div>
+          <div class="skeleton-body">
+            <div class="skeleton-line skeleton-title"></div>
+            <div class="skeleton-line skeleton-text"></div>
+            <div class="skeleton-line skeleton-text short"></div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
   <!-- Projects Grid -->
   <section>
     {% if projects %}
-      <div class="row g-4">
+      <div id="projects-grid" class="row g-4">
         {% for project in projects %}
           <div class="col-12 col-md-6 col-lg-4 d-flex">
             {% include "components/project_card.html" %}
@@ -180,13 +226,22 @@
         {% endfor %}
       </div>
     {% else %}
-      <div class="surface-card p-4">
-        <h2 class="h5 mb-2">No projects found</h2>
-        <p class="text-secondary mb-0">
-          No projects match the current filter.
-        </p>
-      </div>
+      <div id="projects-grid" class="row g-4 d-none"></div>
     {% endif %}
+
+    <div
+      id="projects-empty"
+      class="surface-card p-4 {% if projects %}d-none{% endif %}"
+    >
+      <h2 class="h5 mb-2">No projects found</h2>
+      <p class="text-secondary mb-0">
+        No projects match the current filter.
+      </p>
+    </div>
   </section>
 
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/projects-filter.js') }}"></script>
 {% endblock %}
