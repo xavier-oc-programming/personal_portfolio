@@ -196,10 +196,10 @@ Run the full application stack — app and database — with a single command.
 ### Start
 
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 
-The app is available at `http://localhost:8000`. The database is a fresh PostgreSQL instance managed by Docker Compose. Data persists in a named volume across restarts.
+The app is available at `http://localhost:8000`. On first boot, the entrypoint script seeds the database with all 51 projects automatically — no manual steps required. Data persists in a named volume across restarts.
 
 ### Environment
 
@@ -208,8 +208,8 @@ Docker Compose reads `ADMIN_PASSWORD` and `SECRET_KEY` from your `.env` file. Ma
 ### Stop
 
 ```bash
-docker-compose down          # Stop containers
-docker-compose down -v       # Stop and delete the database volume
+docker compose down          # Stop containers
+docker compose down -v       # Stop and delete the database volume
 ```
 
 ---
