@@ -264,7 +264,7 @@ Defined in `.github/workflows/ci.yml`.
 
 A failed test blocks deployment. The pipeline will not ship broken code.
 
-To enable Railway deployment from the pipeline, add a `RAILWAY_TOKEN` secret to the GitHub repository (Settings → Secrets and variables → Actions).
+To enable Railway deployment from the pipeline, add a `RAILWAY_PORTFOLIO_TOKEN` secret to the GitHub repository (Settings → Secrets and variables → Actions).
 
 ---
 
