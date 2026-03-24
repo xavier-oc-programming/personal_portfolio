@@ -2,17 +2,17 @@
 {% block title %}Featured Order{% endblock %}
 
 {% block content %}
-<div class="featured-sticky-bar">
-  <div class="d-flex justify-content-between align-items-center mb-2">
-    <h2 class="fw-bold mb-0">Featured Order</h2>
-    <div class="d-flex gap-2 align-items-center">
-      <span id="save-status" class="text-muted small"></span>
-      <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#addFeaturedModal">+ Add</button>
-      <button id="save-btn" class="btn btn-dark btn-sm" disabled>Save Order</button>
-      <a href="{{ url_for('admin.projects') }}" class="btn btn-outline-secondary btn-sm">All Projects</a>
-    </div>
+<div class="featured-sticky-bar d-flex justify-content-between align-items-center gap-3">
+  <div>
+    <h2 class="fw-bold mb-1">Featured Order</h2>
+    <p class="text-muted small mb-0">Drag cards to reorder. Click Save Order to apply — this is exactly how they appear on the home page.</p>
   </div>
-  <p class="text-muted small mb-0">Drag cards to reorder. Click Save Order to apply — this is exactly how they appear on the home page.</p>
+  <div class="d-flex gap-2 align-items-center flex-shrink-0">
+    <span id="save-status" class="text-muted small"></span>
+    <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#addFeaturedModal">+ Add</button>
+    <button id="save-btn" class="btn btn-dark btn-sm" disabled>Save Order</button>
+    <a href="{{ url_for('admin.projects') }}" class="btn btn-outline-secondary btn-sm">All Projects</a>
+  </div>
 </div>
 
 <!-- Home page simulation -->
@@ -412,6 +412,7 @@
   .home-preview-container {
     width: 1120px;
     padding: 48px 12px;
+    margin: 0 auto;
   }
 
   /* Drag and drop */
