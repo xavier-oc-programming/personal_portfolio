@@ -13,6 +13,7 @@ on:
       - "wsgi.py"
       - "entrypoint.sh"
       - "railway.toml"
+      - ".github/workflows/**"
   pull_request:
     branches: [main]
 
