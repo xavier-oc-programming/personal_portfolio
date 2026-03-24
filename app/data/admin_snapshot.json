@@ -1,22 +1,26 @@
 {
-  "snapshot_at": "2026-03-24T11:28:34Z",
+  "snapshot_at": "2026-03-24T11:31:21Z",
   "projects": [
     {
       "id": 1,
       "slug": "hangman",
       "title": "Hangman",
       "primary_category": "software",
-      "short_description": "Classic word guessing game in the terminal with random word selection and a lives system.",
+      "short_description": "Two fully playable versions of the same game that together tell a clear story of growth. The project demonstrates not just Python fundamentals, but the ability to revisit earlier work with a critical eye and rebuild it at a significantly higher level.",
       "full_description": "A terminal-based Hangman game that selects a random word and challenges the player to guess it letter by letter before running out of lives. Demonstrates string manipulation, list operations, and basic control flow in Python.",
-      "featured": true,
-      "date": "2025-09-15",
-      "problem": "oooooo",
-      "solution": null,
-      "challenges": null,
-      "results": null,
+      "featured": false,
+      "date": "2024-09-15",
+      "problem": "Two fully playable versions of the same game that together tell a clear story of growth. The project demonstrates not just Python fundamentals, but the ability to revisit earlier work with a critical eye and rebuild it at a significantly higher level.",
+      "solution": "I wanted a first portfolio project that honestly represented where I started, not just where I ended up. Most developers hide their early work — I wanted to show the full arc.",
+      "challenges": "Built the game twice. The original stays exactly as written during the course — no cleanup. The advanced rebuild introduces a richer, more capable version of the same game: a HangmanGame class managing the full game logic, a WordBank class with JSON-persisted custom categories, animated ASCII art, color-coded letter tracking, difficulty levels, a hint system, and a play stats tracker saved between sessions.",
+      "results": "The biggest challenge in the advanced rebuild was designing clean separation of concerns across six modules while keeping the code readable for someone who might inspect it. Managing ANSI escape codes for in-place terminal animation (line-by-line hangman drawing, flashing win banner, typewriter effects) without corrupting the layout took significant iteration.",
       "tags": [
         "cli",
-        "game"
+        "game",
+        "python",
+        "beginner",
+        "oop",
+        "terminal"
       ],
       "tech_stack": [
         "Python"
@@ -24,7 +28,7 @@
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/hangman/card/hangman_card.jpg",
-      "repo_url": null,
+      "repo_url": "https://github.com/xavier-oc-programming/hangman_beginner_project_xoc",
       "live_url": null,
       "demo_url": null
     },
