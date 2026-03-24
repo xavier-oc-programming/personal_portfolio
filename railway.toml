@@ -1,2 +1,10 @@
 [build]
 builder = "DOCKERFILE"
+
+[deploy]
+watchPatterns = [
+  "**",
+  "!app/data/admin_snapshot.json",
+  "!app/static/images/**",
+  "!app/static/videos/**",
+]
