@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-24T18:07:42Z",
+  "snapshot_at": "2026-03-24T18:07:46Z",
   "projects": [
     {
       "id": 1,
@@ -9,7 +9,7 @@
       "short_description": "Two fully playable versions of the same game that together tell a clear story of growth. The project demonstrates not just Python fundamentals, but the ability to revisit earlier work with a critical eye and rebuild it at a significantly higher level.",
       "full_description": "A terminal-based Hangman game that selects a random word and challenges the player to guess it letter by letter before running out of lives. Demonstrates string manipulation, list operations, and basic control flow in Python.",
       "featured": true,
-      "featured_order": 1,
+      "featured_order": 3,
       "date": "2024-09-15",
       "problem": "I wanted a first portfolio project that honestly represented where I started, not just where I ended up. Most developers hide their early work — I wanted to show the full arc.",
       "solution": "Built the game twice. The original stays exactly as written during the course — no cleanup. The advanced rebuild introduces a richer, more capable version of the same game: a HangmanGame class managing the full game logic, a WordBank class with JSON-persisted custom categories, animated ASCII art, color-coded letter tracking, difficulty levels, a hint system, and a play stats tracker saved between sessions.",
@@ -618,7 +618,7 @@
       "short_description": "Monitors stock price movements and sends SMS alerts with relevant news headlines when significant changes occur.",
       "full_description": "An automation pipeline that checks daily stock price changes via the Alpha Vantage API, fetches relevant news headlines from the News API when a significant movement is detected, and delivers a formatted SMS alert via Twilio. Demonstrates multi-API orchestration and threshold-based alerting.",
       "featured": true,
-      "featured_order": 9,
+      "featured_order": 11,
       "date": "2025-11-26",
       "problem": "Tracking stock price movements manually is slow and easy to miss — by the time you notice a significant shift, the relevant news cycle has already moved on.",
       "solution": "Built an automated pipeline that polls the Alpha Vantage API daily for price changes, fetches the top three relevant news headlines from the News API when a movement exceeds 5%, and delivers a formatted SMS alert via Twilio with the stock ticker, change percentage, and headlines.",
@@ -1454,7 +1454,7 @@
       "short_description": "Predicts house prices using a regression model trained on a real dataset with data cleaning, feature engineering, and evaluation.",
       "full_description": "A machine learning capstone project that applies linear regression to a real housing dataset. Covers the full ML pipeline: data cleaning, feature engineering, train/test splitting, model training with scikit-learn, and evaluation using RMSE and R² metrics, with results visualised using Matplotlib and Seaborn.",
       "featured": true,
-      "featured_order": 13,
+      "featured_order": 9,
       "date": "2026-02-25",
       "problem": "Predicting house prices accurately requires more than a formula — it demands identifying which features actually drive price, cleaning messy real-world data, and validating that the model generalises beyond the training set.",
       "solution": "Applied linear regression using scikit-learn to a real housing dataset. Covered the full ML pipeline: data cleaning, feature engineering (log transforms, dummy variables), train/test split, model training, and evaluation using RMSE and R² metrics.",
@@ -1515,7 +1515,7 @@
       "short_description": "Full-stack Flask portfolio deployed with a custom domain, PostgreSQL database, HTTPS, Google Analytics, and SEO configuration.",
       "full_description": "HELLOOO A production-grade Flask portfolio application built as the Day 83 capstone of 100 Days of Code. Features a PostgreSQL database with SQLAlchemy ORM, dynamic project rendering, reusable Jinja components, Bootstrap layout, contact form with email delivery, Google Analytics, SEO metadata, and deployment on Render with a custom domain and HTTPS.",
       "featured": true,
-      "featured_order": 3,
+      "featured_order": 1,
       "date": "2026-03-01",
       "problem": "Completing 100 Days of Code produces dozens of projects — without a professional presentation layer, that work is invisible to recruiters and hiring managers. A GitHub profile alone isn't a portfolio.",
       "solution": "Built a production-grade Flask portfolio with PostgreSQL, dynamic project rendering from a database, reusable Jinja2 components, an admin panel for content management, a contact form with email delivery, Google Analytics, SEO metadata, and deployment on Railway with a custom domain and HTTPS.",
