@@ -34,6 +34,8 @@ def app():
     with _app.app_context():
         _db.create_all()
         yield _app
+        _db.session.remove()
+        _db.engine.dispose()
         _db.drop_all()
 
 
