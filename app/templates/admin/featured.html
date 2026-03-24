@@ -1,0 +1,83 @@
+{% extends "admin/base.html" %}
+{% block title %}Featured Order{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="fw-bold mb-0">Featured Order</h2>
+  <a href="{{ url_for('admin.projects') }}" class="btn btn-outline-secondary btn-sm">All Projects</a>
+</div>
+
+{% if featured_projects %}
+  <div class="card">
+    <div class="card-header fw-semibold">
+      Drag to reorder — changes save automatically
+    </div>
+    <div class="card-body p-0">
+      <ul class="list-group list-group-flush" id="featured-list">
+        {% for project in featured_projects %}
+          <li class="list-group-item d-flex align-items-center gap-3 py-3 featured-item"
+              data-slug="{{ project.slug }}" style="cursor: grab;">
+            <span class="text-muted" style="font-size:1.2rem; user-select:none;">&#9776;</span>
+            {% if project.card_image %}
+              <img src="{{ url_for('static', filename=project.card_image) }}"
+                   style="width:56px;height:40px;object-fit:cover;border-radius:4px;pointer-events:none;"
+                   alt="{{ project.title }}">
+            {% else %}
+              <div style="width:56px;height:40px;background:#e9ecef;border-radius:4px;flex-shrink:0;"></div>
+            {% endif %}
+            <div class="flex-grow-1 min-width-0">
+              <div class="fw-semibold text-truncate">{{ project.title }}</div>
+              <div class="text-muted small text-capitalize">{{ project.primary_category }}</div>
+            </div>
+            <a href="{{ url_for('admin.project_edit', slug=project.slug) }}"
+               class="btn btn-sm btn-outline-secondary">Edit</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <p class="text-muted small mt-2">Order is reflected immediately on the home page.</p>
+{% else %}
+  <div class="card">
+    <div class="card-body text-muted">
+      No featured projects yet. Mark projects as featured from their
+      <a href="{{ url_for('admin.projects') }}">edit page</a>.
+    </div>
+  </div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.3/Sortable.min.js"></script>
+<script>
+(function () {
+  const list = document.getElementById('featured-list');
+  if (!list) return;
+
+  const reorderUrl = "{{ url_for('admin.featured_reorder') }}";
+  const csrfToken = "{{ csrf_token() }}";
+
+  Sortable.create(list, {
+    animation: 150,
+    ghostClass: 'sortable-ghost',
+    onEnd: function () {
+      const order = Array.from(list.querySelectorAll('[data-slug]')).map(function (el) {
+        return el.dataset.slug;
+      });
+      fetch(reorderUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrfToken,
+        },
+        body: JSON.stringify({ order: order }),
+      });
+    },
+  });
+})();
+</script>
+<style>
+  .sortable-ghost { opacity: 0.4; background: #f8f9fa; }
+  .featured-item:active { cursor: grabbing; }
+</style>
+{% endblock %}

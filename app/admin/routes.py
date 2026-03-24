@@ -20,6 +20,8 @@ Routes:
     POST /admin/projects/<slug>/media/screenshots/reorder - Reorder screenshots
     POST /admin/projects/<slug>/media/video    - Upload video
     POST /admin/projects/<slug>/media/delete   - Delete a media file
+    GET  /admin/featured           - Drag-and-drop featured order page
+    POST /admin/featured/reorder   - Save new featured order
     GET  /admin/messages           - List contact messages
     POST /admin/messages/<id>/delete - Delete a message
     GET  /admin/tags               - List all tags with project counts
@@ -111,6 +113,7 @@ def _backup_projects() -> None:
             "short_description": p.short_description,
             "full_description": p.full_description,
             "featured": p.featured,
+            "featured_order": p.featured_order,
             "date": p.date,
             "problem": p.problem,
             "solution": p.solution,
@@ -221,6 +224,7 @@ def _github_commit_full_snapshot() -> bool:
                 "short_description": p.short_description,
                 "full_description": p.full_description,
                 "featured": p.featured,
+                "featured_order": p.featured_order,
                 "date": p.date,
                 "problem": p.problem,
                 "solution": p.solution,
@@ -645,6 +649,38 @@ def media_delete(slug: str):
 
 
 # ---------------------------------------------------------------------------
+# Featured order
+# ---------------------------------------------------------------------------
+
+@admin_bp.get("/featured")
+@_require_admin
+def featured_order():
+    featured = (
+        Project.query
+        .filter_by(featured=True)
+        .order_by(db.func.coalesce(Project.featured_order, 999999).asc(), Project.title.asc())
+        .all()
+    )
+    return render_template("admin/featured.html", featured_projects=featured)
+
+
+@admin_bp.post("/featured/reorder")
+@_require_admin
+def featured_reorder():
+    data = request.get_json(silent=True)
+    if not data or "order" not in data:
+        return jsonify({"error": "Missing order"}), 400
+    slugs = data["order"]
+    for i, slug in enumerate(slugs):
+        project = Project.query.filter_by(slug=slug).first()
+        if project and project.featured:
+            project.featured_order = i
+    db.session.commit()
+    _github_commit_full_snapshot()
+    return jsonify({"ok": True})
+
+
+# ---------------------------------------------------------------------------
 # Messages
 # ---------------------------------------------------------------------------
 
@@ -714,6 +750,7 @@ def backup_restore(filename: str):
         project.short_description = entry["short_description"]
         project.full_description = entry["full_description"]
         project.featured = entry["featured"]
+        project.featured_order = entry.get("featured_order")
         project.date = entry.get("date")
         project.problem = entry.get("problem")
         project.solution = entry.get("solution")

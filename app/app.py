@@ -313,7 +313,7 @@ def create_app() -> Flask:
         featured_projects = (
             Project.query
             .filter_by(featured=True)
-            .order_by(Project.date.desc(), Project.title.asc())
+            .order_by(db.func.coalesce(Project.featured_order, 999999).asc(), Project.title.asc())
             .all()
         )
 

@@ -48,6 +48,7 @@ class Project(db.Model):
     full_description = db.Column(db.Text, nullable=False)
 
     featured = db.Column(db.Boolean, default=False, nullable=False)
+    featured_order = db.Column(db.Integer, nullable=True)
     date = db.Column(db.String(20), nullable=True)
 
     problem = db.Column(db.Text, nullable=True)
