@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-24T14:20:40Z",
+  "snapshot_at": "2026-03-24T14:21:16Z",
   "projects": [
     {
       "id": 1,
@@ -1548,7 +1548,7 @@
       "primary_category": "web",
       "short_description": "Full-stack Flask portfolio deployed with a custom domain, PostgreSQL database, HTTPS, Google Analytics, and SEO configuration.",
       "full_description": "HELLOOO A production-grade Flask portfolio application built as the Day 83 capstone of 100 Days of Code. Features a PostgreSQL database with SQLAlchemy ORM, dynamic project rendering, reusable Jinja components, Bootstrap layout, contact form with email delivery, Google Analytics, SEO metadata, and deployment on Render with a custom domain and HTTPS.",
-      "featured": false,
+      "featured": true,
       "featured_order": 0,
       "date": "2026-03-01",
       "problem": "Completing 100 Days of Code produces dozens of projects — without a professional presentation layer, that work is invisible to recruiters and hiring managers. A GitHub profile alone isn't a portfolio.",
