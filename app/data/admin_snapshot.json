@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-24T13:52:33Z",
+  "snapshot_at": "2026-03-24T14:20:29Z",
   "projects": [
     {
       "id": 1,
@@ -8,8 +8,8 @@
       "primary_category": "software",
       "short_description": "Two fully playable versions of the same game that together tell a clear story of growth. The project demonstrates not just Python fundamentals, but the ability to revisit earlier work with a critical eye and rebuild it at a significantly higher level.",
       "full_description": "A terminal-based Hangman game that selects a random word and challenges the player to guess it letter by letter before running out of lives. Demonstrates string manipulation, list operations, and basic control flow in Python.",
-      "featured": false,
-      "featured_order": null,
+      "featured": true,
+      "featured_order": 0,
       "date": "2024-09-15",
       "problem": "I wanted a first portfolio project that honestly represented where I started, not just where I ended up. Most developers hide their early work — I wanted to show the full arc.",
       "solution": "Built the game twice. The original stays exactly as written during the course — no cleanup. The advanced rebuild introduces a richer, more capable version of the same game: a HangmanGame class managing the full game logic, a WordBank class with JSON-persisted custom categories, animated ASCII art, color-coded letter tracking, difficulty levels, a hint system, and a play stats tracker saved between sessions.",
@@ -46,8 +46,7 @@
       "card_image": "images/projects/hangman/card/hangman_card.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/hangman_beginner_project_xoc",
       "live_url": null,
-      "demo_url": null,
-      "featured_order": 0
+      "demo_url": null
     },
     {
       "id": 2,
