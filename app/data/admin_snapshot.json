@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-24T15:57:12Z",
+  "snapshot_at": "2026-03-24T18:03:26Z",
   "projects": [
     {
       "id": 1,
@@ -1140,7 +1140,7 @@
       "demo_url": null
     },
     {
-      "id": 39,
+      "id": 38,
       "slug": "us-states-game",
       "title": "US States Game",
       "primary_category": "software",
@@ -1172,7 +1172,7 @@
       "demo_url": null
     },
     {
-      "id": 40,
+      "id": 39,
       "slug": "college-major-salary-analysis",
       "title": "College Major vs Salary Analysis",
       "primary_category": "data",
@@ -1202,7 +1202,7 @@
       "demo_url": null
     },
     {
-      "id": 41,
+      "id": 40,
       "slug": "programming-languages-visualisation",
       "title": "Programming Languages Visualisation",
       "primary_category": "data",
@@ -1232,7 +1232,7 @@
       "demo_url": null
     },
     {
-      "id": 42,
+      "id": 41,
       "slug": "lego-dataset-analysis",
       "title": "LEGO Dataset Analysis",
       "primary_category": "data",
@@ -1262,7 +1262,7 @@
       "demo_url": null
     },
     {
-      "id": 43,
+      "id": 42,
       "slug": "google-trends-analysis",
       "title": "Google Trends Time Series Analysis",
       "primary_category": "data",
@@ -1292,7 +1292,7 @@
       "demo_url": null
     },
     {
-      "id": 44,
+      "id": 43,
       "slug": "android-app-store-analysis",
       "title": "Android App Store Analysis",
       "primary_category": "data",
@@ -1322,7 +1322,7 @@
       "demo_url": null
     },
     {
-      "id": 45,
+      "id": 44,
       "slug": "numpy-arrays",
       "title": "NumPy N-Dimensional Arrays",
       "primary_category": "data",
@@ -1351,7 +1351,7 @@
       "demo_url": null
     },
     {
-      "id": 46,
+      "id": 45,
       "slug": "linear-regression-seaborn",
       "title": "Linear Regression with Seaborn",
       "primary_category": "data",
@@ -1383,7 +1383,7 @@
       "demo_url": null
     },
     {
-      "id": 47,
+      "id": 46,
       "slug": "nobel-prize-analysis",
       "title": "Nobel Prize Analysis",
       "primary_category": "data",
@@ -1416,7 +1416,7 @@
       "demo_url": null
     },
     {
-      "id": 48,
+      "id": 47,
       "slug": "handwashing-discovery-analysis",
       "title": "Handwashing Discovery Analysis",
       "primary_category": "data",
@@ -1447,14 +1447,14 @@
       "demo_url": null
     },
     {
-      "id": 49,
+      "id": 48,
       "slug": "house-price-prediction",
       "title": "House Price Prediction",
       "primary_category": "data",
       "short_description": "Predicts house prices using a regression model trained on a real dataset with data cleaning, feature engineering, and evaluation.",
       "full_description": "A machine learning capstone project that applies linear regression to a real housing dataset. Covers the full ML pipeline: data cleaning, feature engineering, train/test splitting, model training with scikit-learn, and evaluation using RMSE and R² metrics, with results visualised using Matplotlib and Seaborn.",
-      "featured": true,
-      "featured_order": 5,
+      "featured": false,
+      "featured_order": null,
       "date": "2026-02-25",
       "problem": "Predicting house prices accurately requires more than a formula — it demands identifying which features actually drive price, cleaning messy real-world data, and validating that the model generalises beyond the training set.",
       "solution": "Applied linear regression using scikit-learn to a real housing dataset. Covered the full ML pipeline: data cleaning, feature engineering (log transforms, dummy variables), train/test split, model training, and evaluation using RMSE and R² metrics.",
@@ -1480,7 +1480,7 @@
       "demo_url": null
     },
     {
-      "id": 50,
+      "id": 49,
       "slug": "python-scripting-portfolio",
       "title": "Python Scripting Portfolio Project",
       "primary_category": "software",
@@ -1508,7 +1508,7 @@
       "demo_url": null
     },
     {
-      "id": 51,
+      "id": 50,
       "slug": "professional-portfolio-site",
       "title": "Professional Portfolio Site",
       "primary_category": "web",
@@ -1544,6 +1544,40 @@
       "videos": [],
       "card_image": "images/projects/professional-portfolio-site/card/Screenshot_2026-03-19_at_16.37.36.png",
       "repo_url": "https://github.com/xavier-oc-programming/personal_portfolio",
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 51,
+      "slug": "blog-with-authentication",
+      "title": "Blog Platform with Authentication",
+      "primary_category": "web",
+      "short_description": "Multi-user blog with registration, login, admin roles, and full CRUD post management backed by a relational database.",
+      "full_description": "A full-featured Flask blog platform with user registration, password hashing, login sessions, admin-only post creation and deletion, and comment functionality. Built with SQLAlchemy and PostgreSQL, with relational models linking users, posts, and comments. The most complete web project before the portfolio site.",
+      "featured": false,
+      "featured_order": null,
+      "date": "2026-02-16",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "web-app",
+        "crud",
+        "authentication"
+      ],
+      "tech_stack": [
+        "Python",
+        "Flask",
+        "SQLAlchemy",
+        "PostgreSQL",
+        "WTForms",
+        "Bootstrap"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
       "live_url": null,
       "demo_url": null
     }
