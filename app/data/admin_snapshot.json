@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-24T15:30:25Z",
+  "snapshot_at": "2026-03-24T15:31:45Z",
   "projects": [
     {
       "id": 1,
@@ -637,7 +637,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "images/projects/stock-trading-news-alert/card/stock.jpeg",
       "repo_url": null,
       "live_url": null,
       "demo_url": null
