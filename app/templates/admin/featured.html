@@ -2,41 +2,28 @@
 {% block title %}Featured Order{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
+<div class="d-flex justify-content-between align-items-center mb-2">
   <h2 class="fw-bold mb-0">Featured Order</h2>
-  <a href="{{ url_for('admin.projects') }}" class="btn btn-outline-secondary btn-sm">All Projects</a>
+  <div class="d-flex gap-2 align-items-center">
+    <span id="save-status" class="text-muted small"></span>
+    <button id="save-btn" class="btn btn-dark btn-sm" disabled>Save Order</button>
+    <a href="{{ url_for('admin.projects') }}" class="btn btn-outline-secondary btn-sm">All Projects</a>
+  </div>
 </div>
+<p class="text-muted small mb-4">Drag cards to reorder. Click Save Order to apply — this is exactly how they appear on the home page.</p>
 
 {% if featured_projects %}
-  <div class="card">
-    <div class="card-header fw-semibold">
-      Drag to reorder — changes save automatically
-    </div>
-    <div class="card-body p-0">
-      <ul class="list-group list-group-flush" id="featured-list">
-        {% for project in featured_projects %}
-          <li class="list-group-item d-flex align-items-center gap-3 py-3 featured-item"
-              data-slug="{{ project.slug }}" style="cursor: grab;">
-            <span class="text-muted" style="font-size:1.2rem; user-select:none;">&#9776;</span>
-            {% if project.card_image %}
-              <img src="{{ url_for('static', filename=project.card_image) }}"
-                   style="width:56px;height:40px;object-fit:cover;border-radius:4px;pointer-events:none;"
-                   alt="{{ project.title }}">
-            {% else %}
-              <div style="width:56px;height:40px;background:#e9ecef;border-radius:4px;flex-shrink:0;"></div>
-            {% endif %}
-            <div class="flex-grow-1 min-width-0">
-              <div class="fw-semibold text-truncate">{{ project.title }}</div>
-              <div class="text-muted small text-capitalize">{{ project.primary_category }}</div>
-            </div>
-            <a href="{{ url_for('admin.project_edit', slug=project.slug) }}"
-               class="btn btn-sm btn-outline-secondary">Edit</a>
-          </li>
-        {% endfor %}
-      </ul>
-    </div>
+  <div class="row g-4" id="featured-grid">
+    {% for project in featured_projects %}
+      <div class="col-12 col-md-6 col-lg-4 featured-item" data-slug="{{ project.slug }}" style="cursor: grab;">
+        <div class="position-relative">
+          <span class="position-absolute top-0 start-0 badge bg-dark m-2" style="z-index:10;">{{ loop.index }}</span>
+          {% include "components/project_card.html" %}
+        </div>
+      </div>
+    {% endfor %}
   </div>
-  <p class="text-muted small mt-2">Order is reflected immediately on the home page.</p>
+  <p class="text-muted small mt-3">{{ featured_projects|length }} featured project(s).</p>
 {% else %}
   <div class="card">
     <div class="card-body text-muted">
@@ -51,33 +38,69 @@
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.3/Sortable.min.js"></script>
 <script>
 (function () {
-  const list = document.getElementById('featured-list');
-  if (!list) return;
+  const grid = document.getElementById('featured-grid');
+  if (!grid) return;
 
+  const saveBtn = document.getElementById('save-btn');
+  const saveStatus = document.getElementById('save-status');
   const reorderUrl = "{{ url_for('admin.featured_reorder') }}";
   const csrfToken = "{{ csrf_token() }}";
 
-  Sortable.create(list, {
+  function updatePositionBadges() {
+    grid.querySelectorAll('.featured-item').forEach(function (el, i) {
+      const badge = el.querySelector('.badge');
+      if (badge) badge.textContent = i + 1;
+    });
+  }
+
+  Sortable.create(grid, {
     animation: 150,
     ghostClass: 'sortable-ghost',
     onEnd: function () {
-      const order = Array.from(list.querySelectorAll('[data-slug]')).map(function (el) {
-        return el.dataset.slug;
-      });
-      fetch(reorderUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': csrfToken,
-        },
-        body: JSON.stringify({ order: order }),
-      });
+      updatePositionBadges();
+      saveBtn.disabled = false;
+      saveStatus.textContent = 'Unsaved changes';
+      saveStatus.className = 'text-warning small';
     },
+  });
+
+  saveBtn.addEventListener('click', function () {
+    const order = Array.from(grid.querySelectorAll('[data-slug]')).map(function (el) {
+      return el.dataset.slug;
+    });
+    saveBtn.disabled = true;
+    saveStatus.textContent = 'Saving…';
+    saveStatus.className = 'text-muted small';
+
+    fetch(reorderUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken,
+      },
+      body: JSON.stringify({ order: order }),
+    })
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      if (data.ok) {
+        saveStatus.textContent = 'Saved';
+        saveStatus.className = 'text-success small';
+      } else {
+        saveStatus.textContent = 'Error saving';
+        saveStatus.className = 'text-danger small';
+        saveBtn.disabled = false;
+      }
+    })
+    .catch(function () {
+      saveStatus.textContent = 'Error saving';
+      saveStatus.className = 'text-danger small';
+      saveBtn.disabled = false;
+    });
   });
 })();
 </script>
 <style>
-  .sortable-ghost { opacity: 0.4; background: #f8f9fa; }
+  .sortable-ghost { opacity: 0.4; }
   .featured-item:active { cursor: grabbing; }
 </style>
 {% endblock %}
