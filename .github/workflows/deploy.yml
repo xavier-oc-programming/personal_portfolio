@@ -18,5 +18,5 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger Railway deploy
-        run: curl -sS -X POST "${{ secrets.RAILWAY_DEPLOY_HOOK }}"
+      - name: Confirm deploy
+        run: echo "Code change detected — Railway will deploy after this check passes."
