@@ -72,30 +72,57 @@ function initScrollToTop() {
 }
 
 /**
- * Initialize the Bootstrap modal used to enlarge project detail images.
+ * Initialize the screenshots gallery modal with prev/next navigation and counter.
  */
 function initDetailImageModal() {
   const modal = document.getElementById("imagePreviewModal");
   const modalImg = document.getElementById("imagePreviewModalImg");
+  const counterEl = document.getElementById("galleryCounter");
+  const navEl = document.getElementById("galleryNav");
+  const prevBtn = document.getElementById("galleryPrev");
+  const nextBtn = document.getElementById("galleryNext");
 
   if (!modal || !modalImg) {
     return;
   }
 
+  const triggers = Array.from(
+    document.querySelectorAll(".detail-media-trigger[data-gallery-index]")
+  );
+  let currentIndex = 0;
+
+  function showImage(index) {
+    currentIndex = (index + triggers.length) % triggers.length;
+    const trigger = triggers[currentIndex];
+    modalImg.src = trigger.getAttribute("data-image-src") || "";
+    modalImg.alt = trigger.getAttribute("data-image-alt") || "Screenshot";
+    if (counterEl) {
+      counterEl.textContent = triggers.length > 1
+        ? currentIndex + 1 + " / " + triggers.length
+        : "";
+    }
+  }
+
   modal.addEventListener("show.bs.modal", function (event) {
     const trigger = event.relatedTarget;
-
-    if (!trigger) {
-      return;
-    }
-
-    const imageSrc = trigger.getAttribute("data-image-src");
-    const imageAlt =
-      trigger.getAttribute("data-image-alt") || "Expanded image preview";
-
-    modalImg.src = imageSrc || "";
-    modalImg.alt = imageAlt;
+    if (!trigger) return;
+    const idx = parseInt(trigger.getAttribute("data-gallery-index") || "0", 10);
+    showImage(isNaN(idx) ? 0 : idx);
+    const single = triggers.length <= 1;
+    if (navEl) navEl.style.display = single ? "none" : "";
   });
+
+  if (prevBtn) {
+    prevBtn.addEventListener("click", function () {
+      showImage(currentIndex - 1);
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener("click", function () {
+      showImage(currentIndex + 1);
+    });
+  }
 
   modal.addEventListener("hidden.bs.modal", function () {
     modalImg.src = "";

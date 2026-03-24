@@ -51,19 +51,21 @@
       <div class="card-header fw-semibold">Screenshots ({{ project.screenshots | length }})</div>
       <div class="card-body">
         {% if project.screenshots %}
-          <div class="row g-2 mb-3">
+          <p class="text-muted small mb-2">Drag to reorder.</p>
+          <div class="row g-2 mb-3" id="screenshots-grid">
             {% for shot in project.screenshots %}
-              <div class="col-6 col-sm-4 position-relative">
+              <div class="col-6 col-sm-4 position-relative screenshot-item" data-path="{{ shot }}"
+                   style="cursor:grab;">
                 <img src="{{ url_for('static', filename=shot) }}"
                      class="img-fluid rounded w-100"
-                     style="height:110px;object-fit:cover;" alt="Screenshot">
+                     style="height:110px;object-fit:cover;pointer-events:none;" alt="Screenshot">
                 <form method="POST" action="{{ url_for('admin.media_delete', slug=project.slug) }}"
                       class="position-absolute top-0 end-0 m-1">
                   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                   <input type="hidden" name="type" value="screenshot" />
                   <input type="hidden" name="path" value="{{ shot }}" />
                   <button type="submit" class="btn btn-sm btn-danger py-0 px-1"
-                          style="font-size:.7rem;" onclick="return confirm('Remove screenshot?')">&times;</button>
+                          style="font-size:.7rem;cursor:pointer;" onclick="return confirm('Remove screenshot?')">&times;</button>
                 </form>
               </div>
             {% endfor %}
@@ -76,7 +78,7 @@
               enctype="multipart/form-data" class="d-flex gap-2 align-items-end">
           {{ screenshot_form.hidden_tag() }}
           <div class="flex-grow-1">
-            {{ screenshot_form.screenshot(class="form-control form-control-sm") }}
+            {{ screenshot_form.screenshots(class="form-control form-control-sm") }}
           </div>
           {{ screenshot_form.submit(class="btn btn-dark btn-sm") }}
         </form>
@@ -121,4 +123,38 @@
   </div>
 
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.3/Sortable.min.js"></script>
+<script>
+(function () {
+  const grid = document.getElementById('screenshots-grid');
+  if (!grid) return;
+
+  const reorderUrl = "{{ url_for('admin.media_reorder_screenshots', slug=project.slug) }}";
+  const csrfToken = "{{ csrf_token() }}";
+
+  Sortable.create(grid, {
+    animation: 150,
+    ghostClass: 'sortable-ghost',
+    onEnd: function () {
+      const order = Array.from(grid.querySelectorAll('[data-path]')).map(function (el) {
+        return el.dataset.path;
+      });
+      fetch(reorderUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrfToken,
+        },
+        body: JSON.stringify({ order: order }),
+      });
+    },
+  });
+})();
+</script>
+<style>
+  .sortable-ghost { opacity: 0.4; }
+</style>
 {% endblock %}

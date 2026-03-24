@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed, FileField
-from wtforms import BooleanField, SelectField, StringField, SubmitField, TextAreaField
+from wtforms import BooleanField, MultipleFileField, SelectField, StringField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Length, Optional, URL
 
 
@@ -51,11 +51,11 @@ class CardImageForm(FlaskForm):
 
 
 class ScreenshotForm(FlaskForm):
-    screenshot = FileField(
-        "Screenshot",
+    screenshots = MultipleFileField(
+        "Screenshots",
         validators=[FileAllowed(ALLOWED_IMAGE_EXTENSIONS, "Images only (jpg, png, gif, webp).")],
     )
-    submit = SubmitField("Upload Screenshot")
+    submit = SubmitField("Upload Screenshots")
 
 
 class VideoForm(FlaskForm):

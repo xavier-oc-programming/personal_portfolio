@@ -216,51 +216,29 @@
         <p class="small text-muted mb-0">Click any image to enlarge.</p>
       </div>
 
-      {% if (project.media and project.media.card_image) or (project.media and project.media.screenshots) %}
+      {% if project.media and project.media.screenshots %}
         <div class="row g-3">
-          {% if project.media and project.media.card_image %}
+          {% for screenshot in project.media.screenshots %}
             <div class="col-12 col-md-6">
               <button
                 type="button"
                 class="detail-media-trigger"
                 data-bs-toggle="modal"
                 data-bs-target="#imagePreviewModal"
-                data-image-src="{{ url_for('static', filename=project.media.card_image) }}"
-                data-image-alt="{{ project.title }} cover image"
+                data-image-src="{{ url_for('static', filename=screenshot) }}"
+                data-image-alt="{{ project.title }} screenshot {{ loop.index }}"
+                data-gallery-index="{{ loop.index0 }}"
               >
                 <img
-                  src="{{ url_for('static', filename=project.media.card_image) }}"
+                  src="{{ url_for('static', filename=screenshot) }}"
                   class="img-fluid rounded w-100 detail-media-image"
-                  alt="{{ project.title }} cover image"
+                  alt="{{ project.title }} screenshot {{ loop.index }}"
                   loading="lazy"
                   decoding="async"
                 >
               </button>
             </div>
-          {% endif %}
-
-          {% if project.media and project.media.screenshots %}
-            {% for screenshot in project.media.screenshots %}
-              <div class="col-12 col-md-6">
-                <button
-                  type="button"
-                  class="detail-media-trigger"
-                  data-bs-toggle="modal"
-                  data-bs-target="#imagePreviewModal"
-                  data-image-src="{{ url_for('static', filename=screenshot) }}"
-                  data-image-alt="{{ project.title }} screenshot {{ loop.index }}"
-                >
-                  <img
-                    src="{{ url_for('static', filename=screenshot) }}"
-                    class="img-fluid rounded w-100 detail-media-image"
-                    alt="{{ project.title }} screenshot {{ loop.index }}"
-                    loading="lazy"
-                    decoding="async"
-                  >
-                </button>
-              </div>
-            {% endfor %}
-          {% endif %}
+          {% endfor %}
         </div>
       {% else %}
         <p class="text-secondary mb-0">
@@ -292,7 +270,7 @@
     </div>
   </section>
 
-  <!-- Image Preview Modal -->
+  <!-- Screenshots Gallery Modal -->
   <div
     class="modal fade"
     id="imagePreviewModal"
@@ -303,7 +281,9 @@
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content detail-image-modal">
         <div class="modal-header border-0 pb-0">
-          <h2 class="modal-title h5" id="imagePreviewModalLabel">Image Preview</h2>
+          <h2 class="modal-title h5" id="imagePreviewModalLabel">
+            Screenshot <span id="galleryCounter"></span>
+          </h2>
           <button
             type="button"
             class="btn-close"
@@ -318,6 +298,10 @@
             src=""
             alt=""
           >
+        </div>
+        <div class="modal-footer border-0 justify-content-between" id="galleryNav">
+          <button type="button" class="btn btn-outline-secondary" id="galleryPrev">&larr; Prev</button>
+          <button type="button" class="btn btn-outline-secondary" id="galleryNext">Next &rarr;</button>
         </div>
       </div>
     </div>

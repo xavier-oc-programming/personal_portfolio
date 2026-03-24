@@ -16,7 +16,8 @@ Routes:
     POST /admin/projects/<slug>/delete         - Delete project
     GET  /admin/projects/<slug>/media          - Media manager
     POST /admin/projects/<slug>/media/card     - Upload card image
-    POST /admin/projects/<slug>/media/screenshot - Upload screenshot
+    POST /admin/projects/<slug>/media/screenshot - Upload screenshots (multi-file)
+    POST /admin/projects/<slug>/media/screenshots/reorder - Reorder screenshots
     POST /admin/projects/<slug>/media/video    - Upload video
     POST /admin/projects/<slug>/media/delete   - Delete a media file
     GET  /admin/messages           - List contact messages
@@ -40,6 +41,7 @@ from flask import (
     abort,
     current_app,
     flash,
+    jsonify,
     redirect,
     render_template,
     request,
@@ -390,22 +392,53 @@ def media_upload_card(slug: str):
 @_require_admin
 def media_upload_screenshot(slug: str):
     project = Project.query.filter_by(slug=slug).first_or_404()
-    form = ScreenshotForm()
 
-    if form.validate_on_submit() and form.screenshot.data:
-        dest = _get_project_static_dir(slug) / "screenshots"
-        filename = _save_file(form.screenshot.data, dest)
+    files = request.files.getlist("screenshots")
+    valid_files = [f for f in files if f and f.filename]
+
+    if not valid_files:
+        flash("No valid image files provided.", "danger")
+        return redirect(url_for("admin.project_media", slug=slug))
+
+    allowed_exts = {"jpg", "jpeg", "png", "gif", "webp"}
+    dest = _get_project_static_dir(slug) / "screenshots"
+    shots = project.screenshots
+    count = 0
+
+    for file in valid_files:
+        ext = Path(secure_filename(file.filename)).suffix.lstrip(".").lower()
+        if ext not in allowed_exts:
+            continue
+        filename = _save_file(file, dest)
         rel_path = _static_rel(dest / filename)
-        shots = project.screenshots
         if rel_path not in shots:
             shots.append(rel_path)
-            project.screenshots = shots
-            db.session.commit()
-        flash("Screenshot uploaded.", "success")
+            count += 1
+
+    if count:
+        project.screenshots = shots
+        db.session.commit()
+        flash(f"{count} screenshot(s) uploaded.", "success")
     else:
-        flash("No valid image file provided.", "danger")
+        flash("No valid image files provided.", "danger")
 
     return redirect(url_for("admin.project_media", slug=slug))
+
+
+@admin_bp.post("/projects/<slug>/media/screenshots/reorder")
+@_require_admin
+def media_reorder_screenshots(slug: str):
+    project = Project.query.filter_by(slug=slug).first_or_404()
+    data = request.get_json(silent=True)
+    if not data or "order" not in data:
+        return jsonify({"error": "Missing order"}), 400
+    new_order = data["order"]
+    current = set(project.screenshots)
+    if not all(p in current for p in new_order):
+        return jsonify({"error": "Invalid paths"}), 400
+    project.screenshots = new_order
+    db.session.commit()
+    return jsonify({"ok": True})
 
 
 @admin_bp.post("/projects/<slug>/media/video")
