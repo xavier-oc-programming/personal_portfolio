@@ -15,6 +15,7 @@
 
 <!-- Home page simulation -->
 <div class="home-preview">
+  <div class="home-preview-container">
 
   <!-- Hero (copied from index.html) -->
   <section class="page-section">
@@ -132,7 +133,8 @@
     </div>
   </section>
 
-</div>
+  </div><!-- /home-preview-container -->
+</div><!-- /home-preview -->
 
 
 <!-- ================================================================
@@ -379,16 +381,22 @@
 })();
 </script>
 <style>
-  /* Restore admin body bg (styles.css sets var(--color-bg) which is #f8fafc) */
+  /* Restore admin body bg */
   body { background: #f1f3f5 !important; }
 
-  /* Home page preview wrapper */
+  /* Scrollable viewport that shows the real page background */
   .home-preview {
     background: var(--color-bg, #f8fafc);
     border: 1px solid #dee2e6;
     border-radius: 8px;
-    padding: 2.5rem;
     margin-top: 0.5rem;
+    overflow-x: auto;
+  }
+
+  /* Fixed 1120px inner container — identical to main .container.py-5 on the real page */
+  .home-preview-container {
+    width: 1120px;
+    padding: 48px 12px;
   }
 
   /* Drag and drop */
