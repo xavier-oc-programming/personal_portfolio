@@ -140,6 +140,65 @@ def _static_rel(path: Path) -> str:
     return str(path.relative_to(static_dir)).replace("\\", "/")
 
 
+def _github_commit_file(file_path: Path) -> bool:
+    """
+    Commit a static file to GitHub via the Contents API.
+    Requires GITHUB_TOKEN and GITHUB_REPO to be set in config.
+    Returns True on success, False if not configured or on any error.
+    """
+    import base64
+    import json
+    import urllib.error
+    import urllib.request
+
+    token = current_app.config.get("GITHUB_TOKEN")
+    repo = current_app.config.get("GITHUB_REPO")
+    if not token or not repo:
+        return False
+
+    static_dir = Path(current_app.root_path) / "static"
+    try:
+        rel = str(file_path.relative_to(static_dir)).replace("\\", "/")
+    except ValueError:
+        return False
+
+    repo_file_path = f"app/static/{rel}"
+    api_url = f"https://api.github.com/repos/{repo}/contents/{repo_file_path}"
+    headers = {
+        "Authorization": f"token {token}",
+        "Accept": "application/vnd.github.v3+json",
+        "Content-Type": "application/json",
+        "User-Agent": "portfolio-admin",
+    }
+
+    with open(file_path, "rb") as f:
+        content_b64 = base64.b64encode(f.read()).decode()
+
+    sha = None
+    try:
+        req = urllib.request.Request(api_url, headers=headers)
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            sha = json.loads(resp.read())["sha"]
+    except urllib.error.HTTPError as e:
+        if e.code != 404:
+            return False
+    except Exception:
+        return False
+
+    payload: dict = {"message": f"media: upload {file_path.name}", "content": content_b64}
+    if sha:
+        payload["sha"] = sha
+
+    try:
+        data = json.dumps(payload).encode()
+        req = urllib.request.Request(api_url, data=data, headers=headers, method="PUT")
+        with urllib.request.urlopen(req, timeout=30):
+            pass
+        return True
+    except Exception:
+        return False
+
+
 def _populate_project_from_form(project: Project, form: ProjectForm) -> None:
     project.title = form.title.data.strip()
     project.slug = form.slug.data.strip().lower()
@@ -379,9 +438,13 @@ def media_upload_card(slug: str):
     if form.validate_on_submit() and form.card_image.data:
         dest = _get_project_static_dir(slug) / "card"
         filename = _save_file(form.card_image.data, dest)
-        project.card_image = _static_rel(dest / filename)
+        file_path = dest / filename
+        project.card_image = _static_rel(file_path)
         db.session.commit()
-        flash("Card image uploaded.", "success")
+        if _github_commit_file(file_path):
+            flash("Card image uploaded and committed to GitHub.", "success")
+        else:
+            flash("Card image uploaded. Commit app/static/... to git to preserve it on Railway.", "warning")
     else:
         flash("No valid image file provided.", "danger")
 
@@ -403,22 +466,28 @@ def media_upload_screenshot(slug: str):
     allowed_exts = {"jpg", "jpeg", "png", "gif", "webp"}
     dest = _get_project_static_dir(slug) / "screenshots"
     shots = project.screenshots
-    count = 0
+    saved_paths: list[Path] = []
 
     for file in valid_files:
         ext = Path(secure_filename(file.filename)).suffix.lstrip(".").lower()
         if ext not in allowed_exts:
             continue
         filename = _save_file(file, dest)
-        rel_path = _static_rel(dest / filename)
+        file_path = dest / filename
+        rel_path = _static_rel(file_path)
         if rel_path not in shots:
             shots.append(rel_path)
-            count += 1
+            saved_paths.append(file_path)
 
+    count = len(saved_paths)
     if count:
         project.screenshots = shots
         db.session.commit()
-        flash(f"{count} screenshot(s) uploaded.", "success")
+        committed = sum(_github_commit_file(fp) for fp in saved_paths)
+        if committed == count:
+            flash(f"{count} screenshot(s) uploaded and committed to GitHub.", "success")
+        else:
+            flash(f"{count} screenshot(s) uploaded. Commit app/static/... to git to preserve on Railway.", "warning")
     else:
         flash("No valid image files provided.", "danger")
 
@@ -450,15 +519,17 @@ def media_upload_video(slug: str):
     if form.validate_on_submit() and form.video.data:
         dest = _get_project_video_dir(slug)
         filename = _save_file(form.video.data, dest)
-        rel_path = str((dest / filename).relative_to(
-            Path(current_app.root_path) / "static"
-        )).replace("\\", "/")
+        file_path = dest / filename
+        rel_path = _static_rel(file_path)
         vids = project.videos
         if rel_path not in vids:
             vids.append(rel_path)
             project.videos = vids
             db.session.commit()
-        flash("Video uploaded.", "success")
+        if _github_commit_file(file_path):
+            flash("Video uploaded and committed to GitHub.", "success")
+        else:
+            flash("Video uploaded. Commit app/static/... to git to preserve it on Railway.", "warning")
     else:
         flash("No valid video file provided.", "danger")
 

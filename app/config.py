@@ -23,6 +23,10 @@ Resend-related variables:
 - RESEND_API_KEY
 - CONTACT_NOTIFICATION_EMAIL
 
+GitHub auto-commit variables (optional — enables auto-committing uploaded media):
+- GITHUB_TOKEN: personal access token with repo write permission
+- GITHUB_REPO: repository in "owner/repo" format (e.g. xavier-oc-programming/personal_portfolio)
+
 Usage:
     from app.config import get_config_class
     app.config.from_object(get_config_class())
@@ -98,6 +102,12 @@ class BaseConfig:
         ),
     )
     GOOGLE_ANALYTICS_ID: str | None = os.environ.get("GOOGLE_ANALYTICS_ID")
+
+    GITHUB_TOKEN: str | None = os.environ.get("GITHUB_TOKEN")
+    GITHUB_REPO: str | None = os.environ.get("GITHUB_REPO")
+
+    # Used for JS/CSS cache-busting. Railway injects RAILWAY_GIT_COMMIT_SHA automatically.
+    APP_VERSION: str = os.environ.get("RAILWAY_GIT_COMMIT_SHA", "dev")[:8]
 
 
 class DevelopmentConfig(BaseConfig):

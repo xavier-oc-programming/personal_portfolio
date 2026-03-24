@@ -72,7 +72,8 @@ function initScrollToTop() {
 }
 
 /**
- * Initialize the screenshots gallery modal with prev/next navigation and counter.
+ * Initialize the screenshots gallery modal with prev/next navigation,
+ * counter, and arrow key support.
  */
 function initDetailImageModal() {
   const modal = document.getElementById("imagePreviewModal");
@@ -92,13 +93,14 @@ function initDetailImageModal() {
   let currentIndex = 0;
 
   function showImage(index) {
-    currentIndex = (index + triggers.length) % triggers.length;
+    if (!triggers.length) return;
+    currentIndex = ((index % triggers.length) + triggers.length) % triggers.length;
     const trigger = triggers[currentIndex];
     modalImg.src = trigger.getAttribute("data-image-src") || "";
     modalImg.alt = trigger.getAttribute("data-image-alt") || "Screenshot";
     if (counterEl) {
       counterEl.textContent = triggers.length > 1
-        ? currentIndex + 1 + " / " + triggers.length
+        ? (currentIndex + 1) + " / " + triggers.length
         : "";
     }
   }
@@ -108,21 +110,32 @@ function initDetailImageModal() {
     if (!trigger) return;
     const idx = parseInt(trigger.getAttribute("data-gallery-index") || "0", 10);
     showImage(isNaN(idx) ? 0 : idx);
-    const single = triggers.length <= 1;
-    if (navEl) navEl.style.display = single ? "none" : "";
+    if (navEl) navEl.style.display = triggers.length <= 1 ? "none" : "";
   });
 
   if (prevBtn) {
-    prevBtn.addEventListener("click", function () {
+    prevBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
       showImage(currentIndex - 1);
     });
   }
 
   if (nextBtn) {
-    nextBtn.addEventListener("click", function () {
+    nextBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
       showImage(currentIndex + 1);
     });
   }
+
+  modal.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      showImage(currentIndex - 1);
+    } else if (e.key === "ArrowRight") {
+      e.preventDefault();
+      showImage(currentIndex + 1);
+    }
+  });
 
   modal.addEventListener("hidden.bs.modal", function () {
     modalImg.src = "";
