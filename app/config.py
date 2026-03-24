@@ -74,10 +74,10 @@ class BaseConfig:
     if _DATABASE_URL:
         DATABASE_PATH: Path | None = None
         SQLALCHEMY_DATABASE_URI: str = _DATABASE_URL
-        SQLALCHEMY_ENGINE_OPTIONS: dict = {
-            "pool_pre_ping": True,
-            "connect_args": {"connect_timeout": 10},
-        }
+        _engine_opts: dict = {"pool_pre_ping": True}
+        if _DATABASE_URL.startswith("postgresql://"):
+            _engine_opts["connect_args"] = {"connect_timeout": 10}
+        SQLALCHEMY_ENGINE_OPTIONS: dict = _engine_opts
     else:
         DATABASE_PATH = DATABASE_FILE
         SQLALCHEMY_DATABASE_URI = f"sqlite:///{DATABASE_FILE}"

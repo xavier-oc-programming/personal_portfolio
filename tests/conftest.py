@@ -22,15 +22,15 @@ if 'DATABASE_URL' not in os.environ:
     os.environ['DATABASE_URL'] = 'sqlite:////tmp/portfolio_test.db'
 
 import pytest
-from app.app import app as _app
+from app.app import create_app
 from app.models.models import Project, db as _db
-
-_app.config['TESTING'] = True
-_app.config['WTF_CSRF_ENABLED'] = False
 
 
 @pytest.fixture(scope='session')
 def app():
+    _app = create_app()
+    _app.config['TESTING'] = True
+    _app.config['WTF_CSRF_ENABLED'] = False
     with _app.app_context():
         _db.create_all()
         yield _app
