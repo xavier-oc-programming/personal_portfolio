@@ -222,7 +222,7 @@
             <div class="col-12 col-md-6">
               <button
                 type="button"
-                class="detail-media-trigger"
+                class="detail-media-trigger screenshot-frame"
                 data-bs-toggle="modal"
                 data-bs-target="#imagePreviewModal"
                 data-image-src="{{ url_for('static', filename=screenshot) }}"
@@ -231,7 +231,7 @@
               >
                 <img
                   src="{{ url_for('static', filename=screenshot) }}"
-                  class="img-fluid rounded w-100 detail-media-image"
+                  class="detail-media-image"
                   alt="{{ project.title }} screenshot {{ loop.index }}"
                   loading="lazy"
                   decoding="async"

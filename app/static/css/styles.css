@@ -468,6 +468,16 @@ a:hover {
   text-align: inherit;
 }
 
+.screenshot-frame {
+  background: #f1f3f5;
+  border-radius: var(--radius-md);
+  aspect-ratio: 16 / 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
 .detail-media-image {
   display: block;
   width: 100%;
@@ -479,9 +489,23 @@ a:hover {
     box-shadow 0.2s ease;
 }
 
+.screenshot-frame .detail-media-image {
+  width: auto;
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+  border-radius: 0;
+  box-shadow: none;
+}
+
 .detail-media-trigger:hover .detail-media-image {
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
+}
+
+.screenshot-frame:hover .detail-media-image {
+  transform: none;
+  box-shadow: none;
 }
 
 .detail-image-modal {

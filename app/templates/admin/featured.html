@@ -52,7 +52,7 @@
       <div class="row g-4" id="featured-grid">
         {% for project in featured_projects %}
           <div class="col-12 col-md-6 col-lg-4 featured-item" data-slug="{{ project.slug }}" style="cursor: grab;">
-            <div class="position-relative">
+            <div class="position-relative h-100">
               <span class="position-absolute top-0 start-0 badge bg-dark m-2" style="z-index:10; font-size:.85rem;">{{ loop.index }}</span>
               <button
                 class="btn btn-sm btn-danger position-absolute top-0 end-0 m-2 remove-btn"
