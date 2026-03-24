@@ -644,7 +644,9 @@ def media_delete(slug: str):
 
     else:
         flash("Unknown media type.", "danger")
+        return redirect(url_for("admin.project_media", slug=slug))
 
+    _github_commit_full_snapshot()
     return redirect(url_for("admin.project_media", slug=slug))
 
 

@@ -32,15 +32,18 @@ from app.models.models import Project, db
 
 
 def _upsert_from_snapshot(existing: Project | None, data: dict) -> Project:
-    """Apply all fields from a snapshot project dict onto a Project instance."""
+    """Apply fields from a snapshot project dict onto a Project instance.
+
+    For existing projects, admin-managed fields (featured, featured_order,
+    card_image, screenshots, videos) are preserved from the DB so that
+    admin changes survive deploys. These fields are only set for new projects.
+    """
     p = existing or Project()
     p.slug = data["slug"]
     p.title = data["title"]
     p.primary_category = data["primary_category"]
     p.short_description = data["short_description"]
     p.full_description = data["full_description"]
-    p.featured = data.get("featured", False)
-    p.featured_order = data.get("featured_order")
     p.date = data.get("date")
     p.problem = data.get("problem")
     p.solution = data.get("solution")
@@ -51,9 +54,15 @@ def _upsert_from_snapshot(existing: Project | None, data: dict) -> Project:
     p.repo_url = data.get("repo_url")
     p.live_url = data.get("live_url")
     p.demo_url = data.get("demo_url")
-    p.card_image = data.get("card_image")
-    p.screenshots = data.get("screenshots", [])
-    p.videos = data.get("videos", [])
+
+    if existing is None:
+        # New project — apply all fields from snapshot including admin-managed ones
+        p.featured = data.get("featured", False)
+        p.featured_order = data.get("featured_order")
+        p.card_image = data.get("card_image")
+        p.screenshots = data.get("screenshots", [])
+        p.videos = data.get("videos", [])
+
     return p
 
 
@@ -98,12 +107,11 @@ def seed_projects() -> None:
             existing = Project.query.filter_by(slug=project_data["slug"]).first()
 
             if existing:
-                # Update text fields; preserve any media already in the DB
+                # Update text fields only; preserve admin-managed fields in DB
                 existing.title = project_data["title"]
                 existing.primary_category = project_data["primary_category"]
                 existing.short_description = project_data["short_description"]
                 existing.full_description = project_data["full_description"]
-                existing.featured = project_data.get("featured", False)
                 existing.date = project_data.get("date")
                 existing.problem = project_data.get("problem")
                 existing.solution = project_data.get("solution")
@@ -114,12 +122,6 @@ def seed_projects() -> None:
                 existing.demo_url = links.get("demo")
                 existing.tags = project_data.get("tags", [])
                 existing.tech_stack = project_data.get("tech_stack", [])
-                if media.get("card_image"):
-                    existing.card_image = media["card_image"]
-                if media.get("screenshots"):
-                    existing.screenshots = media["screenshots"]
-                if media.get("videos"):
-                    existing.videos = media["videos"]
             else:
                 project = Project(
                     slug=project_data["slug"],
