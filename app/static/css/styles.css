@@ -469,43 +469,31 @@ a:hover {
 }
 
 .screenshot-frame {
-  background: #f1f3f5;
+  background: var(--color-surface-muted);
   border-radius: var(--radius-md);
   aspect-ratio: 16 / 10;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  width: 100%;
 }
 
 .detail-media-image {
   display: block;
-  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
   height: auto;
   object-fit: contain;
-  box-shadow: var(--shadow-sm);
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
 }
 
-.screenshot-frame .detail-media-image {
-  width: auto;
-  max-width: 100%;
-  max-height: 100%;
-  height: auto;
-  border-radius: 0;
-  box-shadow: none;
-}
-
 .detail-media-trigger:hover .detail-media-image {
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
-}
-
-.screenshot-frame:hover .detail-media-image {
-  transform: none;
-  box-shadow: none;
 }
 
 .detail-image-modal {

@@ -16,34 +16,36 @@
 <!-- Home page simulation -->
 <div class="home-preview">
 
-  <!-- Hero -->
-  <section class="hp-section">
+  <!-- Hero (copied from index.html) -->
+  <section class="page-section">
     <div class="row align-items-center g-4">
       <div class="col-12 col-lg-8">
-        <p class="hp-eyebrow">Xavier OC</p>
-        <h1 class="hp-h1">I build Python applications — web, data, and everything in between.</h1>
-        <p class="hp-body mt-2 mb-0">Over the past year I've built Flask web applications, data analysis pipelines, and automation scripts in Python — from local scripts to deployed production apps. This portfolio is the work.</p>
+        <div class="section-header">
+          <span class="eyebrow">Xavier OC</span>
+          <h1 class="mb-3">I build Python applications — web, data, and everything in between.</h1>
+          <p class="section-intro text-secondary mb-0">Over the past year I've built Flask web applications, data analysis pipelines, and automation scripts in Python — from local scripts to deployed production apps. This portfolio is the work.</p>
+        </div>
         <div class="d-flex flex-wrap gap-2 mt-4">
-          <span class="btn btn-dark btn-sm pe-none">View Projects</span>
-          <span class="btn btn-outline-dark btn-sm pe-none">Contact</span>
+          <span class="btn btn-dark pe-none">View Projects</span>
+          <span class="btn btn-outline-dark pe-none">Contact</span>
         </div>
       </div>
       <div class="col-12 col-lg-4">
-        <div class="hp-surface-muted p-4">
-          <p class="mb-2 fw-semibold hp-text">Open to</p>
-          <p class="mb-0 hp-body">Junior Python Developer or Junior Data Analyst roles — Madrid or remote. Available immediately.</p>
+        <div class="surface-card-muted p-4 h-100">
+          <p class="mb-2 fw-semibold">Open to</p>
+          <p class="mb-0 text-secondary">Junior Python Developer or Junior Data Analyst roles — Madrid or remote. Available immediately.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Featured Projects — interactive -->
-  <section class="hp-section">
+  <!-- Featured Projects — interactive (structure from index.html) -->
+  <section class="page-section">
     <div class="d-flex justify-content-between align-items-end gap-3 mb-4 flex-wrap">
       <div>
-        <span class="hp-eyebrow">Highlights</span>
-        <h2 class="hp-h2 mb-1">Featured Projects</h2>
-        <p class="hp-body mb-0">A few highlights from across Web, Data, and Software.</p>
+        <span class="eyebrow">Highlights</span>
+        <h2 class="mb-1">Featured Projects</h2>
+        <p class="text-secondary mb-0">A few highlights from across Web, Data, and Software.</p>
       </div>
       <span class="btn btn-outline-dark btn-sm pe-none">View all</span>
     </div>
@@ -66,24 +68,24 @@
           </div>
         {% endfor %}
       </div>
-      <p class="hp-body small mt-3" id="featured-count">{{ featured_projects|length }} featured project(s).</p>
+      <p class="text-secondary small mt-3" id="featured-count">{{ featured_projects|length }} featured project(s).</p>
     {% else %}
-      <div class="hp-surface p-4" id="empty-state">
-        <p class="hp-body mb-0">No featured projects yet.</p>
+      <div class="surface-card p-4" id="empty-state">
+        <p class="text-secondary mb-0">No featured projects yet.</p>
       </div>
       <div class="row g-4 d-none" id="featured-grid"></div>
-      <p class="hp-body small mt-3 d-none" id="featured-count">0 featured project(s).</p>
+      <p class="text-secondary small mt-3 d-none" id="featured-count">0 featured project(s).</p>
     {% endif %}
   </section>
 
-  <!-- What you'll find here -->
-  <section class="hp-section">
-    <div class="mb-4">
-      <span class="hp-eyebrow">Overview</span>
-      <h2 class="hp-h2 mb-2">What you'll find here</h2>
+  <!-- What you'll find here (copied from index.html) -->
+  <section class="page-section">
+    <div class="section-heading">
+      <span class="eyebrow">Overview</span>
+      <h2 class="mb-2">What you'll find here</h2>
     </div>
-    <div class="hp-surface p-4">
-      <ul class="mb-0 hp-body">
+    <div class="surface-card p-4">
+      <ul class="mb-0 text-secondary">
         <li>Flask applications with clean Jinja architecture</li>
         <li>Data projects using Python, Pandas, and visualization</li>
         <li>Automation and software builds with strong structure</li>
@@ -91,42 +93,42 @@
     </div>
   </section>
 
-  <!-- Focus Areas -->
-  <section class="hp-section">
-    <div class="mb-4">
-      <span class="hp-eyebrow">Core categories</span>
-      <h2 class="hp-h2 mb-2">Focus areas</h2>
+  <!-- Focus Areas (copied from index.html) -->
+  <section class="page-section">
+    <div class="section-heading">
+      <span class="eyebrow">Core categories</span>
+      <h2 class="mb-2">Focus areas</h2>
     </div>
     <div class="row g-4">
       <div class="col-12 col-md-4">
-        <div class="hp-surface p-4 h-100">
-          <h3 class="h5 mb-2 hp-text">Web</h3>
-          <p class="hp-body mb-0">Flask, Jinja, routing, templates, Bootstrap layout discipline.</p>
+        <div class="surface-card p-4 h-100">
+          <h3 class="h5 mb-2">Web</h3>
+          <p class="text-secondary mb-0">Flask, Jinja, routing, templates, Bootstrap layout discipline.</p>
         </div>
       </div>
       <div class="col-12 col-md-4">
-        <div class="hp-surface p-4 h-100">
-          <h3 class="h5 mb-2 hp-text">Data</h3>
-          <p class="hp-body mb-0">Pandas workflows, cleaning, analysis, visualization, reporting.</p>
+        <div class="surface-card p-4 h-100">
+          <h3 class="h5 mb-2">Data</h3>
+          <p class="text-secondary mb-0">Pandas workflows, cleaning, analysis, visualization, reporting.</p>
         </div>
       </div>
       <div class="col-12 col-md-4">
-        <div class="hp-surface p-4 h-100">
-          <h3 class="h5 mb-2 hp-text">Software</h3>
-          <p class="hp-body mb-0">Python structure, automation scripts, clean interfaces and logic.</p>
+        <div class="surface-card p-4 h-100">
+          <h3 class="h5 mb-2">Software</h3>
+          <p class="text-secondary mb-0">Python structure, automation scripts, clean interfaces and logic.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
+  <!-- CTA (copied from index.html) -->
   <section>
-    <div class="hp-surface-muted p-4 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+    <div class="surface-card-muted p-4 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
       <div>
-        <h2 class="h4 mb-1 hp-text">Want to see everything?</h2>
-        <p class="hp-body mb-0">Browse the full projects hub with categories and tags.</p>
+        <h2 class="h4 mb-1">Want to see everything?</h2>
+        <p class="text-secondary mb-0">Browse the full projects hub with categories and tags.</p>
       </div>
-      <span class="btn btn-dark btn-sm pe-none">Browse Projects</span>
+      <span class="btn btn-dark pe-none">Browse Projects</span>
     </div>
   </section>
 
@@ -377,54 +379,16 @@
 })();
 </script>
 <style>
-  /* Restore admin body bg */
+  /* Restore admin body bg (styles.css sets var(--color-bg) which is #f8fafc) */
   body { background: #f1f3f5 !important; }
 
   /* Home page preview wrapper */
   .home-preview {
-    background: #ffffff;
+    background: var(--color-bg, #f8fafc);
     border: 1px solid #dee2e6;
     border-radius: 8px;
     padding: 2.5rem;
     margin-top: 0.5rem;
-  }
-
-  /* Scoped home page styles */
-  .hp-section { margin-bottom: 3rem; }
-  .hp-eyebrow {
-    display: inline-block;
-    margin-bottom: 0.35rem;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #2563eb;
-  }
-  .hp-h1 {
-    font-size: clamp(1.6rem, 3vw, 2.2rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-    color: #111;
-    margin-bottom: 0;
-  }
-  .hp-h2 {
-    font-size: clamp(1.25rem, 2.5vw, 1.65rem);
-    font-weight: 650;
-    letter-spacing: -0.01em;
-    line-height: 1.25;
-    color: #111;
-  }
-  .hp-text { color: #111; }
-  .hp-body { color: #555; }
-  .hp-surface {
-    background: #fff;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-  }
-  .hp-surface-muted {
-    background: #f8f9fa;
-    border-radius: 8px;
   }
 
   /* Drag and drop */
