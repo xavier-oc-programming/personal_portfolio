@@ -75,6 +75,6 @@ jobs:
           npm config set prefix ~/.npm-global
           export PATH=~/.npm-global/bin:$PATH
           npm install -g @railway/cli
-          railway up --detach
+          railway up --detach --service personal_portfolio
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_PORTFOLIO_TOKEN }}
