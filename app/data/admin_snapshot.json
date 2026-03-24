@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-24T15:38:47Z",
+  "snapshot_at": "2026-03-24T15:42:05Z",
   "projects": [
     {
       "id": 1,
@@ -546,7 +546,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "images/projects/birthday-email-automator/card/birthday2.png",
       "repo_url": null,
       "live_url": null,
       "demo_url": null
