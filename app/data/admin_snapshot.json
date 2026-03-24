@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-24T12:12:50Z",
+  "snapshot_at": "2026-03-24T12:14:30Z",
   "projects": [
     {
       "id": 1,
@@ -27,7 +27,6 @@
       ],
       "screenshots": [
         "images/projects/hangman/screenshots/Screenshot_2026-03-24_at_10.44.26.png",
-        "images/projects/hangman/screenshots/Screenshot_2026-03-24_at_10.44.39.png",
         "images/projects/hangman/screenshots/Screenshot_2026-03-24_at_10.45.22.png",
         "images/projects/hangman/screenshots/Screenshot_2026-03-24_at_10.45.49.png",
         "images/projects/hangman/screenshots/Screenshot_2026-03-24_at_10.50.51.png",
@@ -37,7 +36,7 @@
         "images/projects/hangman/screenshots/Screenshot_2026-03-24_at_11.01.04.png",
         "images/projects/hangman/screenshots/Screenshot_2026-03-24_at_11.04.46.png",
         "images/projects/hangman/screenshots/Screenshot_2026-03-24_at_11.07.04.png",
-        "images/projects/hangman/screenshots/Screenshot_2026-03-24_at_13.12.36.png"
+        "images/projects/hangman/screenshots/Screenshot_2026-03-24_at_10.44.39.png"
       ],
       "videos": [],
       "card_image": "images/projects/hangman/card/hangman_card.jpg",
