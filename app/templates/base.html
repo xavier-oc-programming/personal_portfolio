@@ -11,6 +11,8 @@
 
     <title>{% block title %}{{ site_name }}{% endblock %}</title>
 
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}" />
+
     <meta
       name="description"
       content="{% block meta_description %}{{ default_meta_description }}{% endblock %}"
