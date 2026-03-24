@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-24T13:26:23Z",
+  "snapshot_at": "2026-03-24T13:26:26Z",
   "projects": [
     {
       "id": 1,
@@ -952,7 +952,7 @@
       "short_description": "Searches for cheap flights via API and sends SMS alerts when prices drop below a target threshold.",
       "full_description": "A multi-API automation system that reads destination and price targets from a Google Sheet via Sheety, searches for available flights through the Kiwi Tequila API, and sends an SMS alert via Twilio when a deal is found. Demonstrates orchestrating multiple external services in a real-world automation pipeline.",
       "featured": true,
-      "featured_order": 0,
+      "featured_order": 1,
       "date": "2025-12-05",
       "problem": "Manually searching for cheap flights to multiple destinations is slow and unreliable — good deals disappear before they're noticed, and monitoring several routes by hand is not practical.",
       "solution": "Built a multi-API automation system that reads destination and price targets from a Google Sheet via Sheety, searches for available flights through the Kiwi Tequila API, and sends an SMS alert via Twilio when a deal falls below the target price for any route.",
@@ -1549,7 +1549,7 @@
       "short_description": "Full-stack Flask portfolio deployed with a custom domain, PostgreSQL database, HTTPS, Google Analytics, and SEO configuration.",
       "full_description": "A production-grade Flask portfolio application built as the Day 83 capstone of 100 Days of Code. Features a PostgreSQL database with SQLAlchemy ORM, dynamic project rendering, reusable Jinja components, Bootstrap layout, contact form with email delivery, Google Analytics, SEO metadata, and deployment on Render with a custom domain and HTTPS.",
       "featured": true,
-      "featured_order": 1,
+      "featured_order": 0,
       "date": "2026-03-01",
       "problem": "Completing 100 Days of Code produces dozens of projects — without a professional presentation layer, that work is invisible to recruiters and hiring managers. A GitHub profile alone isn't a portfolio.",
       "solution": "Built a production-grade Flask portfolio with PostgreSQL, dynamic project rendering from a database, reusable Jinja2 components, an admin panel for content management, a contact form with email delivery, Google Analytics, SEO metadata, and deployment on Railway with a custom domain and HTTPS.",
