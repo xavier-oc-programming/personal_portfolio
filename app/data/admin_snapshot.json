@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-24T15:55:48Z",
+  "snapshot_at": "2026-03-24T15:56:00Z",
   "projects": [
     {
       "id": 1,
@@ -1286,7 +1286,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": "images/projects/google-trends-analysis/card/trends.jpeg",
+      "card_image": null,
       "repo_url": null,
       "live_url": null,
       "demo_url": null
