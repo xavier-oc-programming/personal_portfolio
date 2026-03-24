@@ -1,12 +1,21 @@
 """
 seed_projects.py
 
-Populate the portfolio database using the Phase 2 in-memory dataset.
+Populate the portfolio database on deploy.
 
-Key responsibilities:
-- Read project data from app/data/projects.py
-- Upsert projects — insert new ones, update existing ones
-- Preserve admin-uploaded media (card_image, screenshots, videos) on existing projects
+Priority order:
+1. app/data/admin_snapshot.json  — written by the admin panel on every change,
+   committed to GitHub automatically. When present this is the full source of
+   truth for all existing projects (text, tags, media paths, everything).
+2. app/data/projects.py          — fallback / source for projects that are not
+   yet in the snapshot (e.g. newly added entries).
+
+On every deploy:
+- Projects present in the snapshot are restored exactly as they were when the
+  admin last saved them (descriptions, tags, media paths, etc.).
+- Projects in projects.py that are NOT in the snapshot are inserted fresh
+  (new projects added in code that haven't been touched in the admin yet).
+- Projects no longer in either source are deleted from the DB.
 
 Run from repo root:
     python -m app.seed_projects
@@ -14,41 +23,81 @@ Run from repo root:
 
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
 from app.app import create_app
 from app.data.projects import PROJECTS
 from app.models.models import Project, db
 
 
+def _upsert_from_snapshot(existing: Project | None, data: dict) -> Project:
+    """Apply all fields from a snapshot project dict onto a Project instance."""
+    p = existing or Project()
+    p.slug = data["slug"]
+    p.title = data["title"]
+    p.primary_category = data["primary_category"]
+    p.short_description = data["short_description"]
+    p.full_description = data["full_description"]
+    p.featured = data.get("featured", False)
+    p.date = data.get("date")
+    p.problem = data.get("problem")
+    p.solution = data.get("solution")
+    p.challenges = data.get("challenges")
+    p.results = data.get("results")
+    p.tags = data.get("tags", [])
+    p.tech_stack = data.get("tech_stack", [])
+    p.repo_url = data.get("repo_url")
+    p.live_url = data.get("live_url")
+    p.demo_url = data.get("demo_url")
+    p.card_image = data.get("card_image")
+    p.screenshots = data.get("screenshots", [])
+    p.videos = data.get("videos", [])
+    return p
+
+
 def seed_projects() -> None:
-    """
-    Upsert projects from PROJECTS into the database.
-
-    Existing projects are updated for all content fields.
-    Media fields (card_image, screenshots, videos) are only written
-    if the seed data contains non-empty values — admin-uploaded media
-    is preserved otherwise.
-
-    New projects (slug not yet in DB) are inserted fresh.
-    Projects in the DB whose slug is no longer in PROJECTS are deleted.
-    """
     app = create_app()
 
     with app.app_context():
-        seed_slugs = {p["slug"] for p in PROJECTS}
+        snapshot_path = Path(app.root_path) / "data" / "admin_snapshot.json"
 
-        # Remove projects no longer in the seed list
-        Project.query.filter(Project.slug.notin_(seed_slugs)).delete(
+        # Load snapshot if it exists
+        snapshot_projects: list[dict] = []
+        if snapshot_path.exists():
+            try:
+                snapshot_projects = json.loads(snapshot_path.read_text()).get("projects", [])
+                print(f"Using admin_snapshot.json ({len(snapshot_projects)} projects).")
+            except (json.JSONDecodeError, OSError):
+                print("Warning: admin_snapshot.json could not be read — falling back to projects.py.")
+
+        snapshot_slugs = {p["slug"] for p in snapshot_projects}
+        seed_slugs = {p["slug"] for p in PROJECTS}
+        all_known_slugs = snapshot_slugs | seed_slugs
+
+        # Delete projects no longer in either source
+        Project.query.filter(Project.slug.notin_(all_known_slugs)).delete(
             synchronize_session=False
         )
 
+        # Restore all projects from the snapshot (authoritative for everything)
+        for data in snapshot_projects:
+            existing = Project.query.filter_by(slug=data["slug"]).first()
+            p = _upsert_from_snapshot(existing, data)
+            if existing is None:
+                db.session.add(p)
+
+        # Insert projects from projects.py that are not yet in the snapshot
         for project_data in PROJECTS:
+            if project_data["slug"] in snapshot_slugs:
+                continue  # already handled above
+
             links = project_data.get("links", {})
             media = project_data.get("media", {})
-
             existing = Project.query.filter_by(slug=project_data["slug"]).first()
 
             if existing:
-                # Update content fields
+                # Update text fields; preserve any media already in the DB
                 existing.title = project_data["title"]
                 existing.primary_category = project_data["primary_category"]
                 existing.short_description = project_data["short_description"]
@@ -64,15 +113,12 @@ def seed_projects() -> None:
                 existing.demo_url = links.get("demo")
                 existing.tags = project_data.get("tags", [])
                 existing.tech_stack = project_data.get("tech_stack", [])
-
-                # Only overwrite media if seed data has non-empty values
                 if media.get("card_image"):
                     existing.card_image = media["card_image"]
                 if media.get("screenshots"):
                     existing.screenshots = media["screenshots"]
                 if media.get("videos"):
                     existing.videos = media["videos"]
-
             else:
                 project = Project(
                     slug=project_data["slug"],
