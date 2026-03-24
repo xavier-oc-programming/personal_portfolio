@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-24T18:12:57Z",
+  "snapshot_at": "2026-03-24T18:13:15Z",
   "projects": [
     {
       "id": 1,
@@ -1012,7 +1012,7 @@
     {
       "id": 34,
       "slug": "blog-capstone",
-      "title": "Blog Capstone",
+      "title": "Blog Capstone with Authentication",
       "primary_category": "web",
       "short_description": "A styled Flask blog that renders posts from an external API with dynamic routing and Bootstrap layout.",
       "full_description": "A Flask blog application that fetches post data from an external API and renders it dynamically using Jinja2 templates with Bootstrap styling. Covers Flask routing, Jinja template inheritance, and external API data rendering in a complete multi-page web application.",
