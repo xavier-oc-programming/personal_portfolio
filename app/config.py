@@ -70,9 +70,14 @@ class BaseConfig:
     if _DATABASE_URL:
         DATABASE_PATH: Path | None = None
         SQLALCHEMY_DATABASE_URI: str = _DATABASE_URL
+        SQLALCHEMY_ENGINE_OPTIONS: dict = {
+            "pool_pre_ping": True,
+            "connect_args": {"connect_timeout": 10},
+        }
     else:
         DATABASE_PATH = DATABASE_FILE
         SQLALCHEMY_DATABASE_URI = f"sqlite:///{DATABASE_FILE}"
+        SQLALCHEMY_ENGINE_OPTIONS = {"pool_pre_ping": True}
 
     SQLALCHEMY_TRACK_MODIFICATIONS: bool = False
 
