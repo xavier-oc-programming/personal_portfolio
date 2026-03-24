@@ -514,10 +514,9 @@ def media_upload_card(slug: str):
         file_path = dest / filename
         project.card_image = _static_rel(file_path)
         db.session.commit()
-        if _github_commit_file(file_path):
-            flash("Card image uploaded and committed to GitHub.", "success")
-        else:
-            flash("Card image uploaded. Commit app/static/... to git to preserve it on Railway.", "warning")
+        _github_commit_file(file_path)
+        _github_commit_full_snapshot()
+        flash("Card image uploaded and committed to GitHub.", "success")
     else:
         flash("No valid image file provided.", "danger")
 
@@ -556,11 +555,10 @@ def media_upload_screenshot(slug: str):
     if count:
         project.screenshots = shots
         db.session.commit()
-        committed = sum(_github_commit_file(fp) for fp in saved_paths)
-        if committed == count:
-            flash(f"{count} screenshot(s) uploaded and committed to GitHub.", "success")
-        else:
-            flash(f"{count} screenshot(s) uploaded. Commit app/static/... to git to preserve on Railway.", "warning")
+        for fp in saved_paths:
+            _github_commit_file(fp)
+        _github_commit_full_snapshot()
+        flash(f"{count} screenshot(s) uploaded and committed to GitHub.", "success")
     else:
         flash("No valid image files provided.", "danger")
 
@@ -580,6 +578,7 @@ def media_reorder_screenshots(slug: str):
         return jsonify({"error": "Invalid paths"}), 400
     project.screenshots = new_order
     db.session.commit()
+    _github_commit_full_snapshot()
     return jsonify({"ok": True})
 
 
@@ -599,10 +598,9 @@ def media_upload_video(slug: str):
             vids.append(rel_path)
             project.videos = vids
             db.session.commit()
-        if _github_commit_file(file_path):
-            flash("Video uploaded and committed to GitHub.", "success")
-        else:
-            flash("Video uploaded. Commit app/static/... to git to preserve it on Railway.", "warning")
+        _github_commit_file(file_path)
+        _github_commit_full_snapshot()
+        flash("Video uploaded and committed to GitHub.", "success")
     else:
         flash("No valid video file provided.", "danger")
 
