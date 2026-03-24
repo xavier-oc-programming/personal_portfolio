@@ -8,7 +8,7 @@ on:
       - "app/templates/**"
       - "app/static/css/**"
       - "app/static/js/**"
-      - "app/static/images/**"
+      - "app/static/images/favicon.png"
       - "requirements.txt"
       - "Dockerfile"
       - "wsgi.py"
