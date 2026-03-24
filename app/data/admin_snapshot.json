@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-24T15:12:30Z",
+  "snapshot_at": "2026-03-24T15:27:05Z",
   "projects": [
     {
       "id": 1,
@@ -1508,7 +1508,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "images/projects/house-price-prediction/card/houses_1.webp",
       "repo_url": null,
       "live_url": null,
       "demo_url": null
