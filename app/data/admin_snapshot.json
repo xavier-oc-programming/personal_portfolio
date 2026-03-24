@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-24T15:31:45Z",
+  "snapshot_at": "2026-03-24T15:33:22Z",
   "projects": [
     {
       "id": 1,
@@ -1103,7 +1103,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "images/projects/top-10-movies/card/top_10_movies.png",
       "repo_url": null,
       "live_url": null,
       "demo_url": null
