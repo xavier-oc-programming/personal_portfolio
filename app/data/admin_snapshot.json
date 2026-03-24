@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-24T14:41:12Z",
+  "snapshot_at": "2026-03-24T15:12:30Z",
   "projects": [
     {
       "id": 1,
@@ -1080,8 +1080,8 @@
       "primary_category": "web",
       "short_description": "Flask web app where users search, rank, and manage their top 10 favourite movies using a film database API.",
       "full_description": "A full-stack Flask application where users search for films via the TMDB API, add them to a personal top 10 list, and rank and edit them through a database-backed CRUD interface. Built with SQLAlchemy ORM, WTForms, and Bootstrap — a complete web app with real data persistence.",
-      "featured": false,
-      "featured_order": null,
+      "featured": true,
+      "featured_order": 12,
       "date": "2026-02-06",
       "problem": "There was no convenient way to maintain a personal ranked list of favourite films without building a full application with persistent storage — static lists are flat and can't be reordered or enriched.",
       "solution": "Built a Flask web app where users search for films via the TMDB API, add them to a personal top 10 list, and update rankings and reviews through a database-backed CRUD interface with WTForms validation and Bootstrap layout.",
