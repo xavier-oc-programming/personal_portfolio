@@ -40,6 +40,7 @@ def _upsert_from_snapshot(existing: Project | None, data: dict) -> Project:
     p.short_description = data["short_description"]
     p.full_description = data["full_description"]
     p.featured = data.get("featured", False)
+    p.featured_order = data.get("featured_order")
     p.date = data.get("date")
     p.problem = data.get("problem")
     p.solution = data.get("solution")

@@ -286,6 +286,12 @@ def create_app() -> Flask:
 
     with app.app_context():
         db.create_all()
+        # Add featured_order column if it doesn't exist (safe migration for existing DBs)
+        try:
+            db.session.execute(db.text("ALTER TABLE projects ADD COLUMN featured_order INTEGER"))
+            db.session.commit()
+        except Exception:
+            db.session.rollback()
 
     @app.context_processor
     def inject_global_template_vars():
