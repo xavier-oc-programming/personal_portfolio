@@ -140,14 +140,13 @@ def _static_rel(path: Path) -> str:
     return str(path.relative_to(static_dir)).replace("\\", "/")
 
 
-def _github_commit_file(file_path: Path) -> bool:
+def _github_put_content(repo_file_path: str, content_bytes: bytes, commit_message: str) -> bool:
     """
-    Commit a static file to GitHub via the Contents API.
+    Create or update a file in GitHub via the Contents API.
     Requires GITHUB_TOKEN and GITHUB_REPO to be set in config.
     Returns True on success, False if not configured or on any error.
     """
     import base64
-    import json
     import urllib.error
     import urllib.request
 
@@ -156,13 +155,6 @@ def _github_commit_file(file_path: Path) -> bool:
     if not token or not repo:
         return False
 
-    static_dir = Path(current_app.root_path) / "static"
-    try:
-        rel = str(file_path.relative_to(static_dir)).replace("\\", "/")
-    except ValueError:
-        return False
-
-    repo_file_path = f"app/static/{rel}"
     api_url = f"https://api.github.com/repos/{repo}/contents/{repo_file_path}"
     headers = {
         "Authorization": f"token {token}",
@@ -171,8 +163,7 @@ def _github_commit_file(file_path: Path) -> bool:
         "User-Agent": "portfolio-admin",
     }
 
-    with open(file_path, "rb") as f:
-        content_b64 = base64.b64encode(f.read()).decode()
+    content_b64 = base64.b64encode(content_bytes).decode()
 
     sha = None
     try:
@@ -185,7 +176,7 @@ def _github_commit_file(file_path: Path) -> bool:
     except Exception:
         return False
 
-    payload: dict = {"message": f"media: upload {file_path.name}", "content": content_b64}
+    payload: dict = {"message": commit_message, "content": content_b64}
     if sha:
         payload["sha"] = sha
 
@@ -197,6 +188,73 @@ def _github_commit_file(file_path: Path) -> bool:
         return True
     except Exception:
         return False
+
+
+def _github_commit_file(file_path: Path) -> bool:
+    """Commit a static file to GitHub. Returns True on success."""
+    static_dir = Path(current_app.root_path) / "static"
+    try:
+        rel = str(file_path.relative_to(static_dir)).replace("\\", "/")
+    except ValueError:
+        return False
+    with open(file_path, "rb") as f:
+        content = f.read()
+    return _github_put_content(f"app/static/{rel}", content, f"media: upload {file_path.name}")
+
+
+def _github_commit_full_snapshot() -> bool:
+    """
+    Commit a full JSON snapshot of all projects and messages to GitHub.
+    Saved as app/data/admin_snapshot.json. Returns True on success.
+    """
+    projects = Project.query.order_by(Project.id.asc()).all()
+    messages = ContactMessage.query.order_by(ContactMessage.created_at.desc()).all()
+
+    data = {
+        "snapshot_at": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "projects": [
+            {
+                "id": p.id,
+                "slug": p.slug,
+                "title": p.title,
+                "primary_category": p.primary_category,
+                "short_description": p.short_description,
+                "full_description": p.full_description,
+                "featured": p.featured,
+                "date": p.date,
+                "problem": p.problem,
+                "solution": p.solution,
+                "challenges": p.challenges,
+                "results": p.results,
+                "tags": p.tags,
+                "tech_stack": p.tech_stack,
+                "screenshots": p.screenshots,
+                "videos": p.videos,
+                "card_image": p.card_image,
+                "repo_url": p.repo_url,
+                "live_url": p.live_url,
+                "demo_url": p.demo_url,
+            }
+            for p in projects
+        ],
+        "messages": [
+            {
+                "id": m.id,
+                "name": m.name,
+                "email": m.email,
+                "message": m.message,
+                "created_at": m.created_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
+            }
+            for m in messages
+        ],
+    }
+
+    content = json.dumps(data, indent=2, ensure_ascii=False).encode()
+    return _github_put_content(
+        "app/data/admin_snapshot.json",
+        content,
+        "data: update admin snapshot",
+    )
 
 
 def _populate_project_from_form(project: Project, form: ProjectForm) -> None:
@@ -347,8 +405,13 @@ def project_new():
         db.session.add(project)
         db.session.commit()
         _backup_projects()
+        backed_up = _github_commit_full_snapshot()
 
-        flash(f"Project '{project.title}' created.", "success")
+        flash(
+            f"Project '{project.title}' created and backed up to GitHub." if backed_up
+            else f"Project '{project.title}' created.",
+            "success",
+        )
         return redirect(url_for("admin.project_edit", slug=project.slug))
 
     if form.errors:
@@ -383,8 +446,13 @@ def project_edit(slug: str):
         _populate_project_from_form(project, form)
         db.session.commit()
         _backup_projects()
+        backed_up = _github_commit_full_snapshot()
 
-        flash(f"Project '{project.title}' updated.", "success")
+        flash(
+            f"Project '{project.title}' updated and backed up to GitHub." if backed_up
+            else f"Project '{project.title}' updated.",
+            "success",
+        )
         return redirect(url_for("admin.project_edit", slug=project.slug))
 
     if form.errors:
@@ -407,7 +475,12 @@ def project_delete(slug: str):
     db.session.delete(project)
     db.session.commit()
     _backup_projects()
-    flash(f"Project '{title}' deleted.", "success")
+    backed_up = _github_commit_full_snapshot()
+    flash(
+        f"Project '{title}' deleted and snapshot backed up to GitHub." if backed_up
+        else f"Project '{title}' deleted.",
+        "success",
+    )
     return redirect(url_for("admin.projects"))
 
 
@@ -590,6 +663,7 @@ def message_delete(message_id: int):
     msg = ContactMessage.query.get_or_404(message_id)
     db.session.delete(msg)
     db.session.commit()
+    _github_commit_full_snapshot()
     flash("Message deleted.", "success")
     return redirect(url_for("admin.messages"))
 
@@ -657,6 +731,7 @@ def backup_restore(filename: str):
         project.demo_url = entry.get("demo_url")
 
     db.session.commit()
+    _github_commit_full_snapshot()
     flash(f"Restored {len(data)} projects from {filename}.", "success")
     return redirect(url_for("admin.backups"))
 
@@ -709,6 +784,7 @@ def tag_add():
 
     db.session.commit()
     _backup_projects()
+    _github_commit_full_snapshot()
     flash(f"Added tag '{tag}' to {updated} project(s).", "success")
     return redirect(url_for("admin.tags"))
 
@@ -736,6 +812,7 @@ def tag_assign():
 
     db.session.commit()
     _backup_projects()
+    _github_commit_full_snapshot()
     flash(f"Tag '{tag}': {added} added, {removed} removed.", "success")
     return redirect(url_for("admin.tags"))
 
@@ -762,6 +839,7 @@ def tag_rename():
 
     db.session.commit()
     _backup_projects()
+    _github_commit_full_snapshot()
     flash(f"Renamed '{old_tag}' → '{new_tag}' across {updated} project(s).", "success")
     return redirect(url_for("admin.tags"))
 
@@ -783,5 +861,6 @@ def tag_delete():
 
     db.session.commit()
     _backup_projects()
+    _github_commit_full_snapshot()
     flash(f"Deleted tag '{tag}' from {updated} project(s).", "success")
     return redirect(url_for("admin.tags"))
