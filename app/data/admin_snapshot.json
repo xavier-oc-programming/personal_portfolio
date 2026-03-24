@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-24T11:32:06Z",
+  "snapshot_at": "2026-03-24T11:36:07Z",
   "projects": [
     {
       "id": 1,
@@ -7,13 +7,13 @@
       "title": "Hangman",
       "primary_category": "software",
       "short_description": "Two fully playable versions of the same game that together tell a clear story of growth. The project demonstrates not just Python fundamentals, but the ability to revisit earlier work with a critical eye and rebuild it at a significantly higher level.",
-      "full_description": "A terminal-based Hangman game that selects a random word and challenges the player to guess it letter by letter before running out of lives. Demonstrates string manipulation, list operations, and basic control flow in Python.",
+      "full_description": "HEYYYY A terminal-based Hangman game that selects a random word and challenges the player to guess it letter by letter before running out of lives. Demonstrates string manipulation, list operations, and basic control flow in Python.",
       "featured": false,
       "date": "2024-09-15",
-      "problem": "Two fully playable versions of the same game that together tell a clear story of growth. The project demonstrates not just Python fundamentals, but the ability to revisit earlier work with a critical eye and rebuild it at a significantly higher level.",
-      "solution": "I wanted a first portfolio project that honestly represented where I started, not just where I ended up. Most developers hide their early work — I wanted to show the full arc.",
-      "challenges": "Built the game twice. The original stays exactly as written during the course — no cleanup. The advanced rebuild introduces a richer, more capable version of the same game: a HangmanGame class managing the full game logic, a WordBank class with JSON-persisted custom categories, animated ASCII art, color-coded letter tracking, difficulty levels, a hint system, and a play stats tracker saved between sessions.",
-      "results": "The biggest challenge in the advanced rebuild was designing clean separation of concerns across six modules while keeping the code readable for someone who might inspect it. Managing ANSI escape codes for in-place terminal animation (line-by-line hangman drawing, flashing win banner, typewriter effects) without corrupting the layout took significant iteration.",
+      "problem": "I wanted a first portfolio project that honestly represented where I started, not just where I ended up. Most developers hide their early work — I wanted to show the full arc.",
+      "solution": "Built the game twice. The original stays exactly as written during the course — no cleanup. The advanced rebuild introduces a richer, more capable version of the same game: a HangmanGame class managing the full game logic, a WordBank class with JSON-persisted custom categories, animated ASCII art, color-coded letter tracking, difficulty levels, a hint system, and a play stats tracker saved between sessions.",
+      "challenges": "The biggest challenge in the advanced rebuild was designing clean separation of concerns across six modules while keeping the code readable for someone who might inspect it. Managing ANSI escape codes for in-place terminal animation (line-by-line hangman drawing, flashing win banner, typewriter effects) without corrupting the layout took significant iteration.",
+      "results": "Two fully playable versions of the same game that together tell a clear story of growth. The project demonstrates not just Python fundamentals, but the ability to revisit earlier work with a critical eye and rebuild it at a significantly higher level.",
       "tags": [
         "cli",
         "game",
