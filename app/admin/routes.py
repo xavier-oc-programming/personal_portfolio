@@ -663,7 +663,17 @@ def featured_order():
         .order_by(db.func.coalesce(Project.featured_order, 999999).asc(), Project.title.asc())
         .all()
     )
-    return render_template("admin/featured.html", featured_projects=featured)
+    not_featured = (
+        Project.query
+        .filter_by(featured=False)
+        .order_by(Project.title.asc())
+        .all()
+    )
+    return render_template(
+        "admin/featured.html",
+        featured_projects=featured,
+        all_projects=not_featured,
+    )
 
 
 @admin_bp.post("/featured/reorder")
@@ -677,6 +687,45 @@ def featured_reorder():
         project = Project.query.filter_by(slug=slug).first()
         if project and project.featured:
             project.featured_order = i
+    db.session.commit()
+    _github_commit_full_snapshot()
+    return jsonify({"ok": True})
+
+
+@admin_bp.post("/featured/add")
+@_require_admin
+def featured_add():
+    data = request.get_json(silent=True)
+    if not data or "slugs" not in data:
+        return jsonify({"error": "Missing slugs"}), 400
+    max_order = db.session.query(
+        db.func.coalesce(db.func.max(Project.featured_order), -1)
+    ).scalar()
+    added = 0
+    for slug in data["slugs"]:
+        project = Project.query.filter_by(slug=slug).first()
+        if project and not project.featured:
+            max_order += 1
+            project.featured = True
+            project.featured_order = max_order
+            added += 1
+    db.session.commit()
+    if added:
+        _github_commit_full_snapshot()
+    return jsonify({"ok": True, "added": added})
+
+
+@admin_bp.post("/featured/remove")
+@_require_admin
+def featured_remove():
+    data = request.get_json(silent=True)
+    if not data or "slug" not in data:
+        return jsonify({"error": "Missing slug"}), 400
+    project = Project.query.filter_by(slug=data["slug"]).first()
+    if not project:
+        return jsonify({"error": "Not found"}), 404
+    project.featured = False
+    project.featured_order = None
     db.session.commit()
     _github_commit_full_snapshot()
     return jsonify({"ok": True})

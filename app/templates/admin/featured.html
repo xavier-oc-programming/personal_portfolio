@@ -6,100 +6,428 @@
   <h2 class="fw-bold mb-0">Featured Order</h2>
   <div class="d-flex gap-2 align-items-center">
     <span id="save-status" class="text-muted small"></span>
+    <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#addFeaturedModal">+ Add</button>
     <button id="save-btn" class="btn btn-dark btn-sm" disabled>Save Order</button>
     <a href="{{ url_for('admin.projects') }}" class="btn btn-outline-secondary btn-sm">All Projects</a>
   </div>
 </div>
 <p class="text-muted small mb-4">Drag cards to reorder. Click Save Order to apply — this is exactly how they appear on the home page.</p>
 
-{% if featured_projects %}
-  <div class="row g-4" id="featured-grid">
-    {% for project in featured_projects %}
-      <div class="col-12 col-md-6 col-lg-4 featured-item" data-slug="{{ project.slug }}" style="cursor: grab;">
-        <div class="position-relative">
-          <span class="position-absolute top-0 start-0 badge bg-dark m-2" style="z-index:10;">{{ loop.index }}</span>
-          {% include "components/project_card.html" %}
+<!-- Home page simulation -->
+<div class="home-preview">
+
+  <!-- Hero -->
+  <section class="hp-section">
+    <div class="row align-items-center g-4">
+      <div class="col-12 col-lg-8">
+        <p class="hp-eyebrow">Xavier OC</p>
+        <h1 class="hp-h1">I build Python applications — web, data, and everything in between.</h1>
+        <p class="hp-body mt-2 mb-0">Over the past year I've built Flask web applications, data analysis pipelines, and automation scripts in Python — from local scripts to deployed production apps. This portfolio is the work.</p>
+        <div class="d-flex flex-wrap gap-2 mt-4">
+          <span class="btn btn-dark btn-sm pe-none">View Projects</span>
+          <span class="btn btn-outline-dark btn-sm pe-none">Contact</span>
         </div>
       </div>
-    {% endfor %}
-  </div>
-  <p class="text-muted small mt-3">{{ featured_projects|length }} featured project(s).</p>
-{% else %}
-  <div class="card">
-    <div class="card-body text-muted">
-      No featured projects yet. Mark projects as featured from their
-      <a href="{{ url_for('admin.projects') }}">edit page</a>.
+      <div class="col-12 col-lg-4">
+        <div class="hp-surface-muted p-4">
+          <p class="mb-2 fw-semibold hp-text">Open to</p>
+          <p class="mb-0 hp-body">Junior Python Developer or Junior Data Analyst roles — Madrid or remote. Available immediately.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Projects — interactive -->
+  <section class="hp-section">
+    <div class="d-flex justify-content-between align-items-end gap-3 mb-4 flex-wrap">
+      <div>
+        <span class="hp-eyebrow">Highlights</span>
+        <h2 class="hp-h2 mb-1">Featured Projects</h2>
+        <p class="hp-body mb-0">A few highlights from across Web, Data, and Software.</p>
+      </div>
+      <span class="btn btn-outline-dark btn-sm pe-none">View all</span>
+    </div>
+
+    {% if featured_projects %}
+      <div class="row g-4" id="featured-grid">
+        {% for project in featured_projects %}
+          <div class="col-12 col-md-6 col-lg-4 featured-item" data-slug="{{ project.slug }}" style="cursor: grab;">
+            <div class="position-relative">
+              <span class="position-absolute top-0 start-0 badge bg-dark m-2" style="z-index:10; font-size:.85rem;">{{ loop.index }}</span>
+              <button
+                class="btn btn-sm btn-danger position-absolute top-0 end-0 m-2 remove-btn"
+                data-slug="{{ project.slug }}"
+                data-title="{{ project.title|e }}"
+                style="z-index:10; padding: 0.15rem 0.4rem; font-size: 0.75rem; line-height:1;"
+                title="Remove from featured"
+              >&times;</button>
+              {% include "components/project_card.html" %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <p class="hp-body small mt-3" id="featured-count">{{ featured_projects|length }} featured project(s).</p>
+    {% else %}
+      <div class="hp-surface p-4" id="empty-state">
+        <p class="hp-body mb-0">No featured projects yet.</p>
+      </div>
+      <div class="row g-4 d-none" id="featured-grid"></div>
+      <p class="hp-body small mt-3 d-none" id="featured-count">0 featured project(s).</p>
+    {% endif %}
+  </section>
+
+  <!-- What you'll find here -->
+  <section class="hp-section">
+    <div class="mb-4">
+      <span class="hp-eyebrow">Overview</span>
+      <h2 class="hp-h2 mb-2">What you'll find here</h2>
+    </div>
+    <div class="hp-surface p-4">
+      <ul class="mb-0 hp-body">
+        <li>Flask applications with clean Jinja architecture</li>
+        <li>Data projects using Python, Pandas, and visualization</li>
+        <li>Automation and software builds with strong structure</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Focus Areas -->
+  <section class="hp-section">
+    <div class="mb-4">
+      <span class="hp-eyebrow">Core categories</span>
+      <h2 class="hp-h2 mb-2">Focus areas</h2>
+    </div>
+    <div class="row g-4">
+      <div class="col-12 col-md-4">
+        <div class="hp-surface p-4 h-100">
+          <h3 class="h5 mb-2 hp-text">Web</h3>
+          <p class="hp-body mb-0">Flask, Jinja, routing, templates, Bootstrap layout discipline.</p>
+        </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="hp-surface p-4 h-100">
+          <h3 class="h5 mb-2 hp-text">Data</h3>
+          <p class="hp-body mb-0">Pandas workflows, cleaning, analysis, visualization, reporting.</p>
+        </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="hp-surface p-4 h-100">
+          <h3 class="h5 mb-2 hp-text">Software</h3>
+          <p class="hp-body mb-0">Python structure, automation scripts, clean interfaces and logic.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section>
+    <div class="hp-surface-muted p-4 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+      <div>
+        <h2 class="h4 mb-1 hp-text">Want to see everything?</h2>
+        <p class="hp-body mb-0">Browse the full projects hub with categories and tags.</p>
+      </div>
+      <span class="btn btn-dark btn-sm pe-none">Browse Projects</span>
+    </div>
+  </section>
+
+</div>
+
+
+<!-- ================================================================
+     ADD FEATURED MODAL
+     ================================================================ -->
+<div class="modal fade" id="addFeaturedModal" tabindex="-1" aria-labelledby="addFeaturedModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addFeaturedModalLabel">Add to Featured</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        {% if all_projects %}
+          <p class="text-muted small mb-3">Select projects to add to the featured list. They will be appended at the end — drag to reorder afterwards.</p>
+          <div class="mb-3">
+            <input type="text" id="addFeaturedSearch" class="form-control form-control-sm" placeholder="Search projects..." autocomplete="off" />
+          </div>
+          {% set categories = [('web', 'Web'), ('data', 'Data'), ('software', 'Software')] %}
+          {% for cat_key, cat_label in categories %}
+            {% set cat_projects = all_projects | selectattr('primary_category', 'equalto', cat_key) | list %}
+            {% if cat_projects %}
+              <div class="mb-3 add-category-group">
+                <div class="text-muted small fw-semibold text-uppercase mb-2" style="letter-spacing:.05em;">{{ cat_label }}</div>
+                <div class="row g-1">
+                  {% for project in cat_projects %}
+                    <div class="col-12 col-md-6 add-project-row">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="{{ project.slug }}" id="add_{{ project.slug }}" />
+                        <label class="form-check-label small add-project-label" for="add_{{ project.slug }}" data-title="{{ project.title }}">{{ project.title }}</label>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          <p class="text-muted">All projects are already featured.</p>
+        {% endif %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" id="add-featured-confirm" class="btn btn-dark" {% if not all_projects %}disabled{% endif %}>Add Selected</button>
+      </div>
     </div>
   </div>
-{% endif %}
+</div>
 {% endblock %}
 
+
 {% block scripts %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.3/Sortable.min.js"></script>
 <script>
 (function () {
   const grid = document.getElementById('featured-grid');
-  if (!grid) return;
-
   const saveBtn = document.getElementById('save-btn');
   const saveStatus = document.getElementById('save-status');
+  const featuredCount = document.getElementById('featured-count');
   const reorderUrl = "{{ url_for('admin.featured_reorder') }}";
+  const removeUrl = "{{ url_for('admin.featured_remove') }}";
+  const addUrl = "{{ url_for('admin.featured_add') }}";
   const csrfToken = "{{ csrf_token() }}";
 
+  // ── Position badges ──────────────────────────────────────────────────────
   function updatePositionBadges() {
+    if (!grid) return;
     grid.querySelectorAll('.featured-item').forEach(function (el, i) {
       const badge = el.querySelector('.badge');
       if (badge) badge.textContent = i + 1;
     });
+    const n = grid.querySelectorAll('.featured-item').length;
+    if (featuredCount) featuredCount.textContent = n + ' featured project(s).';
   }
 
-  Sortable.create(grid, {
-    animation: 150,
-    ghostClass: 'sortable-ghost',
-    onEnd: function () {
-      updatePositionBadges();
-      saveBtn.disabled = false;
-      saveStatus.textContent = 'Unsaved changes';
-      saveStatus.className = 'text-warning small';
-    },
-  });
-
-  saveBtn.addEventListener('click', function () {
-    const order = Array.from(grid.querySelectorAll('[data-slug]')).map(function (el) {
-      return el.dataset.slug;
-    });
-    saveBtn.disabled = true;
-    saveStatus.textContent = 'Saving…';
-    saveStatus.className = 'text-muted small';
-
-    fetch(reorderUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrfToken,
+  // ── Sortable ─────────────────────────────────────────────────────────────
+  if (grid) {
+    Sortable.create(grid, {
+      animation: 150,
+      ghostClass: 'sortable-ghost',
+      onEnd: function () {
+        updatePositionBadges();
+        saveBtn.disabled = false;
+        saveStatus.textContent = 'Unsaved changes';
+        saveStatus.className = 'text-warning small';
       },
-      body: JSON.stringify({ order: order }),
+    });
+  }
+
+  // ── Save order ───────────────────────────────────────────────────────────
+  if (saveBtn) {
+    saveBtn.addEventListener('click', function () {
+      const order = Array.from(grid.querySelectorAll('[data-slug]')).map(function (el) {
+        return el.dataset.slug;
+      });
+      saveBtn.disabled = true;
+      saveStatus.textContent = 'Saving…';
+      saveStatus.className = 'text-muted small';
+
+      fetch(reorderUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
+        body: JSON.stringify({ order: order }),
+      })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (data.ok) {
+          saveStatus.textContent = 'Saved';
+          saveStatus.className = 'text-success small';
+        } else {
+          saveStatus.textContent = 'Error saving';
+          saveStatus.className = 'text-danger small';
+          saveBtn.disabled = false;
+        }
+      })
+      .catch(function () {
+        saveStatus.textContent = 'Error saving';
+        saveStatus.className = 'text-danger small';
+        saveBtn.disabled = false;
+      });
+    });
+  }
+
+  // ── Remove buttons ───────────────────────────────────────────────────────
+  document.addEventListener('click', function (e) {
+    const btn = e.target.closest('.remove-btn');
+    if (!btn) return;
+    const slug = btn.dataset.slug;
+    const title = btn.dataset.title;
+    if (!confirm('Remove "' + title + '" from featured?')) return;
+
+    btn.disabled = true;
+
+    fetch(removeUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
+      body: JSON.stringify({ slug: slug }),
     })
     .then(function (r) { return r.json(); })
     .then(function (data) {
       if (data.ok) {
-        saveStatus.textContent = 'Saved';
-        saveStatus.className = 'text-success small';
+        const item = btn.closest('.featured-item');
+        if (item) item.remove();
+        updatePositionBadges();
+        // show empty state if no cards left
+        const emptyState = document.getElementById('empty-state');
+        if (grid && grid.querySelectorAll('.featured-item').length === 0 && emptyState) {
+          emptyState.classList.remove('d-none');
+          grid.classList.add('d-none');
+          if (featuredCount) featuredCount.classList.add('d-none');
+        }
       } else {
-        saveStatus.textContent = 'Error saving';
-        saveStatus.className = 'text-danger small';
-        saveBtn.disabled = false;
+        btn.disabled = false;
+        alert('Error removing project.');
       }
     })
     .catch(function () {
-      saveStatus.textContent = 'Error saving';
-      saveStatus.className = 'text-danger small';
-      saveBtn.disabled = false;
+      btn.disabled = false;
+      alert('Error removing project.');
     });
   });
+
+  // ── Add Featured Modal ───────────────────────────────────────────────────
+  const addModal = document.getElementById('addFeaturedModal');
+  const addSearch = document.getElementById('addFeaturedSearch');
+  const addConfirmBtn = document.getElementById('add-featured-confirm');
+
+  if (addSearch) {
+    addSearch.addEventListener('input', function () {
+      const q = this.value.trim().toLowerCase();
+      addModal.querySelectorAll('.add-project-row').forEach(function (row) {
+        const label = row.querySelector('.add-project-label');
+        const title = label.dataset.title;
+        if (!q) {
+          row.style.opacity = '';
+          label.innerHTML = title;
+          return;
+        }
+        const idx = title.toLowerCase().indexOf(q);
+        if (idx === -1) {
+          row.style.opacity = '0.25';
+          label.innerHTML = title;
+        } else {
+          row.style.opacity = '1';
+          label.innerHTML =
+            title.slice(0, idx) +
+            '<mark class="px-0">' + title.slice(idx, idx + q.length) + '</mark>' +
+            title.slice(idx + q.length);
+        }
+      });
+      addModal.querySelectorAll('.add-category-group').forEach(function (group) {
+        const anyVisible = Array.from(group.querySelectorAll('.add-project-row'))
+          .some(function (r) { return r.style.opacity !== '0.25'; });
+        group.style.display = (!q || anyVisible) ? '' : 'none';
+      });
+    });
+  }
+
+  if (addModal) {
+    addModal.addEventListener('hidden.bs.modal', function () {
+      if (addSearch) { addSearch.value = ''; addSearch.dispatchEvent(new Event('input')); }
+      addModal.querySelectorAll('input[type=checkbox]').forEach(function (cb) { cb.checked = false; });
+    });
+  }
+
+  if (addConfirmBtn) {
+    addConfirmBtn.addEventListener('click', function () {
+      const selected = Array.from(
+        addModal.querySelectorAll('input[type=checkbox]:checked')
+      ).map(function (cb) { return cb.value; });
+
+      if (selected.length === 0) {
+        alert('Select at least one project.');
+        return;
+      }
+
+      addConfirmBtn.disabled = true;
+      addConfirmBtn.textContent = 'Adding…';
+
+      fetch(addUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
+        body: JSON.stringify({ slugs: selected }),
+      })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (data.ok) {
+          window.location.reload();
+        } else {
+          addConfirmBtn.disabled = false;
+          addConfirmBtn.textContent = 'Add Selected';
+          alert('Error adding projects.');
+        }
+      })
+      .catch(function () {
+        addConfirmBtn.disabled = false;
+        addConfirmBtn.textContent = 'Add Selected';
+        alert('Error adding projects.');
+      });
+    });
+  }
+
 })();
 </script>
 <style>
+  /* Restore admin body bg */
+  body { background: #f1f3f5 !important; }
+
+  /* Home page preview wrapper */
+  .home-preview {
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 2.5rem;
+    margin-top: 0.5rem;
+  }
+
+  /* Scoped home page styles */
+  .hp-section { margin-bottom: 3rem; }
+  .hp-eyebrow {
+    display: inline-block;
+    margin-bottom: 0.35rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #2563eb;
+  }
+  .hp-h1 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: #111;
+    margin-bottom: 0;
+  }
+  .hp-h2 {
+    font-size: clamp(1.25rem, 2.5vw, 1.65rem);
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    color: #111;
+  }
+  .hp-text { color: #111; }
+  .hp-body { color: #555; }
+  .hp-surface {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+  }
+  .hp-surface-muted {
+    background: #f8f9fa;
+    border-radius: 8px;
+  }
+
+  /* Drag and drop */
   .sortable-ghost { opacity: 0.4; }
   .featured-item:active { cursor: grabbing; }
 </style>
