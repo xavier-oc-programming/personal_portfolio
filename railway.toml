@@ -1,5 +1,2 @@
 [build]
-builder = "RAILPACK"
-
-[deploy]
-startCommand = "python -m app.seed_projects && gunicorn wsgi:app --bind 0.0.0.0:$PORT --workers 2 --timeout 30"
+builder = "DOCKERFILE"
