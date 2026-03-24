@@ -176,7 +176,7 @@ def _github_put_content(repo_file_path: str, content_bytes: bytes, commit_messag
     except Exception:
         return False
 
-    payload: dict = {"message": f"{commit_message} [skip deploy]", "content": content_b64}
+    payload: dict = {"message": f"{commit_message} [skip ci]", "content": content_b64}
     if sha:
         payload["sha"] = sha
 
