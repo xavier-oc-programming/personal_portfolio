@@ -62,8 +62,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Cache Railway CLI
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm-global
+          key: railway-cli-${{ runner.os }}
+
       - name: Deploy to Railway
         run: |
+          npm config set prefix ~/.npm-global
+          export PATH=~/.npm-global/bin:$PATH
           npm install -g @railway/cli
           railway up --detach
         env:
