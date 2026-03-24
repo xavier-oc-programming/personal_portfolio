@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-24T11:11:26Z",
+  "snapshot_at": "2026-03-24T11:13:43Z",
   "projects": [
     {
       "id": 1,
@@ -10,7 +10,7 @@
       "full_description": "A terminal-based Hangman game that selects a random word and challenges the player to guess it letter by letter before running out of lives. Demonstrates string manipulation, list operations, and basic control flow in Python.",
       "featured": false,
       "date": "2025-09-15",
-      "problem": "hellooooo",
+      "problem": "oooooo",
       "solution": null,
       "challenges": null,
       "results": null,
