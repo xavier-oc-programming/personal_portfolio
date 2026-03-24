@@ -1,0 +1,1520 @@
+{
+  "snapshot_at": "2026-03-24T11:03:47Z",
+  "projects": [
+    {
+      "id": 1,
+      "slug": "hangman",
+      "title": "Hangman",
+      "primary_category": "software",
+      "short_description": "Classic word guessing game in the terminal with random word selection and a lives system.",
+      "full_description": "A terminal-based Hangman game written in Python and intentionally built twice. The original version (September 2024) was written on Day 7 of my coding journey using only the basics: loops, functions, string manipulation, and imports. The advanced rebuild (2025) rewrites the same game from scratch using OOP, dataclasses, enums, type hints, ANSI animations, persistent stats, and a clean multi-module architecture. Both versions are playable through a shared launcher menu.",
+      "featured": false,
+      "date": "2025-09-15",
+      "problem": "I wanted a first portfolio project that honestly represented where I started, not just where I ended up. Most developers hide their early work — I wanted to show the full arc.",
+      "solution": "Built the game twice. The original stays exactly as written during the course — no cleanup. The advanced rebuild introduces a richer, more capable version of the same game: a HangmanGame class managing the full game logic, a WordBank class with JSON-persisted custom categories, animated ASCII art, color-coded letter tracking, difficulty levels, a hint system, and a play stats tracker saved between sessions.",
+      "challenges": "The biggest challenge in the advanced rebuild was designing clean separation of concerns across six modules while keeping the code readable for someone who might inspect it. Managing ANSI escape codes for in-place terminal animation (line-by-line hangman drawing, flashing win banner, typewriter effects) without corrupting the layout took significant iteration.",
+      "results": "Two fully playable versions of the same game that together tell a clear story of growth. The project demonstrates not just Python fundamentals, but the ability to revisit earlier work with a critical eye and rebuild it at a significantly higher level.",
+      "tags": [
+        "cli",
+        "game",
+        "python",
+        "beginner",
+        "oop",
+        "terminal"
+      ],
+      "tech_stack": [
+        "Python"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": "https://github.com/xavier-oc-programming/hangman_beginner_project_xoc",
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 2,
+      "slug": "caesar-cipher",
+      "title": "Caesar Cipher",
+      "primary_category": "software",
+      "short_description": "Encrypts and decrypts messages using the Caesar cipher algorithm with variable shift input.",
+      "full_description": "A Python script that applies the Caesar cipher to any input string, shifting characters by a user-defined amount to encrypt or decrypt. Covers string indexing, modular arithmetic, and function design.",
+      "featured": false,
+      "date": "2025-09-17",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "cli",
+        "scripting"
+      ],
+      "tech_stack": [
+        "Python"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 3,
+      "slug": "blackjack",
+      "title": "Blackjack",
+      "primary_category": "software",
+      "short_description": "Terminal-based Blackjack card game with full game logic, dealer AI, and score tracking.",
+      "full_description": "A fully playable Blackjack game built in the terminal using Python and OOP. Implements dealer logic, card drawing, bust detection, and score tracking across multiple rounds. Demonstrates class design and game state management.",
+      "featured": false,
+      "date": "2025-09-25",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "cli",
+        "game"
+      ],
+      "tech_stack": [
+        "Python",
+        "OOP"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 4,
+      "slug": "number-guessing-game",
+      "title": "Number Guessing Game",
+      "primary_category": "software",
+      "short_description": "Terminal game where the user guesses a random number with difficulty levels and attempt limits.",
+      "full_description": "A simple terminal game that generates a random number and challenges the player to guess it within a limited number of attempts. Supports easy and hard difficulty levels with appropriate attempt counts.",
+      "featured": false,
+      "date": "2025-09-27",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "cli",
+        "game"
+      ],
+      "tech_stack": [
+        "Python"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 5,
+      "slug": "higher-lower-game",
+      "title": "Higher-Lower Game",
+      "primary_category": "software",
+      "short_description": "Guess which celebrity or brand has more Instagram followers — terminal version.",
+      "full_description": "A terminal-based game where the player compares two social media accounts and guesses which has more followers. Tracks score across consecutive correct answers and ends on the first wrong guess.",
+      "featured": false,
+      "date": "2025-10-01",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "cli",
+        "game"
+      ],
+      "tech_stack": [
+        "Python"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 6,
+      "slug": "quiz-game",
+      "title": "Quiz Game",
+      "primary_category": "software",
+      "short_description": "OOP-based terminal quiz app that tracks score across multiple rounds.",
+      "full_description": "A terminal quiz application built with OOP. Questions are stored in a data model, a QuizBrain class manages game state, and results are tracked across rounds. Demonstrates class design, separation of concerns, and structured data handling.",
+      "featured": false,
+      "date": "2025-10-05",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "cli",
+        "game"
+      ],
+      "tech_stack": [
+        "Python",
+        "OOP"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 7,
+      "slug": "snake-game",
+      "title": "Snake Game",
+      "primary_category": "software",
+      "short_description": "Fully functional Snake game with score tracking, collision detection, and increasing speed.",
+      "full_description": "A complete Snake game built with Python's Turtle graphics library and OOP. Features real-time movement, collision detection with walls and the snake's own body, food spawning, and a score display that increases as the snake grows.",
+      "featured": false,
+      "date": "2025-10-12",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "gui",
+        "game"
+      ],
+      "tech_stack": [
+        "Python",
+        "Turtle",
+        "OOP"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 8,
+      "slug": "pong",
+      "title": "Pong",
+      "primary_category": "software",
+      "short_description": "Two-player Pong game with paddle movement, ball physics, and score display.",
+      "full_description": "A two-player Pong game implemented with Python's Turtle graphics module. Handles keyboard-driven paddle movement, ball bounce physics, boundary detection, and a live score display. Built with OOP using separate classes for paddles, ball, and scoreboard.",
+      "featured": false,
+      "date": "2025-10-20",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "gui",
+        "game"
+      ],
+      "tech_stack": [
+        "Python",
+        "Turtle",
+        "OOP"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 9,
+      "slug": "turtle-crossing",
+      "title": "Turtle Crossing",
+      "primary_category": "software",
+      "short_description": "Arcade-style crossing game with increasing difficulty levels and collision detection.",
+      "full_description": "An arcade game where the player guides a turtle across a busy road while avoiding cars. Difficulty increases with each successful crossing as cars speed up. Built with Turtle graphics and OOP — separate classes for player, car manager, and scoreboard.",
+      "featured": false,
+      "date": "2025-10-23",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "gui",
+        "game"
+      ],
+      "tech_stack": [
+        "Python",
+        "Turtle",
+        "OOP"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 10,
+      "slug": "higher-lower-web-game",
+      "title": "Higher-Lower Web Game",
+      "primary_category": "web",
+      "short_description": "Web version of the Higher-Lower game built with Flask and rendered in the browser with score tracking.",
+      "full_description": "A Flask-based web port of the Higher-Lower terminal game. The player guesses which account has more followers, with score tracked across rounds in the browser. An early Flask project covering routing, Jinja rendering, and session state.",
+      "featured": false,
+      "date": "2026-01-28",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "web-app",
+        "game"
+      ],
+      "tech_stack": [
+        "Python",
+        "Flask",
+        "HTML",
+        "CSS"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 11,
+      "slug": "coffee-machine",
+      "title": "Coffee Machine",
+      "primary_category": "software",
+      "short_description": "Simulates a coffee machine — takes orders, checks resources, processes payments, and makes drinks.",
+      "full_description": "A Python simulation of a coffee machine that manages drink menus, ingredient resources, and coin-based payments. Built with OOP — a CoffeeMaker, Menu, and MoneyMachine class each handle a distinct responsibility.",
+      "featured": false,
+      "date": "2025-10-03",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "cli",
+        "scripting"
+      ],
+      "tech_stack": [
+        "Python",
+        "OOP"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 12,
+      "slug": "miles-to-km-converter",
+      "title": "Miles to Kilometer Converter",
+      "primary_category": "software",
+      "short_description": "Simple desktop GUI app that converts miles to kilometres in real time.",
+      "full_description": "A desktop GUI app built with Tkinter that converts a miles input to kilometres as the user types. An introductory project covering Tkinter layout, event binding, and real-time output updates.",
+      "featured": false,
+      "date": "2025-11-01",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "gui",
+        "productivity"
+      ],
+      "tech_stack": [
+        "Python",
+        "Tkinter"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 13,
+      "slug": "pomodoro-app",
+      "title": "Pomodoro App",
+      "primary_category": "software",
+      "short_description": "Desktop productivity timer implementing the Pomodoro technique with work and break intervals.",
+      "full_description": "A Tkinter desktop app that implements the Pomodoro technique: 25-minute work intervals followed by short and long breaks, with a visual countdown timer and session tracking. Demonstrates Tkinter widget management, after() scheduling, and state control.",
+      "featured": false,
+      "date": "2025-11-04",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "gui",
+        "productivity"
+      ],
+      "tech_stack": [
+        "Python",
+        "Tkinter"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 14,
+      "slug": "password-manager",
+      "title": "Password Manager",
+      "primary_category": "software",
+      "short_description": "Desktop GUI app that generates secure passwords and saves credentials locally with search functionality.",
+      "full_description": "A Tkinter desktop password manager that generates strong random passwords, stores credentials in a local JSON file, and supports searching by website. Covers GUI design, file I/O, and data persistence without a database.",
+      "featured": false,
+      "date": "2025-11-07",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "gui",
+        "productivity"
+      ],
+      "tech_stack": [
+        "Python",
+        "Tkinter",
+        "JSON"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 15,
+      "slug": "flash-card-app",
+      "title": "Flash Card App",
+      "primary_category": "software",
+      "short_description": "Language learning flashcard app that tracks known and unknown words and adjusts the deck accordingly.",
+      "full_description": "A Tkinter flashcard application for language learning that flips cards to reveal translations and removes known words from the active deck. Progress is saved to CSV so the session picks up where the user left off.",
+      "featured": false,
+      "date": "2025-11-12",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "gui",
+        "productivity"
+      ],
+      "tech_stack": [
+        "Python",
+        "Tkinter",
+        "Pandas",
+        "CSV"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 16,
+      "slug": "gui-quiz-app",
+      "title": "GUI Quiz App",
+      "primary_category": "software",
+      "short_description": "Desktop quiz application with a graphical interface pulling questions from an open trivia API.",
+      "full_description": "A Tkinter quiz app that fetches true/false questions from the Open Trivia API and presents them in a styled GUI with score tracking. Combines API integration, OOP design, and GUI development in a single project.",
+      "featured": false,
+      "date": "2025-11-20",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "gui",
+        "game",
+        "api-integration"
+      ],
+      "tech_stack": [
+        "Python",
+        "Tkinter",
+        "Requests",
+        "Open Trivia API"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 17,
+      "slug": "mail-merge-automator",
+      "title": "Mail Merge Automator",
+      "primary_category": "software",
+      "short_description": "Reads a list of names and a letter template then generates personalised letters automatically.",
+      "full_description": "A Python script that reads a list of recipient names and a letter template, then generates individually addressed letters by substituting each name into the template. Demonstrates file I/O, string replacement, and automation fundamentals.",
+      "featured": false,
+      "date": "2025-10-25",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "automation",
+        "scripting"
+      ],
+      "tech_stack": [
+        "Python",
+        "File I/O"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 18,
+      "slug": "birthday-email-automator",
+      "title": "Birthday Email Automator",
+      "primary_category": "software",
+      "short_description": "Checks a CSV of birthdays daily and automatically sends a personalised email on each person's birthday.",
+      "full_description": "An automation script that reads a CSV of contacts and their birthdays, checks the current date, and sends a personalised birthday email via smtplib when a match is found. Demonstrates scheduled automation, datetime handling, and email integration.",
+      "featured": false,
+      "date": "2025-11-15",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "automation",
+        "scripting"
+      ],
+      "tech_stack": [
+        "Python",
+        "smtplib",
+        "Pandas",
+        "datetime"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 19,
+      "slug": "iss-overhead-notifier",
+      "title": "ISS Overhead Notifier",
+      "primary_category": "software",
+      "short_description": "Tracks the ISS position and sends an email alert when it passes overhead at night.",
+      "full_description": "A Python automation script that polls the ISS location API and a sunrise/sunset API, then sends an email notification when the ISS is overhead and dark enough to see it. Demonstrates multi-API integration, conditional automation, and scheduled execution.",
+      "featured": false,
+      "date": "2025-11-17",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "automation",
+        "api-integration"
+      ],
+      "tech_stack": [
+        "Python",
+        "Requests",
+        "smtplib"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 20,
+      "slug": "sms-sender",
+      "title": "SMS Sender",
+      "primary_category": "software",
+      "short_description": "Sends automated SMS messages using the Twilio API with environment variable authentication.",
+      "full_description": "A Python script that sends SMS messages programmatically via the Twilio API. Credentials are managed with environment variables following secure configuration practices. A foundational automation project used as a building block in later alert systems.",
+      "featured": false,
+      "date": "2025-11-23",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "automation",
+        "api-integration"
+      ],
+      "tech_stack": [
+        "Python",
+        "Twilio API"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 21,
+      "slug": "stock-trading-news-alert",
+      "title": "Stock Trading News Alert",
+      "primary_category": "software",
+      "short_description": "Monitors stock price movements and sends SMS alerts with relevant news headlines when significant changes occur.",
+      "full_description": "An automation pipeline that checks daily stock price changes via the Alpha Vantage API, fetches relevant news headlines from the News API when a significant movement is detected, and delivers a formatted SMS alert via Twilio. Demonstrates multi-API orchestration and threshold-based alerting.",
+      "featured": true,
+      "date": "2025-11-26",
+      "problem": "Tracking stock price movements manually is slow and easy to miss — by the time you notice a significant shift, the relevant news cycle has already moved on.",
+      "solution": "Built an automated pipeline that polls the Alpha Vantage API daily for price changes, fetches the top three relevant news headlines from the News API when a movement exceeds 5%, and delivers a formatted SMS alert via Twilio with the stock ticker, change percentage, and headlines.",
+      "challenges": "Coordinating three external APIs with different authentication patterns and response formats. Structuring the conditional logic to avoid false positives and noisy alerts required careful threshold tuning. Managing credentials securely through environment variables.",
+      "results": "Delivers relevant SMS alerts with news context whenever the monitored stock moves significantly. Demonstrates multi-service API orchestration in a practical automation context — a pattern directly applicable to production alerting pipelines.",
+      "tags": [
+        "automation",
+        "api-integration",
+        "data-pipeline"
+      ],
+      "tech_stack": [
+        "Python",
+        "Alpha Vantage API",
+        "News API",
+        "Twilio API"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 22,
+      "slug": "habit-tracker",
+      "title": "Habit Tracker",
+      "primary_category": "software",
+      "short_description": "Logs daily habits via API POST requests and builds a visual pixel graph of completion over time.",
+      "full_description": "A Python automation tool that logs daily habit completion to the Pixela API using POST requests, building a visual contribution-graph of streaks over time. Covers REST API interaction, authentication headers, and structured HTTP request design.",
+      "featured": false,
+      "date": "2025-11-29",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "automation",
+        "api-integration"
+      ],
+      "tech_stack": [
+        "Python",
+        "Requests",
+        "Pixela API"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 23,
+      "slug": "workout-tracker",
+      "title": "Workout Tracker",
+      "primary_category": "software",
+      "short_description": "Accepts natural language workout input, interprets it via an AI API, and logs structured data to Google Sheets.",
+      "full_description": "A Python tool that takes natural language workout descriptions, sends them to the Nutritionix exercise API for interpretation, and logs the structured output — exercise name, duration, and calories — to a Google Sheets spreadsheet via the Sheety API. Demonstrates NLP-backed API integration and multi-service data pipelines.",
+      "featured": false,
+      "date": "2025-12-02",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "automation",
+        "api-integration",
+        "data-pipeline"
+      ],
+      "tech_stack": [
+        "Python",
+        "Requests",
+        "Nutritionix API",
+        "Sheety API"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 24,
+      "slug": "amazon-price-tracker",
+      "title": "Amazon Price Tracker",
+      "primary_category": "software",
+      "short_description": "Scrapes an Amazon product page and sends an email alert when the price drops below a defined target.",
+      "full_description": "A web scraping automation tool that parses an Amazon product page using BeautifulSoup, extracts the current price, and sends an email notification via smtplib when it falls below a user-defined threshold. Combines web scraping and conditional alerting.",
+      "featured": false,
+      "date": "2026-01-02",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "automation",
+        "web-scraping"
+      ],
+      "tech_stack": [
+        "Python",
+        "BeautifulSoup",
+        "Requests",
+        "smtplib"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 25,
+      "slug": "selenium-browser-bot",
+      "title": "Selenium Browser Bot",
+      "primary_category": "software",
+      "short_description": "Automates browser interactions using Selenium — fills forms, clicks elements, and navigates pages programmatically.",
+      "full_description": "An introduction to browser automation with Selenium WebDriver. The bot navigates to a target site, locates elements by selector, and interacts with forms and buttons programmatically. A foundational project used as the basis for more complex bots later in the course.",
+      "featured": false,
+      "date": "2026-01-05",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "browser-automation",
+        "scripting"
+      ],
+      "tech_stack": [
+        "Python",
+        "Selenium"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 26,
+      "slug": "gym-routine-automator",
+      "title": "Gym Routine Automator",
+      "primary_category": "software",
+      "short_description": "Automates logging a gym routine to an online platform using Selenium browser automation.",
+      "full_description": "A Selenium automation script that logs into a fitness tracking platform and records a predefined gym routine without manual input. Demonstrates login automation, session handling, and structured interaction with dynamic web content.",
+      "featured": false,
+      "date": "2026-01-08",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "browser-automation",
+        "automation"
+      ],
+      "tech_stack": [
+        "Python",
+        "Selenium"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 27,
+      "slug": "tinder-bot",
+      "title": "Tinder Bot",
+      "primary_category": "software",
+      "short_description": "Automates Tinder interactions using Selenium, demonstrating browser automation and session handling.",
+      "full_description": "A Selenium bot that automates interactions on Tinder, handling login flows, popup dismissal, and automated swiping. Demonstrates session handling, dynamic content waiting, and element targeting in a single-page application.",
+      "featured": false,
+      "date": "2026-01-12",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "browser-automation",
+        "automation"
+      ],
+      "tech_stack": [
+        "Python",
+        "Selenium"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 28,
+      "slug": "internet-speed-twitter-bot",
+      "title": "Internet Speed Twitter Complaint Bot",
+      "primary_category": "software",
+      "short_description": "Tests internet speed and automatically tweets a complaint at the ISP if speeds fall below the contracted rate.",
+      "full_description": "A Selenium automation bot that runs an internet speed test, compares the result to a contracted speed threshold, and automatically posts a tweet to the ISP if speeds are too low. Combines API data retrieval with browser automation and conditional action logic.",
+      "featured": false,
+      "date": "2026-01-15",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "browser-automation",
+        "automation",
+        "api-integration"
+      ],
+      "tech_stack": [
+        "Python",
+        "Selenium",
+        "Speedtest API"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 29,
+      "slug": "instagram-follower-bot",
+      "title": "Instagram Follower Bot",
+      "primary_category": "software",
+      "short_description": "Automates following users from a target account's follower list using Selenium.",
+      "full_description": "A Selenium bot that navigates to a target Instagram account, accesses its follower list, and automates the follow action on each user. Demonstrates handling of modal dialogs, infinite scroll, and rate-limited interactions in browser automation.",
+      "featured": false,
+      "date": "2026-01-18",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "browser-automation",
+        "automation"
+      ],
+      "tech_stack": [
+        "Python",
+        "Selenium"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 30,
+      "slug": "web-scraping-data-entry-bot",
+      "title": "Web Scraping Data Entry Bot",
+      "primary_category": "software",
+      "short_description": "Scrapes property listings from a website and automatically enters the data into a Google Form.",
+      "full_description": "An end-to-end automation pipeline that scrapes rental property listings using BeautifulSoup, extracts address, price, and link data, then uses Selenium to fill and submit a Google Form for each entry. Combines scraping and browser automation in a single workflow.",
+      "featured": false,
+      "date": "2026-01-22",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "web-scraping",
+        "browser-automation"
+      ],
+      "tech_stack": [
+        "Python",
+        "BeautifulSoup",
+        "Selenium",
+        "Requests"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 31,
+      "slug": "kanye-quotes-app",
+      "title": "Kanye Quotes App",
+      "primary_category": "software",
+      "short_description": "Desktop app that fetches and displays a random Kanye West quote via API at the press of a button.",
+      "full_description": "A Tkinter desktop app that calls the Kanye REST API to retrieve a random quote and displays it on screen with a styled layout. A simple but complete project combining GUI design with live API data fetching.",
+      "featured": false,
+      "date": "2025-11-17",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "gui",
+        "api-integration"
+      ],
+      "tech_stack": [
+        "Python",
+        "Requests",
+        "Tkinter",
+        "Kanye REST API"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 32,
+      "slug": "flight-deal-finder",
+      "title": "Flight Deal Finder",
+      "primary_category": "software",
+      "short_description": "Searches for cheap flights via API and sends SMS alerts when prices drop below a target threshold.",
+      "full_description": "A multi-API automation system that reads destination and price targets from a Google Sheet via Sheety, searches for available flights through the Kiwi Tequila API, and sends an SMS alert via Twilio when a deal is found. Demonstrates orchestrating multiple external services in a real-world automation pipeline.",
+      "featured": true,
+      "date": "2025-12-05",
+      "problem": "Manually searching for cheap flights to multiple destinations is slow and unreliable — good deals disappear before they're noticed, and monitoring several routes by hand is not practical.",
+      "solution": "Built a multi-API automation system that reads destination and price targets from a Google Sheet via Sheety, searches for available flights through the Kiwi Tequila API, and sends an SMS alert via Twilio when a deal falls below the target price for any route.",
+      "challenges": "Handling IATA code resolution when destinations don't have a stored airport code. Managing data flow cleanly between three services with different request patterns. Structuring the comparison logic to handle multi-leg routes and date ranges correctly.",
+      "results": "Fully functional deal-detection pipeline that fires alerts automatically when matching flights are found. Demonstrates real-world orchestration of three external services — a practical automation that scales to any number of destinations in the sheet.",
+      "tags": [
+        "automation",
+        "api-integration",
+        "data-pipeline"
+      ],
+      "tech_stack": [
+        "Python",
+        "Requests",
+        "Twilio API",
+        "Sheety API",
+        "Kiwi Tequila API"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 33,
+      "slug": "spotify-playlist-generator",
+      "title": "Spotify Playlist Generator",
+      "primary_category": "software",
+      "short_description": "Scrapes Billboard Hot 100 for a given date and creates a matching Spotify playlist automatically.",
+      "full_description": "A Python tool that scrapes the Billboard Hot 100 chart for any user-specified date using BeautifulSoup, then authenticates with the Spotify API via Spotipy to search for each song and create a time-travel playlist in the user's account. Combines web scraping with OAuth authentication and API playlist management.",
+      "featured": false,
+      "date": "2025-12-20",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "automation",
+        "api-integration",
+        "web-scraping"
+      ],
+      "tech_stack": [
+        "Python",
+        "BeautifulSoup",
+        "Spotipy",
+        "Spotify API"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 34,
+      "slug": "blog-capstone",
+      "title": "Blog Capstone",
+      "primary_category": "web",
+      "short_description": "A styled Flask blog that renders posts from an external API with dynamic routing and Bootstrap layout.",
+      "full_description": "A Flask blog application that fetches post data from an external API and renders it dynamically using Jinja2 templates with Bootstrap styling. Covers Flask routing, Jinja template inheritance, and external API data rendering in a complete multi-page web application.",
+      "featured": false,
+      "date": "2026-01-24",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "web-app",
+        "api-integration"
+      ],
+      "tech_stack": [
+        "Python",
+        "Flask",
+        "Jinja2",
+        "Bootstrap",
+        "Requests"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 35,
+      "slug": "coffee-wifi-finder",
+      "title": "Coffee & Wifi Finder",
+      "primary_category": "web",
+      "short_description": "Flask web app where users browse and submit cafes with wifi and power ratings.",
+      "full_description": "A Flask web application that lets users browse a list of cafes with wifi and power socket availability, and submit new entries via a WTForms-powered form. Data is persisted in CSV. An early full-stack project combining Flask routing, form handling, and file-based storage.",
+      "featured": false,
+      "date": "2026-02-01",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "web-app",
+        "crud"
+      ],
+      "tech_stack": [
+        "Python",
+        "Flask",
+        "WTForms",
+        "Bootstrap",
+        "CSV"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 36,
+      "slug": "top-10-movies",
+      "title": "Top 10 Movies Website",
+      "primary_category": "web",
+      "short_description": "Flask web app where users search, rank, and manage their top 10 favourite movies using a film database API.",
+      "full_description": "A full-stack Flask application where users search for films via the TMDB API, add them to a personal top 10 list, and rank and edit them through a database-backed CRUD interface. Built with SQLAlchemy ORM, WTForms, and Bootstrap — a complete web app with real data persistence.",
+      "featured": true,
+      "date": "2026-02-06",
+      "problem": "There was no convenient way to maintain a personal ranked list of favourite films without building a full application with persistent storage — static lists are flat and can't be reordered or enriched.",
+      "solution": "Built a Flask web app where users search for films via the TMDB API, add them to a personal top 10 list, and update rankings and reviews through a database-backed CRUD interface with WTForms validation and Bootstrap layout.",
+      "challenges": "Integrating live TMDB API search with a SQLite database while keeping the ranking system stable across edits. Handling form validation edge cases and ensuring the rank ordering remained consistent when items were removed or re-ranked.",
+      "results": "A functional full-stack web application with real data persistence. Demonstrates the complete Flask development stack: routing, ORM models, form validation, API integration, and templating — the same pattern used in production Flask applications.",
+      "tags": [
+        "web-app",
+        "crud",
+        "api-integration"
+      ],
+      "tech_stack": [
+        "Python",
+        "Flask",
+        "SQLAlchemy",
+        "SQLite",
+        "WTForms",
+        "Bootstrap",
+        "TMDB API"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 37,
+      "slug": "rest-api",
+      "title": "REST API",
+      "primary_category": "web",
+      "short_description": "A fully documented RESTful API with GET, POST, PATCH, and DELETE endpoints built and tested from scratch.",
+      "full_description": "A Flask REST API with complete CRUD coverage — GET, POST, PATCH, and DELETE endpoints — backed by SQLAlchemy and tested with Postman. Demonstrates RESTful design principles, HTTP status codes, JSON response formatting, and API documentation practice.",
+      "featured": false,
+      "date": "2026-02-10",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "web-app",
+        "rest-api"
+      ],
+      "tech_stack": [
+        "Python",
+        "Flask",
+        "SQLAlchemy",
+        "Postman"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 38,
+      "slug": "blog-with-authentication",
+      "title": "Blog Platform with Authentication",
+      "primary_category": "web",
+      "short_description": "Multi-user blog with registration, login, admin roles, and full CRUD post management backed by a relational database.",
+      "full_description": "A full-featured Flask blog platform with user registration, password hashing, login sessions, admin-only post creation and deletion, and comment functionality. Built with SQLAlchemy and PostgreSQL, with relational models linking users, posts, and comments. The most complete web project before the portfolio site.",
+      "featured": false,
+      "date": "2026-02-16",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "web-app",
+        "crud",
+        "authentication"
+      ],
+      "tech_stack": [
+        "Python",
+        "Flask",
+        "SQLAlchemy",
+        "PostgreSQL",
+        "WTForms",
+        "Bootstrap"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 39,
+      "slug": "us-states-game",
+      "title": "US States Game",
+      "primary_category": "software",
+      "short_description": "Interactive geography game using Pandas and Turtle — guess all 50 US states and track which ones you missed.",
+      "full_description": "An interactive geography quiz built with Python's Turtle module and Pandas. The player names US states one by one, which are plotted on a map as they're guessed correctly. At the end, a CSV of missed states is generated for further study. Combines data lookup with GUI interaction.",
+      "featured": false,
+      "date": "2025-10-27",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "gui",
+        "game",
+        "data-analysis"
+      ],
+      "tech_stack": [
+        "Python",
+        "Pandas",
+        "Turtle",
+        "CSV"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 40,
+      "slug": "college-major-salary-analysis",
+      "title": "College Major vs Salary Analysis",
+      "primary_category": "data",
+      "short_description": "Explores the relationship between college major and starting and mid-career salary using Pandas and visualisation.",
+      "full_description": "A data analysis project that examines salary outcomes by college major using a real dataset. Uses Pandas for sorting, filtering, and grouping, and Matplotlib for visualisation. Surfaces which majors lead to the highest earning potential at different career stages.",
+      "featured": false,
+      "date": "2026-02-22",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "data-analysis",
+        "visualisation"
+      ],
+      "tech_stack": [
+        "Python",
+        "Pandas",
+        "Matplotlib"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 41,
+      "slug": "programming-languages-visualisation",
+      "title": "Programming Languages Visualisation",
+      "primary_category": "data",
+      "short_description": "Visualises the rise and fall of programming language popularity over time using historical Stack Overflow data.",
+      "full_description": "A time series visualisation project using historical Stack Overflow survey data to track the relative popularity of programming languages over the years. Applies Pandas for reshaping and aggregation, and Matplotlib for multi-line trend charts.",
+      "featured": false,
+      "date": "2026-02-24",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "data-analysis",
+        "visualisation"
+      ],
+      "tech_stack": [
+        "Python",
+        "Pandas",
+        "Matplotlib"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 42,
+      "slug": "lego-dataset-analysis",
+      "title": "LEGO Dataset Analysis",
+      "primary_category": "data",
+      "short_description": "Analyses the complete history of LEGO sets — themes, parts, colours, and trends — using aggregation and merging.",
+      "full_description": "A Pandas analysis of the complete LEGO dataset covering decades of sets, themes, parts, and colours. Uses merge operations across multiple related tables to answer questions about how LEGO sets have evolved over time, visualised with Matplotlib.",
+      "featured": false,
+      "date": "2026-02-26",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "data-analysis",
+        "visualisation"
+      ],
+      "tech_stack": [
+        "Python",
+        "Pandas",
+        "Matplotlib"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 43,
+      "slug": "google-trends-analysis",
+      "title": "Google Trends Time Series Analysis",
+      "primary_category": "data",
+      "short_description": "Analyses and visualises Google Trends data over time, resampling time series to identify meaningful patterns.",
+      "full_description": "A time series analysis of Google Trends data examining search interest patterns over time. Uses Pandas for date parsing, resampling, and rolling averages, and Matplotlib for multi-series trend visualisation. Demonstrates temporal data handling and pattern extraction.",
+      "featured": false,
+      "date": "2026-02-28",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "data-analysis",
+        "visualisation"
+      ],
+      "tech_stack": [
+        "Python",
+        "Pandas",
+        "Matplotlib"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 44,
+      "slug": "android-app-store-analysis",
+      "title": "Android App Store Analysis",
+      "primary_category": "data",
+      "short_description": "Analyses Google Play Store data to identify trends in app categories, ratings, installs, and pricing.",
+      "full_description": "A data analysis of the Google Play Store dataset exploring category distribution, rating patterns, install counts, and pricing strategies across different app types. Uses Pandas for cleaning and aggregation, and Plotly for interactive charts.",
+      "featured": false,
+      "date": "2026-03-02",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "data-analysis",
+        "visualisation"
+      ],
+      "tech_stack": [
+        "Python",
+        "Pandas",
+        "Plotly"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 45,
+      "slug": "numpy-arrays",
+      "title": "NumPy N-Dimensional Arrays",
+      "primary_category": "data",
+      "short_description": "Explores NumPy array operations, broadcasting, reshaping, and mathematical computation on multi-dimensional data.",
+      "full_description": "A structured exploration of NumPy covering array creation, indexing, slicing, broadcasting, reshaping, and mathematical operations on multi-dimensional data. Foundational work for the machine learning projects that follow.",
+      "featured": false,
+      "date": "2026-03-04",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "data-analysis",
+        "machine-learning"
+      ],
+      "tech_stack": [
+        "Python",
+        "NumPy"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 46,
+      "slug": "linear-regression-seaborn",
+      "title": "Linear Regression with Seaborn",
+      "primary_category": "data",
+      "short_description": "Applies and visualises linear regression on a real dataset, exploring correlation and predictive modelling fundamentals.",
+      "full_description": "A data science project that applies linear regression to a real-world dataset to model relationships between variables. Uses Seaborn for correlation plots and regression visualisation, and scikit-learn for model fitting. An introduction to predictive modelling methodology.",
+      "featured": false,
+      "date": "2026-03-06",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "data-analysis",
+        "machine-learning",
+        "visualisation"
+      ],
+      "tech_stack": [
+        "Python",
+        "Pandas",
+        "Seaborn",
+        "scikit-learn"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 47,
+      "slug": "nobel-prize-analysis",
+      "title": "Nobel Prize Analysis",
+      "primary_category": "data",
+      "short_description": "Explores over 100 years of Nobel Prize data to surface trends by country, gender, and category with interactive charts.",
+      "full_description": "A comprehensive data analysis of the Nobel Prize dataset spanning over a century of awards. Explores trends by country, gender, age, and prize category using Pandas for aggregation and Plotly, Matplotlib, and Seaborn for a range of static and interactive visualisations.",
+      "featured": true,
+      "date": "2026-02-20",
+      "problem": "The Nobel Prize dataset spans over 120 years of awards across six categories — surface-level summaries miss the structural patterns in who wins, when, and from where.",
+      "solution": "Performed a full exploratory analysis using Pandas for aggregation and filtering, and produced a range of visualisations in Plotly, Matplotlib, and Seaborn to surface trends by country, gender, age distribution, and prize category over time.",
+      "challenges": "Handling missing values and inconsistent country entries across 120+ years of records. Choosing the right chart type for each finding so that results were interpretable at a glance rather than requiring explanation.",
+      "results": "Surfaced clear, concrete trends: the US dominates prize totals since 1950; male recipients outnumber female by approximately 18:1 across the full dataset; Physics laureates skew significantly older than Literature recipients. Interactive Plotly charts make every finding navigable and presentation-ready.",
+      "tags": [
+        "data-analysis",
+        "visualisation"
+      ],
+      "tech_stack": [
+        "Python",
+        "Pandas",
+        "Plotly",
+        "Matplotlib",
+        "Seaborn",
+        "NumPy"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 48,
+      "slug": "handwashing-discovery-analysis",
+      "title": "Handwashing Discovery Analysis",
+      "primary_category": "data",
+      "short_description": "Recreates the historical data analysis behind Semmelweis's discovery of handwashing using statistical visualisation.",
+      "full_description": "A historical data analysis project that reconstructs Ignaz Semmelweis's 19th-century discovery linking handwashing to reduced patient mortality. Uses Pandas for data preparation and Matplotlib and Seaborn to visualise the dramatic reduction in death rates after the intervention.",
+      "featured": false,
+      "date": "2026-02-22",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "data-analysis",
+        "visualisation"
+      ],
+      "tech_stack": [
+        "Python",
+        "Pandas",
+        "Matplotlib",
+        "Seaborn"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 49,
+      "slug": "house-price-prediction",
+      "title": "House Price Prediction",
+      "primary_category": "data",
+      "short_description": "Predicts house prices using a regression model trained on a real dataset with data cleaning, feature engineering, and evaluation.",
+      "full_description": "A machine learning capstone project that applies linear regression to a real housing dataset. Covers the full ML pipeline: data cleaning, feature engineering, train/test splitting, model training with scikit-learn, and evaluation using RMSE and R² metrics, with results visualised using Matplotlib and Seaborn.",
+      "featured": true,
+      "date": "2026-02-25",
+      "problem": "Predicting house prices accurately requires more than a formula — it demands identifying which features actually drive price, cleaning messy real-world data, and validating that the model generalises beyond the training set.",
+      "solution": "Applied linear regression using scikit-learn to a real housing dataset. Covered the full ML pipeline: data cleaning, feature engineering (log transforms, dummy variables), train/test split, model training, and evaluation using RMSE and R² metrics.",
+      "challenges": "Dealing with skewed price distributions that needed log transformation to meet regression assumptions. Identifying multicollinearity among correlated features. Interpreting model coefficients to understand what the model actually learned about the data.",
+      "results": "Achieved R² = 0.89 on the test set with RMSE within expected range for the dataset. Feature importance analysis confirmed square footage and location as primary price drivers. Results visualised with residual plots and predicted-vs-actual charts. Demonstrates the complete supervised learning workflow from raw data to evaluated model.",
+      "tags": [
+        "machine-learning",
+        "data-analysis"
+      ],
+      "tech_stack": [
+        "Python",
+        "Pandas",
+        "NumPy",
+        "scikit-learn",
+        "Matplotlib",
+        "Seaborn"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 50,
+      "slug": "python-scripting-portfolio",
+      "title": "Python Scripting Portfolio Project",
+      "primary_category": "software",
+      "short_description": "A professional Python scripting project demonstrating automation, file handling, and clean script architecture.",
+      "full_description": "A standalone scripting project built to professional standards — clean architecture, modular design, and well-documented code. Demonstrates Python scripting fundamentals including file handling, automation logic, and reusable function design.",
+      "featured": false,
+      "date": "2026-02-28",
+      "problem": null,
+      "solution": null,
+      "challenges": null,
+      "results": null,
+      "tags": [
+        "scripting",
+        "automation"
+      ],
+      "tech_stack": [
+        "Python"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": null,
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 51,
+      "slug": "professional-portfolio-site",
+      "title": "Professional Portfolio Site",
+      "primary_category": "web",
+      "short_description": "Full-stack Flask portfolio deployed with a custom domain, PostgreSQL database, HTTPS, Google Analytics, and SEO configuration.",
+      "full_description": "A production-grade Flask portfolio application built as the Day 83 capstone of 100 Days of Code. Features a PostgreSQL database with SQLAlchemy ORM, dynamic project rendering, reusable Jinja components, Bootstrap layout, contact form with email delivery, Google Analytics, SEO metadata, and deployment on Render with a custom domain and HTTPS.",
+      "featured": true,
+      "date": "2026-03-01",
+      "problem": "Completing 100 Days of Code produces dozens of projects — without a professional presentation layer, that work is invisible to recruiters and hiring managers. A GitHub profile alone isn't a portfolio.",
+      "solution": "Built a production-grade Flask portfolio with PostgreSQL, dynamic project rendering from a database, reusable Jinja2 components, an admin panel for content management, a contact form with email delivery, Google Analytics, SEO metadata, and deployment on Railway with a custom domain and HTTPS.",
+      "challenges": "Designing a data model flexible enough to support software, web, and data projects while keeping the admin interface simple enough to use without code changes. Configuring Railway deployment with environment variables, PostgreSQL persistence, and auto-seeding on cold starts.",
+      "results": "Live at a custom domain with HTTPS, serving 40+ projects across three categories. Admin panel enables content updates, media uploads, and project management without touching code. Analytics and SEO foundations in place. This site is its own proof of concept — the portfolio is itself a featured project.",
+      "tags": [
+        "web-app",
+        "crud",
+        "authentication",
+        "deployment"
+      ],
+      "tech_stack": [
+        "Python",
+        "Flask",
+        "PostgreSQL",
+        "Jinja2",
+        "HTML",
+        "CSS",
+        "Git",
+        "Render"
+      ],
+      "screenshots": [
+        "images/projects/professional-portfolio-site/screenshots/Screenshot_2026-03-19_at_16.34.33.png",
+        "images/projects/professional-portfolio-site/screenshots/Screenshot_2026-03-19_at_16.34.44.png"
+      ],
+      "videos": [],
+      "card_image": "images/projects/professional-portfolio-site/card/Screenshot_2026-03-19_at_16.37.36.png",
+      "repo_url": "https://github.com/xavier-oc-programming/personal_portfolio",
+      "live_url": null,
+      "demo_url": null
+    }
+  ],
+  "messages": []
+}
