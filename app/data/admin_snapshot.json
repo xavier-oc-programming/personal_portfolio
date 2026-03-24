@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-24T15:27:05Z",
+  "snapshot_at": "2026-03-24T15:30:25Z",
   "projects": [
     {
       "id": 1,
@@ -972,7 +972,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "images/projects/flight-deal-finder/card/flight.jpg",
       "repo_url": null,
       "live_url": null,
       "demo_url": null
@@ -1444,7 +1444,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "images/projects/nobel-prize-analysis/card/nobel_p.webp",
       "repo_url": null,
       "live_url": null,
       "demo_url": null
