@@ -246,31 +246,29 @@
     });
 
     // Sync mobile toggle label (left side)
-    // Replace the node entirely — iOS Safari can cache the GPU texture of
-    // composited sticky/fixed elements and ignore textContent mutations.
-    // A brand-new node is always painted fresh.
     const toggleLabel = document.getElementById('filters-toggle-label');
     if (toggleLabel) {
       let label = state.category
         ? state.category.charAt(0).toUpperCase() + state.category.slice(1)
         : 'All';
       if (state.tag) label += ' \u00b7 ' + state.tag;
-      const fresh = document.createElement('span');
-      fresh.id = 'filters-toggle-label';
-      fresh.textContent = label;
-      toggleLabel.parentNode.replaceChild(fresh, toggleLabel);
+      toggleLabel.textContent = label;
     }
 
     // Sync mobile toggle sort label (right side)
     const sortLabel = document.getElementById('filters-sort-label');
     if (sortLabel) {
       const labels = { az: 'A\u2013Z', newest: 'Newest', oldest: 'Oldest' };
-      const fresh = document.createElement('span');
-      fresh.id        = 'filters-sort-label';
-      fresh.className = sortLabel.className;
-      fresh.setAttribute('style', sortLabel.getAttribute('style') || '');
-      fresh.textContent = labels[state.sort] || 'A\u2013Z';
-      sortLabel.parentNode.replaceChild(fresh, sortLabel);
+      sortLabel.textContent = labels[state.sort] || 'A\u2013Z';
+    }
+
+    // Force iOS Safari to re-rasterize the composited sticky/fixed layer.
+    // opacity != 1 creates a new stacking context so iOS must repaint the
+    // GPU texture from the current DOM — it cannot reuse a cached version.
+    var stickyWrap = document.querySelector('.filters-toggle-sticky');
+    if (stickyWrap) {
+      stickyWrap.style.opacity = '0.9999';
+      requestAnimationFrame(function () { stickyWrap.style.opacity = ''; });
     }
   }
 
@@ -290,8 +288,8 @@
       e.preventDefault();
       state.category = catBtn.dataset.categoryBtn;
       state.tag = '';
-      syncButtons();
       history.pushState({ ...state }, '', buildPageUrl());
+      syncButtons();
       update();
       closePanelOnMobile();
       return;
@@ -302,8 +300,8 @@
       e.preventDefault();
       const clicked = tagBtn.dataset.tagBtn;
       state.tag = (clicked === state.tag) ? '' : clicked;
-      syncButtons();
       history.pushState({ ...state }, '', buildPageUrl());
+      syncButtons();
       update();
       closePanelOnMobile();
       return;
@@ -313,8 +311,8 @@
     if (sortBtn) {
       e.preventDefault();
       state.sort = sortBtn.dataset.sortBtn;
-      syncButtons();
       history.pushState({ ...state }, '', buildPageUrl());
+      syncButtons();
       showLoading();
       update(1200);
     }
