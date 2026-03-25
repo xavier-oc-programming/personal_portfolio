@@ -312,14 +312,13 @@
       panel.addEventListener('hidden.bs.collapse', function () {
         closing = false;
         toggleWrap.classList.remove('filters-open');
-        // Sync the toggle label after the panel closes. Use two rAFs so iOS
-        // Safari finishes the fixed→sticky position transition before we write
-        // the new text — otherwise the composited layer may still be stale.
-        requestAnimationFrame(function () {
-          requestAnimationFrame(function () {
-            if (window.__syncFilterButtons) window.__syncFilterButtons();
-          });
-        });
+        // Force iOS Safari to repaint the toggle with current state.
+        // display:none removes the element from the GPU layer entirely —
+        // when restored it must be painted fresh, no cached texture possible.
+        toggleWrap.style.display = 'none';
+        if (window.__syncFilterButtons) window.__syncFilterButtons();
+        void toggleWrap.offsetHeight;
+        toggleWrap.style.display = '';
       });
     })();
   </script>
