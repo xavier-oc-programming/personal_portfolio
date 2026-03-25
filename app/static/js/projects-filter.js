@@ -186,16 +186,19 @@
   const loadSkeleton = document.getElementById('load-skeleton');
 
   function showLoading() {
-    // OPTION 1 — Progress bar
+    // OPTION 1 — Progress bar (CSS transition on width)
     if (loadBar) {
-      loadBar.classList.remove('d-none');
       const fill = loadBar.querySelector('.load-bar-fill');
-      fill.style.animation = 'none';
-      void fill.offsetWidth;
-      fill.style.animation = '';
-      fill.addEventListener('animationend', function () {
+      fill.style.transition = 'none';
+      fill.style.width = '0%';
+      loadBar.classList.remove('d-none');
+      void fill.offsetWidth;               // flush so the 0% is painted before transition starts
+      fill.style.transition = '';
+      fill.style.width = '100%';
+      setTimeout(function () {
         loadBar.classList.add('d-none');
-      }, { once: true });
+        fill.style.width = '0%';           // reset for next use
+      }, 650);
     }
     // OPTION 2 — Spinner
     if (loadSpinner) loadSpinner.classList.remove('d-none');
