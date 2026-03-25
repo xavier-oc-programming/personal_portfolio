@@ -192,13 +192,15 @@
       fill.style.transition = 'none';
       fill.style.width = '0%';
       loadBar.classList.remove('d-none');
-      void fill.offsetWidth;               // flush so the 0% is painted before transition starts
-      fill.style.transition = '';
-      fill.style.width = '100%';
-      setTimeout(function () {
-        loadBar.classList.add('d-none');
-        fill.style.width = '0%';           // reset for next use
-      }, 650);
+      // rAF ensures the browser paints the reset state before the transition starts
+      requestAnimationFrame(function () {
+        fill.style.transition = '';
+        fill.style.width = '100%';
+        setTimeout(function () {
+          loadBar.classList.add('d-none');
+          fill.style.width = '0%';         // reset for next use
+        }, 650);
+      });
     }
     // OPTION 2 — Spinner
     if (loadSpinner) loadSpinner.classList.remove('d-none');
