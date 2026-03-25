@@ -154,9 +154,6 @@
     grid.style.opacity    = '0';
 
     setTimeout(function () {
-      // OPTION 1 — hide bar after transition
-      if (loadBar) loadBar.classList.add('d-none');
-
       // OPTION 2 — hide spinner
       if (loadSpinner) loadSpinner.classList.add('d-none');
 
@@ -196,6 +193,9 @@
       fill.style.animation = 'none';
       void fill.offsetWidth;
       fill.style.animation = '';
+      fill.addEventListener('animationend', function () {
+        loadBar.classList.add('d-none');
+      }, { once: true });
     }
     // OPTION 2 — Spinner
     if (loadSpinner) loadSpinner.classList.remove('d-none');
