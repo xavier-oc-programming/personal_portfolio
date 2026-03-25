@@ -312,13 +312,7 @@
       panel.addEventListener('hidden.bs.collapse', function () {
         closing = false;
         toggleWrap.classList.remove('filters-open');
-        // Force iOS Safari to repaint the toggle with current state.
-        // display:none removes the element from the GPU layer entirely —
-        // when restored it must be painted fresh, no cached texture possible.
-        toggleWrap.style.display = 'none';
-        if (window.__syncFilterButtons) window.__syncFilterButtons();
-        void toggleWrap.offsetHeight;
-        toggleWrap.style.display = '';
+        if (window.innerWidth < 768) window.location.reload();
       });
     })();
   </script>
