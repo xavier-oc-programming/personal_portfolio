@@ -266,6 +266,14 @@
     }
   }
 
+  // ---- Mobile panel auto-close --------------------------------------------
+
+  function closePanelOnMobile() {
+    if (window.innerWidth >= 768) return;
+    var panel = document.getElementById('filters-panel');
+    if (panel) bootstrap.Collapse.getOrCreateInstance(panel).hide();
+  }
+
   // ---- Events -------------------------------------------------------------
 
   document.addEventListener('click', function (e) {
@@ -277,6 +285,7 @@
       syncButtons();
       history.pushState({ ...state }, '', buildPageUrl());
       update();
+      closePanelOnMobile();
       return;
     }
 
@@ -288,6 +297,7 @@
       syncButtons();
       history.pushState({ ...state }, '', buildPageUrl());
       update();
+      closePanelOnMobile();
       return;
     }
 
