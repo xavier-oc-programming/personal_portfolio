@@ -312,6 +312,14 @@
       panel.addEventListener('hidden.bs.collapse', function () {
         closing = false;
         toggleWrap.classList.remove('filters-open');
+        // Sync the toggle label after the panel closes. Use two rAFs so iOS
+        // Safari finishes the fixed→sticky position transition before we write
+        // the new text — otherwise the composited layer may still be stale.
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            if (window.__syncFilterButtons) window.__syncFilterButtons();
+          });
+        });
       });
     })();
   </script>

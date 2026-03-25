@@ -269,7 +269,6 @@
   document.addEventListener('click', function (e) {
     const catBtn = e.target.closest('[data-category-btn]');
     if (catBtn) {
-      if (window.innerWidth < 768) { e.preventDefault(); window.location.assign(catBtn.href); return; }
       e.preventDefault();
       state.category = catBtn.dataset.categoryBtn;
       state.tag = '';
@@ -281,7 +280,6 @@
 
     const tagBtn = e.target.closest('[data-tag-btn]');
     if (tagBtn) {
-      if (window.innerWidth < 768) { e.preventDefault(); window.location.assign(tagBtn.href); return; }
       e.preventDefault();
       const clicked = tagBtn.dataset.tagBtn;
       state.tag = (clicked === state.tag) ? '' : clicked;
@@ -293,7 +291,6 @@
 
     const sortBtn = e.target.closest('[data-sort-btn]');
     if (sortBtn) {
-      if (window.innerWidth < 768) { e.preventDefault(); window.location.assign(sortBtn.href); return; }
       e.preventDefault();
       state.sort = sortBtn.dataset.sortBtn;
       history.pushState({ ...state }, '', buildPageUrl());
@@ -312,5 +309,7 @@
       update();
     }
   });
+
+  window.__syncFilterButtons = syncButtons;
 
 }());
