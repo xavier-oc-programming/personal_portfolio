@@ -55,10 +55,16 @@
       rel="stylesheet"
     />
 
+    <!-- Bootstrap Icons -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+
     <!-- Local CSS -->
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='css/styles.css') }}"
+      href="{{ url_for('static', filename='css/styles.css') }}?v={{ config.APP_VERSION }}"
     />
 
     {% if google_analytics_id %}
@@ -91,10 +97,12 @@
     {% include "components/navbar.html" %}
 
     <main class="flex-grow-1">
+      {% block outer_container %}
       <div class="container py-5">
         {% include "components/flash_messages.html" %}
         {% block content %}{% endblock %}
       </div>
+      {% endblock %}
     </main>
 
     {% include "components/footer.html" %}

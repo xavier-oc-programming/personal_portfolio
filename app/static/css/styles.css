@@ -683,6 +683,183 @@ a:hover {
 }
 
 /* ==========================================
+   About page
+========================================== */
+
+/* ── Hero ── */
+.about-hero {
+  background: #fff;
+  border-bottom: 1px solid #dee2e6;
+  padding: 5rem 0 4rem;
+}
+p.hero-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #6c757d;
+  margin-bottom: 0.75rem;
+}
+.hero-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+/* ── Status badge ── */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #198754;
+  background: #d1e7dd;
+  border-radius: 20px;
+  padding: 0.3rem 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.status-badge::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #198754;
+  flex-shrink: 0;
+  animation: status-blink 2s infinite;
+}
+@keyframes status-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.focus-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-md);
+  background-color: var(--color-accent-soft);
+  color: var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+p.section-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #0d6efd;
+  margin-bottom: 0.4rem;
+}
+
+/* ── Timeline ── */
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0.45rem;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: 2px;
+  background: #dee2e6;
+}
+.timeline-item {
+  position: relative;
+  padding-bottom: 2.5rem;
+}
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+.timeline-dot {
+  position: absolute;
+  left: -1.6rem;
+  top: 0.3rem;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #adb5bd;
+}
+.timeline-item.active .timeline-dot {
+  background: #0d6efd;
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 4px #e7f1ff;
+}
+p.timeline-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #6c757d;
+  margin-bottom: 0.2rem;
+}
+.timeline-item.active p.timeline-label {
+  color: #0d6efd;
+}
+p.timeline-title {
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 0.5rem;
+  color: var(--color-text);
+}
+.timeline-body {
+  font-size: 0.9rem;
+  line-height: 1.75;
+}
+.timeline-body p {
+  color: #495057;
+  margin-bottom: 0.6rem;
+}
+.timeline-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Info blocks ── */
+.info-block {
+  background: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 2rem;
+}
+.info-block h5 {
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--color-text);
+}
+.info-block p {
+  font-size: 0.9rem;
+  color: #495057;
+  line-height: 1.75;
+  margin-bottom: 0.6rem;
+}
+.info-block p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── CTA ── */
+.about-cta {
+  background: #212529;
+  color: #fff;
+  padding: 3.5rem 0;
+}
+.about-cta h2 {
+  font-weight: 700;
+  color: #fff;
+}
+.about-cta p {
+  color: #adb5bd;
+  margin-bottom: 0;
+}
+
+/* ==========================================
    Responsive refinements
 ========================================== */
 
