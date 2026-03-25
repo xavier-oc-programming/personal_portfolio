@@ -168,13 +168,23 @@ function initNavLoadBar() {
     ) return;
 
     // Skip links that JS handles without a page load (filter/sort buttons)
-    if (link.hasAttribute("data-category-btn") || link.hasAttribute("data-tag-btn")) return;
+    if (
+      link.hasAttribute("data-category-btn") ||
+      link.hasAttribute("data-tag-btn") ||
+      link.hasAttribute("data-sort-btn")
+    ) return;
+
+    // Prevent navigation — let the bar complete first, then navigate
+    e.preventDefault();
 
     const fill = bar.querySelector(".load-bar-fill");
     fill.style.width = "0%";
     bar.classList.remove("d-none");
     setTimeout(function () {
       fill.style.width = "100%";
+      setTimeout(function () {
+        window.location.href = href;
+      }, 600);
     }, 16);
   });
 }
