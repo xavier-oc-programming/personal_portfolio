@@ -172,9 +172,12 @@ function initNavLoadBar() {
     // Skip links that JS handles without a page load (filter/sort buttons)
     if (link.hasAttribute("data-category-btn") || link.hasAttribute("data-tag-btn")) return;
 
+    fill.style.transition = "none";
+    fill.style.width = "0%";
     bar.classList.remove("d-none");
-    fill.style.animation = "none";
-    void fill.offsetWidth;
-    fill.style.animation = "";
+    requestAnimationFrame(function () {
+      fill.style.transition = "";
+      fill.style.width = "100%";
+    });
   });
 }

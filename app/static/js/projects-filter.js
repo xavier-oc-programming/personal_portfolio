@@ -154,9 +154,6 @@
     grid.style.opacity    = '0';
 
     setTimeout(function () {
-      // OPTION 1 — hide bar after transition
-      if (loadBar) loadBar.classList.add('d-none');
-
       // OPTION 2 — hide spinner
       if (loadSpinner) loadSpinner.classList.add('d-none');
 
@@ -189,13 +186,21 @@
   const loadSkeleton = document.getElementById('load-skeleton');
 
   function showLoading() {
-    // OPTION 1 — Progress bar
+    // OPTION 1 — Progress bar (CSS transition on width)
     if (loadBar) {
-      loadBar.classList.remove('d-none');
       const fill = loadBar.querySelector('.load-bar-fill');
-      fill.style.animation = 'none';
-      void fill.offsetWidth;
-      fill.style.animation = '';
+      fill.style.transition = 'none';
+      fill.style.width = '0%';
+      loadBar.classList.remove('d-none');
+      // rAF ensures the browser paints the reset state before the transition starts
+      requestAnimationFrame(function () {
+        fill.style.transition = '';
+        fill.style.width = '100%';
+        setTimeout(function () {
+          loadBar.classList.add('d-none');
+          fill.style.width = '0%';         // reset for next use
+        }, 650);
+      });
     }
     // OPTION 2 — Spinner
     if (loadSpinner) loadSpinner.classList.remove('d-none');
