@@ -175,10 +175,6 @@ function initNavLoadBar() {
     bar.classList.remove("d-none");
     setTimeout(function () {
       fill.style.width = "100%";
-      setTimeout(function () {
-        bar.classList.add("d-none");
-        fill.style.width = "0%";
-      }, 600);
     }, 16);
   });
 }
