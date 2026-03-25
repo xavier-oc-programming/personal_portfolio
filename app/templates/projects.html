@@ -312,6 +312,9 @@
       panel.addEventListener('hidden.bs.collapse', function () {
         closing = false;
         toggleWrap.classList.remove('filters-open');
+        // Force iOS Safari to repaint the toggle after it returns to sticky positioning
+        var toggleBtn = document.getElementById('filters-toggle');
+        if (toggleBtn) void toggleBtn.offsetHeight;
       });
     })();
   </script>

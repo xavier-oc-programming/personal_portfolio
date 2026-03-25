@@ -253,6 +253,8 @@
         : 'All';
       if (state.tag) label += ' · ' + state.tag;
       toggleLabel.textContent = label;
+      // Force iOS Safari to repaint the composited sticky/fixed layer
+      void toggleLabel.offsetHeight;
     }
 
     // Sync mobile toggle sort label (right side)
@@ -260,6 +262,7 @@
     if (sortLabel) {
       const labels = { az: 'A\u2013Z', newest: 'Newest', oldest: 'Oldest' };
       sortLabel.textContent = labels[state.sort] || 'A\u2013Z';
+      void sortLabel.offsetHeight;
     }
   }
 
