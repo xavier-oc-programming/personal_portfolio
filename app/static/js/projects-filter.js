@@ -246,23 +246,31 @@
     });
 
     // Sync mobile toggle label (left side)
-    const toggleLabel = document.querySelector('#filters-toggle > span:first-child');
+    // Replace the node entirely — iOS Safari can cache the GPU texture of
+    // composited sticky/fixed elements and ignore textContent mutations.
+    // A brand-new node is always painted fresh.
+    const toggleLabel = document.getElementById('filters-toggle-label');
     if (toggleLabel) {
       let label = state.category
         ? state.category.charAt(0).toUpperCase() + state.category.slice(1)
         : 'All';
-      if (state.tag) label += ' · ' + state.tag;
-      toggleLabel.textContent = label;
-      // Force iOS Safari to repaint the composited sticky/fixed layer
-      void toggleLabel.offsetHeight;
+      if (state.tag) label += ' \u00b7 ' + state.tag;
+      const fresh = document.createElement('span');
+      fresh.id = 'filters-toggle-label';
+      fresh.textContent = label;
+      toggleLabel.parentNode.replaceChild(fresh, toggleLabel);
     }
 
     // Sync mobile toggle sort label (right side)
     const sortLabel = document.getElementById('filters-sort-label');
     if (sortLabel) {
       const labels = { az: 'A\u2013Z', newest: 'Newest', oldest: 'Oldest' };
-      sortLabel.textContent = labels[state.sort] || 'A\u2013Z';
-      void sortLabel.offsetHeight;
+      const fresh = document.createElement('span');
+      fresh.id        = 'filters-sort-label';
+      fresh.className = sortLabel.className;
+      fresh.setAttribute('style', sortLabel.getAttribute('style') || '');
+      fresh.textContent = labels[state.sort] || 'A\u2013Z';
+      sortLabel.parentNode.replaceChild(fresh, sortLabel);
     }
   }
 
@@ -321,5 +329,9 @@
       update();
     }
   });
+
+  // Expose so the panel-close handler in projects.html can re-sync the toggle
+  // after the sticky→fixed→sticky transition completes on iOS Safari.
+  window.__syncFilterButtons = syncButtons;
 
 }());

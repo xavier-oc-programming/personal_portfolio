@@ -61,7 +61,7 @@
       aria-expanded="false"
       aria-controls="filters-panel"
     >
-      <span>
+      <span id="filters-toggle-label">
         {% if active_category %}{{ active_category | capitalize }}{% else %}All{% endif %}{% if active_tag %} · {{ active_tag }}{% endif %}
       </span>
       <span class="d-flex align-items-center gap-3">
@@ -312,9 +312,11 @@
       panel.addEventListener('hidden.bs.collapse', function () {
         closing = false;
         toggleWrap.classList.remove('filters-open');
-        // Force iOS Safari to repaint the toggle after it returns to sticky positioning
-        var toggleBtn = document.getElementById('filters-toggle');
-        if (toggleBtn) void toggleBtn.offsetHeight;
+        // Re-sync the toggle label now that the sticky/fixed transition is done.
+        // On iOS Safari the GPU layer may still show stale content after the
+        // position change; replacing the node (inside syncButtons) guarantees
+        // a fresh paint.
+        if (window.__syncFilterButtons) window.__syncFilterButtons();
       });
     })();
   </script>
