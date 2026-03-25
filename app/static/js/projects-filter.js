@@ -262,22 +262,6 @@
       sortLabel.textContent = labels[state.sort] || 'A\u2013Z';
     }
 
-    // Force iOS Safari to re-rasterize the composited sticky/fixed layer.
-    // opacity != 1 creates a new stacking context so iOS must repaint the
-    // GPU texture from the current DOM — it cannot reuse a cached version.
-    var stickyWrap = document.querySelector('.filters-toggle-sticky');
-    if (stickyWrap) {
-      stickyWrap.style.opacity = '0.9999';
-      requestAnimationFrame(function () { stickyWrap.style.opacity = ''; });
-    }
-  }
-
-  // ---- Mobile panel auto-close --------------------------------------------
-
-  function closePanelOnMobile() {
-    if (window.innerWidth >= 768) return;
-    var panel = document.getElementById('filters-panel');
-    if (panel) bootstrap.Collapse.getOrCreateInstance(panel).hide();
   }
 
   // ---- Events -------------------------------------------------------------
@@ -285,30 +269,31 @@
   document.addEventListener('click', function (e) {
     const catBtn = e.target.closest('[data-category-btn]');
     if (catBtn) {
+      if (window.innerWidth < 768) return; // let the href navigate on mobile
       e.preventDefault();
       state.category = catBtn.dataset.categoryBtn;
       state.tag = '';
       history.pushState({ ...state }, '', buildPageUrl());
       syncButtons();
       update();
-      closePanelOnMobile();
       return;
     }
 
     const tagBtn = e.target.closest('[data-tag-btn]');
     if (tagBtn) {
+      if (window.innerWidth < 768) return; // let the href navigate on mobile
       e.preventDefault();
       const clicked = tagBtn.dataset.tagBtn;
       state.tag = (clicked === state.tag) ? '' : clicked;
       history.pushState({ ...state }, '', buildPageUrl());
       syncButtons();
       update();
-      closePanelOnMobile();
       return;
     }
 
     const sortBtn = e.target.closest('[data-sort-btn]');
     if (sortBtn) {
+      if (window.innerWidth < 768) return; // let the href navigate on mobile
       e.preventDefault();
       state.sort = sortBtn.dataset.sortBtn;
       history.pushState({ ...state }, '', buildPageUrl());
@@ -327,9 +312,5 @@
       update();
     }
   });
-
-  // Expose so the panel-close handler in projects.html can re-sync the toggle
-  // after the sticky→fixed→sticky transition completes on iOS Safari.
-  window.__syncFilterButtons = syncButtons;
 
 }());

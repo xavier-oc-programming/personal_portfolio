@@ -312,22 +312,7 @@
       panel.addEventListener('hidden.bs.collapse', function () {
         closing = false;
         toggleWrap.classList.remove('filters-open');
-        // Re-sync the toggle label now that the sticky/fixed transition is done.
-        // On iOS Safari the GPU layer may still show stale content after the
-        // position change; replacing the node (inside syncButtons) guarantees
-        // a fresh paint.
-        if (window.__syncFilterButtons) window.__syncFilterButtons();
       });
-
-      // Force toggle label update the instant either close-trigger is pressed,
-      // before the panel animation even starts.
-      var toggleBtn = document.getElementById('filters-toggle');
-      var closeBtn  = document.querySelector('.filters-close-bar button');
-      function syncOnPress() {
-        if (window.__syncFilterButtons) window.__syncFilterButtons();
-      }
-      if (toggleBtn) toggleBtn.addEventListener('click', syncOnPress);
-      if (closeBtn)  closeBtn.addEventListener('click', syncOnPress);
     })();
   </script>
 {% endblock %}
