@@ -449,9 +449,19 @@ a:hover {
     padding: 0.75rem 1rem;
   }
 
-  /* Kill Bootstrap's height transition — the fixed overlay handles reveal */
+  /* Kill Bootstrap's height transition — CSS keyframes handle open/close */
   .filters-panel {
     transition: none !important;
+  }
+
+  @keyframes filterPanelIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes filterPanelOut {
+    from { opacity: 1; transform: translateY(0); }
+    to   { opacity: 0; transform: translateY(-10px); }
   }
 
   /* When expanded: full-screen fixed overlay behind the sticky toggle */
@@ -465,7 +475,22 @@ a:hover {
     overflow-y: auto;
     z-index: 1025;
     background-color: var(--color-bg);
-    padding: 60px 1rem 0; /* 60px clears the sticky toggle above */
+    padding: 60px 1rem 0;
+    animation: filterPanelIn 0.22s ease forwards;
+  }
+
+  /* Closing: overrides the opening animation while Bootstrap is intercepted */
+  .filters-panel.filters-panel-closing {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100dvh !important;
+    z-index: 1025;
+    background-color: var(--color-bg);
+    padding: 60px 1rem 0;
+    animation: filterPanelOut 0.2s ease forwards !important;
   }
 
   /* Close-filters bar pins to bottom of the fixed overlay */

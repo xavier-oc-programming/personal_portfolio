@@ -64,7 +64,12 @@
       <span>
         {% if active_category %}{{ active_category | capitalize }}{% else %}All{% endif %}{% if active_tag %} · {{ active_tag }}{% endif %}
       </span>
-      <i class="bi bi-sliders"></i>
+      <span class="d-flex align-items-center gap-3">
+        <span id="filters-sort-label" class="text-secondary" style="font-size:0.8rem;">
+          {% if active_sort == 'newest' %}Newest{% elif active_sort == 'oldest' %}Oldest{% else %}A–Z{% endif %}
+        </span>
+        <i class="bi bi-sliders"></i>
+      </span>
     </button>
   </div>
 
@@ -285,13 +290,27 @@
       var toggleWrap = document.querySelector('.filters-toggle-sticky');
       if (!panel || !toggleWrap) return;
 
+      var closing = false;
+
       panel.addEventListener('show.bs.collapse', function () {
         if (window.innerWidth >= 768) return;
         window.scrollTo(0, 0);
         toggleWrap.classList.add('filters-open');
       });
 
+      panel.addEventListener('hide.bs.collapse', function (e) {
+        if (window.innerWidth >= 768 || closing) return;
+        e.preventDefault();
+        panel.classList.add('filters-panel-closing');
+        setTimeout(function () {
+          panel.classList.remove('filters-panel-closing');
+          closing = true;
+          bootstrap.Collapse.getInstance(panel).hide();
+        }, 210);
+      });
+
       panel.addEventListener('hidden.bs.collapse', function () {
+        closing = false;
         toggleWrap.classList.remove('filters-open');
       });
     })();

@@ -24,6 +24,7 @@ Run locally (from repo root):
 
 from __future__ import annotations
 
+import json
 import time
 from datetime import datetime
 from pathlib import Path
@@ -270,6 +271,55 @@ def _send_contact_notification(
         return False
 
 
+def _sync_from_snapshot(app: Flask) -> None:
+    """
+    Upsert all projects from admin_snapshot.json into the local database.
+
+    Runs only in development so the local DB stays in sync with the
+    latest snapshot committed to the repository without any manual steps.
+    """
+    snapshot_path = Path(__file__).parent / "data" / "admin_snapshot.json"
+
+    if not snapshot_path.exists():
+        app.logger.warning("admin_snapshot.json not found — skipping sync.")
+        return
+
+    with open(snapshot_path) as f:
+        snapshot = json.load(f)
+
+    projects_data = snapshot.get("projects", [])
+
+    for record in projects_data:
+        project = Project.query.filter_by(slug=record["slug"]).first()
+
+        if project is None:
+            project = Project(slug=record["slug"])
+            db.session.add(project)
+
+        project.title             = record["title"]
+        project.primary_category  = record["primary_category"]
+        project.short_description = record["short_description"]
+        project.full_description  = record["full_description"]
+        project.featured          = record.get("featured", False)
+        project.featured_order    = record.get("featured_order")
+        project.date              = record.get("date")
+        project.problem           = record.get("problem")
+        project.solution          = record.get("solution")
+        project.challenges        = record.get("challenges")
+        project.results           = record.get("results")
+        project.tags              = record.get("tags", [])
+        project.tech_stack        = record.get("tech_stack", [])
+        project.screenshots       = record.get("screenshots", [])
+        project.videos            = record.get("videos", [])
+        project.card_image        = record.get("card_image")
+        project.repo_url          = record.get("repo_url")
+        project.live_url          = record.get("live_url")
+        project.demo_url          = record.get("demo_url")
+
+    db.session.commit()
+    app.logger.info("Synced %d projects from admin_snapshot.json.", len(projects_data))
+
+
 def create_app() -> Flask:
     app = Flask(__name__)
     app.config.from_object(get_config_class())
@@ -277,6 +327,11 @@ def create_app() -> Flask:
     _ensure_database_directory_and_file(app)
 
     db.init_app(app)
+
+    with app.app_context():
+        db.create_all()
+        if app.config.get("DEBUG"):
+            _sync_from_snapshot(app)
 
     CSRFProtect(app)
     CORS(app, resources={r"/api/*": {"origins": "*"}})

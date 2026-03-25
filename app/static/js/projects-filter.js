@@ -244,6 +244,23 @@
       btn.classList.toggle('btn-dark',         active);
       btn.classList.toggle('btn-outline-dark', !active);
     });
+
+    // Sync mobile toggle label (left side)
+    const toggleLabel = document.querySelector('#filters-toggle > span:first-child');
+    if (toggleLabel) {
+      let label = state.category
+        ? state.category.charAt(0).toUpperCase() + state.category.slice(1)
+        : 'All';
+      if (state.tag) label += ' · ' + state.tag;
+      toggleLabel.textContent = label;
+    }
+
+    // Sync mobile toggle sort label (right side)
+    const sortLabel = document.getElementById('filters-sort-label');
+    if (sortLabel) {
+      const labels = { az: 'A\u2013Z', newest: 'Newest', oldest: 'Oldest' };
+      sortLabel.textContent = labels[state.sort] || 'A\u2013Z';
+    }
   }
 
   // ---- Events -------------------------------------------------------------
