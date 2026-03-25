@@ -50,146 +50,181 @@
     {% include "components/section_header.html" %}
   </section>
 
-  <!-- Category Controls -->
+  <!-- Mobile filter toggle (hidden on md+, sticky on scroll) -->
+  <div class="d-md-none filters-toggle-sticky">
+    <button
+      id="filters-toggle"
+      class="btn btn-outline-dark btn-sm w-100 d-flex justify-content-between align-items-center"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#filters-panel"
+      aria-expanded="false"
+      aria-controls="filters-panel"
+    >
+      <span>
+        {% if active_category %}{{ active_category | capitalize }}{% else %}All{% endif %}{% if active_tag %} · {{ active_tag }}{% endif %}
+      </span>
+      <i class="bi bi-sliders"></i>
+    </button>
+  </div>
+
+  <!-- Filter panel: collapsible on mobile, always visible on desktop -->
+  <div class="collapse filters-panel" id="filters-panel">
+
   <section class="page-section">
-    <div class="surface-card p-3 p-md-4">
-      <div class="row g-3 align-items-center">
-        <div class="col-12 col-lg-8">
-          <div class="d-flex flex-wrap gap-2">
-            <a
-              class="btn btn-sm {% if not active_category %}btn-dark{% else %}btn-outline-dark{% endif %}"
-              href="{{ url_for('projects', sort=active_sort, tag=active_tag) }}"
-              data-category-btn=""
-            >
-              All ({{ category_counts['all'] }})
-            </a>
+    <div class="row g-3">
 
-            <a
-              class="btn btn-sm {% if active_category == 'web' %}btn-dark{% else %}btn-outline-dark{% endif %}"
-              href="{{ url_for('projects_web', sort=active_sort, tag=active_tag) }}"
-              data-category-btn="web"
-            >
-              Web ({{ category_counts['web'] }})
-            </a>
-
-            <a
-              class="btn btn-sm {% if active_category == 'data' %}btn-dark{% else %}btn-outline-dark{% endif %}"
-              href="{{ url_for('projects_data', sort=active_sort, tag=active_tag) }}"
-              data-category-btn="data"
-            >
-              Data ({{ category_counts['data'] }})
-            </a>
-
-            <a
-              class="btn btn-sm {% if active_category == 'software' %}btn-dark{% else %}btn-outline-dark{% endif %}"
-              href="{{ url_for('projects_software', sort=active_sort, tag=active_tag) }}"
-              data-category-btn="software"
-            >
-              Software ({{ category_counts['software'] }})
-            </a>
+      <!-- Category (col-md-6 on desktop; order 1 on mobile, order 1 on desktop) -->
+      <div class="col-12 col-md-6 order-md-1">
+        <div class="surface-card filter-card h-100 d-flex flex-column">
+          <div class="filter-card-header">Category</div>
+          <div class="p-3 flex-grow-1 d-flex flex-column justify-content-center">
+            <div class="d-flex justify-content-center mb-2">
+              <a
+                class="btn btn-sm {% if not active_category %}btn-dark{% else %}btn-outline-dark{% endif %}"
+                href="{{ url_for('projects', sort=active_sort, tag=active_tag) }}"
+                data-category-btn=""
+              >
+                All ({{ category_counts['all'] }})
+              </a>
+            </div>
+            <div class="d-flex flex-wrap justify-content-center gap-2">
+              <a
+                class="btn btn-sm {% if active_category == 'web' %}btn-dark{% else %}btn-outline-dark{% endif %}"
+                href="{{ url_for('projects_web', sort=active_sort, tag=active_tag) }}"
+                data-category-btn="web"
+              >
+                Web ({{ category_counts['web'] }})
+              </a>
+              <a
+                class="btn btn-sm {% if active_category == 'data' %}btn-dark{% else %}btn-outline-dark{% endif %}"
+                href="{{ url_for('projects_data', sort=active_sort, tag=active_tag) }}"
+                data-category-btn="data"
+              >
+                Data ({{ category_counts['data'] }})
+              </a>
+              <a
+                class="btn btn-sm {% if active_category == 'software' %}btn-dark{% else %}btn-outline-dark{% endif %}"
+                href="{{ url_for('projects_software', sort=active_sort, tag=active_tag) }}"
+                data-category-btn="software"
+              >
+                Software ({{ category_counts['software'] }})
+              </a>
+            </div>
           </div>
         </div>
+      </div>
 
-        <div class="col-12 col-lg-4">
-          <form id="sort-form" method="get" class="d-flex justify-content-lg-end">
-            <select
-              id="sort-select"
-              class="form-select form-select-sm w-auto"
-              name="sort"
-              aria-label="Sort projects"
-            >
-              <option value="az" {% if active_sort == "az" %}selected{% endif %}>A–Z</option>
-              <option value="newest" {% if active_sort == "newest" %}selected{% endif %}>Newest</option>
-              <option value="oldest" {% if active_sort == "oldest" %}selected{% endif %}>Oldest</option>
-            </select>
+      <!-- Tags (col-12 always; order 2 on mobile, order 3 on desktop → wraps below) -->
+      <div class="col-12 order-2 order-md-3">
+        <div class="surface-card filter-card">
+          <div class="filter-card-header">Tags</div>
+          <div class="p-3">
+            <div class="d-flex flex-wrap justify-content-center gap-2">
 
-            {% if active_tag %}
-              <input type="hidden" name="tag" value="{{ active_tag }}">
-            {% endif %}
-          </form>
+              {% if active_category == "web" %}
+                <a
+                  class="btn btn-sm {% if not active_tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
+                  href="{{ url_for('projects_web', sort=active_sort) }}"
+                  data-tag-btn=""
+                >All Tags</a>
+              {% elif active_category == "data" %}
+                <a
+                  class="btn btn-sm {% if not active_tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
+                  href="{{ url_for('projects_data', sort=active_sort) }}"
+                  data-tag-btn=""
+                >All Tags</a>
+              {% elif active_category == "software" %}
+                <a
+                  class="btn btn-sm {% if not active_tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
+                  href="{{ url_for('projects_software', sort=active_sort) }}"
+                  data-tag-btn=""
+                >All Tags</a>
+              {% else %}
+                <a
+                  class="btn btn-sm {% if not active_tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
+                  href="{{ url_for('projects', sort=active_sort) }}"
+                  data-tag-btn=""
+                >All Tags</a>
+              {% endif %}
+
+              {% for tag in available_tags %}
+                {% if active_category == "web" %}
+                  <a
+                    class="btn btn-sm {% if active_tag == tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
+                    href="{{ url_for('projects_web', tag=tag, sort=active_sort) }}"
+                    data-tag-btn="{{ tag }}"
+                  >{{ tag }}</a>
+                {% elif active_category == "data" %}
+                  <a
+                    class="btn btn-sm {% if active_tag == tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
+                    href="{{ url_for('projects_data', tag=tag, sort=active_sort) }}"
+                    data-tag-btn="{{ tag }}"
+                  >{{ tag }}</a>
+                {% elif active_category == "software" %}
+                  <a
+                    class="btn btn-sm {% if active_tag == tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
+                    href="{{ url_for('projects_software', tag=tag, sort=active_sort) }}"
+                    data-tag-btn="{{ tag }}"
+                  >{{ tag }}</a>
+                {% else %}
+                  <a
+                    class="btn btn-sm {% if active_tag == tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
+                    href="{{ url_for('projects', tag=tag, sort=active_sort) }}"
+                    data-tag-btn="{{ tag }}"
+                  >{{ tag }}</a>
+                {% endif %}
+              {% endfor %}
+
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- Tag Controls -->
-  <section class="page-section">
-    <div class="surface-card p-3 p-md-4">
-      <div class="d-flex flex-wrap gap-2 align-items-center">
-        <span class="fw-semibold me-1">Tags:</span>
-
-        {% if active_category == "web" %}
-          <a
-            class="btn btn-sm {% if not active_tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
-            href="{{ url_for('projects_web', sort=active_sort) }}"
-            data-tag-btn=""
-          >
-            All Tags
-          </a>
-        {% elif active_category == "data" %}
-          <a
-            class="btn btn-sm {% if not active_tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
-            href="{{ url_for('projects_data', sort=active_sort) }}"
-            data-tag-btn=""
-          >
-            All Tags
-          </a>
-        {% elif active_category == "software" %}
-          <a
-            class="btn btn-sm {% if not active_tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
-            href="{{ url_for('projects_software', sort=active_sort) }}"
-            data-tag-btn=""
-          >
-            All Tags
-          </a>
-        {% else %}
-          <a
-            class="btn btn-sm {% if not active_tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
-            href="{{ url_for('projects', sort=active_sort) }}"
-            data-tag-btn=""
-          >
-            All Tags
-          </a>
-        {% endif %}
-
-        {% for tag in available_tags %}
-          {% if active_category == "web" %}
-            <a
-              class="btn btn-sm {% if active_tag == tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
-              href="{{ url_for('projects_web', tag=tag, sort=active_sort) }}"
-              data-tag-btn="{{ tag }}"
-            >
-              {{ tag }}
-            </a>
-          {% elif active_category == "data" %}
-            <a
-              class="btn btn-sm {% if active_tag == tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
-              href="{{ url_for('projects_data', tag=tag, sort=active_sort) }}"
-              data-tag-btn="{{ tag }}"
-            >
-              {{ tag }}
-            </a>
-          {% elif active_category == "software" %}
-            <a
-              class="btn btn-sm {% if active_tag == tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
-              href="{{ url_for('projects_software', tag=tag, sort=active_sort) }}"
-              data-tag-btn="{{ tag }}"
-            >
-              {{ tag }}
-            </a>
-          {% else %}
-            <a
-              class="btn btn-sm {% if active_tag == tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
-              href="{{ url_for('projects', tag=tag, sort=active_sort) }}"
-              data-tag-btn="{{ tag }}"
-            >
-              {{ tag }}
-            </a>
-          {% endif %}
-        {% endfor %}
+      <!-- Order (col-md-6 on desktop; order 3 on mobile, order 2 on desktop → sits next to Category) -->
+      <div class="col-12 col-md-6 order-3 order-md-2">
+        <div class="surface-card filter-card h-100 d-flex flex-column">
+          <div class="filter-card-header">Order</div>
+          <div class="p-3 flex-grow-1 d-flex flex-column justify-content-center">
+            <div class="d-flex flex-wrap justify-content-center gap-2">
+              <a
+                class="btn btn-sm {% if active_sort == 'az' %}btn-dark{% else %}btn-outline-dark{% endif %}"
+                href="{{ url_for('projects', sort='az', tag=active_tag) if not active_category else url_for('projects_' ~ active_category, sort='az', tag=active_tag) }}"
+                data-sort-btn="az"
+              >A–Z</a>
+              <a
+                class="btn btn-sm {% if active_sort == 'newest' %}btn-dark{% else %}btn-outline-dark{% endif %}"
+                href="{{ url_for('projects', sort='newest', tag=active_tag) if not active_category else url_for('projects_' ~ active_category, sort='newest', tag=active_tag) }}"
+                data-sort-btn="newest"
+              >Newest</a>
+              <a
+                class="btn btn-sm {% if active_sort == 'oldest' %}btn-dark{% else %}btn-outline-dark{% endif %}"
+                href="{{ url_for('projects', sort='oldest', tag=active_tag) if not active_category else url_for('projects_' ~ active_category, sort='oldest', tag=active_tag) }}"
+                data-sort-btn="oldest"
+              >Oldest</a>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+
+    </div><!-- /row -->
   </section>
+
+  <!-- Mobile-only close button — signals end of filters -->
+  <div class="d-md-none filters-close-bar">
+    <button
+      class="btn btn-dark w-100 d-flex justify-content-center align-items-center gap-2"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#filters-panel"
+      aria-label="Close filters"
+    >
+      <i class="bi bi-chevron-up"></i>
+      Close Filters
+    </button>
+  </div>
+
+  </div><!-- /filters-panel -->
 
   <!-- LOADING OPTION 1: Progress bar (thin bar at top of page) -->
   <div id="load-bar" class="load-bar d-none"><div class="load-bar-fill"></div></div>
@@ -244,4 +279,21 @@
 
 {% block scripts %}
   <script src="{{ url_for('static', filename='js/projects-filter.js') }}"></script>
+  <script>
+    (function () {
+      var panel = document.getElementById('filters-panel');
+      var toggleWrap = document.querySelector('.filters-toggle-sticky');
+      if (!panel || !toggleWrap) return;
+
+      panel.addEventListener('show.bs.collapse', function () {
+        if (window.innerWidth >= 768) return;
+        window.scrollTo(0, 0);
+        toggleWrap.classList.add('filters-open');
+      });
+
+      panel.addEventListener('hidden.bs.collapse', function () {
+        toggleWrap.classList.remove('filters-open');
+      });
+    })();
+  </script>
 {% endblock %}

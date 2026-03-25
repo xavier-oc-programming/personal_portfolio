@@ -13,8 +13,6 @@
   const grid       = document.getElementById('projects-grid');
   const emptyState = document.getElementById('projects-empty');
   const stateEl    = document.getElementById('projects-filter-state');
-  const sortForm   = document.getElementById('sort-form');
-  const sortSelect = document.getElementById('sort-select');
 
   if (!grid || !stateEl) return;
 
@@ -241,7 +239,11 @@
       btn.classList.toggle('btn-outline-dark', !active);
     });
 
-    if (sortSelect) sortSelect.value = state.sort;
+    document.querySelectorAll('[data-sort-btn]').forEach(btn => {
+      const active = btn.dataset.sortBtn === state.sort;
+      btn.classList.toggle('btn-dark',         active);
+      btn.classList.toggle('btn-outline-dark', !active);
+    });
   }
 
   // ---- Events -------------------------------------------------------------
@@ -266,18 +268,19 @@
       syncButtons();
       history.pushState({ ...state }, '', buildPageUrl());
       update();
+      return;
     }
-  });
 
-  if (sortSelect) {
-    sortSelect.addEventListener('change', function (e) {
-      state.sort = sortSelect.value;
+    const sortBtn = e.target.closest('[data-sort-btn]');
+    if (sortBtn) {
+      e.preventDefault();
+      state.sort = sortBtn.dataset.sortBtn;
       syncButtons();
       history.pushState({ ...state }, '', buildPageUrl());
       showLoading();
       update(1200);
-    });
-  }
+    }
+  });
 
   window.addEventListener('popstate', function (e) {
     if (e.state) {
