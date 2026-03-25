@@ -400,6 +400,84 @@ a:hover {
 }
 
 /* ==========================================
+   Filter controls (mobile collapse)
+========================================== */
+
+@media (min-width: 768px) {
+  .filters-panel {
+    display: block !important;
+    overflow: visible !important;
+  }
+}
+
+.filter-card {
+  overflow: hidden;
+}
+
+.filter-card-header {
+  background-color: #d8e0ea;
+  border-bottom: 1px solid var(--color-border);
+  padding: 0.625rem 1rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
+}
+
+/* Filter toggle button — softer corners */
+#filters-toggle {
+  border-radius: var(--radius-md);
+}
+
+/* Sticky filter toggle — mobile only */
+@media (max-width: 767.98px) {
+  .filters-toggle-sticky {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    background-color: var(--color-bg);
+    padding: 0.75rem 0;
+    /* No shadow — background matches page so it blends seamlessly */
+  }
+
+  /* When filters are open: pin to top of viewport, full-width */
+  .filters-toggle-sticky.filters-open {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 0.75rem 1rem;
+  }
+
+  /* Kill Bootstrap's height transition — the fixed overlay handles reveal */
+  .filters-panel {
+    transition: none !important;
+  }
+
+  /* When expanded: full-screen fixed overlay behind the sticky toggle */
+  .filters-panel.show {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100dvh !important;
+    overflow-y: auto;
+    z-index: 1025;
+    background-color: var(--color-bg);
+    padding: 60px 1rem 0; /* 60px clears the sticky toggle above */
+  }
+
+  /* Close-filters bar pins to bottom of the fixed overlay */
+  .filters-close-bar {
+    position: sticky;
+    bottom: 0;
+    background-color: var(--color-bg);
+    padding: 0.75rem 0 1.25rem;
+  }
+}
+
+/* ==========================================
    Project cards
 ========================================== */
 
