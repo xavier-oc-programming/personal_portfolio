@@ -151,8 +151,6 @@ function initNavLoadBar() {
 
   if (!bar) return;
 
-  const fill = bar.querySelector(".load-bar-fill");
-
   document.addEventListener("click", function (e) {
     const link = e.target.closest("a[href]");
     if (!link) return;
@@ -172,12 +170,15 @@ function initNavLoadBar() {
     // Skip links that JS handles without a page load (filter/sort buttons)
     if (link.hasAttribute("data-category-btn") || link.hasAttribute("data-tag-btn")) return;
 
-    fill.style.transition = "none";
+    const fill = bar.querySelector(".load-bar-fill");
     fill.style.width = "0%";
     bar.classList.remove("d-none");
-    requestAnimationFrame(function () {
-      fill.style.transition = "";
+    setTimeout(function () {
       fill.style.width = "100%";
-    });
+      setTimeout(function () {
+        bar.classList.add("d-none");
+        fill.style.width = "0%";
+      }, 600);
+    }, 16);
   });
 }

@@ -186,21 +186,17 @@
   const loadSkeleton = document.getElementById('load-skeleton');
 
   function showLoading() {
-    // OPTION 1 — Progress bar (CSS transition on width)
     if (loadBar) {
       const fill = loadBar.querySelector('.load-bar-fill');
-      fill.style.transition = 'none';
       fill.style.width = '0%';
       loadBar.classList.remove('d-none');
-      // rAF ensures the browser paints the reset state before the transition starts
-      requestAnimationFrame(function () {
-        fill.style.transition = '';
-        fill.style.width = '100%';
+      setTimeout(function () {
+        fill.style.width = '100%';          // one frame later — transition fires cleanly
         setTimeout(function () {
           loadBar.classList.add('d-none');
-          fill.style.width = '0%';         // reset for next use
-        }, 650);
-      });
+          fill.style.width = '0%';          // reset for next use
+        }, 600);                            // match transition duration
+      }, 16);
     }
     // OPTION 2 — Spinner
     if (loadSpinner) loadSpinner.classList.remove('d-none');
