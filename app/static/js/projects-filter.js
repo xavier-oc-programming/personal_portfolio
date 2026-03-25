@@ -295,8 +295,11 @@
       state.sort = sortBtn.dataset.sortBtn;
       history.pushState({ ...state }, '', buildPageUrl());
       syncButtons();
-      showLoading();
-      update(1200);
+      update();
+      if (window.innerWidth < 768) {
+        var panel = document.getElementById('filters-panel');
+        if (panel) bootstrap.Collapse.getOrCreateInstance(panel).hide();
+      }
     }
   });
 
