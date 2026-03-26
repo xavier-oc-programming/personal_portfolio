@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-26T09:43:54Z",
+  "snapshot_at": "2026-03-26T09:45:23Z",
   "projects": [
     {
       "id": 1,
@@ -817,7 +817,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "images/projects/tinder-bot/card/tinder.webp",
       "repo_url": null,
       "live_url": null,
       "demo_url": null
