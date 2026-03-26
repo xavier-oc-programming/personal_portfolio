@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-26T11:04:58Z",
+  "snapshot_at": "2026-03-26T11:06:50Z",
   "projects": [
     {
       "id": 1,
@@ -1345,7 +1345,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "images/projects/numpy-arrays/card/numpy.png",
       "repo_url": null,
       "live_url": null,
       "demo_url": null
