@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-26T08:47:38Z",
+  "snapshot_at": "2026-03-26T08:47:51Z",
   "projects": [
     {
       "id": 1,
@@ -1256,7 +1256,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "images/projects/lego-dataset-analysis/card/lego.png",
       "repo_url": null,
       "live_url": null,
       "demo_url": null
