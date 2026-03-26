@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-26T11:39:48Z",
+  "snapshot_at": "2026-03-26T11:48:32Z",
   "projects": [
     {
       "id": 1,
@@ -364,7 +364,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": "images/projects/miles-to-km-converter/card/km.webp",
+      "card_image": null,
       "repo_url": null,
       "live_url": null,
       "demo_url": null
