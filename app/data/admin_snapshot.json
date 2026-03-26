@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-26T11:22:55Z",
+  "snapshot_at": "2026-03-26T11:26:06Z",
   "projects": [
     {
       "id": 1,
@@ -1481,10 +1481,10 @@
     },
     {
       "id": 49,
-      "slug": "python-scripting-portfolio",
-      "title": "Python Scripting Portfolio Project",
+      "slug": "morse-code-converter",
+      "title": "Text to Morse Code",
       "primary_category": "software",
-      "short_description": "A professional Python scripting project demonstrating automation, file handling, and clean script architecture.",
+      "short_description": "A morse code converter scripting project demonstrating automation, file handling, and clean script architecture.",
       "full_description": "A standalone scripting project built to professional standards — clean architecture, modular design, and well-documented code. Demonstrates Python scripting fundamentals including file handling, automation logic, and reusable function design.",
       "featured": false,
       "featured_order": null,
