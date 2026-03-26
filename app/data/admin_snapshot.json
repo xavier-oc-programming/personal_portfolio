@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-26T09:39:06Z",
+  "snapshot_at": "2026-03-26T09:43:54Z",
   "projects": [
     {
       "id": 1,
@@ -1004,7 +1004,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "images/projects/spotify-playlist-generator/card/playlist.png",
       "repo_url": null,
       "live_url": null,
       "demo_url": null
