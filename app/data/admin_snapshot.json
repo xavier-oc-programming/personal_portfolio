@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-26T09:48:54Z",
+  "snapshot_at": "2026-03-26T09:49:35Z",
   "projects": [
     {
       "id": 1,
@@ -605,7 +605,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "images/projects/sms-sender/card/sms.png",
       "repo_url": null,
       "live_url": null,
       "demo_url": null
