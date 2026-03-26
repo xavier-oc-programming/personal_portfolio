@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-26T08:48:18Z",
+  "snapshot_at": "2026-03-26T08:52:07Z",
   "projects": [
     {
       "id": 1,
@@ -156,7 +156,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "images/projects/higher-lower-game/card/higher.png",
       "repo_url": null,
       "live_url": null,
       "demo_url": null
