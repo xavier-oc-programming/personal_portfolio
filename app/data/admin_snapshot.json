@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-26T09:12:58Z",
+  "snapshot_at": "2026-03-26T09:39:06Z",
   "projects": [
     {
       "id": 1,
@@ -1377,7 +1377,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "images/projects/linear-regression-seaborn/card/Screenshot_2026-03-26_at_10.38.27.png",
       "repo_url": null,
       "live_url": null,
       "demo_url": null
