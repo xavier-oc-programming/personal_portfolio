@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-26T09:51:08Z",
+  "snapshot_at": "2026-03-26T11:02:14Z",
   "projects": [
     {
       "id": 1,
@@ -1513,7 +1513,7 @@
       "title": "Professional Portfolio Site",
       "primary_category": "web",
       "short_description": "Full-stack Flask portfolio deployed with a custom domain, PostgreSQL database, HTTPS, Google Analytics, and SEO configuration.",
-      "full_description": "HELLOOO A production-grade Flask portfolio application built as the Day 83 capstone of 100 Days of Code. Features a PostgreSQL database with SQLAlchemy ORM, dynamic project rendering, reusable Jinja components, Bootstrap layout, contact form with email delivery, Google Analytics, SEO metadata, and deployment on Render with a custom domain and HTTPS.",
+      "full_description": "A production-grade Flask portfolio application built as the Day 83 capstone of 100 Days of Code. Features a PostgreSQL database with SQLAlchemy ORM, dynamic project rendering, reusable Jinja components, Bootstrap layout, contact form with email delivery, Google Analytics, SEO metadata, and deployment on Render with a custom domain and HTTPS.",
       "featured": true,
       "featured_order": 1,
       "date": "2026-03-01",
