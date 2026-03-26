@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-26T09:50:28Z",
+  "snapshot_at": "2026-03-26T09:50:55Z",
   "projects": [
     {
       "id": 1,
@@ -1166,7 +1166,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": "images/projects/us-states-game/card/turtle.jpg",
+      "card_image": null,
       "repo_url": null,
       "live_url": null,
       "demo_url": null
