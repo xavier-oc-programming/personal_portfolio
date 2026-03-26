@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-26T11:18:52Z",
+  "snapshot_at": "2026-03-26T11:22:55Z",
   "projects": [
     {
       "id": 1,
@@ -1226,7 +1226,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "images/projects/programming-languages-visualisation/card/languages2.jpg",
       "repo_url": null,
       "live_url": null,
       "demo_url": null
