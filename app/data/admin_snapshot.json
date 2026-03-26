@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-26T11:30:30Z",
+  "snapshot_at": "2026-03-26T11:33:27Z",
   "projects": [
     {
       "id": 1,
@@ -908,7 +908,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "images/projects/web-scraping-data-entry-bot/card/scrape.webp",
       "repo_url": null,
       "live_url": null,
       "demo_url": null
