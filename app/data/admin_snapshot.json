@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-26T07:26:17Z",
+  "snapshot_at": "2026-03-26T08:24:20Z",
   "projects": [
     {
       "id": 1,
@@ -576,7 +576,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "images/projects/iss-overhead-notifier/card/iss.png",
       "repo_url": null,
       "live_url": null,
       "demo_url": null
