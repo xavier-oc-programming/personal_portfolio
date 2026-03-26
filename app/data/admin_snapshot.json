@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-26T08:43:05Z",
+  "snapshot_at": "2026-03-26T08:43:12Z",
   "projects": [
     {
       "id": 1,
@@ -935,7 +935,7 @@
         "Python",
         "Requests",
         "Tkinter",
-        "Kanye REST API"
+        "REST API"
       ],
       "screenshots": [],
       "videos": [],
