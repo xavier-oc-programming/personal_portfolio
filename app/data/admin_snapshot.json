@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-26T11:27:14Z",
+  "snapshot_at": "2026-03-26T11:30:30Z",
   "projects": [
     {
       "id": 1,
@@ -185,7 +185,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "images/projects/quiz-game/card/quiz_terminal.png",
       "repo_url": null,
       "live_url": null,
       "demo_url": null
