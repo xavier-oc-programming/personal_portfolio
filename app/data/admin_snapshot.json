@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-26T08:37:43Z",
+  "snapshot_at": "2026-03-26T08:43:05Z",
   "projects": [
     {
       "id": 1,
@@ -915,11 +915,11 @@
     },
     {
       "id": 31,
-      "slug": "kanye-quotes-app",
-      "title": "Kanye Quotes App",
+      "slug": "ron-quotes-app",
+      "title": "Ron Swanson Quotes App",
       "primary_category": "software",
-      "short_description": "Desktop app that fetches and displays a random Kanye West quote via API at the press of a button.",
-      "full_description": "A Tkinter desktop app that calls the Kanye REST API to retrieve a random quote and displays it on screen with a styled layout. A simple but complete project combining GUI design with live API data fetching.",
+      "short_description": "Desktop app that fetches and displays a random Ron Swanson quote via API at the press of a button.",
+      "full_description": "A Tkinter desktop app that calls the Ron Swanson REST API to retrieve a random quote and displays it on screen with a styled layout. A simple but complete project combining GUI design with live API data fetching.",
       "featured": false,
       "featured_order": null,
       "date": "2025-11-17",
