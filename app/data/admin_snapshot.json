@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-26T08:27:14Z",
+  "snapshot_at": "2026-03-26T08:36:13Z",
   "projects": [
     {
       "id": 1,
@@ -877,7 +877,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "images/projects/instagram-follower-bot/card/insta_2.jpg",
       "repo_url": null,
       "live_url": null,
       "demo_url": null
