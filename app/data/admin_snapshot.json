@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-26T09:48:11Z",
+  "snapshot_at": "2026-03-26T09:48:54Z",
   "projects": [
     {
       "id": 1,
@@ -759,7 +759,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "images/projects/selenium-browser-bot/card/selenium.jpg",
       "repo_url": null,
       "live_url": null,
       "demo_url": null
