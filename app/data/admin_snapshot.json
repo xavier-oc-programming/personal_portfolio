@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-30T14:10:57Z",
+  "snapshot_at": "2026-03-30T14:20:06Z",
   "projects": [
     {
       "id": 1,
@@ -54,17 +54,18 @@
       "title": "Caesar Cipher",
       "primary_category": "software",
       "short_description": "Encrypts and decrypts messages using the Caesar cipher algorithm with variable shift input.",
-      "full_description": "A Python script that applies the Caesar cipher to any input string, shifting characters by a user-defined amount to encrypt or decrypt. Covers string indexing, modular arithmetic, and function design.",
+      "full_description": "A dual-version Caesar cipher terminal app built as the Day 8 project of 100 Days of Code. The original beginner version (2024)          \r\n  demonstrates core Python fundamentals. The advanced rebuild (2025) adds a Vigenère cipher, brute-force cracking, frequency analysis,    \r\n  file encryption, ANSI color UI, typewriter animations, and raw arrow-key navigation — all using only the Python standard library.",
       "featured": false,
       "featured_order": null,
       "date": "2025-09-17",
-      "problem": null,
-      "solution": null,
-      "challenges": null,
-      "results": null,
+      "problem": "The Day 8 exercise produces a simple working cipher in ~40 lines. That version works, but doesn't reflect what Python engineering       \r\n  actually looks like — no structure, no reusability, no real UX.",
+      "solution": "Kept the original version intact as a snapshot of where the journey started, then rebuilt the project from scratch with proper          \r\n  architecture: OOP dataclasses, enums for type safety, a cryptanalysis engine, modular separation of concerns, and a polished terminal UI\r\n   with color, animation, and keyboard-driven navigation.",
+      "challenges": "Implementing frequency analysis correctly required choosing a scoring function that works on short texts — sum of squared errors against\r\n   the English letter frequency distribution, scored as negative so float(\"-inf\") initialises the baseline naturally. Capturing arrow-key\r\n  presses without waiting for Enter required dropping the terminal into raw mode via termios and tty, then parsing the \\x1b[A escape      \r\n  sequence manually.",
+      "results": "Two fully functional independent programs launched from a shared menu. The advanced version supports 5 modes (Caesar, Vigenère, brute   \r\n  force, frequency analysis, file encrypt/decrypt), zero external dependencies, and a navigation system where Enter stays in the current\r\n  mode and Up arrow returns to the menu. Both versions preserved side-by-side to show the before/after progression.",
       "tags": [
         "cli",
-        "scripting"
+        "scripting",
+        "terminal-ux"
       ],
       "tech_stack": [
         "Python"
