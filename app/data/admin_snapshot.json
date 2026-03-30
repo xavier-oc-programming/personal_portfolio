@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-03-30T14:20:06Z",
+  "snapshot_at": "2026-03-30T15:26:28Z",
   "projects": [
     {
       "id": 1,
@@ -70,7 +70,18 @@
       "tech_stack": [
         "Python"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/caesar-cipher/screenshots/Screenshot_2026-03-30_at_17.16.01.png",
+        "images/projects/caesar-cipher/screenshots/Screenshot_2026-03-30_at_17.16.45.png",
+        "images/projects/caesar-cipher/screenshots/Screenshot_2026-03-30_at_17.17.33.png",
+        "images/projects/caesar-cipher/screenshots/Screenshot_2026-03-30_at_17.17.53.png",
+        "images/projects/caesar-cipher/screenshots/Screenshot_2026-03-30_at_17.18.39.png",
+        "images/projects/caesar-cipher/screenshots/Screenshot_2026-03-30_at_17.19.04.png",
+        "images/projects/caesar-cipher/screenshots/Screenshot_2026-03-30_at_17.19.21.png",
+        "images/projects/caesar-cipher/screenshots/Screenshot_2026-03-30_at_17.19.37.png",
+        "images/projects/caesar-cipher/screenshots/Screenshot_2026-03-30_at_17.22.16.png",
+        "images/projects/caesar-cipher/screenshots/Screenshot_2026-03-30_at_17.24.59.png"
+      ],
       "videos": [],
       "card_image": "images/projects/caesar-cipher/card/cipher.jpeg",
       "repo_url": "https://github.com/xavier-oc-programming/caesar-cipher-python",
