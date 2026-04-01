@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-01T14:42:03Z",
+  "snapshot_at": "2026-04-01T17:51:30Z",
   "projects": [
     {
       "id": 1,
@@ -141,7 +141,7 @@
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/number-guessing-game/card/guess2.jpg",
-      "repo_url": null,
+      "repo_url": "https://github.com/xavier-oc-programming/number-guessing-game",
       "live_url": null,
       "demo_url": null
     },
