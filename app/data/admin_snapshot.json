@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-01T17:51:30Z",
+  "snapshot_at": "2026-04-02T10:28:13Z",
   "projects": [
     {
       "id": 1,
@@ -123,14 +123,14 @@
       "title": "Number Guessing Game",
       "primary_category": "software",
       "short_description": "Terminal game where the user guesses a random number with difficulty levels and attempt limits.",
-      "full_description": "A simple terminal game that generates a random number and challenges the player to guess it within a limited number of attempts. Supports easy and hard difficulty levels with appropriate attempt counts.",
+      "full_description": "A terminal game where the player guesses a randomly chosen number between 1 and 100. Choose Easy (10 turns) or Hard (5 turns); after each guess the game tells you whether you went too high or too low.\r\n\r\nBuilt with a focus on Python scope and namespaces. The repo ships two versions: the original procedural script close to the course solution, and a fully rebuilt OOP version with a strict three-layer architecture separating game logic, terminal UI, and orchestration.",
       "featured": false,
       "featured_order": null,
       "date": "2025-09-27",
-      "problem": null,
-      "solution": null,
-      "challenges": null,
-      "results": null,
+      "problem": "Day 12 of 100 Days of Code covers Python scope — a concept that trips up beginners because Python's LEGB rule, the lack of block scope, and the dangers of the global keyword all behave differently from most other languages. The course exercise was a number guessing game, but the underlying challenge was building something that actually demonstrates those concepts rather than just working around them.",
+      "solution": "Built two versions side by side. The original version stays close to the course solution — procedural, single file, global constants in ALL_CAPS. The advanced version is a full OOP rebuild enforcing a hard rule: the game logic layer (GameState dataclass) has zero UI imports. All terminal output lives in display.py. main.py only orchestrates — collect input, call logic, call display. GuessResult and Difficulty enums replace magic strings and booleans throughout.",
+      "challenges": "Enforcing zero UI imports in the logic layer required designing GuessResult as an enum so main.py could react to outcomes without GameState ever deciding what to print.\r\n\r\nASCII art in Python triple-quoted strings: a backslash at the end of a line is silently treated as a line continuation, causing lines to merge. Required doubling every backslash in the logo string.\r\n\r\nRaw keypress detection for post-game navigation (↑ arrow, Enter, q) required dropping into tty/termios to bypass Python's default line-buffered input.",
+      "results": "Two fully working versions runnable via a shared root menu. Clean repo structure matching a standard game portfolio layout, with an original branch preserving the course scaffolding. Comprehensive README covering architecture diagrams, full module API reference, and the Day 12 scope concepts with code examples.",
       "tags": [
         "cli",
         "game"
