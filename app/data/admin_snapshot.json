@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-02T10:28:13Z",
+  "snapshot_at": "2026-04-02T10:30:31Z",
   "projects": [
     {
       "id": 1,
@@ -133,7 +133,15 @@
       "results": "Two fully working versions runnable via a shared root menu. Clean repo structure matching a standard game portfolio layout, with an original branch preserving the course scaffolding. Comprehensive README covering architecture diagrams, full module API reference, and the Day 12 scope concepts with code examples.",
       "tags": [
         "cli",
-        "game"
+        "game",
+        "oop",
+        "python",
+        "terminal",
+        "terminal-ux",
+        "beginner",
+        "scope",
+        "ascii-art",
+        "dataclasses"
       ],
       "tech_stack": [
         "Python"
