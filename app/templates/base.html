@@ -67,6 +67,8 @@
       href="{{ url_for('static', filename='css/styles.css') }}?v={{ config.APP_VERSION }}"
     />
 
+    {% block jsonld %}{% endblock %}
+
     {% if google_analytics_id %}
       <!-- Google Analytics 4 -->
       <script

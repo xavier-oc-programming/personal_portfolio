@@ -32,7 +32,7 @@ from typing import Any
 
 import resend
 
-from flask import Flask, abort, flash, redirect, render_template, request, session, url_for
+from flask import Flask, Response, abort, flash, redirect, render_template, request, session, url_for
 from flask_cors import CORS
 from flask_wtf.csrf import CSRFProtect
 
@@ -359,6 +359,32 @@ def create_app() -> Flask:
             "default_og_image": default_og_image,
             "request_path": request.path,
         }
+
+    @app.get("/robots.txt")
+    def robots_txt():
+        site_url = app.config["SITE_URL"]
+        content = f"User-agent: *\nAllow: /\nSitemap: {site_url}/sitemap.xml\n"
+        return Response(content, mimetype="text/plain")
+
+    @app.get("/sitemap.xml")
+    def sitemap_xml():
+        site_url = app.config["SITE_URL"]
+        pages = [
+            (site_url + "/", "weekly", "1.0"),
+            (site_url + "/about", "monthly", "0.9"),
+            (site_url + "/projects", "weekly", "0.9"),
+            (site_url + "/contact", "monthly", "0.7"),
+        ]
+        urls = "".join(
+            f"<url><loc>{loc}</loc><changefreq>{freq}</changefreq><priority>{pri}</priority></url>"
+            for loc, freq, pri in pages
+        )
+        xml = f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0/9/">{urls}</urlset>'
+        return Response(xml, mimetype="application/xml")
+
+    @app.get("/favicon.ico")
+    def favicon_ico():
+        return redirect(url_for("static", filename="images/favicon.png"), code=301)
 
     @app.get("/")
     def home():

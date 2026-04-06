@@ -4,10 +4,29 @@
 
 {% extends "base.html" %}
 
-{% block meta_description %}Portfolio of Xavier OC — Flask web apps, data projects, automation, and software development with Python.{% endblock %}
-{% block og_title %}Xavier OC | Python Developer Portfolio{% endblock %}
-{% block og_description %}Portfolio of Xavier OC — Flask web apps, data projects, automation, and software development with Python.{% endblock %}
+{% block title %}Xavier Ocon Capdeville | Python Developer Portfolio{% endblock %}
+{% block meta_description %}Portfolio of Xavier Ocon Capdeville (Xavier OC) — Flask web apps, data projects, automation, and software development with Python. Based in Madrid.{% endblock %}
+{% block og_title %}Xavier Ocon Capdeville | Python Developer Portfolio{% endblock %}
+{% block og_description %}Portfolio of Xavier Ocon Capdeville (Xavier OC) — Flask web apps, data projects, automation, and software development with Python. Based in Madrid.{% endblock %}
 {% block canonical_href %}{{ site_url ~ url_for('home') }}{% endblock %}
+
+{% block jsonld %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Xavier Ocon Capdeville",
+  "alternateName": ["Xavier OC", "Xavier Ocon", "xavieroc"],
+  "url": "{{ site_url }}/",
+  "jobTitle": "Python Developer",
+  "description": "Python developer based in Madrid, specializing in Flask web applications, data analysis, and automation.",
+  "knowsAbout": ["Python", "Flask", "Pandas", "SQL", "Data Analysis", "Web Development"],
+  "sameAs": [
+    "https://github.com/xavier-oc-programming"
+  ]
+}
+</script>
+{% endblock %}
 
 {% block content %}
 
