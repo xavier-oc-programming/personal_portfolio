@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-11T10:47:41Z",
+  "snapshot_at": "2026-04-11T10:47:48Z",
   "projects": [
     {
       "id": 1,
@@ -1590,40 +1590,6 @@
         "Requests",
         "Tkinter",
         "Kanye REST API"
-      ],
-      "screenshots": [],
-      "videos": [],
-      "card_image": null,
-      "repo_url": null,
-      "live_url": null,
-      "demo_url": null
-    },
-    {
-      "id": 52,
-      "slug": "blog-with-authentication",
-      "title": "Blog Platform with Authentication",
-      "primary_category": "web",
-      "short_description": "Multi-user blog with registration, login, admin roles, and full CRUD post management backed by a relational database.",
-      "full_description": "A full-featured Flask blog platform with user registration, password hashing, login sessions, admin-only post creation and deletion, and comment functionality. Built with SQLAlchemy and PostgreSQL, with relational models linking users, posts, and comments. The most complete web project before the portfolio site.",
-      "featured": false,
-      "featured_order": null,
-      "date": "2026-02-16",
-      "problem": null,
-      "solution": null,
-      "challenges": null,
-      "results": null,
-      "tags": [
-        "web-app",
-        "crud",
-        "authentication"
-      ],
-      "tech_stack": [
-        "Python",
-        "Flask",
-        "SQLAlchemy",
-        "PostgreSQL",
-        "WTForms",
-        "Bootstrap"
       ],
       "screenshots": [],
       "videos": [],
