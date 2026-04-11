@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-11T10:47:48Z",
+  "snapshot_at": "2026-04-11T10:48:11Z",
   "projects": [
     {
       "id": 1,
@@ -1564,37 +1564,6 @@
       "videos": [],
       "card_image": "images/projects/professional-portfolio-site/card/Screenshot_2026-03-19_at_16.37.36.png",
       "repo_url": "https://github.com/xavier-oc-programming/personal_portfolio",
-      "live_url": null,
-      "demo_url": null
-    },
-    {
-      "id": 51,
-      "slug": "kanye-quotes-app",
-      "title": "Kanye Quotes App",
-      "primary_category": "software",
-      "short_description": "Desktop app that fetches and displays a random Kanye West quote via API at the press of a button.",
-      "full_description": "A Tkinter desktop app that calls the Kanye REST API to retrieve a random quote and displays it on screen with a styled layout. A simple but complete project combining GUI design with live API data fetching.",
-      "featured": false,
-      "featured_order": null,
-      "date": "2025-11-17",
-      "problem": null,
-      "solution": null,
-      "challenges": null,
-      "results": null,
-      "tags": [
-        "gui",
-        "api-integration"
-      ],
-      "tech_stack": [
-        "Python",
-        "Requests",
-        "Tkinter",
-        "Kanye REST API"
-      ],
-      "screenshots": [],
-      "videos": [],
-      "card_image": null,
-      "repo_url": null,
       "live_url": null,
       "demo_url": null
     }
