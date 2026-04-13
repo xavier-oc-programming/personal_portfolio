@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-13T16:20:10Z",
+  "snapshot_at": "2026-04-13T16:29:03Z",
   "projects": [
     {
       "id": 1,
@@ -262,8 +262,21 @@
         "random",
         "time"
       ],
-      "screenshots": [],
-      "videos": [],
+      "screenshots": [
+        "images/projects/quiz-game-python/screenshots/Screenshot_2026-04-13_at_18.23.39.png",
+        "images/projects/quiz-game-python/screenshots/Screenshot_2026-04-13_at_18.23.48.png",
+        "images/projects/quiz-game-python/screenshots/Screenshot_2026-04-13_at_18.23.56.png",
+        "images/projects/quiz-game-python/screenshots/Screenshot_2026-04-13_at_18.24.08.png",
+        "images/projects/quiz-game-python/screenshots/Screenshot_2026-04-13_at_18.24.23.png",
+        "images/projects/quiz-game-python/screenshots/Screenshot_2026-04-13_at_18.24.36.png",
+        "images/projects/quiz-game-python/screenshots/Screenshot_2026-04-13_at_18.24.42.png",
+        "images/projects/quiz-game-python/screenshots/Screenshot_2026-04-13_at_18.24.52.png",
+        "images/projects/quiz-game-python/screenshots/Screenshot_2026-04-13_at_18.24.59.png",
+        "images/projects/quiz-game-python/screenshots/Screenshot_2026-04-13_at_18.27.27.png"
+      ],
+      "videos": [
+        "videos/projects/quiz-game-python/Screen_Recording_2026-04-13_at_18.27.36.mov"
+      ],
       "card_image": "images/projects/quiz-game/card/quiz_terminal.png",
       "repo_url": "https://github.com/xavier-oc-programming/quiz-game-python",
       "live_url": null,
