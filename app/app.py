@@ -317,6 +317,18 @@ def _sync_from_snapshot(app: Flask) -> None:
         project.demo_url          = record.get("demo_url")
 
     db.session.commit()
+
+    # Delete projects that exist in the DB but are no longer in the snapshot.
+    snapshot_slugs = {record["slug"] for record in projects_data}
+    removed = 0
+    for project in Project.query.all():
+        if project.slug not in snapshot_slugs:
+            db.session.delete(project)
+            removed += 1
+    if removed:
+        db.session.commit()
+        app.logger.info("Removed %d projects not in admin_snapshot.json.", removed)
+
     app.logger.info("Synced %d projects from admin_snapshot.json.", len(projects_data))
 
 

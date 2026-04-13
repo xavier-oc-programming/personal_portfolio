@@ -132,9 +132,9 @@ def _backup_projects() -> None:
     ]
     backup_path.write_text(json.dumps(data, indent=2, ensure_ascii=False))
 
-    # Keep only the 3 most recent backups
+    # Keep only the 25 most recent backups
     existing = sorted(backup_dir.glob("projects_*.json"))
-    for old in existing[:-3]:
+    for old in existing[:-25]:
         old.unlink()
 
 
@@ -397,11 +397,12 @@ def projects():
 @_require_admin
 def project_new():
     form = ProjectForm()
+    all_tags = [d["tag"] for d in _get_tag_counts()]
 
     if form.validate_on_submit():
         if Project.query.filter_by(slug=form.slug.data.strip().lower()).first():
             flash(f"Slug '{form.slug.data}' is already taken.", "danger")
-            return render_template("admin/project_form.html", form=form, project=None)
+            return render_template("admin/project_form.html", form=form, project=None, all_tags=all_tags)
 
         project = Project()
         _populate_project_from_form(project, form)
@@ -423,7 +424,7 @@ def project_new():
             for err in errors:
                 flash(err, "danger")
 
-    return render_template("admin/project_form.html", form=form, project=None)
+    return render_template("admin/project_form.html", form=form, project=None, all_tags=all_tags)
 
 
 # ---------------------------------------------------------------------------
@@ -435,17 +436,18 @@ def project_new():
 def project_edit(slug: str):
     project = Project.query.filter_by(slug=slug).first_or_404()
     form = ProjectForm()
+    all_tags = [d["tag"] for d in _get_tag_counts()]
 
     if request.method == "GET":
         _populate_form_from_project(form, project)
-        return render_template("admin/project_form.html", form=form, project=project)
+        return render_template("admin/project_form.html", form=form, project=project, all_tags=all_tags)
 
     if form.validate_on_submit():
         new_slug = form.slug.data.strip().lower()
         if new_slug != project.slug:
             if Project.query.filter_by(slug=new_slug).first():
                 flash(f"Slug '{new_slug}' is already taken.", "danger")
-                return render_template("admin/project_form.html", form=form, project=project)
+                return render_template("admin/project_form.html", form=form, project=project, all_tags=all_tags)
 
         _populate_project_from_form(project, form)
         db.session.commit()
@@ -464,7 +466,7 @@ def project_edit(slug: str):
             for err in errors:
                 flash(err, "danger")
 
-    return render_template("admin/project_form.html", form=form, project=project)
+    return render_template("admin/project_form.html", form=form, project=project, all_tags=all_tags)
 
 
 # ---------------------------------------------------------------------------

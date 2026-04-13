@@ -7,12 +7,13 @@
     <a href="{{ url_for('admin.projects') }}" class="text-muted text-decoration-none small">&larr; All Projects</a>
     <h2 class="fw-bold mb-0">{{ 'Edit: ' + project.title if project else 'New Project' }}</h2>
   </div>
-  {% if project %}
-    <div class="d-flex gap-2">
+  <div class="d-flex gap-2">
+    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#fillTemplateModal">Fill Form Template</button>
+    {% if project %}
       <a href="{{ url_for('admin.project_media', slug=project.slug) }}" class="btn btn-outline-secondary">Manage Media</a>
       <a href="{{ url_for('project_detail', slug=project.slug) }}" target="_blank" class="btn btn-outline-dark">View on Site</a>
-    </div>
-  {% endif %}
+    {% endif %}
+  </div>
 </div>
 
 <form method="POST">
@@ -136,4 +137,135 @@
     </div>
   </div>
 </form>
+
+<!-- Fill Form Template Modal -->
+<div class="modal fade" id="fillTemplateModal" tabindex="-1" aria-labelledby="fillTemplateModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold" id="fillTemplateModalLabel">Fill Form Template</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="mb-4">
+          <p class="text-muted mb-0">Use the <strong>project fill template</strong> on your Desktop to generate a structured YAML file for any project. Once filled, paste it below and click <strong>Apply to Form</strong> — all fields will be populated automatically for you to review and save.</p>
+        </div>
+
+        {% if all_tags %}
+        <div class="mb-4">
+          <div class="fw-semibold mb-1">Available Tags <span class="text-muted fw-normal small">— click a tag to copy it</span></div>
+          <div class="d-flex flex-wrap gap-1">
+            {% for tag in all_tags %}
+              <button type="button" class="btn btn-sm btn-outline-secondary tag-chip" data-tag="{{ tag }}">{{ tag }}</button>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        <div class="mb-2">
+          <label for="templateYaml" class="form-label fw-semibold">Paste filled YAML</label>
+          <textarea id="templateYaml" class="form-control font-monospace" rows="22"
+            placeholder="title: &#10;slug: &#10;category:            # web | data | software&#10;date:                # YYYY-MM-DD&#10;featured: false&#10;tags:                # comma-separated&#10;tech_stack:          # comma-separated&#10;repo_url: &#10;live_url: &#10;demo_url: &#10;short_description:   # max 300 chars&#10;full_description: |&#10;  &#10;problem: |&#10;  &#10;solution: |&#10;  &#10;challenges: |&#10;  &#10;results: |&#10;  "></textarea>
+        </div>
+        <div id="templateParseError" class="alert alert-danger d-none mb-0"></div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-dark" id="applyTemplateBtn">Apply to Form</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  // Tag chips: click to copy tag text to clipboard
+  document.querySelectorAll('.tag-chip').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      const tag = this.dataset.tag;
+      navigator.clipboard.writeText(tag).then(() => {
+        const orig = this.textContent;
+        this.textContent = 'copied!';
+        this.classList.replace('btn-outline-secondary', 'btn-secondary');
+        setTimeout(() => {
+          this.textContent = orig;
+          this.classList.replace('btn-secondary', 'btn-outline-secondary');
+        }, 1000);
+      });
+    });
+  });
+
+  // Apply template to form
+  document.getElementById('applyTemplateBtn').addEventListener('click', function () {
+    const raw = document.getElementById('templateYaml').value.trim();
+    const errEl = document.getElementById('templateParseError');
+    errEl.classList.add('d-none');
+    errEl.textContent = '';
+
+    if (!raw) {
+      errEl.textContent = 'Paste your filled YAML first.';
+      errEl.classList.remove('d-none');
+      return;
+    }
+
+    let data;
+    try {
+      // Strip leading/trailing --- delimiters if present
+      const cleaned = raw.replace(/^---[ \t]*\n/, '').replace(/\n---[ \t]*$/, '');
+      data = jsyaml.load(cleaned);
+    } catch (e) {
+      errEl.textContent = 'YAML parse error: ' + e.message;
+      errEl.classList.remove('d-none');
+      return;
+    }
+
+    if (!data || typeof data !== 'object') {
+      errEl.textContent = 'Invalid YAML: expected a mapping of fields.';
+      errEl.classList.remove('d-none');
+      return;
+    }
+
+    // Simple text/textarea fields
+    ['title', 'slug', 'date', 'short_description', 'full_description',
+     'problem', 'solution', 'challenges', 'results',
+     'repo_url', 'live_url', 'demo_url'].forEach(function (field) {
+      const el = document.getElementById(field);
+      if (el && data[field] != null) {
+        el.value = String(data[field]).trim();
+      }
+    });
+
+    // List fields: YAML may parse as array or remain a comma string
+    ['tags', 'tech_stack'].forEach(function (field) {
+      const el = document.getElementById(field);
+      if (el && data[field] != null) {
+        const val = data[field];
+        el.value = Array.isArray(val) ? val.join(', ') : String(val).trim();
+      }
+    });
+
+    // Category select (accepts "category" or "primary_category" key)
+    const catVal = data['primary_category'] ?? data['category'];
+    if (catVal != null) {
+      const catEl = document.getElementById('primary_category');
+      if (catEl) catEl.value = String(catVal).trim().toLowerCase();
+    }
+
+    // Featured checkbox
+    if (data['featured'] != null) {
+      const featEl = document.getElementById('featured');
+      if (featEl) featEl.checked = Boolean(data['featured']);
+    }
+
+    bootstrap.Modal.getInstance(document.getElementById('fillTemplateModal')).hide();
+  });
+
+});
+</script>
 {% endblock %}
