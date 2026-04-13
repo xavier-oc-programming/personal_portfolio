@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-13T16:12:48Z",
+  "snapshot_at": "2026-04-13T16:18:26Z",
   "projects": [
     {
       "id": 1,
@@ -171,7 +171,9 @@
         "Python"
       ],
       "screenshots": [],
-      "videos": [],
+      "videos": [
+        "videos/projects/number-guessing-game/Screen_Recording_2026-04-13_at_18.16.11.mov"
+      ],
       "card_image": "images/projects/number-guessing-game/card/guess2.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/number-guessing-game",
       "live_url": null,
