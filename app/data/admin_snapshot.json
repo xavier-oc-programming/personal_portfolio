@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-13T15:15:39Z",
+  "snapshot_at": "2026-04-13T15:20:32Z",
   "projects": [
     {
       "id": 1,
@@ -358,31 +358,39 @@
     {
       "id": 10,
       "slug": "higher-lower-web-game",
-      "title": "Higher-Lower Web Game",
+      "title": "Higher / Lower Web Game",
       "primary_category": "web",
-      "short_description": "Web version of the Higher-Lower game built with Flask and rendered in the browser with score tracking.",
-      "full_description": "A Flask-based web port of the Higher-Lower terminal game. The player guesses which account has more followers, with score tracked across rounds in the browser. An early Flask project covering routing, Jinja rendering, and session state.",
+      "short_description": "A Flask number-guessing game played through the browser URL bar. Two builds: a verbatim course version and a modular rebuild that fixes a shared-global bug using Flask session-based state.",
+      "full_description": "Higher/Lower is a Flask web game where the entire interface is the URL bar -- type /5 to guess 5, and the server tells you if you're too low, too high, or spot on. It ships as two builds: the original verbatim course version, and an advanced modular rebuild that fixes a real concurrency bug present in the original. The project is launched through a terminal menu that lets you pick which build to run, with the menu reappearing automatically when the server stops.",
       "featured": false,
       "featured_order": null,
       "date": "2026-01-28",
-      "problem": null,
-      "solution": null,
-      "challenges": null,
-      "results": null,
+      "problem": "The course version of this game stores the secret number as a Python module-level global: SECRET_NUMBER = random.randint(0, 9). That number is picked once when the server starts and never changes -- meaning every user hitting the same server shares the same secret. If one player finds it, the game is effectively broken for everyone else until the server restarts. On top of that, all HTML lives as raw strings inside route functions, magic numbers are scattered throughout, and there is no way to test the game logic without spinning up a Flask server. None of these are catastrophic for a course exercise, but they are real problems worth understanding and fixing.",
+      "solution": "The advanced build replaces the module-level global with Flask's signed cookie session, so each browser tab gets its own independent secret that resets every time the home page is visited. Game logic was extracted into a pure game.py module with zero Flask imports -- pick_secret() and check_guess() can be called and tested without a running server. HTML moved into Jinja2 templates, and every constant (number range, port, GIF URLs) was centralised in config.py. The terminal menu uses subprocess.run with cwd=path.parent so that relative imports inside each build resolve correctly regardless of where the menu is launched from.",
+      "challenges": "The trickiest part was the menu launcher. Running each Flask build as a subprocess keeps the menu process alive after Ctrl+C, which is the behaviour you want -- but without cwd=str(path.parent), Python can't resolve the relative imports inside the advanced build (from config import ...) and crashes immediately. That one argument took a moment to land on. A secondary edge case was guarding against direct URL access: visiting /5 with no active session would cause the original to crash comparing None to an integer, so the advanced build detects a missing session with session.get(\"secret\") and redirects to / instead. Finally, stacking custom decorators with Flask routes requires setting wrapper.__name__ manually on each wrapper -- Flask uses the function name as the endpoint identifier and raises an AssertionError if two routes share the same name after decoration.",
+      "results": "This project demonstrates Flask routing, session management, Jinja2 templating, and the separation of logic from presentation in a web app -- all through the lens of a deliberately simple game that makes the before/after contrast easy to read. The two-build structure is what makes it genuinely useful as a portfolio piece: it shows not just that I can build a working Flask app, but that I can identify real bugs in existing code and explain why the fix works. If I were to extend it, I would add a guess counter, a leaderboard backed by a lightweight database, and proper unit tests for game.py -- the pure logic layer makes that last part straightforward.",
       "tags": [
+        "game",
+        "python",
         "web-app",
-        "game"
+        "beginner",
+        "scope",
+        "terminal-ux"
       ],
       "tech_stack": [
         "Python",
         "Flask",
+        "Jinja2",
         "HTML",
-        "CSS"
+        "CSS",
+        "markupsafe",
+        "pathlib",
+        "subprocess"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/higher-lower-web-game/card/high_loop.gif",
-      "repo_url": null,
+      "repo_url": "https://github.com/xavier-oc-programming/higher-lower-web-game",
       "live_url": null,
       "demo_url": null
     },
