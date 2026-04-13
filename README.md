@@ -35,11 +35,11 @@ Password-protected. The entire portfolio is maintainable through this interface 
 
 | Section | Capabilities |
 |---|---|
-| **Projects** | Create, edit, delete projects. Full rich form for all content fields |
+| **Projects** | Create, edit, delete projects. Full rich form for all content fields. **Fill Form Template** button parses a pasted YAML block and auto-fills every field instantly |
 | **Media manager** | Upload and delete card images, screenshots, and videos per project |
 | **Tags** | Create tags, assign them to projects, rename, and delete — with live search and bulk assignment |
 | **Messages** | View and delete contact form submissions |
-| **Backups** | Download JSON snapshots of the database. Auto-backup triggers before every write operation |
+| **Backups** | Download JSON snapshots of the database. Auto-backup triggers before every write operation. Keeps the 25 most recent snapshots |
 
 ### REST API (`/api/v1`)
 Public, read-only, no authentication required.
@@ -129,7 +129,10 @@ tests/
 └── test_api.py             API responses, envelope shape, filters
 
 .github/workflows/
-└── ci.yml          Test on every push/PR · Deploy to Railway on main
+└── ci.yml                  Test on every push/PR · Deploy to Railway on main
+
+project_fill_template.md    YAML template for generating project entries — scan a repo,
+                            fill the template, paste into the admin Fill Form Template modal
 ```
 
 ---
@@ -227,6 +230,8 @@ docker compose down -v       # Stop and delete the database volume
 | `SITE_NAME` | No | Site title used in `<title>` tags and metadata. |
 | `GOOGLE_ANALYTICS_ID` | No | GA4 measurement ID for analytics. |
 | `FLASK_ENV` | No | `development` or `production`. Defaults to `development`. |
+| `GITHUB_TOKEN` | No | Personal access token with repo write permission. Enables automatic snapshot commits to GitHub after every admin write. |
+| `GITHUB_REPO` | No | Repository in `owner/repo` format. Required alongside `GITHUB_TOKEN` for snapshot auto-commit. |
 
 ---
 
@@ -264,7 +269,7 @@ Defined in `.github/workflows/ci.yml`.
 
 A failed test blocks deployment. The pipeline will not ship broken code.
 
-To enable Railway deployment from the pipeline, add a `RAILWAY_PORTFOLIO_TOKEN` secret to the GitHub repository (Settings → Secrets and variables → Actions).
+To enable Railway deployment from the pipeline, add a `RAILWAY_PORTFOLIO_TOKEN` secret to the GitHub repository (Settings → Secrets and variables → Actions). The token must be a **project-level** token generated from Railway's project settings, not an account API token.
 
 ---
 
@@ -351,6 +356,9 @@ Flask-Admin generates a generic CRUD interface. This dashboard is purpose-built 
 
 **Why automated backups before every write?**
 The admin is the only interface that modifies production data. A bug in a delete route or an accidental confirmation would be unrecoverable without backups. The backup runs before the write — not after — so a partial failure still leaves a clean snapshot.
+
+**Why is the snapshot sync authoritative?**
+On startup in development, the app syncs its local database from `admin_snapshot.json`. The sync is authoritative — projects in the database that are absent from the snapshot are deleted, not preserved. This ensures that deletions made on the live site (which commit an updated snapshot to GitHub) are reflected locally after a `git pull`, without any manual database cleanup.
 
 **Why is filtering client-side?**
 The projects page fetches the full project list once from `/api/v1/projects` on load and caches it in memory. Every subsequent filter or sort is instant — no network round-trip, no page reload. This architecture also demonstrates that the API can serve as the data source for a decoupled front end.
