@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-13T15:15:18Z",
+  "snapshot_at": "2026-04-13T15:15:39Z",
   "projects": [
     {
       "id": 1,
@@ -290,7 +290,7 @@
     {
       "id": 8,
       "slug": "pong-python-turtle",
-      "title": "Pong — Python / Turtle",
+      "title": "Pong Game",
       "primary_category": "software",
       "short_description": "Two-player Pong in Python using only the standard library turtle module. Ships an original course build alongside a clean OOP rebuild with a persistent score HUD, pause system, animated title screen, and in-window navigation.",
       "full_description": "This is my Day 22 project from the 100 Days of Code course: a classic two-player Pong game built entirely with Python's turtle module and zero third-party dependencies. The repo ships two builds side by side — the original course version preserved exactly as written, and a full OOP rebuild I designed myself. The advanced build separates all game logic from the display layer entirely, meaning the ball, paddles, and score tracker have zero UI imports and can be reasoned about independently. It also features a terminal version-selector launcher, a persistent score HUD strip, a pause system, an animated title screen, and an in-window navigation flow where R always returns to the title screen without ever closing the window.",
