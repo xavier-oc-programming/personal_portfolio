@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-13T14:39:41Z",
+  "snapshot_at": "2026-04-13T14:40:29Z",
   "projects": [
     {
       "id": 1,
@@ -139,7 +139,7 @@
       "featured": false,
       "featured_order": null,
       "date": "2026-04-02",
-      "problem": "Day 12 is about scope — the LEGB rule, why the global keyword is a trap, and why Python doesn't have block scope like most other languages. The problem with just doing the exercise as given is that you can write a working solution while completely missing the point. I wanted to build something that made those concepts visible in the structure of the code itself, not just in a comment explaining what the lesson was about.",
+      "problem": "This project was my first dive in to the concept of scope — the LEGB rule, why the global keyword is a trap, and why Python doesn't have block scope like most other languages. The problem with just doing the exercise as given is that you can write a working solution while completely missing the point. I wanted to build something that made those concepts visible in the structure of the code itself, not just in a comment explaining what the lesson was about.",
       "solution": "I built two versions so the contrast is concrete and inspectable. The original stays close to the course — procedural, one file, global constants in ALL_CAPS, helper functions that return values instead of mutating globals. The advanced version enforces one hard rule: the game logic layer (a GameState dataclass) has zero UI imports. display.py owns every print() call. main.py only orchestrates — collect input, call logic, call display. GuessResult and Difficulty enums replace every magic string and bare boolean, and a shared menu.py at the root launches either version via subprocess.",
       "challenges": "The trickiest design decision was making the zero-UI-imports rule actually work. The solution was GuessResult as an enum — GameState.guess() returns a value, main.py reads it and decides what to show. The logic layer never needs to know a terminal exists. A less obvious problem was ASCII art in Python triple-quoted strings: a backslash at the end of a line is silently treated as a line continuation, so lines were merging with no error and no warning. I had to double every backslash in the logo string to fix it. Getting raw keypress detection working for the post-game navigation (up arrow, Enter, q without needing Enter) also required dropping into tty/termios to bypass Python's line-buffered input.",
       "results": "The project does what I wanted — the architecture makes the scope concepts tangible rather than just described. Seeing the two versions next to each other makes it obvious why passing data in and returning it out is cleaner than reaching into global state. The thing I'm most happy with is the GuessResult enum design: it kept the logic layer genuinely portable and made main.py read almost like pseudocode. If I were to extend it, I'd add a high score tracker and pull the file I/O into its own module — the architecture is already set up for that cleanly.",
