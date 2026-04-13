@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-13T16:58:30Z",
+  "snapshot_at": "2026-04-13T17:11:33Z",
   "projects": [
     {
       "id": 1,
@@ -441,7 +441,9 @@
         "subprocess"
       ],
       "screenshots": [],
-      "videos": [],
+      "videos": [
+        "videos/projects/higher-lower-web-game/Screen_Recording_2026-04-13_at_19.07.07.mov"
+      ],
       "card_image": "images/projects/higher-lower-web-game/card/high_loop.gif",
       "repo_url": "https://github.com/xavier-oc-programming/higher-lower-web-game",
       "live_url": null,
