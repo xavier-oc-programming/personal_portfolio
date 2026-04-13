@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-13T16:57:59Z",
+  "snapshot_at": "2026-04-13T16:58:10Z",
   "projects": [
     {
       "id": 1,
@@ -393,7 +393,13 @@
         "Turtle",
         "OOP"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/turtle-crossing/screenshots/Screenshot_2026-04-13_at_18.54.04.png",
+        "images/projects/turtle-crossing/screenshots/Screenshot_2026-04-13_at_18.54.16.png",
+        "images/projects/turtle-crossing/screenshots/Screenshot_2026-04-13_at_18.54.23.png",
+        "images/projects/turtle-crossing/screenshots/Screenshot_2026-04-13_at_18.54.58.png",
+        "images/projects/turtle-crossing/screenshots/Screenshot_2026-04-13_at_18.55.03.png"
+      ],
       "videos": [],
       "card_image": "images/projects/turtle-crossing/card/turtle.jpg",
       "repo_url": null,
