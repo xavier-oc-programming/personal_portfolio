@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-13T16:37:23Z",
+  "snapshot_at": "2026-04-13T16:37:38Z",
   "projects": [
     {
       "id": 1,
@@ -316,7 +316,9 @@
         "images/projects/snake-game-python/screenshots/Screenshot_2026-04-13_at_18.33.33.png",
         "images/projects/snake-game-python/screenshots/Screenshot_2026-04-13_at_18.34.03.png"
       ],
-      "videos": [],
+      "videos": [
+        "videos/projects/snake-game-python/Screen_Recording_2026-04-13_at_18.35.57.mov"
+      ],
       "card_image": "images/projects/snake-game/card/snake.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/snake-game-python",
       "live_url": null,
