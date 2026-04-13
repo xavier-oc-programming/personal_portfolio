@@ -1,5 +1,5 @@
 """
-app.py
+app.py  # noqa
 
 Flask application entrypoint for the Portfolio Website.
 
