@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-13T16:29:18Z",
+  "snapshot_at": "2026-04-13T16:29:23Z",
   "projects": [
     {
       "id": 1,
@@ -264,7 +264,6 @@
       ],
       "screenshots": [
         "images/projects/quiz-game-python/screenshots/Screenshot_2026-04-13_at_18.27.27.png",
-        "images/projects/quiz-game-python/screenshots/Screenshot_2026-04-13_at_18.23.39.png",
         "images/projects/quiz-game-python/screenshots/Screenshot_2026-04-13_at_18.23.48.png",
         "images/projects/quiz-game-python/screenshots/Screenshot_2026-04-13_at_18.23.56.png",
         "images/projects/quiz-game-python/screenshots/Screenshot_2026-04-13_at_18.24.08.png",
