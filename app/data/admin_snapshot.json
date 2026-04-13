@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-13T17:11:40Z",
+  "snapshot_at": "2026-04-13T17:12:02Z",
   "projects": [
     {
       "id": 1,
@@ -440,7 +440,14 @@
         "pathlib",
         "subprocess"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/higher-lower-web-game/screenshots/Screenshot_2026-04-13_at_19.08.24.png",
+        "images/projects/higher-lower-web-game/screenshots/Screenshot_2026-04-13_at_19.08.31.png",
+        "images/projects/higher-lower-web-game/screenshots/Screenshot_2026-04-13_at_19.08.40.png",
+        "images/projects/higher-lower-web-game/screenshots/Screenshot_2026-04-13_at_19.08.55.png",
+        "images/projects/higher-lower-web-game/screenshots/Screenshot_2026-04-13_at_19.09.09.png",
+        "images/projects/higher-lower-web-game/screenshots/Screenshot_2026-04-13_at_19.09.19.png"
+      ],
       "videos": [
         "videos/projects/higher-lower-web-game/Screen_Recording_2026-04-13_at_19.07.07.mov"
       ],
