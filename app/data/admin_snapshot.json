@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-11T10:48:11Z",
+  "snapshot_at": "2026-04-13T11:40:47Z",
   "projects": [
     {
       "id": 1,
@@ -140,7 +140,6 @@
         "terminal-ux",
         "beginner",
         "scope",
-        "ascii-art",
         "dataclasses"
       ],
       "tech_stack": [
