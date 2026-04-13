@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-13T11:40:47Z",
+  "snapshot_at": "2026-04-13T14:26:15Z",
   "projects": [
     {
       "id": 1,
@@ -90,25 +90,37 @@
     },
     {
       "id": 3,
-      "slug": "blackjack",
+      "slug": "blackjack-python",
       "title": "Blackjack",
       "primary_category": "software",
-      "short_description": "Terminal-based Blackjack card game with full game logic, dealer AI, and score tracking.",
-      "full_description": "A fully playable Blackjack game built in the terminal using Python and OOP. Implements dealer logic, card drawing, bust detection, and score tracking across multiple rounds. Demonstrates class design and game state management.",
+      "short_description": "Terminal Blackjack in Python — two versions side by side. Procedural course solution plus a full OOP rebuild with animated ASCII card UI, chip system, split, double down, insurance, and difficulty modes.",
+      "full_description": "A Day 11 project from the 100 Days of Code bootcamp, built in two versions to show architectural growth. The original follows the course spec closely in ~75 lines of procedural Python. The advanced version is a complete rebuild with a four-file modular architecture, a 4-deck shoe, a chip-based betting system, casino-style side bets (split, double down, insurance), three difficulty modes, an animated terminal UI with ASCII card art, and a session statistics screen. Both versions launch from a shared root menu and share a single ASCII logo asset.",
       "featured": false,
       "featured_order": null,
-      "date": "2025-09-25",
-      "problem": null,
-      "solution": null,
-      "challenges": null,
-      "results": null,
+      "date": "2026-04-13",
+      "problem": "The Day 11 course brief produces a minimal working game — cards dealt, hit or stand, result printed — but nothing that feels like a real product or demonstrates meaningful Python depth. There is no sense of stakes without chips, no replay incentive, no visual feedback beyond raw score printouts, and no architectural separation between game logic and output. A single flat file with hardcoded print statements is not a portfolio piece, and it doesn't exercise the Python features introduced across the first eleven days of the course in any cohesive way.",
+      "solution": "Two versions were built and shipped side by side so the contrast is visible. The original implements the course spec as written. The advanced version enforces a strict four-file separation: config.py holds every constant, blackjack.py contains pure game logic with zero I/O using dataclasses and enums, display.py owns all terminal rendering and animations, and main.py orchestrates the round loop. Chip accounting uses a pre-deduction model — the bet is removed upfront and chip_delta returns what to add back — which keeps split-hand accounting clean. A finite 4-deck shoe with automatic reshuffle replaces the course's infinite random sampling, more closely modelling real casino play.",
+      "challenges": "The hardest problem was building card-flip and dealer-reveal animations without clearing the screen — the game board needed to remain visible while the animation played in a side panel. This required ANSI cursor-up escape codes to overwrite specific terminal lines in place rather than re-rendering the full screen on each frame. The split flow presented a second challenge: two independent interactive hand loops share a single dealer turn, and double-downs inside each split hand alter their individual bets separately. Getting chip accounting to remain correct across all combinations of split, double, bust, and insurance required pinning the pre-deduction model consistently throughout rather than patching it per-case. Raw single-keypress input via tty/termios also required careful terminal state restoration to avoid corrupting the shell after exit.",
+      "results": "The project demonstrates clean separation of concerns, Python dataclasses and enums used for domain modelling, and raw terminal UI techniques rarely seen in beginner-level Python work. The advanced version is genuinely playable with casino-accurate rules across all three difficulty modes. Placing both versions in the same repository makes architectural growth explicit — from 75 procedural lines to a modular system with animations, side bets, and session statistics. The pure-logic isolation in blackjack.py means unit tests could be added with no refactoring required, which would be the first improvement in a future iteration.",
       "tags": [
+        "game",
+        "python",
+        "oop",
         "cli",
-        "game"
+        "terminal",
+        "terminal-ux",
+        "dataclasses",
+        "beginner"
       ],
       "tech_stack": [
-        "Python",
-        "OOP"
+        "Python 3.10+",
+        "dataclasses",
+        "enum",
+        "typing",
+        "tty",
+        "termios",
+        "random",
+        "subprocess"
       ],
       "screenshots": [],
       "videos": [],
