@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-13T15:21:27Z",
+  "snapshot_at": "2026-04-13T16:02:48Z",
   "projects": [
     {
       "id": 1,
@@ -396,30 +396,38 @@
     },
     {
       "id": 11,
-      "slug": "coffee-machine",
-      "title": "Coffee Machine",
+      "slug": "coffee-machine-python",
+      "title": "Coffee Machine — Command-Line Simulator",
       "primary_category": "software",
-      "short_description": "Simulates a coffee machine — takes orders, checks resources, processes payments, and makes drinks.",
-      "full_description": "A Python simulation of a coffee machine that manages drink menus, ingredient resources, and coin-based payments. Built with OOP — a CoffeeMaker, Menu, and MoneyMachine class each handle a distinct responsibility.",
+      "short_description": "A command-line coffee vending machine in Python. Two builds: the original procedural course exercise and a full OOP refactor with separated concerns, type hints, coin-based payments, ingredient refills, and persisted lifetime revenue.",
+      "full_description": "I built this as Day 15 of my 100 Days of Code journey — a fully functional coffee machine simulator that runs entirely in the terminal. The machine tracks ingredient resources, processes coin-by-coin payments, calculates change, and dispenses drinks. The repo ships two builds side by side: the original procedural script from the course, and a complete OOP refactor I wrote to see how the same problem looks when concerns are properly separated. A terminal launcher lets you switch between both versions from a single entry point.",
       "featured": false,
       "featured_order": null,
-      "date": "2025-10-03",
-      "problem": null,
-      "solution": null,
-      "challenges": null,
-      "results": null,
+      "date": "2024-09-17",
+      "problem": "The course exercise does a great job of teaching Python fundamentals — dictionaries, loops, modules, f-strings — but the end result is a single flat script where data, logic, and terminal output all live in the same place. There's no obvious entry point, commands like `off` and `report` aren't discoverable unless you read the source, and leftover scratch files from development were committed alongside the working code. For a portfolio that's meant to show what I actually know, a procedural script with no structure and no documentation doesn't do the work justice. I also genuinely wanted to know what this same program looks like when you apply OOP and separation of concerns — and building both versions back to back seemed like the most honest way to find out.",
+      "solution": "I restructured the repo around two builds: `original/` preserves the course code verbatim as a reference point, and `advanced/` is a full OOP refactor I built from scratch on top of it. A root-level `menu.py` launcher uses `subprocess.run` with `cwd=` set to each build's directory, so you can switch between them without touching any code. In the advanced build, all business logic lives in three pure classes — `CoffeeMachine`, `DrinkMenu`, and `CoinProcessor` — with zero `print()` or `input()` calls. Every terminal interaction is owned exclusively by `Display`, and every constant lives in `config.py`. The machine also writes lifetime revenue to `data.txt` so the total persists across sessions.",
+      "challenges": "The trickiest issue was floating-point arithmetic on monetary values. In Python, `0.1 + 0.2` evaluates to `0.30000000000000004`, which meant the coin insertion loop condition (`while coin_sum < order_cost`) could behave incorrectly on certain combinations of coins and prices. Wrapping every monetary operation in `round(..., 2)` fixed it, but catching it required actually tracing the arithmetic rather than assuming it would just work. Import resolution was another subtle one: when `menu.py` launches a build via `subprocess.run`, setting `cwd` to the script's parent directory is what makes sibling imports like `from config import ...` resolve correctly — skip it and the subprocess fails silently depending on how it was invoked. I also found two bugs in the original course code while cleaning it up: `ordering_coffee` wasn't reset on insufficient resources, and revenue wasn't tracked after a sale.",
+      "results": "The project shows a clear before-and-after on the same problem — procedural vs. OOP, all logic mixed vs. strictly separated — which I think is more useful to a reader than either version alone. The advanced build's `display.py` isolation means the entire terminal interface could theoretically be swapped for a GUI by replacing one file and touching nothing else. I learned that separation of concerns isn't just an organizational preference; it's about what you can change or test independently. If I were to extend this, I'd add a proper `Decimal` type for monetary values instead of `round()` hacks, and maybe a restocking threshold that warns you before resources run out rather than after.",
       "tags": [
+        "python",
         "cli",
+        "oop",
+        "terminal",
+        "terminal-ux",
+        "beginner",
         "scripting"
       ],
       "tech_stack": [
         "Python",
-        "OOP"
+        "subprocess",
+        "pathlib",
+        "os",
+        "sys"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/coffee-machine/card/cmachine.webp",
-      "repo_url": null,
+      "repo_url": "https://github.com/xavier-oc-programming/coffee-machine-python",
       "live_url": null,
       "demo_url": null
     },
