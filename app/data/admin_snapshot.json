@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-13T16:18:37Z",
+  "snapshot_at": "2026-04-13T16:19:04Z",
   "projects": [
     {
       "id": 1,
@@ -171,7 +171,8 @@
         "Python"
       ],
       "screenshots": [
-        "images/projects/number-guessing-game/screenshots/Screenshot_2026-04-13_at_18.17.48.png"
+        "images/projects/number-guessing-game/screenshots/Screenshot_2026-04-13_at_18.17.48.png",
+        "images/projects/number-guessing-game/screenshots/Screenshot_2026-04-13_at_18.18.50.png"
       ],
       "videos": [
         "videos/projects/number-guessing-game/Screen_Recording_2026-04-13_at_18.16.11.mov"
