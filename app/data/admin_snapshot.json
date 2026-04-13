@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-13T14:40:29Z",
+  "snapshot_at": "2026-04-13T14:55:52Z",
   "projects": [
     {
       "id": 1,
@@ -166,29 +166,44 @@
     },
     {
       "id": 5,
-      "slug": "higher-lower-game",
-      "title": "Higher-Lower Game",
+      "slug": "higher-or-lower",
+      "title": "Higher or Lower",
       "primary_category": "software",
-      "short_description": "Guess which celebrity or brand has more Instagram followers — terminal version.",
-      "full_description": "A terminal-based game where the player compares two social media accounts and guesses which has more followers. Tracks score across consecutive correct answers and ends on the first wrong guess.",
+      "short_description": "Terminal guessing game: pick which Instagram account has more followers. Includes a procedural course version and a fully rebuilt advanced version with ANSI colors, single-keypress input, and strict layer separation.",
+      "full_description": "Higher or Lower is a terminal game where two Instagram accounts are shown side by side and you guess which has more followers. A correct guess keeps your streak alive and the chain continues; a wrong guess ends the game. The repo ships two complete versions of the same game: the original single-file procedural solution written during the course, and a ground-up advanced rebuild with modular architecture, ANSI color UI, and raw-mode keypress input.",
       "featured": false,
       "featured_order": null,
-      "date": "2025-10-01",
-      "problem": null,
-      "solution": null,
-      "challenges": null,
-      "results": null,
+      "date": "2026-04-02",
+      "problem": "The course exercise produces a working game, but everything — data, helpers, game loop, and screen output — lives in one file. That's fine for a first pass, but it means the display logic is tangled with game logic: you can't test the rules without triggering print() calls, and restyling the UI means editing the same file as the core mechanic. The screen-clear was 25 blank lines, input required pressing Enter after every guess, and there was no way to navigate back to a menu. It worked, but it wasn't something I'd point to as a piece of work.",
+      "solution": "I rebuilt the game from scratch with a strict three-layer architecture: config.py holds all constants and raw data, higher_lower.py contains pure game logic with zero UI imports, and display.py owns all terminal output and input. A frozen dataclass (Account) replaces raw dicts for typed, immutable, hashable account objects. The display layer uses ANSI escape codes for color and tty/termios raw mode for single-keypress input — no Enter needed. A MODES dict dispatcher in main.py means adding a new game variant only requires a new entry and a run_*() function; nothing else changes. A root menu.py launches either version via subprocess so both can coexist cleanly.",
+      "challenges": "The hardest part was getting single-keypress input right without hanging the terminal. Switching into tty raw mode via termios disables all the usual line-buffering and echo behavior, which means arrow keys send a 3-byte escape sequence (ESC [ A) rather than a single character — you have to read 3 bytes to detect them, and if you read too many or too few the terminal state gets corrupted. The bigger risk was leaving the terminal in raw mode on a crash, which would make the shell unusable. Wrapping the read in a try/finally that always calls termios.tcsetattr() to restore the original settings solved that reliably. The \"B becomes the new A\" carry mechanic also needed careful thought — passing the previous B as a carry parameter to pick_pair() was cleaner than reassigning it inside the loop and avoided re-rolling the same account as both A and B.",
+      "results": "The advanced version demonstrates the practical difference between \"code that runs\" and \"code that's designed\" — same game, completely different architecture. The logic layer has zero dependencies on the UI, which means check_answer() and pick_pair() are trivially testable in isolation. I learned that frozen dataclasses are a genuinely useful replacement for plain dicts when the data has a fixed shape: attribute access is cleaner, immutability is enforced, and == comparisons work without writing __eq__. If I were to extend this, the MODES dispatcher is already wired up to support new game variants with minimal changes.",
       "tags": [
+        "game",
+        "python",
+        "terminal",
+        "terminal-ux",
+        "dataclasses",
+        "oop",
         "cli",
-        "game"
+        "beginner"
       ],
       "tech_stack": [
-        "Python"
+        "Python",
+        "dataclasses",
+        "termios",
+        "tty",
+        "sys",
+        "os",
+        "random",
+        "time",
+        "typing",
+        "subprocess"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/higher-lower-game/card/higher.png",
-      "repo_url": null,
+      "repo_url": "https://github.com/xavier-oc-programming/higher-lower-python",
       "live_url": null,
       "demo_url": null
     },
