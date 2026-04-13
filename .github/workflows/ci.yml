@@ -78,4 +78,4 @@ jobs:
           npm install -g @railway/cli
           railway up --detach --service personal_portfolio
         env:
-          RAILWAY_TOKEN: ${{ secrets.WEBSITE_TOKEN2 }}
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_PORTFOLIO_TOKEN }}
