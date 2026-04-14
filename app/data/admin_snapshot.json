@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T13:25:15Z",
+  "snapshot_at": "2026-04-14T18:09:48Z",
   "projects": [
     {
       "id": 1,
@@ -1297,34 +1297,45 @@
     },
     {
       "id": 32,
-      "slug": "flight-deal-finder",
-      "title": "Flight Deal Finder",
+      "slug": "flight-club",
+      "title": "Flight Club",
       "primary_category": "software",
-      "short_description": "Searches for cheap flights via API and sends SMS alerts when prices drop below a target threshold.",
-      "full_description": "A multi-API automation system that reads destination and price targets from a Google Sheet via Sheety, searches for available flights through the Kiwi Tequila API, and sends an SMS alert via Twilio when a deal is found. Demonstrates orchestrating multiple external services in a real-world automation pipeline.",
-      "featured": true,
+      "short_description": "Python CLI that scans Google Flights via SerpApi for round-trip deals from Madrid, fires WhatsApp and email alerts via Twilio and Gmail when a fare drops below your threshold. Destinations and price targets live in a Google Sheet via Sheety.",
+      "full_description": "Flight Club is an automated flight deal scanner that watches a list of destinations and their price thresholds, then notifies you the moment a fare drops below your target. It queries Google Flights via SerpApi, reads destination data from a Google Sheet through Sheety, and delivers alerts over WhatsApp (Twilio) and email (Gmail SMTP). The project ships in two builds: an original version faithful to the course exercise, and a refactored advanced build with all constants in config.py, a clean Notifier class, and launch-directory-independent path handling.",
+      "featured": false,
       "featured_order": 5,
       "date": "2025-12-05",
-      "problem": "Manually searching for cheap flights to multiple destinations is slow and unreliable — good deals disappear before they're noticed, and monitoring several routes by hand is not practical.",
-      "solution": "Built a multi-API automation system that reads destination and price targets from a Google Sheet via Sheety, searches for available flights through the Kiwi Tequila API, and sends an SMS alert via Twilio when a deal falls below the target price for any route.",
-      "challenges": "Handling IATA code resolution when destinations don't have a stored airport code. Managing data flow cleanly between three services with different request patterns. Structuring the comparison logic to handle multi-leg routes and date ranges correctly.",
-      "results": "Fully functional deal-detection pipeline that fires alerts automatically when matching flights are found. Demonstrates real-world orchestration of three external services — a practical automation that scales to any number of destinations in the sheet.",
+      "problem": "Flight prices fluctuate constantly and checking manually across multiple destinations is tedious and unreliable — you either check too late or miss the window entirely. The course exercise that inspired this project originally used the Amadeus test API, which was decommissioned in early 2026, leaving the project non-functional out of the box. Beyond that, most flight alert tools are web apps with account friction; what I wanted was a lightweight script I could run locally, pointed at my own Google Sheet, with no subscription required. The challenge was finding a replacement API that was actually working, free at a useful tier, and didn't require an OAuth2 flow just to get started.",
+      "solution": "The app reads destination cities, IATA codes, and price thresholds from a Google Sheet via Sheety, which wraps the sheet as a REST API. For each destination it queries SerpApi's Google Flights engine, first searching for direct flights and falling back to connections if none are found. Results are parsed into FlightData objects, the cheapest is identified, and if it beats the threshold a formatted alert is sent via Twilio's WhatsApp sandbox and Gmail SMTP. The advanced build separates concerns cleanly: DataManager owns Sheety I/O, FlightSearch owns SerpApi, Notifier is a pure I/O class that accepts plain strings, and all magic numbers live in config.py.",
+      "challenges": "The hardest problem was that the original API was being decommissioned mid-project, returning 500s on every call, which meant finding and integrating a replacement from scratch. I evaluated several alternatives before landing on SerpApi, which scrapes Google Flights and returns real prices with a simple API key and no OAuth2 flow. SerpApi's data model is also different from a traditional flights API: it takes a specific outbound and return date rather than a date range, and it has no IATA lookup endpoint, so airport codes have to be pre-filled in the sheet manually. Parsing the nested response structure (best_flights, other_flights, and layovers arrays) cleanly into FlightData objects also required careful handling to avoid KeyError crashes on missing fields.",
+      "results": "The project is fully functional: it scans the sheet, searches Google Flights in real time, and delivers WhatsApp and email alerts when a deal lands. I came away with a much deeper understanding of multi-API orchestration, specifically what it actually takes to swap one external service for another cleanly without rewiring everything else. The two-build structure was a deliberate choice to show the before/after of a refactor: same logic, cleaner architecture, easier to extend. If I were taking it further, I'd add a date-range loop so each run checks multiple departure windows rather than a single fixed date, and I'd look at scheduling it as a daily cron job so it runs without me having to remember to trigger it.",
       "tags": [
-        "automation",
         "api-integration",
-        "data-pipeline"
+        "automation",
+        "dataclasses",
+        "oop",
+        "productivity",
+        "python",
+        "rest-api",
+        "terminal",
+        "terminal-ux"
       ],
       "tech_stack": [
         "Python",
-        "Requests",
-        "Twilio API",
-        "Sheety API",
-        "Kiwi Tequila API"
+        "SerpApi",
+        "Sheety",
+        "Twilio WhatsApp",
+        "Gmail SMTP",
+        "requests",
+        "python-dotenv",
+        "smtplib",
+        "pathlib",
+        "datetime"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/flight-deal-finder/card/flight.jpg",
-      "repo_url": null,
+      "repo_url": "https://github.com/xavier-oc-programming/flight-club",
       "live_url": null,
       "demo_url": null
     },
