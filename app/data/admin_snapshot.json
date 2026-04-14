@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T07:39:50Z",
+  "snapshot_at": "2026-04-14T07:39:55Z",
   "projects": [
     {
       "id": 1,
@@ -525,9 +525,7 @@
         "tkinter"
       ],
       "screenshots": [],
-      "videos": [
-        "videos/projects/miles-to-km-converter/Screen_Recording_2026-04-14_at_09.25.29.mov"
-      ],
+      "videos": [],
       "card_image": "images/projects/miles-to-km-converter/card/Screenshot_2026-03-26_at_12.49.16.png",
       "repo_url": "https://github.com/xavier-oc-programming/miles-to-km-converter-python",
       "live_url": null,
