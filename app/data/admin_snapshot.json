@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T07:06:49Z",
+  "snapshot_at": "2026-04-14T07:08:36Z",
   "projects": [
     {
       "id": 1,
@@ -692,32 +692,42 @@
     },
     {
       "id": 18,
-      "slug": "birthday-email-automator",
-      "title": "Birthday Email Automator",
+      "slug": "birthday-email-bot",
+      "title": "Birthday Email Bot",
       "primary_category": "software",
-      "short_description": "Checks a CSV of birthdays daily and automatically sends a personalised email on each person's birthday.",
-      "full_description": "An automation script that reads a CSV of contacts and their birthdays, checks the current date, and sends a personalised birthday email via smtplib when a match is found. Demonstrates scheduled automation, datetime handling, and email integration.",
+      "short_description": "Automated birthday email sender that reads a CSV, checks today's date, picks a random letter template, and sends personalised Gmail messages. Runs locally or on a daily GitHub Actions cron schedule.",
+      "full_description": "Birthday Email Bot is a Python automation that reads a CSV of names, emails, and birthdays, checks whether today matches any entry, and fires off a personalised email via Gmail SMTP. It comes in two builds: a course-original single-file script and a fully refactored OOP version with separated concerns and centralised config. A GitHub Actions workflow runs it every day at 08:00 UTC so no local machine needs to stay on.",
       "featured": false,
       "featured_order": null,
       "date": "2025-11-15",
-      "problem": null,
-      "solution": null,
-      "challenges": null,
-      "results": null,
+      "problem": "Remembering birthdays is one thing — actually sending a personalised message on the right day is another. Most people rely on calendar reminders that still require manual action: you see the notification, think you'll send something later, and then forget. There is no friction-free way to guarantee a heartfelt birthday email lands in someone's inbox on their actual birthday without opening a client and writing something from scratch. Scaling this across many people makes it worse — each birthday becomes another item to track and act on manually, and the cognitive load quietly compounds.",
+      "solution": "I built a Python script that reads a CSV of birthdays, compares each row's month and day against today's date, randomly picks from a pool of letter templates with a personalised name substitution, and sends a plain-text email via Gmail SMTP with STARTTLS. The advanced build separates this into two classes — BirthdayLoader for all CSV and date logic, and EmailSender for template selection and SMTP delivery — wired together by a thin orchestrator in main.py. All constants live in a single config.py so there are no magic numbers scattered through the code. A GitHub Actions workflow runs the advanced build every day using encrypted repository secrets, making the whole thing fully hands-off once deployed.",
+      "challenges": "The trickiest part was getting GitHub Actions to pick up credentials without ever touching a .env file in CI. The fix was storing BIRTHDAY_SENDER_EMAIL and BIRTHDAY_APP_PASSWORD as encrypted repository secrets injected as environment variables at runtime, which the existing dotenv pattern picks up transparently. Making the CSV parsing robust against malformed rows was another interesting problem — pandas' to_numeric with errors='coerce' converts bad values to NaN, which are then identified and skipped with a printed warning rather than crashing the run. Getting module imports to resolve correctly both when launched directly and when invoked via menu.py's subprocess.run required sys.path.insert at the top of advanced/main.py combined with an explicit cwd= argument in the subprocess call.",
+      "results": "This project showed me how much cleaner code gets when you enforce a strict separation between data loading, business logic, and output — swapping the SMTP client or the CSV source would mean touching exactly one class. I got hands-on experience setting up GitHub Actions for scheduled automation with secrets management, which opens up a whole category of set-it-and-forget-it bots. The bot successfully sent a real birthday email to a test address during development, proving the full end-to-end flow works. Next time I would add a log file to keep a record of every send and failure, and explore Jinja2 templates for richer email formatting.",
       "tags": [
         "automation",
-        "scripting"
+        "python",
+        "scripting",
+        "oop",
+        "productivity",
+        "cli",
+        "terminal-ux",
+        "deployment"
       ],
       "tech_stack": [
         "Python",
+        "pandas",
         "smtplib",
-        "Pandas",
-        "datetime"
+        "ssl",
+        "python-dotenv",
+        "email.message",
+        "pathlib",
+        "GitHub Actions"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/birthday-email-automator/card/birthday2.png",
-      "repo_url": null,
+      "repo_url": "https://github.com/xavier-oc-programming/birthday-email-bot",
       "live_url": null,
       "demo_url": null
     },
