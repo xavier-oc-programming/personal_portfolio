@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T07:39:37Z",
+  "snapshot_at": "2026-04-14T07:39:42Z",
   "projects": [
     {
       "id": 1,
@@ -525,7 +525,6 @@
         "tkinter"
       ],
       "screenshots": [
-        "images/projects/miles-to-km-converter/screenshots/Screenshot_2026-04-14_at_09.27.45.png",
         "images/projects/miles-to-km-converter/screenshots/Screenshot_2026-04-14_at_09.28.28.png"
       ],
       "videos": [
