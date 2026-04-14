@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T10:34:42Z",
+  "snapshot_at": "2026-04-14T10:44:58Z",
   "projects": [
     {
       "id": 1,
@@ -697,7 +697,9 @@
         "html"
       ],
       "screenshots": [],
-      "videos": [],
+      "videos": [
+        "videos/projects/gui-quiz-app/Screen_Recording_2026-04-14_at_12.32.14.mov"
+      ],
       "card_image": "images/projects/gui-quiz-app/card/quiz.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/gui-quiz-app",
       "live_url": null,
