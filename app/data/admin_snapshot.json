@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T07:56:07Z",
+  "snapshot_at": "2026-04-14T08:12:26Z",
   "projects": [
     {
       "id": 1,
@@ -609,7 +609,15 @@
         "pathlib",
         "subprocess"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/password-manager-app/screenshots/Screenshot_2026-04-14_at_10.10.16.png",
+        "images/projects/password-manager-app/screenshots/Screenshot_2026-04-14_at_10.10.28.png",
+        "images/projects/password-manager-app/screenshots/Screenshot_2026-04-14_at_10.10.36.png",
+        "images/projects/password-manager-app/screenshots/Screenshot_2026-04-14_at_10.10.45.png",
+        "images/projects/password-manager-app/screenshots/Screenshot_2026-04-14_at_10.10.56.png",
+        "images/projects/password-manager-app/screenshots/Screenshot_2026-04-14_at_10.11.12.png",
+        "images/projects/password-manager-app/screenshots/Screenshot_2026-04-14_at_10.11.27.png"
+      ],
       "videos": [],
       "card_image": "images/projects/password-manager/card/password.png",
       "repo_url": "https://github.com/xavier-oc-programming/password-manager-app",
