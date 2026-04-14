@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T13:03:32Z",
+  "snapshot_at": "2026-04-14T13:04:22Z",
   "projects": [
     {
       "id": 1,
@@ -1183,27 +1183,34 @@
       "slug": "instagram-follower-bot",
       "title": "Instagram Follower Bot",
       "primary_category": "software",
-      "short_description": "Automates following users from a target account's follower list using Selenium.",
-      "full_description": "A Selenium bot that navigates to a target Instagram account, accesses its follower list, and automates the follow action on each user. Demonstrates handling of modal dialogs, infinite scroll, and rate-limited interactions in browser automation.",
+      "short_description": "A Selenium bot that logs into Instagram, scrolls a target account's followers modal, and mass-follows users. Includes a smart unfollow cleanup. Built with undetected-chromedriver to bypass bot detection.",
+      "full_description": "Growing an Instagram audience through the follow-for-follow strategy means clicking Follow on hundreds of individual users one by one -- something that is basically impossible at scale. I built a bot that handles the entire flow: log in to an Instagram account, navigate to any target account's followers modal, scroll through it to load entries, and click Follow on each user while waiting for state confirmation before moving on. It also ships a companion unfollow cleanup script that opens your own Following list and systematically reverses the whole thing. The advanced build uses undetected-chromedriver so Instagram doesn't fingerprint and block the session before it even gets started.",
       "featured": false,
       "featured_order": null,
       "date": "2026-01-18",
-      "problem": null,
-      "solution": null,
-      "challenges": null,
-      "results": null,
+      "problem": "Growing an Instagram following through the follow-for-follow strategy requires visiting a similar account, opening their followers modal, scrolling through it, and clicking Follow on each person individually. At any meaningful scale -- say 100-200 follows per session -- this is completely impractical by hand. The modal lazy-loads entries as you scroll, so you can't just scrape a static page -- you have to actually drive the browser. Instagram also fingerprints standard Selenium WebDriver and restricts automated sessions before they can do anything useful. There's no official API for this kind of growth strategy, so the only viable path is browser automation that looks genuinely human.",
+      "solution": "I built an InstaBot class powered by undetected-chromedriver -- a patched Selenium driver that strips the automation signatures Instagram scans for at the browser binary level. The bot keeps a persistent Chrome profile on disk so login sessions and dismissed popups survive restarts, meaning you only have to do the first login once. It navigates to the target account's profile, opens the followers modal, and runs a scroll loop with stagnation detection and progressive backoff to load all visible entries before following anyone. Each Follow click then waits for the button to flip to \"Following\" or go stale before moving to the next entry, preventing double-clicks and keeping pace with Instagram's client-side state updates. Every XPath and tunable -- delays, scroll cycles, the unfollow cap -- lives in config.py, so a broken selector after an Instagram DOM update is a one-line fix.",
+      "challenges": "The nastiest bug was a StaleElementReferenceException that only appeared after the followers modal successfully opened. \"Followers dialog open.\" would print, then the bot would crash. What was actually happening: Instagram's SPA re-renders the modal DOM during its open animation, so the dialog WebElement returned by wait.until() was already stale by the time the JS fallback tried to pass it to execute_script -- and only TimeoutException was being caught, so the stale error propagated all the way up. The fix was to re-find the dialog fresh inside the fallback rather than relying on the passed reference, plus a one-second settle wait before searching for the scroll container. A secondary challenge was Chrome's \"Save password?\" popup -- an OS-level dialog that Selenium XPath can't reach -- which I suppressed entirely via ChromeOptions prefs before the driver even launches, so it never appears.",
+      "results": "The bot successfully navigates Instagram's login flow, handles all post-login dialogs, scrolls the followers modal to load entries, and follows users with reliable state-change confirmation before each move. Building it gave me a real appreciation for DOM instability in SPAs -- the stale element bug was a genuinely tricky one because the error appeared one step after the actual failure point, which made it hard to locate at first. I also learned why undetected-chromedriver exists as a separate project: standard Selenium gets blocked before you even see a login form on modern platforms. If I were extending this, I'd add rate limiting spread across hours rather than just seconds, and track followed users in a local SQLite database to avoid re-following the same accounts across sessions.",
       "tags": [
+        "automation",
         "browser-automation",
-        "automation"
+        "oop",
+        "python",
+        "scripting",
+        "web-scraping"
       ],
       "tech_stack": [
         "Python",
-        "Selenium"
+        "Selenium",
+        "undetected-chromedriver",
+        "python-dotenv",
+        "ChromeDriver"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/instagram-follower-bot/card/insta_2.jpg",
-      "repo_url": null,
+      "repo_url": "https://github.com/xavier-oc-programming/instagram-follower-bot",
       "live_url": null,
       "demo_url": null
     },
