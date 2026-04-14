@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T18:20:29Z",
+  "snapshot_at": "2026-04-14T18:21:04Z",
   "projects": [
     {
       "id": 1,
@@ -1650,28 +1650,32 @@
       "slug": "lego-dataset-analysis",
       "title": "LEGO Dataset Analysis",
       "primary_category": "data",
-      "short_description": "Analyses the complete history of LEGO sets — themes, parts, colours, and trends — using aggregation and merging.",
-      "full_description": "A Pandas analysis of the complete LEGO dataset covering decades of sets, themes, parts, and colours. Uses merge operations across multiple related tables to answer questions about how LEGO sets have evolved over time, visualised with Matplotlib.",
+      "short_description": "Exploratory analysis of 11,000+ LEGO sets using pandas and matplotlib — uncovering colour stats, debut year, largest sets, year-on-year growth, complexity trends, and top themes by set count.",
+      "full_description": "I built a full data analysis pipeline across three relational datasets from Rebrickable covering LEGO colours, sets, and themes. The analysis answers questions about the company's history — from its first sets in 1949 to the explosion of licensed themes around 2000. All wrangling is done with pandas (groupby, agg, merge) and results are visualised as a dual-axis line chart, a scatter plot, and a bar chart. It's a single notebook that tells a coherent story about how LEGO evolved over 70+ years.",
       "featured": false,
       "featured_order": null,
-      "date": "2026-02-26",
-      "problem": null,
-      "solution": null,
-      "challenges": null,
-      "results": null,
+      "date": "2026-04-13",
+      "problem": "LEGO has been releasing sets since 1949, but the raw Rebrickable data — three CSV files covering 11,000+ sets, 135 colours, and 457 themes — doesn't tell you much on its own. To understand how the company grew, you need to aggregate by year, join across tables, and chart the results. The most interesting question (which theme has the most sets?) can't even be answered from sets.csv alone because theme names live in a completely separate themes.csv, connected only by a foreign key. Without merging and aggregating correctly you just see numeric IDs and miss the whole story. The data also contains partial-year entries that silently distort any time-series chart if you don't account for them.",
+      "solution": "I built the analysis as a single Jupyter notebook using pandas for all wrangling and matplotlib for every chart. The pipeline loads all three CSVs, explores colours with .nunique() and .groupby('is_trans'), then aggregates sets.csv by year using .agg() to produce both a set count and a unique-theme count per year. A dual-axis line chart using ax.twinx() overlays both metrics on a shared time axis despite their different scales. Average part count per year comes from .groupby().agg({'num_parts': mean}) and is plotted as a scatter chart to show the complexity trend. For theme ranking, I used .value_counts() to count sets per theme_id, converted the Series to a DataFrame, then merged it with themes.csv on the id key to resolve actual theme names before plotting the top 10 as a bar chart.",
+      "challenges": "The hardest part was getting the dual-axis chart right. Plotting sets-per-year and themes-per-year on a single y-axis produces a misleading chart because the two series live on totally different scales — sets reach ~900 by 2019 while themes peak around ~100. The fix was ax.twinx() to give each series its own independent y-axis, then matching each axis label and tick colour to its line so the reader can tell them apart instantly. A quieter but equally important problem was the incomplete final two years in the dataset — the CSV was exported mid-year, so a simple [:-2] slice was needed on both time series to avoid a fake drop at the right edge of the charts.",
+      "results": "The analysis confirmed LEGO's dramatic expansion from a handful of sets per year in the 1950s to hundreds per year by the 2010s, with a clear inflection point around 1999-2000 when licensed themes like Star Wars and Harry Potter came on board. Average part count per set has also risen steadily over time, showing that modern LEGO is genuinely more complex than early LEGO. This project gave me solid hands-on practice with groupby aggregation, cross-table merging, and multi-axis matplotlib charts — the pandas patterns that show up again and again in real analysis work. If I revisited it, I'd dig into the parent_id column in themes.csv to group sub-themes under their parents and get a cleaner split between LEGO's own IP and licensed franchises.",
       "tags": [
         "data-analysis",
-        "visualisation"
+        "visualisation",
+        "python",
+        "beginner"
       ],
       "tech_stack": [
         "Python",
-        "Pandas",
-        "Matplotlib"
+        "pandas",
+        "numpy",
+        "matplotlib",
+        "Jupyter Notebook"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/lego-dataset-analysis/card/lego2.png",
-      "repo_url": null,
+      "repo_url": "https://github.com/xavier-oc-programming/lego-dataset-analysis",
       "live_url": null,
       "demo_url": null
     },
