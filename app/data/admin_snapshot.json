@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T07:09:32Z",
+  "snapshot_at": "2026-04-14T07:10:36Z",
   "projects": [
     {
       "id": 1,
@@ -774,30 +774,41 @@
     },
     {
       "id": 20,
-      "slug": "sms-sender",
-      "title": "SMS Sender",
+      "slug": "rain-alert-sms",
+      "title": "Rain Alert SMS Bot",
       "primary_category": "software",
-      "short_description": "Sends automated SMS messages using the Twilio API with environment variable authentication.",
-      "full_description": "A Python script that sends SMS messages programmatically via the Twilio API. Credentials are managed with environment variables following secure configuration practices. A foundational automation project used as a building block in later alert systems.",
+      "short_description": "Fetches a 12-hour weather forecast from OpenWeatherMap and sends a WhatsApp or SMS alert via Twilio if rain is expected. Runs automatically every morning via GitHub Actions.",
+      "full_description": "Rain Alert SMS Bot is a Python automation that checks the next 12 hours of weather for Madrid and sends a personalised WhatsApp or SMS message via Twilio if rain is on the way. It was built as Day 35 of 100 Days of Code, covering API authentication and environment variables. The project ships in two versions: a clean course solution and a refactored OOP build with a config module, separated fetcher and notifier classes, and a GitHub Actions workflow that fires every morning at 7am.",
       "featured": false,
       "featured_order": null,
       "date": "2025-11-23",
-      "problem": null,
-      "solution": null,
-      "challenges": null,
-      "results": null,
+      "problem": "Checking the weather app every morning and still getting caught without an umbrella is exactly the kind of low-stakes but genuinely annoying problem that automation is perfect for. The real friction isn't laziness — it's context switching: you're rushing out the door and the last thing on your mind is opening an app. A push notification that arrives before you leave, with no action required on your part, completely removes that friction. The course introduced API keys and environment variables at Day 35, so this was also the first project where credential management and secret isolation became a real concern rather than an afterthought.",
+      "solution": "The bot calls the OpenWeatherMap /forecast endpoint, requesting four 3-hour intervals to cover the next 12 hours. Any interval with a condition code below 700 — the OWM threshold for precipitation — triggers a \"bring an umbrella\" message; otherwise it sends a clear skies confirmation. The original build is a clean procedural script that loads credentials from a .env file via python-dotenv and sends a single Twilio message. The advanced build refactors this into a WeatherFetcher class (all OWM logic) and a Notifier class (all Twilio logic), with a config.py that centralises every constant including a condition_label() helper that maps raw OWM codes to colloquial descriptions. A GitHub Actions workflow runs the advanced build daily at 6:00 UTC, reading credentials from repository secrets so no .env file is needed in CI.",
+      "challenges": "The trickiest part wasn't the API calls — it was credential hygiene. One of the course exploration files had real API keys and phone numbers hardcoded directly in the source, which could have been committed to a public GitHub repo without a careful pre-staging scan. Catching that before any git add happened was the right call, and it shaped the template rule added afterwards: always grep for credential patterns before staging. The second challenge was the menu UX: without an input(\"Press Enter...\") pause after subprocess.run(), any error from the build was wiped off the screen the instant the menu loop cleared the console, making debugging nearly impossible. A one-line fix, but one that required experiencing the failure to notice.",
+      "results": "The bot now runs autonomously every morning and sends a WhatsApp message before the day starts — no manual action required. Building it solidified the core credential management pattern I'll use in every project that touches an external API: .env locally, .env.example committed, GitHub Secrets in CI, and load_dotenv() as a no-op bridge between the two. The OOP refactor made the separation of concerns genuinely obvious rather than theoretical — WeatherFetcher and Notifier can each be tested or swapped without touching anything else. If I rebuilt it, I'd add a proper logging layer instead of print() statements so the GitHub Actions run history is more useful for debugging.",
       "tags": [
+        "api-integration",
+        "authentication",
         "automation",
-        "api-integration"
+        "oop",
+        "python",
+        "rest-api",
+        "scripting",
+        "terminal",
+        "terminal-ux"
       ],
       "tech_stack": [
         "Python",
-        "Twilio API"
+        "Twilio",
+        "OpenWeatherMap API",
+        "python-dotenv",
+        "requests",
+        "GitHub Actions"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/sms-sender/card/sms.png",
-      "repo_url": null,
+      "repo_url": "https://github.com/xavier-oc-programming/rain-alert-sms",
       "live_url": null,
       "demo_url": null
     },
