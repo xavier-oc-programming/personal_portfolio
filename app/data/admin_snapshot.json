@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T07:15:38Z",
+  "snapshot_at": "2026-04-14T07:30:03Z",
   "projects": [
     {
       "id": 1,
@@ -459,7 +459,7 @@
     {
       "id": 11,
       "slug": "coffee-machine-python",
-      "title": "Coffee Machine -- Command-Line Simulator",
+      "title": "Coffee Machine — Command-Line Simulator",
       "primary_category": "software",
       "short_description": "A command-line coffee vending machine in Python. Two builds: the original procedural course exercise and a full OOP refactor with separated concerns, type hints, coin-based payments, ingredient refills, and persisted lifetime revenue.",
       "full_description": "I built this as Day 15 of my 100 Days of Code journey -- a fully functional coffee machine simulator that runs entirely in the terminal. The machine tracks ingredient resources, processes coin-by-coin payments, calculates change, and even refills ingredients on command. What makes it interesting is that the repo ships two builds side by side: the original procedural script from the course, and a complete OOP refactor I wrote right after to see how the same problem looks when concerns are properly separated.",
