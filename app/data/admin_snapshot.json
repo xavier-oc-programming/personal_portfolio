@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T12:59:37Z",
+  "snapshot_at": "2026-04-14T13:00:36Z",
   "projects": [
     {
       "id": 1,
@@ -1062,7 +1062,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "images/projects/cookie-clicker-bot/card/Screenshot_2026-04-14_at_15.00.06.png",
       "repo_url": "https://github.com/xavier-oc-programming/cookie-clicker-bot",
       "live_url": null,
       "demo_url": null
