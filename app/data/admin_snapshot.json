@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T07:08:36Z",
+  "snapshot_at": "2026-04-14T07:09:32Z",
   "projects": [
     {
       "id": 1,
@@ -736,28 +736,39 @@
       "slug": "iss-overhead-notifier",
       "title": "ISS Overhead Notifier",
       "primary_category": "software",
-      "short_description": "Tracks the ISS position and sends an email alert when it passes overhead at night.",
-      "full_description": "A Python automation script that polls the ISS location API and a sunrise/sunset API, then sends an email notification when the ISS is overhead and dark enough to see it. Demonstrates multi-API integration, conditional automation, and scheduled execution.",
+      "short_description": "Python bot that checks ISS position every 5 minutes via GitHub Actions and emails you when the station is overhead at night. Includes a course-original polling build and an OOP refactor with ISSClient and EmailNotifier classes.",
+      "full_description": "The ISS Overhead Notifier is a Python automation that emails you whenever the International Space Station is passing overhead and it's dark enough to see it. It pulls live ISS coordinates from the Open Notify API and cross-references them with real-time sunrise/sunset data to make sure the alert is actually useful. The project ships in two versions: the original course build as a reference point, and a refactored advanced build that runs serverlessly on GitHub Actions every five minutes — no Raspberry Pi, no VPS, nothing to maintain.",
       "featured": false,
       "featured_order": null,
       "date": "2025-11-17",
-      "problem": null,
-      "solution": null,
-      "challenges": null,
-      "results": null,
+      "problem": "ISS passes are short — typically two to six minutes — and happen at unpredictable times across the day and night. The only way to catch one is to either check a tracking site constantly or set up something that watches for you. Manual checking is tedious enough that most people just miss passes entirely, and the common suggestion of \"run it on a Raspberry Pi\" adds hardware, power, and maintenance overhead that most beginners don't want to deal with. There's also a real credential-safety problem with course exercises like this one: the original code stores email passwords as plain string literals, which can easily end up in a public git repo without the developer realising.",
+      "solution": "The advanced build is a single-run Python script that checks two public APIs — Open Notify for the ISS's current lat/lon, and Sunrise-Sunset for the current day/night window at the observer's location — then fires a Gmail SMTP notification if both conditions are met. Because it exits cleanly after one check, it plugs directly into a GitHub Actions cron workflow that triggers every five minutes for free on any public repository. The OOP refactor splits concerns into an ISSClient class (all API logic), an EmailNotifier class (all SMTP logic), and a thin orchestrator in main.py — each module is independently testable and replaceable without touching the others. Credentials are loaded from environment variables, either via a local .env file or GitHub Actions repository secrets, using the same os.environ calls in both contexts.",
+      "challenges": "The trickiest part of this project wasn't the APIs — it was credential safety. The original course file stored a real Gmail app password as a string literal, which made it into the initial git commit and got pushed to a public GitHub repo before the problem was caught. Fixing it properly meant doing a full clean rebuild from a temp directory rather than trying to rewrite history with rebase, since the template's recovery procedure explicitly prohibits that path. A second structural challenge was naming: having both an original/ folder on main and an original branch created constant git ambiguity — git checkout original would fail because it couldn't tell which one was meant. Renaming the branch to source resolved this permanently and made the intent clearer.",
+      "results": "The finished project demonstrates how to chain multiple public APIs together, handle credentials safely across both local and CI environments, and design modules with clear separation of concerns. Migrating from a while True polling loop to a GitHub Actions cron job turned out to be the more interesting architectural lesson — it reframes the script as a stateless function rather than a long-running process, which is both simpler and more robust. If I were extending it further, I'd add a run log to the Actions summary so you can see a timeline of when the ISS was overhead, and possibly filter notifications to only send once per pass rather than potentially emailing multiple times in the same five-minute window.",
       "tags": [
+        "api-integration",
         "automation",
-        "api-integration"
+        "deployment",
+        "oop",
+        "python",
+        "rest-api",
+        "scripting",
+        "terminal-ux"
       ],
       "tech_stack": [
         "Python",
-        "Requests",
-        "smtplib"
+        "requests",
+        "smtplib",
+        "python-dotenv",
+        "GitHub Actions",
+        "Open Notify ISS API",
+        "Sunrise-Sunset API",
+        "Gmail SMTP"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/iss-overhead-notifier/card/iss2.gif",
-      "repo_url": null,
+      "repo_url": "https://github.com/xavier-oc-programming/iss-overhead-notifier",
       "live_url": null,
       "demo_url": null
     },
