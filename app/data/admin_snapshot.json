@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T18:19:45Z",
+  "snapshot_at": "2026-04-14T18:20:29Z",
   "projects": [
     {
       "id": 1,
@@ -1544,33 +1544,37 @@
     },
     {
       "id": 38,
-      "slug": "us-states-game",
-      "title": "US States Game",
+      "slug": "us-states-game-tkinter",
+      "title": "U.S. States Geography Quiz",
       "primary_category": "software",
-      "short_description": "Interactive geography game using Pandas and Turtle — guess all 50 US states and track which ones you missed.",
-      "full_description": "An interactive geography quiz built with Python's Turtle module and Pandas. The player names US states one by one, which are plotted on a map as they're guessed correctly. At the end, a CSV of missed states is generated for further study. Combines data lookup with GUI interaction.",
+      "short_description": "Geography quiz where you name all 50 U.S. states to fill a blank map. Ships as two builds: a turtle original and a tkinter rewrite with callback injection, colour-coded feedback, live score, and a Play Again overlay.",
+      "full_description": "This is a U.S. States Geography Quiz where the goal is simple: name all 50 states and watch them appear on a blank map at their correct geographic positions. It ships as two builds in one repo — the original turtle script from the course exercise, preserved as-is, and an advanced tkinter rewrite that separates quiz logic, UI, and orchestration into distinct modules. The advanced version adds inline input, colour-coded feedback, a live score counter, and a Play Again flow — all without ever closing the main window. It's a hands-on demonstration of how to take a working procedural script and refactor it into a clean, callback-driven architecture.",
       "featured": false,
       "featured_order": null,
-      "date": "2025-10-27",
-      "problem": null,
-      "solution": null,
-      "challenges": null,
-      "results": null,
+      "date": "2026-04-11",
+      "problem": "The course exercise produces a single flat turtle script that works perfectly well as a learning exercise, but breaks the moment you move it to a different folder — all the file paths are hardcoded relative to wherever you happen to run it from. Beyond that, once you finish a round there's no way to play again without quitting and relaunching, and every guess interrupts the flow by popping up a modal dialog. As a study tool for U.S. geography, the vanilla version is a bit too awkward to actually want to sit down and use repeatedly. The original code also mixes data loading, game logic, and display into one flat script, which makes it hard to extend or understand once you step away from it.",
+      "solution": "The project ships two builds side by side so the original course work is always available as a reference point. The advanced rewrite splits everything into three modules: `quiz.py` handles all guessing logic with zero tkinter imports, `display.py` owns every widget and the canvas, and `main.py` wires them together by injecting callbacks at construction time. State coordinate data from the CSV drives both builds — the original uses turtle's native coordinate system, while the advanced build transforms those coordinates to tkinter canvas space at render time. A `config.py` centralises every constant (canvas dimensions, colours, fonts, timing) so there's a single place to tune the app's behaviour.",
+      "challenges": "The trickiest part was bridging two incompatible coordinate systems. The CSV stores turtle coordinates with (0, 0) at the screen centre and y increasing upward, while tkinter's Canvas has (0, 0) at the top-left with y increasing downward. Getting state labels to land on the correct spot required working out the transform (`canvas_x = turtle_x + width // 2`, `canvas_y = height // 2 - turtle_y`) and spot-checking it against geographically obvious states like Alaska and Washington. The other challenge was making Play Again feel seamless — reusing the same window means clearing only the canvas text items without touching the background image, which required tracking every `create_text` item ID and deleting them individually on reset. Making the callback closures work correctly also required the one-element list pattern (`game_active: list[bool] = [True]`) so inner functions could mutate shared state without `nonlocal`.",
+      "results": "The project shows how to decompose a procedural script into proper OOP layers without over-engineering it — three focused modules, each with a clear responsibility and no circular imports. The callback injection pattern means `Display` is completely decoupled from `Quiz`: you could swap the tkinter front-end for a web interface without touching the guessing logic at all. Working through the coordinate transform was a good reminder that \"the data is already there\" doesn't mean it's in the right form — a two-line conversion unlocked the whole advanced build. If I were to extend this further, I'd add a timed mode and a high-score leaderboard persisted to a local JSON file.",
       "tags": [
-        "gui",
         "game",
-        "data-analysis"
+        "gui",
+        "python",
+        "oop",
+        "beginner",
+        "scope"
       ],
       "tech_stack": [
         "Python",
-        "Pandas",
-        "Turtle",
-        "CSV"
+        "tkinter",
+        "turtle",
+        "pandas",
+        "pathlib"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/us-states-game/card/states2.jpg",
-      "repo_url": null,
+      "repo_url": "https://github.com/xavier-oc-programming/us-states-game-tkinter",
       "live_url": null,
       "demo_url": null
     },
