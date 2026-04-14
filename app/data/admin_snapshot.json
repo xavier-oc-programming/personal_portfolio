@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T08:12:38Z",
+  "snapshot_at": "2026-04-14T10:14:27Z",
   "projects": [
     {
       "id": 1,
@@ -95,8 +95,8 @@
       "primary_category": "software",
       "short_description": "Terminal Blackjack in Python — two versions side by side. Procedural course solution plus a full OOP rebuild with animated ASCII card UI, chip system, split, double down, insurance, and difficulty modes.",
       "full_description": "A Day 11 project from the 100 Days of Code bootcamp, built in two versions to show architectural growth. The original follows the course spec closely in ~75 lines of procedural Python. The advanced version is a complete rebuild with a four-file modular architecture, a 4-deck shoe, a chip-based betting system, casino-style side bets (split, double down, insurance), three difficulty modes, an animated terminal UI with ASCII card art, and a session statistics screen. Both versions launch from a shared root menu and share a single ASCII logo asset.",
-      "featured": false,
-      "featured_order": null,
+      "featured": true,
+      "featured_order": 12,
       "date": "2026-04-13",
       "problem": "The Day 11 course brief produces a minimal working game — cards dealt, hit or stand, result printed — but nothing that feels like a real product or demonstrates meaningful Python depth. There is no sense of stakes without chips, no replay incentive, no visual feedback beyond raw score printouts, and no architectural separation between game logic and output. A single flat file with hardcoded print statements is not a portfolio piece, and it doesn't exercise the Python features introduced across the first eleven days of the course in any cohesive way.",
       "solution": "Two versions were built and shipped side by side so the contrast is visible. The original implements the course spec as written. The advanced version enforces a strict four-file separation: config.py holds every constant, blackjack.py contains pure game logic with zero I/O using dataclasses and enums, display.py owns all terminal rendering and animations, and main.py orchestrates the round loop. Chip accounting uses a pre-deduction model — the bet is removed upfront and chip_delta returns what to add back — which keeps split-hand accounting clean. A finite 4-deck shoe with automatic reshuffle replaces the course's infinite random sampling, more closely modelling real casino play.",
