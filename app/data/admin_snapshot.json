@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T07:30:51Z",
+  "snapshot_at": "2026-04-14T07:31:03Z",
   "projects": [
     {
       "id": 1,
@@ -491,7 +491,9 @@
         "images/projects/coffee-machine-python/screenshots/Screenshot_2026-04-14_at_09.27.45.png",
         "images/projects/coffee-machine-python/screenshots/Screenshot_2026-04-14_at_09.28.28.png"
       ],
-      "videos": [],
+      "videos": [
+        "videos/projects/coffee-machine-python/Screen_Recording_2026-04-14_at_09.25.29.mov"
+      ],
       "card_image": "images/projects/coffee-machine/card/cmachine.webp",
       "repo_url": "https://github.com/xavier-oc-programming/coffee-machine-python",
       "live_url": null,
