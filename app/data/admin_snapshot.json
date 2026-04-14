@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T10:34:36Z",
+  "snapshot_at": "2026-04-14T10:34:42Z",
   "projects": [
     {
       "id": 1,
@@ -654,7 +654,11 @@
         "pathlib",
         "pandas"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/flash-card-tkinter/screenshots/Screenshot_2026-04-14_at_12.33.47.png",
+        "images/projects/flash-card-tkinter/screenshots/Screenshot_2026-04-14_at_12.33.53.png",
+        "images/projects/flash-card-tkinter/screenshots/Screenshot_2026-04-14_at_12.34.12.png"
+      ],
       "videos": [
         "videos/projects/flash-card-tkinter/Screen_Recording_2026-04-14_at_12.32.14.mov"
       ],
