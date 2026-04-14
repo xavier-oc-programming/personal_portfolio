@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T07:10:36Z",
+  "snapshot_at": "2026-04-14T07:12:07Z",
   "projects": [
     {
       "id": 1,
@@ -817,30 +817,36 @@
       "slug": "stock-trading-news-alert",
       "title": "Stock Trading News Alert",
       "primary_category": "software",
-      "short_description": "Monitors stock price movements and sends SMS alerts with relevant news headlines when significant changes occur.",
-      "full_description": "An automation pipeline that checks daily stock price changes via the Alpha Vantage API, fetches relevant news headlines from the News API when a significant movement is detected, and delivers a formatted SMS alert via Twilio. Demonstrates multi-API orchestration and threshold-based alerting.",
+      "short_description": "Monitors a stock's daily price change and fires WhatsApp alerts with the top 3 news headlines via Twilio whenever the move exceeds a configurable threshold.",
+      "full_description": "Stock Trading News Alert watches a ticker (default: TSLA) every morning, fetches the two most recent closing prices from Alpha Vantage, and calculates the percentage change overnight. If the move clears a threshold, it pulls the top three related headlines from NewsAPI and fires one WhatsApp message per article through Twilio. The advanced build refactors the course script into three single-responsibility classes — StockClient, NewsClient, and SmsSender — wired together by a clean orchestrator, with every constant centralised in config.py and a GitHub Actions workflow running the whole thing on a weekday schedule automatically.",
       "featured": true,
       "featured_order": 11,
       "date": "2025-11-26",
-      "problem": "Tracking stock price movements manually is slow and easy to miss — by the time you notice a significant shift, the relevant news cycle has already moved on.",
-      "solution": "Built an automated pipeline that polls the Alpha Vantage API daily for price changes, fetches the top three relevant news headlines from the News API when a movement exceeds 5%, and delivers a formatted SMS alert via Twilio with the stock ticker, change percentage, and headlines.",
-      "challenges": "Coordinating three external APIs with different authentication patterns and response formats. Structuring the conditional logic to avoid false positives and noisy alerts required careful threshold tuning. Managing credentials securely through environment variables.",
-      "results": "Delivers relevant SMS alerts with news context whenever the monitored stock moves significantly. Demonstrates multi-service API orchestration in a practical automation context — a pattern directly applicable to production alerting pipelines.",
+      "problem": "Keeping up with stock movements manually means either staring at a ticker all day or missing a big move entirely. Most retail investors want a simple \"something happened, here's why\" nudge — not a dashboard to babysit. The course exercise surfaced an extra wrinkle: Twilio trial accounts restrict outbound SMS to a verified number tied to that specific account, so the alert would silently fail for anyone who hadn't pre-registered their number. There also wasn't a guard against hammering the daily message cap, which on a trial account sits at around nine SMS — easy to blow through if you're testing or if the threshold is set to zero.",
+      "solution": "The original build chains three REST APIs in a single script: Alpha Vantage for OHLCV data, NewsAPI for recent headlines, and Twilio for delivery. The advanced build splits this into three classes — StockClient handles the Alpha Vantage fetch and returns a (perc_diff, abs_diff) tuple; NewsClient queries NewsAPI and returns a list of article dicts; SmsSender wraps Twilio, enforces a local daily quota via a small JSON file in advanced/data/, and exposes a build_body() classmethod for formatting. The channel switch (SMS vs WhatsApp) lives in config.py as a single CHANNEL constant — main.py reads it and picks the right environment variables and character limit, so flipping between delivery modes is a one-line change. A GitHub Actions workflow runs the script on weekdays at 06:00 UTC with all credentials loaded from repository secrets.",
+      "challenges": "The trickiest part was the Twilio trial account restriction — the SMS from-number worked in the course demo but threw a 21660 \"number mismatch\" error on a different account because trial accounts only allow sending from their own verified number. Switching to the WhatsApp sandbox (whatsapp:+14155238886) solved it cleanly since that number is shared across all Twilio trial accounts. Getting the character limit right for WhatsApp vs SMS also needed care: SMS has a hard UCS-2 segment limit of around 70 characters, but WhatsApp has a 4096-character ceiling, so the same clamp_ucs2() helper needed a configurable limit rather than a hardcoded 65. The local quota guard had a subtle path bug too — QUOTA_FILE was originally set with Path(\".sms_quota.json\"), which resolves relative to the working directory at runtime; when launched from menu.py with a different cwd, the file landed in the wrong place. Anchoring it to Path(__file__).parent fixed it permanently.",
+      "results": "The project demonstrates how to wire multiple REST APIs together in a clean, testable architecture — each module owns exactly one concern and could be swapped out without touching the others. It also shows how to handle real-world API friction: trial account restrictions, rate-limit responses, and daily quota management. The GitHub Actions workflow means the alert actually runs automatically every weekday without any manual intervention, which turns a course exercise into a genuinely useful tool. If I were extending it, I'd add a portfolio of tickers (not just TSLA), persist the last-seen percentage change to avoid re-alerting on the same move, and look at NewsAPI's paid tier for same-day articles — the free tier has a 24-hour delay that blunts the relevance of the headlines.",
       "tags": [
-        "automation",
         "api-integration",
-        "data-pipeline"
+        "automation",
+        "oop",
+        "python",
+        "rest-api",
+        "scripting",
+        "terminal-ux"
       ],
       "tech_stack": [
         "Python",
+        "Twilio",
         "Alpha Vantage API",
-        "News API",
-        "Twilio API"
+        "NewsAPI",
+        "python-dotenv",
+        "GitHub Actions"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/stock-trading-news-alert/card/stock.jpeg",
-      "repo_url": null,
+      "repo_url": "https://github.com/xavier-oc-programming/stock-trading-news-alert",
       "live_url": null,
       "demo_url": null
     },
