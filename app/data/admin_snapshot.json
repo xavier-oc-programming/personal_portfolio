@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T13:24:56Z",
+  "snapshot_at": "2026-04-14T13:25:15Z",
   "projects": [
     {
       "id": 1,
@@ -742,7 +742,13 @@
         "sys",
         "subprocess"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/mail-merge-python/screenshots/Screenshot_2026-04-14_at_15.21.47.png",
+        "images/projects/mail-merge-python/screenshots/Screenshot_2026-04-14_at_15.22.20.png",
+        "images/projects/mail-merge-python/screenshots/Screenshot_2026-04-14_at_15.22.30.png",
+        "images/projects/mail-merge-python/screenshots/Screenshot_2026-04-14_at_15.22.43.png",
+        "images/projects/mail-merge-python/screenshots/Screenshot_2026-04-14_at_15.23.02.png"
+      ],
       "videos": [
         "videos/projects/mail-merge-python/Screen_Recording_2026-04-14_at_15.23.36.mov"
       ],
