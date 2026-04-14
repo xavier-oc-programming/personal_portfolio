@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T18:15:56Z",
+  "snapshot_at": "2026-04-14T18:18:34Z",
   "projects": [
     {
       "id": 1,
@@ -1576,31 +1576,33 @@
     },
     {
       "id": 39,
-      "slug": "college-major-salary-analysis",
-      "title": "College Major vs Salary Analysis",
+      "slug": "college-salary-data-analysis",
+      "title": "College Major vs Your Salary—Data Exploration with Pandas",
       "primary_category": "data",
-      "short_description": "Explores the relationship between college major and starting and mid-career salary using Pandas and visualisation.",
-      "full_description": "A data analysis project that examines salary outcomes by college major using a real dataset. Uses Pandas for sorting, filtering, and grouping, and Matplotlib for visualisation. Surfaces which majors lead to the highest earning potential at different career stages.",
+      "short_description": "Explores salary outcomes for 51 undergraduate majors using pandas, cleaning a WSJ/PayScale dataset, ranking majors by earning risk and potential, and comparing STEM, Business, and HASS degree categories through group aggregation.",
+      "full_description": "I built this as a hands-on exploration of pandas using a Wall Street Journal / PayScale dataset covering 51 undergraduate majors and their salary outcomes. The analysis spans the full EDA workflow: loading and cleaning the data, pinpointing which majors sit at the salary extremes, computing a salary-risk metric from percentile spread, and ranking majors by earning potential versus stability. It's structured with separate theory and practice notebooks so lesson notes and my own working code stay cleanly separated.",
       "featured": false,
       "featured_order": null,
-      "date": "2026-02-22",
-      "problem": null,
-      "solution": null,
-      "challenges": null,
-      "results": null,
+      "date": "2026-04-13",
+      "problem": "When you're thinking about what to study, salary data exists — but it's buried in flat files with no way to quickly answer the questions that actually matter: which majors pay off fastest, which are the safest long-term bets, and how do broad degree categories compare? Raw CSVs don't surface those patterns on their own. Without a way to sort, filter, and aggregate the data programmatically, you end up eyeballing rows manually and missing the bigger picture entirely. This project treats that gap as an EDA problem: the real friction is turning a flat table into meaningful salary rankings and group comparisons.",
+      "solution": "I loaded the dataset into a pandas DataFrame and worked through a structured pipeline: inspection to understand the shape and catch a trailing NaN footer row, cleaning with .dropna(), then index-based lookups using .idxmax() and .idxmin() to surface salary extremes by major. From there I engineered a Spread column — the difference between 90th and 10th percentile mid-career salaries — as a numerical proxy for earnings risk, then used .sort_values() to rank majors across four lenses: lowest risk, highest potential, greatest spread, and high-risk/high-reward. The project is split into annotated theory notebooks and hands-on practice notebooks, keeping lesson notes and working code cleanly separated in a flat, navigable structure.",
+      "challenges": "The trickiest part was understanding that .idxmax() returns a row label, not a value — so pairing it with .loc[idx, col] to actually retrieve the major name required thinking carefully about the distinction between index position and column value. Another subtle issue was the dataset's trailing NaN footer row: it doesn't throw an error on load, it just silently skews any aggregation that follows. Spotting it with .tail() and .isna().sum() before cleaning was the key diagnostic step. Getting the Spread column inserted at a specific position using .insert() rather than just appending it was also a small but satisfying detail — it keeps the DataFrame readable for any downstream analysis.",
+      "results": "This project gave me solid hands-on experience with the core pandas EDA toolkit: inspection, cleaning, indexing, feature engineering, and sorting, all applied to a real dataset with genuinely interesting questions behind it. I now feel comfortable moving between row-level lookups and column-level aggregations, and I understand how to treat derived columns like Spread as first-class features rather than afterthoughts. If I were to extend this, I'd add matplotlib visualisations — a scatter of starting versus mid-career salary and a grouped bar chart comparing STEM, Business, and HASS averages — to make the insights immediately visible rather than just readable from sorted tables.",
       "tags": [
         "data-analysis",
-        "visualisation"
+        "python",
+        "beginner"
       ],
       "tech_stack": [
         "Python",
-        "Pandas",
-        "Matplotlib"
+        "pandas",
+        "Jupyter Notebook",
+        "CSV"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/college-major-salary-analysis/card/salary.jpg",
-      "repo_url": null,
+      "repo_url": "https://github.com/xavier-oc-programming/college-salary-data-analysis",
       "live_url": null,
       "demo_url": null
     },
