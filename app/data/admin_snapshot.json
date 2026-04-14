@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T07:05:15Z",
+  "snapshot_at": "2026-04-14T07:05:56Z",
   "projects": [
     {
       "id": 1,
@@ -592,32 +592,36 @@
     },
     {
       "id": 15,
-      "slug": "flash-card-app",
+      "slug": "flash-card-tkinter",
       "title": "Flash Card App",
       "primary_category": "software",
-      "short_description": "Language learning flashcard app that tracks known and unknown words and adjusts the deck accordingly.",
-      "full_description": "A Tkinter flashcard application for language learning that flips cards to reveal translations and removes known words from the active deck. Progress is saved to CSV so the session picks up where the user left off.",
+      "short_description": "French-to-English flashcard app built with tkinter. Cards auto-flip after 3 seconds, progress persists across sessions, and an OOP advanced build separates logic from UI using injected callbacks and stdlib csv.",
+      "full_description": "This is a French-to-English flashcard app built with Python and tkinter as part of Day 31 of 100 Days of Code. It displays random French words on a card, auto-flips to the English translation after 3 seconds, and tracks which words you've already learned between sessions. The repo ships two builds: a verbatim course solution and a refactored advanced version with clean OOP architecture, zero magic numbers, and no third-party dependencies.",
       "featured": false,
       "featured_order": null,
-      "date": "2025-11-12",
-      "problem": null,
-      "solution": null,
-      "challenges": null,
-      "results": null,
+      "date": "2026-04-06",
+      "problem": "Learning vocabulary from a flat list is tedious — there's no way to skip words you already know, and every session starts from scratch. A flashcard app solves the \"what do I study next?\" problem by randomly surfacing words from a shrinking remaining deck. Without persistence, you'd restart from the full 100-word list every time, making it impossible to feel real progress. The auto-flip timer also removes the temptation to peek immediately — you have to attempt the recall first before the answer appears.",
+      "solution": "The app loads a CSV of French/English word pairs and displays them one at a time on a tkinter Canvas with a card graphic. A root.after() timer flips the card automatically after 3 seconds; clicking the card cancels the timer and flips it manually. Marking a word as known removes it from the in-memory list and immediately persists the remaining words to a separate CSV file, which is loaded on the next launch so known words are permanently skipped. The advanced build separates all word-list logic into a FlashCard class and all UI into a Display class, with main.py wiring them together via injected callbacks — making the logic fully testable without a display and the UI swappable without touching business logic.",
+      "challenges": "The trickiest part was managing the auto-flip timer correctly. root.after() schedules a callback but doesn't prevent stale callbacks from firing if the user acts before the timer expires — without cancellation, a manual card click would flip the card and then the timer would flip it straight back. The fix was to always call after_cancel() on any pending timer ID before scheduling a new one, and to clear the stored ID inside the callback itself so the cancel check stays accurate. A second edge case appeared with an empty words_to_learn.csv: if the file existed but had no rows, the app loaded an empty deck and jumped straight to \"All done!\" The fix was to check the loaded list length and fall back to the full original deck if it was empty.",
+      "results": "This project demonstrates clean separation of concerns in a tkinter app — something the course doesn't cover but which makes the code dramatically easier to reason about and extend. Replacing pandas with the stdlib csv module in the advanced build cut startup time noticeably and removed a third-party dependency entirely. I learned that even small GUI apps benefit a lot from keeping logic and display in separate classes, especially once timer state and edge cases start piling up. The one thing I'd add next is a visible counter showing how many words remain in the deck — right now there's no progress indicator, which makes the session feel a bit open-ended.",
       "tags": [
+        "python",
         "gui",
-        "productivity"
+        "oop",
+        "productivity",
+        "beginner"
       ],
       "tech_stack": [
         "Python",
-        "Tkinter",
-        "Pandas",
-        "CSV"
+        "tkinter",
+        "csv",
+        "pathlib",
+        "pandas"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/flash-card-app/card/flashcard.png",
-      "repo_url": null,
+      "repo_url": "https://github.com/xavier-oc-programming/flash-card-tkinter",
       "live_url": null,
       "demo_url": null
     },
