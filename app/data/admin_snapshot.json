@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T18:14:22Z",
+  "snapshot_at": "2026-04-14T18:15:56Z",
   "projects": [
     {
       "id": 1,
@@ -1506,32 +1506,39 @@
     },
     {
       "id": 37,
-      "slug": "rest-api",
-      "title": "REST API",
+      "slug": "cafe-wifi-api",
+      "title": "REST API — Cafe & Wifi",
       "primary_category": "web",
-      "short_description": "A fully documented RESTful API with GET, POST, PATCH, and DELETE endpoints built and tested from scratch.",
-      "full_description": "A Flask REST API with complete CRUD coverage — GET, POST, PATCH, and DELETE endpoints — backed by SQLAlchemy and tested with Postman. Demonstrates RESTful design principles, HTTP status codes, JSON response formatting, and API documentation practice.",
+      "short_description": "RESTful Flask API for discovering and managing wifi-friendly cafes. Supports full CRUD via GET, POST, PUT, PATCH, and DELETE endpoints backed by SQLite and documented with Postman.",
+      "full_description": "Cafe & Wifi API is a fully functional RESTful backend built with Flask and SQLAlchemy that lets clients discover, add, update, and remove cafes with wifi. It exposes nine endpoints covering every standard HTTP method, with responses serialised to JSON and a simple home page linking out to the published Postman documentation. Built as a Day 66 project in the 100 Days of Code bootcamp, it's a clean demonstration of REST principles, SQLAlchemy 2.0 models, and API-key-protected routes.",
       "featured": false,
       "featured_order": null,
-      "date": "2026-02-10",
-      "problem": null,
-      "solution": null,
-      "challenges": null,
-      "results": null,
+      "date": "2026-04-11",
+      "problem": "Most beginners building their first API run into the same wall: they know how to return a string from a Flask route, but they don't know how to model data, serialise it to JSON, or design endpoints that behave the way clients actually expect. GET, POST, PATCH, PUT, and DELETE are easy to define individually, but understanding when to use each — and what a well-formed response looks like for each one — takes a concrete working example. There's also the practical question of how to protect a destructive endpoint (like DELETE) without a full authentication system. I wanted a project that answered all of these questions in one place.",
+      "solution": "I built a Flask app backed by a SQLite database managed through SQLAlchemy 2.0's typed declarative model. Every cafe row is a `Cafe` model instance with a `to_dict()` method that serialises it straight into a `jsonify()`-friendly dict — no manual column mapping needed. The `/search` endpoint builds queries dynamically from whichever query parameters the client sends, so a single route handles filtering by location, amenities, seats, or price in any combination. For the DELETE endpoint I added a simple API-key check via query parameter, which keeps things testable in Postman without needing sessions or JWT. A `to_bool()` helper normalises Postman's form-encoded strings (`\"1\"`, `\"true\"`, `\"yes\"`) and native JSON booleans into Python bools, so both content types work transparently on every write endpoint.",
+      "challenges": "The trickiest part was making PUT and PATCH behave correctly and distinctly. A PATCH that accidentally overwrites fields the client didn't send, or a PUT that silently ignores missing fields, would be subtly broken in a way that's hard to catch without careful testing. I solved it by having PUT enumerate every required field and return a 400 with a list of which ones are missing, while PATCH only touches the one column it's responsible for. The other tricky bit was boolean handling: Postman sends `x-www-form-urlencoded` bodies where booleans arrive as strings like `\"1\"` or `\"true\"`, but a JSON body sends real booleans. The `to_bool()` helper and `get_incoming_data()` abstraction let every route stay clean while supporting both content types without branching.",
+      "results": "The project gave me a solid, hands-on understanding of how REST APIs are actually structured — not just the happy path, but error responses, partial updates, and input normalisation. I can now design and document an API in Postman, protect an endpoint with a token, and serialise a SQLAlchemy model to JSON cleanly. If I were extending it I'd swap the query-parameter API key for an `Authorization` header, add pagination to `/all`, and seed the database from a fixture file so new clones start with data. It's a compact project but it covers a surprisingly wide slice of real backend work.",
       "tags": [
+        "python",
+        "rest-api",
+        "crud",
         "web-app",
-        "rest-api"
+        "oop"
       ],
       "tech_stack": [
         "Python",
         "Flask",
+        "Flask-SQLAlchemy",
         "SQLAlchemy",
+        "SQLite",
+        "Jinja2",
+        "python-dotenv",
         "Postman"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/rest-api/card/rest.png",
-      "repo_url": null,
+      "repo_url": "https://github.com/xavier-oc-programming/cafe-wifi-api",
       "live_url": null,
       "demo_url": null
     },
