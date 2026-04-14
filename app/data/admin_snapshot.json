@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T10:15:09Z",
+  "snapshot_at": "2026-04-14T10:34:36Z",
   "projects": [
     {
       "id": 1,
@@ -655,7 +655,9 @@
         "pandas"
       ],
       "screenshots": [],
-      "videos": [],
+      "videos": [
+        "videos/projects/flash-card-tkinter/Screen_Recording_2026-04-14_at_12.32.14.mov"
+      ],
       "card_image": "images/projects/flash-card-app/card/flashcard.png",
       "repo_url": "https://github.com/xavier-oc-programming/flash-card-tkinter",
       "live_url": null,
