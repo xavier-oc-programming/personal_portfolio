@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T10:45:16Z",
+  "snapshot_at": "2026-04-14T10:45:45Z",
   "projects": [
     {
       "id": 1,
@@ -697,7 +697,6 @@
         "html"
       ],
       "screenshots": [
-        "images/projects/gui-quiz-app/screenshots/Screenshot_2026-04-14_at_12.33.47.png",
         "images/projects/gui-quiz-app/screenshots/Screenshot_2026-04-14_at_12.33.53.png",
         "images/projects/gui-quiz-app/screenshots/Screenshot_2026-04-14_at_12.34.12.png"
       ],
