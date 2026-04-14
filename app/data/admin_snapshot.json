@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T18:18:34Z",
+  "snapshot_at": "2026-04-14T18:19:45Z",
   "projects": [
     {
       "id": 1,
@@ -1608,31 +1608,36 @@
     },
     {
       "id": 40,
-      "slug": "programming-languages-visualisation",
-      "title": "Programming Languages Visualisation",
+      "slug": "programming-language-trends-analysis",
+      "title": "Programming Language Trends Analysis",
       "primary_category": "data",
-      "short_description": "Visualises the rise and fall of programming language popularity over time using historical Stack Overflow data.",
-      "full_description": "A time series visualisation project using historical Stack Overflow survey data to track the relative popularity of programming languages over the years. Applies Pandas for reshaping and aggregation, and Matplotlib for multi-line trend charts.",
+      "short_description": "Analyses Stack Overflow monthly post counts to track how 14 programming languages rose and fell in popularity from 2008 onwards — using pandas pivots, datetime parsing, and Matplotlib multi-line charts with rolling averages.",
+      "full_description": "This project explores how the popularity of major programming languages has shifted over more than a decade using real Stack Overflow data. The dataset contains monthly post counts for 14 languages, sourced directly from the Stack Exchange Data Explorer. After cleaning and reshaping the data with pandas, trends are visualised as multi-line time-series charts — both raw and smoothed with a 6-month rolling average. It's a satisfying project because the data genuinely reveals something: Python's rise is dramatic, and some once-dominant languages are clearly fading.",
       "featured": false,
       "featured_order": null,
-      "date": "2026-02-24",
-      "problem": null,
-      "solution": null,
-      "challenges": null,
-      "results": null,
+      "date": "2026-01-10",
+      "problem": "Stack Overflow post volume per language is a surprisingly good proxy for developer interest — but the raw data arrives in long format, one row per language per month, which makes it nearly impossible to compare trajectories across languages at a glance. Without reshaping it into a wide format and plotting all languages on the same chart, spotting which language is rising and which is falling requires a lot of mental gymnastics. The raw monthly data is also noisy — spikes from events or releases can obscure the real long-term trend, making it hard to say anything meaningful about direction. And not all languages have been around since 2008, so newer entries like Go and Swift appear mid-dataset, leaving gaps that need careful handling before any chart can be drawn cleanly.",
+      "solution": "The pipeline starts by loading the CSV and renaming the columns for clarity, then parses the date strings into proper datetime objects so pandas can treat them as a time-series index. A groupby aggregation ranks all-time totals by language before the data is pivoted from long to wide format — one column per language, one row per month. Missing values (months before a language existed) are filled with zero. Two charts are then produced: a raw multi-line chart showing all 14 languages at once, and a smoothed version using a 6-month rolling mean that cuts through the noise and makes the long-term trajectories readable. The entire pipeline lives in a single notebook, making it easy to follow from raw CSV to final chart.",
+      "challenges": "The trickiest part was handling the pivot correctly. The raw CSV comes with messy column names — the date column is called \"m\" and the count column has no meaningful header — so renaming had to happen before the pivot could work cleanly. The NaN problem was also subtle: languages like Go and Swift have no rows for months before they existed, so after pivoting those months become NaN rather than zero. Plotting NaN values silently drops those points from the chart, which looked fine on the surface but was technically wrong. Filling with zero made the intent explicit. Choosing the right rolling window was also a genuine judgement call — too small and the noise remains, too large and short-term events disappear entirely.",
+      "results": "The analysis clearly shows JavaScript and Python dominating, with Python's growth trajectory being the most dramatic of any language in the dataset. The project gave me a solid handle on the pivot pattern — long to wide — which comes up constantly in time-series work, and made me think carefully about how smoothing decisions change what story the data tells. It also showed me that raw post counts are affected by Stack Overflow's overall growth over time, so if I revisited this I'd normalise by total monthly posts to get a cleaner picture of relative popularity. Altogether it's a clean end-to-end demonstration of the core data analysis workflow: ingest, clean, reshape, aggregate, visualise.",
       "tags": [
+        "python",
         "data-analysis",
-        "visualisation"
+        "data-pipeline",
+        "visualisation",
+        "beginner"
       ],
       "tech_stack": [
         "Python",
-        "Pandas",
-        "Matplotlib"
+        "pandas",
+        "NumPy",
+        "Matplotlib",
+        "Jupyter Notebook"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/programming-languages-visualisation/card/languages2.jpg",
-      "repo_url": null,
+      "repo_url": "https://github.com/xavier-oc-programming/programming-language-trends-analysis",
       "live_url": null,
       "demo_url": null
     },
