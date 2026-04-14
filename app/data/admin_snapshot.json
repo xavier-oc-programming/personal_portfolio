@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T07:12:07Z",
+  "snapshot_at": "2026-04-14T07:13:02Z",
   "projects": [
     {
       "id": 1,
@@ -852,31 +852,38 @@
     },
     {
       "id": 22,
-      "slug": "habit-tracker",
-      "title": "Habit Tracker",
+      "slug": "habit-tracker-pixela",
+      "title": "Habit Tracker — Pixela",
       "primary_category": "software",
-      "short_description": "Logs daily habits via API POST requests and builds a visual pixel graph of completion over time.",
-      "full_description": "A Python automation tool that logs daily habit completion to the Pixela API using POST requests, building a visual contribution-graph of streaks over time. Covers REST API interaction, authentication headers, and structured HTTP request design.",
+      "short_description": "CLI habit tracker that logs daily activity as graph pixels via the Pixela REST API. Interactive menu, OOP design with a PixelaClient class, and full CRUD support — POST, PUT, and DELETE — with input validation and graceful error handling.",
+      "full_description": "A two-build CLI habit tracker built around the Pixela pixel graph API. The original build walks through all six API operations sequentially, while the advanced build wraps everything in a PixelaClient class with an interactive menu, input validation, and graceful error handling. Built as Day 37 of 100 Days of Code, it covers REST API fundamentals — custom headers, JSON payloads, and HTTP verbs beyond GET.",
       "featured": false,
       "featured_order": null,
       "date": "2025-11-29",
-      "problem": null,
-      "solution": null,
-      "challenges": null,
-      "results": null,
+      "problem": "Tracking habits manually is inconsistent — without a system, it's easy to forget to log or lose historical data. Pixela solves this with a minimalist pixel graph, but it's API-only: there's no app or UI, so you need code to interact with it. The course exercise only shows how to make a single hardcoded POST request, which means re-editing the script every time you want to log something different. And if you run it more than once, it crashes on the create-user and create-graph steps because they've already been done — making it impractical to use as a real daily tool.",
+      "solution": "I built two builds on top of the course exercise. The original stays close to the course material but adds a quantity prompt and handles 409 responses gracefully, so it can be re-run safely every day. The advanced build refactors everything into a PixelaClient class that wraps all API calls in a shared requests.Session, attaching the X-USER-TOKEN header automatically to every request. An interactive menu loop lets you log today's activity, update a past entry, delete one, or view the graph URL — all without touching the code. Credentials are loaded from a .env file, and both username and token are validated against Pixela's own rules before any network request is made.",
+      "challenges": "The trickiest part was making the setup steps idempotent. Pixela returns HTTP 409 when a user or graph already exists, which raise_for_status() treats as a failure — so every run after the first would print scary-looking errors for steps that had actually succeeded. The naive fix would be to wrap everything in a blanket try/except, but that would also swallow real errors like auth failures or network timeouts. The solution was to intercept 409 specifically: check the status code before calling raise_for_status(), print a silent skip message, and let all other non-2xx codes fall through to the error handler as normal. Clean re-runs without hiding legitimate failures.",
+      "results": "This project gave me a solid grounding in REST API design beyond just GET requests — custom headers, JSON request bodies, and the semantic difference between POST, PUT, and DELETE. The OOP refactor made me think carefully about separation of concerns: what belongs in the client versus the orchestrator. I also learned that idempotency is something you have to design for explicitly, not something APIs just hand you. If I were to extend this, I'd add a way to list recent pixels and show a text summary of the week, so you can review your history without opening a browser.",
       "tags": [
-        "automation",
-        "api-integration"
+        "api-integration",
+        "rest-api",
+        "cli",
+        "terminal-ux",
+        "oop",
+        "productivity",
+        "python",
+        "beginner"
       ],
       "tech_stack": [
         "Python",
-        "Requests",
+        "requests",
+        "python-dotenv",
         "Pixela API"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/habit-tracker/card/habit.webp",
-      "repo_url": null,
+      "repo_url": "https://github.com/xavier-oc-programming/habit-tracker-pixela",
       "live_url": null,
       "demo_url": null
     },
