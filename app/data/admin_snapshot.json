@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T18:13:34Z",
+  "snapshot_at": "2026-04-14T18:14:22Z",
   "projects": [
     {
       "id": 1,
@@ -1466,35 +1466,41 @@
     {
       "id": 36,
       "slug": "top-10-movies",
-      "title": "Top 10 Movies Website",
+      "title": "Top 10 Movies",
       "primary_category": "web",
-      "short_description": "Flask web app where users search, rank, and manage their top 10 favourite movies using a film database API.",
-      "full_description": "A full-stack Flask application where users search for films via the TMDB API, add them to a personal top 10 list, and rank and edit them through a database-backed CRUD interface. Built with SQLAlchemy ORM, WTForms, and Bootstrap — a complete web app with real data persistence.",
+      "short_description": "A Flask web app to curate, rate, and rank your personal top 10 movies. Searches the TMDB API for metadata, stores everything in SQLite, and displays movies as animated 3D flip cards.",
+      "full_description": "A personal movie ranking web app built with Flask and SQLAlchemy 2.0. Users search for films by title through the TMDB API, which auto-populates the poster, release year, and description. Each movie gets a personal rating and review, and rankings (1 = best) are recalculated automatically on every home-page load. The flip-card UI uses CSS 3D transforms to display the collection in a visually engaging way.",
       "featured": false,
       "featured_order": null,
-      "date": "2026-02-06",
-      "problem": "There was no convenient way to maintain a personal ranked list of favourite films without building a full application with persistent storage — static lists are flat and can't be reordered or enriched.",
-      "solution": "Built a Flask web app where users search for films via the TMDB API, add them to a personal top 10 list, and update rankings and reviews through a database-backed CRUD interface with WTForms validation and Bootstrap layout.",
-      "challenges": "Integrating live TMDB API search with a SQLite database while keeping the ranking system stable across edits. Handling form validation edge cases and ensuring the rank ordering remained consistent when items were removed or re-ranked.",
-      "results": "A functional full-stack web application with real data persistence. Demonstrates the complete Flask development stack: routing, ORM models, form validation, API integration, and templating — the same pattern used in production Flask applications.",
+      "date": "2025-12-10",
+      "problem": "Keeping track of your favourite movies usually means a notes app, a spreadsheet, or relying on an existing service — none of which let you build a fully custom ranked list with your own ratings and reviews in a web UI you control. Building something from scratch means wrestling with database setup, form handling, and third-party API integration all at once. For a Day 64 project, the real challenge is pulling those pieces together cleanly while learning SQLAlchemy's newer 2.0 ORM syntax for the first time.",
+      "solution": "I built a Flask app with five routes (home, add, select, edit, delete) backed by SQLite via SQLAlchemy 2.0's DeclarativeBase and Mapped typed column syntax. Movie metadata is fetched from the TMDB search and movie-detail endpoints — the user types a title, picks from results, and the app auto-fills the poster, year, and description. Flask-WTF handles form rendering and CSRF protection, Bootstrap-Flask provides responsive layout, and rankings are assigned dynamically on every home load by sorting the rating column and re-numbering. All secrets load from a .env file via config.py, keeping the codebase fully credential-free.",
+      "challenges": "The trickiest part was getting comfortable with SQLAlchemy 2.0's new ORM style — DeclarativeBase, Mapped, and mapped_column are a significant departure from the older db.Column pattern shown in most tutorials, and the typed syntax took some getting used to. Getting the seed logic right (only insert if the table is empty) and running it safely inside an app context also needed a few iterations. On the UI side, the CSS 3D card-flip effect requires careful layering of perspective, backface-visibility, and rotateY transforms — getting even and odd cards to flip in opposite directions without visual glitches took more experimentation than expected.",
+      "results": "The project demonstrates end-to-end Flask development: REST API consumption, ORM-backed CRUD, form validation, and a polished CSS-animated UI — all wired together cleanly across separate modules. I came away with a solid feel for SQLAlchemy 2.0's typed ORM syntax and why it's an improvement over the older style for readability and IDE support. If I were to extend it, I'd add sort and filter controls on the home page and replace the ranking recalculation-on-every-load approach with a targeted update after each edit or delete to avoid unnecessary writes.",
       "tags": [
         "web-app",
+        "python",
         "crud",
-        "api-integration"
+        "rest-api",
+        "api-integration",
+        "beginner"
       ],
       "tech_stack": [
         "Python",
         "Flask",
-        "SQLAlchemy",
-        "SQLite",
+        "SQLAlchemy 2.0",
+        "Flask-WTF",
+        "Bootstrap-Flask",
         "WTForms",
-        "Bootstrap",
-        "TMDB API"
+        "SQLite",
+        "TMDB API",
+        "python-dotenv",
+        "requests"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/top-10-movies/card/top_10_movies.png",
-      "repo_url": null,
+      "repo_url": "https://github.com/xavier-oc-programming/top-10-movies-flask-web-app",
       "live_url": null,
       "demo_url": null
     },
