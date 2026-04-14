@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T13:06:35Z",
+  "snapshot_at": "2026-04-14T13:24:50Z",
   "projects": [
     {
       "id": 1,
@@ -743,7 +743,9 @@
         "subprocess"
       ],
       "screenshots": [],
-      "videos": [],
+      "videos": [
+        "videos/projects/mail-merge-python/Screen_Recording_2026-04-14_at_15.23.36.mov"
+      ],
       "card_image": "images/projects/mail-merge-automator/card/mail.png",
       "repo_url": "https://github.com/xavier-oc-programming/mail-merge-python",
       "live_url": null,
