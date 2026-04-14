@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T10:45:58Z",
+  "snapshot_at": "2026-04-14T10:46:28Z",
   "projects": [
     {
       "id": 1,
@@ -696,8 +696,16 @@
         "requests",
         "html"
       ],
-      "screenshots": [],
-      "videos": [],
+      "screenshots": [
+        "images/projects/gui-quiz-app/screenshots/Screenshot_2026-04-14_at_12.42.06.png",
+        "images/projects/gui-quiz-app/screenshots/Screenshot_2026-04-14_at_12.42.22.png",
+        "images/projects/gui-quiz-app/screenshots/Screenshot_2026-04-14_at_12.43.14.png",
+        "images/projects/gui-quiz-app/screenshots/Screenshot_2026-04-14_at_12.43.29.png",
+        "images/projects/gui-quiz-app/screenshots/Screenshot_2026-04-14_at_12.43.43.png"
+      ],
+      "videos": [
+        "videos/projects/gui-quiz-app/Screen_Recording_2026-04-14_at_12.40.26.mov"
+      ],
       "card_image": "images/projects/gui-quiz-app/card/quiz.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/gui-quiz-app",
       "live_url": null,
