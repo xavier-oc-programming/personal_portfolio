@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T07:03:35Z",
+  "snapshot_at": "2026-04-14T07:04:21Z",
   "projects": [
     {
       "id": 1,
@@ -556,31 +556,39 @@
     },
     {
       "id": 14,
-      "slug": "password-manager",
+      "slug": "password-manager-app",
       "title": "Password Manager",
       "primary_category": "software",
-      "short_description": "Desktop GUI app that generates secure passwords and saves credentials locally with search functionality.",
-      "full_description": "A Tkinter desktop password manager that generates strong random passwords, stores credentials in a local JSON file, and supports searching by website. Covers GUI design, file I/O, and data persistence without a database.",
+      "short_description": "Tkinter GUI that generates strong passwords, saves credentials to JSON, and retrieves them by website name. Ships as two builds: a procedural course version and a refactored OOP/MVC advanced version with injected callbacks and zero magic numbers.",
+      "full_description": "Password Manager is a desktop GUI app built with Python and tkinter that takes the pain out of creating and storing strong passwords. You type a website and email, hit Generate, and a shuffled mix of letters, symbols, and digits lands in the field and copies straight to your clipboard. Hit Add and it's saved to a local JSON file — no cloud, no account, no subscription. The project ships as two builds: the original procedural version from the course, and a refactored OOP/MVC advanced build that separates logic, display, and configuration into dedicated modules.",
       "featured": false,
       "featured_order": null,
-      "date": "2025-11-07",
-      "problem": null,
-      "solution": null,
-      "challenges": null,
-      "results": null,
+      "date": "2026-04-14",
+      "problem": "Registering on a new website and defaulting to a weak, reused password because generating something better feels like too much effort is a genuinely common failure mode. Browser autofill helps but it ties you to one machine and one browser. I wanted a dead-simple desktop tool that would generate a strong password on demand and persist it locally in a format I could read and search without installing anything. The secondary problem was more personal: the course version works, but everything is tangled together — the password generator reaches directly into the widget, the file paths are hardcoded, and there's no way to test any of the logic in isolation. That felt worth fixing.",
+      "solution": "The original build is a single procedural file — a tkinter window with three entry fields, a generator that randomly picks from letters, symbols, and digits and shuffles the result, and a JSON file as the datastore. The save flow reads the full JSON, merges the new entry, and writes it back, so no existing credential is ever overwritten accidentally. The advanced build splits this into three layers: PasswordManager handles all logic (generation, file read/write, search) with zero tkinter imports so it can be tested in isolation; Display owns every widget and accepts on_generate, on_save, and on_search callbacks injected at construction time; and app.py wires the two together and calls mainloop() once at the end. A config.py holds every constant — window padding, entry widths, generation ranges — so no magic numbers appear anywhere in the logic or display code.",
+      "challenges": "The trickiest design call in the advanced build was figuring out exactly where to draw the line between Display and app.py. My first instinct was to let Display handle the messagebox dialogs directly — it already owns the widgets, so it felt natural. But that would mean Display was making decisions (is the search result empty? should we warn?) instead of just rendering. The fix was to have Display expose thin wrappers like show_info and ask_ok_cancel, and let app.py call them based on what the logic returned. That way Display is genuinely passive — it never decides anything. A subtler edge case was the search distinguishing \"the data file doesn't exist yet\" from \"the website isn't in the file\" — both come back as falsy from the logic layer but need different error messages, so the orchestrator has to check them separately.",
+      "results": "The biggest takeaway was how much cleaner event-driven GUI code becomes when you commit fully to callback injection. In the original build, generate_password() reaches directly into the widget to insert its result — tight coupling that makes it impossible to test the generation logic on its own. In the advanced build, PasswordManager.generate_password() just returns a string, which I could drop into a unit test in three lines. I'd probably add a delete-credential flow next, and maybe a show-all view if the app grew. Most practically, I now reach for named constants almost reflexively — PASSWORD_ENTRY_WIDTH communicates intent in a way that 20 never will.",
       "tags": [
         "gui",
-        "productivity"
+        "oop",
+        "python",
+        "productivity",
+        "crud",
+        "beginner",
+        "terminal-ux"
       ],
       "tech_stack": [
         "Python",
-        "Tkinter",
-        "JSON"
+        "tkinter",
+        "pyperclip",
+        "json",
+        "pathlib",
+        "subprocess"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/password-manager/card/password.png",
-      "repo_url": null,
+      "repo_url": "https://github.com/xavier-oc-programming/password-manager-app",
       "live_url": null,
       "demo_url": null
     },
