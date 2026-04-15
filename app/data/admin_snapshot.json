@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-15T09:10:05Z",
+  "snapshot_at": "2026-04-15T09:11:33Z",
   "projects": [
     {
       "id": 1,
@@ -1972,30 +1972,41 @@
       "slug": "professional-portfolio-site",
       "title": "Professional Portfolio Site",
       "primary_category": "web",
-      "short_description": "Full-stack Flask portfolio deployed with a custom domain, PostgreSQL database, HTTPS, Google Analytics, and SEO configuration.",
-      "full_description": "A production-grade Flask portfolio application built as the Day 83 capstone of 100 Days of Code. Features a PostgreSQL database with SQLAlchemy ORM, dynamic project rendering, reusable Jinja components, Bootstrap layout, contact form with email delivery, Google Analytics, SEO metadata, and deployment on Render with a custom domain and HTTPS.",
+      "short_description": "Full-stack Flask portfolio with a custom admin dashboard, PostgreSQL, a public REST API, media management, automated backups, and CI/CD deployment to Railway via GitHub Actions.",
+      "full_description": "This is the portfolio you're looking at right now — built entirely in Flask, backed by PostgreSQL, and deployed on Railway with a custom domain. It's not a template or a no-code builder; it's a real web application I designed and built from scratch. The whole thing is maintained through a custom admin dashboard I built myself, so adding or updating projects never means touching the codebase. It's the kind of system I'd build professionally — and that's exactly the point.",
       "featured": true,
       "featured_order": 1,
       "date": "2026-03-01",
-      "problem": "Completing 100 Days of Code produces dozens of projects — without a professional presentation layer, that work is invisible to recruiters and hiring managers. A GitHub profile alone isn't a portfolio.",
-      "solution": "Built a production-grade Flask portfolio with PostgreSQL, dynamic project rendering from a database, reusable Jinja2 components, an admin panel for content management, a contact form with email delivery, Google Analytics, SEO metadata, and deployment on Railway with a custom domain and HTTPS.",
-      "challenges": "Designing a data model flexible enough to support software, web, and data projects while keeping the admin interface simple enough to use without code changes. Configuring Railway deployment with environment variables, PostgreSQL persistence, and auto-seeding on cold starts.",
-      "results": "Live at a custom domain with HTTPS, serving 40+ projects across three categories. Admin panel enables content updates, media uploads, and project management without touching code. Analytics and SEO foundations in place. This site is its own proof of concept — the portfolio is itself a featured project.",
+      "problem": "Most developer portfolios are static HTML pages thrown together with a CSS template. That gets the job done, but it doesn't actually demonstrate anything about how the developer writes software. I wanted my portfolio to be the proof of skill, not just a holder for links to other projects. Beyond that, maintaining a static site gets tedious fast — every update means editing HTML by hand, pushing manually, and hoping nothing breaks. I needed something I could actually run like a real product.",
+      "solution": "I built a full-stack Flask application structured around three blueprints: public routes, an admin blueprint, and a REST API. All project data lives in PostgreSQL via SQLAlchemy, and the admin dashboard handles everything — full CRUD on projects, media uploads, tag management, contact messages, and automated JSON backups before every write. A GitHub Actions CI/CD pipeline runs the full test suite on every push and deploys to Railway only when tests pass. The snapshot sync system keeps local and production databases in sync by treating admin_snapshot.json as the authoritative source of truth — deletions on the live site commit an updated snapshot to GitHub, which the local dev environment picks up on the next pull and restart.",
+      "challenges": "The trickiest part was making the snapshot sync genuinely reliable. Early on, deleting a project on the live site wouldn't stick — the next deploy would restore it because the sync only ever upserted and never deleted. I had to redesign it as authoritative: any project in the database that isn't in the snapshot gets removed on startup. Getting the CI/CD pipeline stable also took a few iterations — Railway token naming conventions, GitHub Actions path filters, and the interaction between Railway's own auto-deploy and the Actions workflow all needed careful untangling before deploys were consistent.",
+      "results": "The portfolio is live at xavieroc.dev and demonstrates the full stack I worked through during 100 Days of Code — Flask, SQLAlchemy, REST API design, admin tooling, media handling, testing with pytest, and deployment with Docker and Railway. Building the admin dashboard from scratch instead of reaching for Flask-Admin was absolutely the right call — it forced me to implement auth, CSRF protection, file handling, and backup logic myself, which is where the real learning happened. If I rebuilt it today I'd add richer media editing and role-based admin permissions, but as a capstone it covers everything I set out to prove.",
       "tags": [
         "web-app",
-        "crud",
+        "python",
+        "rest-api",
         "authentication",
-        "deployment"
+        "crud",
+        "deployment",
+        "flask",
+        "admin-dashboard",
+        "ci-cd"
       ],
       "tech_stack": [
         "Python",
         "Flask",
+        "SQLAlchemy",
         "PostgreSQL",
+        "SQLite",
+        "Bootstrap",
         "Jinja2",
-        "HTML",
-        "CSS",
-        "Git",
-        "Render"
+        "Flask-WTF",
+        "Gunicorn",
+        "Docker",
+        "pytest",
+        "GitHub Actions",
+        "Railway",
+        "Resend"
       ],
       "screenshots": [
         "images/projects/professional-portfolio-site/screenshots/Screenshot_2026-03-19_at_16.34.33.png",
@@ -2004,7 +2015,7 @@
       "videos": [],
       "card_image": "images/projects/professional-portfolio-site/card/Screenshot_2026-03-19_at_16.37.36.png",
       "repo_url": "https://github.com/xavier-oc-programming/personal_portfolio",
-      "live_url": null,
+      "live_url": "https://www.xavieroc.dev",
       "demo_url": null
     }
   ],
