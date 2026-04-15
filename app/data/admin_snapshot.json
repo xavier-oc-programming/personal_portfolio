@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-15T09:04:03Z",
+  "snapshot_at": "2026-04-15T09:05:25Z",
   "projects": [
     {
       "id": 1,
@@ -1894,34 +1894,38 @@
     },
     {
       "id": 48,
-      "slug": "house-price-prediction",
-      "title": "House Price Prediction",
+      "slug": "boston-house-price-analysis",
+      "title": "Boston House Price Analysis",
       "primary_category": "data",
-      "short_description": "Predicts house prices using a regression model trained on a real dataset with data cleaning, feature engineering, and evaluation.",
-      "full_description": "A machine learning capstone project that applies linear regression to a real housing dataset. Covers the full ML pipeline: data cleaning, feature engineering, train/test splitting, model training with scikit-learn, and evaluation using RMSE and R² metrics, with results visualised using Matplotlib and Seaborn.",
-      "featured": true,
+      "short_description": "Multivariable linear regression model predicting 1970s Boston house prices from 13 neighbourhood features, with residual diagnostics, log transformation, and a custom property valuation function.",
+      "full_description": "This project builds a multivariable linear regression model on the classic Boston Housing Dataset (506 census tracts, 13 features) to estimate median residential property values. It covers the full data science workflow: exploratory analysis and visualisation, train/test splitting, model fitting, residual diagnostics, and a working valuation function that returns a dollar estimate for any given property configuration. The log transformation step takes the model from r² 0.67 to 0.74 on held-out data — a concrete, measurable improvement that came from actually reading the residuals rather than just accepting the first fit.",
+      "featured": false,
       "featured_order": 7,
-      "date": "2026-02-25",
-      "problem": "Predicting house prices accurately requires more than a formula — it demands identifying which features actually drive price, cleaning messy real-world data, and validating that the model generalises beyond the training set.",
-      "solution": "Applied linear regression using scikit-learn to a real housing dataset. Covered the full ML pipeline: data cleaning, feature engineering (log transforms, dummy variables), train/test split, model training, and evaluation using RMSE and R² metrics.",
-      "challenges": "Dealing with skewed price distributions that needed log transformation to meet regression assumptions. Identifying multicollinearity among correlated features. Interpreting model coefficients to understand what the model actually learned about the data.",
-      "results": "Achieved R² = 0.89 on the test set with RMSE within expected range for the dataset. Feature importance analysis confirmed square footage and location as primary price drivers. Results visualised with residual plots and predicted-vs-actual charts. Demonstrates the complete supervised learning workflow from raw data to evaluated model.",
+      "date": "2026-04-13",
+      "problem": "Real estate valuation is rarely driven by a single factor — price is the result of many neighbourhood characteristics interacting at once. A simple \"price per square metre\" heuristic ignores crime rates, school quality, pollution, and proximity to employment, all of which the data shows matter significantly. Without a principled model that accounts for all 13 features simultaneously, any estimate is likely to be badly miscalibrated for properties at the extremes — highly desirable river-adjacent homes or crime-heavy districts. The challenge was to build something that could hold all those variables in mind at once and still produce an interpretable, trustworthy output.",
+      "solution": "I fit a multivariable OLS regression using scikit-learn's LinearRegression on an 80/20 train/test split (random_state=10 for reproducibility). Before modelling I explored the data visually with seaborn jointplots (DIS vs NOX, LSTAT vs PRICE, RM vs PRICE) and a full pairplot to understand which relationships were linear and which were curved. After the first model showed positive skew and a fan-shaped residual pattern, I applied a log transformation to the target variable — fitting the model on log(PRICE) and inverting with np.exp() at prediction time. The final valuation function takes a property's 13 feature values, feeds them through the log model, and returns a dollar estimate, making the model directly usable as a decision tool.",
+      "challenges": "The trickiest part was diagnosing *why* the first model underperformed rather than just accepting its r² of 0.67. The residual vs. predicted plot showed a clear cone shape — variance increasing with predicted price — which is a textbook sign of heteroscedasticity. Recognising that this pointed to a distributional problem with the target (not the features) was the key insight. Applying np.log(PRICE) compressed the high-end values disproportionately, normalised the residuals, and lifted test r² to 0.74. Getting the valuation function right also required careful column ordering to match the training DataFrame exactly, since sklearn's predict() is positional, not named.",
+      "results": "The log-transformed model achieves r² of 0.79 on training data and 0.74 on the held-out test set — a meaningful improvement over the naive first fit. Coefficient signs all make intuitive sense: rooms (RM) is the strongest positive predictor, adding roughly $3,000 per additional room, while poverty (LSTAT), crime (CRIM), and pollution (NOX) all suppress prices. The project taught me that residual analysis isn't a formality — it's the actual diagnostic that told me what to fix. Next time I'd also explore regularisation (Ridge/Lasso) to see whether shrinking noisy coefficients like B and ZN improves generalisation further.",
       "tags": [
+        "data-analysis",
         "machine-learning",
-        "data-analysis"
+        "visualisation",
+        "python"
       ],
       "tech_stack": [
         "Python",
-        "Pandas",
+        "pandas",
         "NumPy",
         "scikit-learn",
+        "seaborn",
         "Matplotlib",
-        "Seaborn"
+        "Plotly",
+        "Jupyter Notebook"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/house-price-prediction/card/house.webp",
-      "repo_url": null,
+      "repo_url": "https://github.com/xavier-oc-programming/boston-house-price-analysis",
       "live_url": null,
       "demo_url": null
     },
