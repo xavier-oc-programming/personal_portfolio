@@ -49,76 +49,41 @@
 
 {% block content %}
 
-  <!-- Page Header -->
+  <!-- Page Header + Quick Facts -->
   <section class="page-section">
-    {% set eyebrow = "Project Detail" %}
-    {% if project and project.title %}
-      {% set title = project.title %}
-    {% else %}
-      {% set title = "Project Detail" %}
-    {% endif %}
-
-    {% if project and project.full_description %}
-      {% set description = project.full_description %}
-    {% else %}
-      {% set description = "This page displays details for a single project." %}
-    {% endif %}
-
-    {% set centered = false %}
-    {% include "components/section_header.html" %}
-
-    <div class="d-flex flex-wrap gap-2 mt-3">
-      {% if project and project.primary_category %}
-        <span class="badge text-bg-dark">{{ project.primary_category|capitalize }}</span>
-      {% endif %}
-
-      {% if project and project.tags %}
-        {% for tag in project.tags %}
-          <span class="badge text-bg-secondary">{{ tag }}</span>
-        {% endfor %}
-      {% endif %}
-    </div>
-  </section>
-
-  <!-- Main Detail Layout -->
-  <section class="page-section">
-    <div class="row g-4">
+    <div class="row g-4 align-items-start">
       <div class="col-12 col-lg-8">
-        <div class="surface-card p-4 h-100">
-          <h2 class="h4 mb-4">Overview</h2>
+        {% set eyebrow = "Project Detail" %}
+        {% if project and project.title %}
+          {% set title = project.title %}
+        {% else %}
+          {% set title = "Project Detail" %}
+        {% endif %}
 
-          <div class="mb-4">
-            <h3 class="h5 mb-2">Problem</h3>
-            <p class="text-secondary mb-0">
-              {{ project.problem if project and project.problem else "Placeholder: describe the problem this project solves." }}
-            </p>
-          </div>
+        {% if project and project.full_description %}
+          {% set description = project.full_description %}
+        {% else %}
+          {% set description = "This page displays details for a single project." %}
+        {% endif %}
 
-          <div class="mb-4">
-            <h3 class="h5 mb-2">Solution</h3>
-            <p class="text-secondary mb-0">
-              {{ project.solution if project and project.solution else "Placeholder: summarize your approach and what you built." }}
-            </p>
-          </div>
+        {% set centered = false %}
+        {% include "components/section_header.html" %}
 
-          <div class="mb-4">
-            <h3 class="h5 mb-2">Challenges</h3>
-            <p class="text-secondary mb-0">
-              {{ project.challenges if project and project.challenges else "Placeholder: note the main technical challenges and how you overcame them." }}
-            </p>
-          </div>
+        <div class="d-flex flex-wrap gap-2 mt-3">
+          {% if project and project.primary_category %}
+            <span class="badge text-bg-dark">{{ project.primary_category|capitalize }}</span>
+          {% endif %}
 
-          <div>
-            <h3 class="h5 mb-2">Results / Metrics</h3>
-            <p class="text-secondary mb-0">
-              {{ project.results if project and project.results else "Placeholder: include outcomes, improvements, performance, or what you learned." }}
-            </p>
-          </div>
+          {% if project and project.tags %}
+            {% for tag in project.tags %}
+              <span class="badge text-bg-secondary">{{ tag }}</span>
+            {% endfor %}
+          {% endif %}
         </div>
       </div>
 
       <div class="col-12 col-lg-4">
-        <div class="surface-card-muted p-4 h-100">
+        <div class="surface-card-muted p-4">
           <h2 class="h4 mb-3">Quick Facts</h2>
 
           {% if project and project.tech_stack %}
@@ -202,6 +167,45 @@
             {% else %}
               <a class="btn btn-dark btn-sm" href="{{ url_for('projects') }}">Back to Projects</a>
             {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Overview -->
+  <section class="page-section">
+    <div class="row g-4">
+      <div class="col-12 col-lg-8">
+        <div class="surface-card p-4">
+          <h2 class="h4 mb-4">Overview</h2>
+
+          <div class="mb-4">
+            <h3 class="h5 mb-2">Problem</h3>
+            <p class="text-secondary mb-0">
+              {{ project.problem if project and project.problem else "Placeholder: describe the problem this project solves." }}
+            </p>
+          </div>
+
+          <div class="mb-4">
+            <h3 class="h5 mb-2">Solution</h3>
+            <p class="text-secondary mb-0">
+              {{ project.solution if project and project.solution else "Placeholder: summarize your approach and what you built." }}
+            </p>
+          </div>
+
+          <div class="mb-4">
+            <h3 class="h5 mb-2">Challenges</h3>
+            <p class="text-secondary mb-0">
+              {{ project.challenges if project and project.challenges else "Placeholder: note the main technical challenges and how you overcame them." }}
+            </p>
+          </div>
+
+          <div>
+            <h3 class="h5 mb-2">Results / Metrics</h3>
+            <p class="text-secondary mb-0">
+              {{ project.results if project and project.results else "Placeholder: include outcomes, improvements, performance, or what you learned." }}
+            </p>
           </div>
         </div>
       </div>
