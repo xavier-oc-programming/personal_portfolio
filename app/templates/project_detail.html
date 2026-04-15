@@ -51,7 +51,7 @@
 
   <!-- Page Header + Quick Facts -->
   <section class="page-section">
-    <div class="row g-4 align-items-start">
+    <div class="row g-4 align-items-stretch">
       <div class="col-12 col-lg-8">
         {% set eyebrow = "Project Detail" %}
         {% if project and project.title %}
@@ -83,7 +83,7 @@
       </div>
 
       <div class="col-12 col-lg-4">
-        <div class="surface-card-muted p-4">
+        <div class="surface-card-muted p-4 h-100">
           <h2 class="h4 mb-3">Quick Facts</h2>
 
           {% if project and project.tech_stack %}
@@ -176,7 +176,7 @@
   <!-- Overview -->
   <section class="page-section">
     <div class="row g-4">
-      <div class="col-12 col-lg-8">
+      <div class="col-12">
         <div class="surface-card p-4">
           <h2 class="h4 mb-4">Overview</h2>
 
@@ -217,39 +217,98 @@
     <div class="surface-card p-4">
       <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-3">
         <h2 class="h4 mb-0">Screenshots</h2>
-        <p class="small text-muted mb-0">Click any image to enlarge.</p>
+        <div class="d-flex align-items-center gap-3">
+          <p class="small text-muted mb-0">Click to enlarge.</p>
+          {% if project.media and project.media.screenshots %}
+            <div class="btn-group btn-group-sm" id="screenshotViewToggle" role="group" aria-label="Screenshot view">
+              <button type="button" class="btn btn-outline-secondary" data-view="grid">Grid</button>
+              <button type="button" class="btn btn-outline-secondary" data-view="hero">Detail</button>
+            </div>
+          {% endif %}
+        </div>
       </div>
 
       {% if project.media and project.media.screenshots %}
-        <div class="row g-3">
-          {% for screenshot in project.media.screenshots %}
-            <div class="col-12 col-md-6">
-              <button
-                type="button"
-                class="detail-media-trigger"
-                data-bs-toggle="modal"
-                data-bs-target="#imagePreviewModal"
-                data-image-src="{{ url_for('static', filename=screenshot) }}"
-                data-image-alt="{{ project.title }} screenshot {{ loop.index }}"
-                data-gallery-index="{{ loop.index0 }}"
+        {% set screenshots = project.media.screenshots %}
+
+        <!-- Grid view -->
+        <div id="screenshotsGridView">
+          <div class="row g-3">
+            {% for screenshot in screenshots %}
+              <div class="col-12 col-md-6">
+                <button
+                  type="button"
+                  class="detail-media-trigger"
+                  data-bs-toggle="modal"
+                  data-bs-target="#imagePreviewModal"
+                  data-gallery-index="{{ loop.index0 }}"
+                >
+                  <div class="screenshot-frame">
+                    <img
+                      src="{{ url_for('static', filename=screenshot) }}"
+                      class="detail-media-image"
+                      alt="{{ project.title }} screenshot {{ loop.index }}"
+                      loading="lazy"
+                      decoding="async"
+                    >
+                  </div>
+                </button>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Hero view -->
+        <div id="screenshotsHeroView">
+
+          <!-- Hero image -->
+          <button
+            type="button"
+            id="screenshotHero"
+            class="detail-media-trigger w-100 mb-3"
+            data-bs-toggle="modal"
+            data-bs-target="#imagePreviewModal"
+            data-image-src="{{ url_for('static', filename=screenshots[0]) }}"
+            data-image-alt="{{ project.title }} screenshot 1"
+            data-gallery-index="0"
+          >
+            <div class="screenshot-frame screenshot-frame--hero">
+              <img
+                id="screenshotHeroImg"
+                src="{{ url_for('static', filename=screenshots[0]) }}"
+                class="detail-media-image"
+                alt="{{ project.title }} screenshot 1"
+                decoding="async"
               >
-                <div class="screenshot-frame">
+            </div>
+          </button>
+
+          <!-- Thumbnails -->
+          {% if screenshots|length > 1 %}
+            <div class="d-flex gap-2 overflow-auto pb-1">
+              {% for screenshot in screenshots %}
+                <button
+                  type="button"
+                  class="screenshot-thumb {% if loop.first %}screenshot-thumb--active{% endif %}"
+                  data-src="{{ url_for('static', filename=screenshot) }}"
+                  data-alt="{{ project.title }} screenshot {{ loop.index }}"
+                  data-index="{{ loop.index0 }}"
+                >
                   <img
                     src="{{ url_for('static', filename=screenshot) }}"
-                    class="detail-media-image"
-                    alt="{{ project.title }} screenshot {{ loop.index }}"
+                    alt="{{ project.title }} thumbnail {{ loop.index }}"
                     loading="lazy"
                     decoding="async"
                   >
-                </div>
-              </button>
+                </button>
+              {% endfor %}
             </div>
-          {% endfor %}
+          {% endif %}
+
         </div>
+
       {% else %}
-        <p class="text-secondary mb-0">
-          No screenshots available yet.
-        </p>
+        <p class="text-secondary mb-0">No screenshots available yet.</p>
       {% endif %}
     </div>
   </section>
@@ -277,38 +336,62 @@
   </section>
 
   <!-- Screenshots Gallery Modal -->
-  <div
-    class="modal fade"
-    id="imagePreviewModal"
-    tabindex="-1"
-    aria-labelledby="imagePreviewModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+  <div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-labelledby="imagePreviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
       <div class="modal-content detail-image-modal">
+
         <div class="modal-header border-0 pb-0">
-          <h2 class="modal-title h5" id="imagePreviewModalLabel">
-            Screenshot <span id="galleryCounter"></span>
-          </h2>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close image preview"
-          ></button>
+          <span class="small text-muted" id="galleryCounter"></span>
+          <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body pt-2">
-          <img
-            id="imagePreviewModalImg"
-            class="img-fluid w-100 rounded"
-            src=""
-            alt=""
-          >
+
+        <div class="modal-body p-0">
+          {% if project.media and project.media.screenshots %}
+            {% set screenshots = project.media.screenshots %}
+            <div id="modalCarousel" class="carousel slide" data-bs-ride="false" data-bs-keyboard="true">
+
+              {% if screenshots|length > 1 %}
+                <div class="carousel-indicators">
+                  {% for screenshot in screenshots %}
+                    <button type="button" data-bs-target="#modalCarousel"
+                      data-bs-slide-to="{{ loop.index0 }}"
+                      class="{{ 'active' if loop.first else '' }}"
+                      aria-label="Screenshot {{ loop.index }}"></button>
+                  {% endfor %}
+                </div>
+              {% endif %}
+
+              <div class="carousel-inner">
+                {% for screenshot in screenshots %}
+                  <div class="carousel-item {{ 'active' if loop.first else '' }}">
+                    <img
+                      src="{{ url_for('static', filename=screenshot) }}"
+                      class="d-block w-100"
+                      alt="{{ project.title }} screenshot {{ loop.index }}"
+                      loading="{{ 'eager' if loop.first else 'lazy' }}"
+                      decoding="async"
+                    >
+                  </div>
+                {% endfor %}
+              </div>
+
+              {% if screenshots|length > 1 %}
+                <button class="carousel-control-prev" type="button" data-bs-target="#modalCarousel" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#modalCarousel" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              {% endif %}
+
+            </div>
+          {% endif %}
         </div>
-        <div class="modal-footer border-0 justify-content-between" id="galleryNav">
-          <button type="button" class="btn btn-outline-secondary" id="galleryPrev">&larr; Prev</button>
-          <button type="button" class="btn btn-outline-secondary" id="galleryNext">Next &rarr;</button>
-        </div>
+
+        <div class="modal-footer border-0 pt-0" style="padding-bottom: 2.5rem;"></div>
+
       </div>
     </div>
   </div>

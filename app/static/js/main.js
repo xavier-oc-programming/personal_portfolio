@@ -18,6 +18,8 @@ document.addEventListener("DOMContentLoaded", function () {
   handleMobileNavbar();
   initScrollToTop();
   initDetailImageModal();
+  initScreenshotThumbnails();
+  initScreenshotViewToggle();
   initNavLoadBar();
 });
 
@@ -77,70 +79,119 @@ function initScrollToTop() {
  */
 function initDetailImageModal() {
   const modal = document.getElementById("imagePreviewModal");
-  const modalImg = document.getElementById("imagePreviewModalImg");
+  const carouselEl = document.getElementById("modalCarousel");
   const counterEl = document.getElementById("galleryCounter");
-  const navEl = document.getElementById("galleryNav");
-  const prevBtn = document.getElementById("galleryPrev");
-  const nextBtn = document.getElementById("galleryNext");
 
-  if (!modal || !modalImg) {
-    return;
-  }
+  if (!modal || !carouselEl) return;
 
-  const triggers = Array.from(
-    document.querySelectorAll(".detail-media-trigger[data-gallery-index]")
-  );
-  let currentIndex = 0;
+  const total = carouselEl.querySelectorAll(".carousel-item").length;
+  const thumbs = document.querySelectorAll(".screenshot-thumb");
 
-  function showImage(index) {
-    if (!triggers.length) return;
-    currentIndex = ((index % triggers.length) + triggers.length) % triggers.length;
-    const trigger = triggers[currentIndex];
-    modalImg.src = trigger.getAttribute("data-image-src") || "";
-    modalImg.alt = trigger.getAttribute("data-image-alt") || "Screenshot";
+  function updateCounter(index) {
     if (counterEl) {
-      counterEl.textContent = triggers.length > 1
-        ? (currentIndex + 1) + " / " + triggers.length
-        : "";
+      counterEl.textContent = total > 1 ? (index + 1) + " / " + total : "";
     }
   }
 
+  function syncThumbs(index) {
+    thumbs.forEach(function (t, i) {
+      t.classList.toggle("screenshot-thumb--active", i === index);
+    });
+  }
+
+  // Jump to correct slide when modal opens, then init counter
   modal.addEventListener("show.bs.modal", function (event) {
     const trigger = event.relatedTarget;
-    if (!trigger) return;
-    const idx = parseInt(trigger.getAttribute("data-gallery-index") || "0", 10);
-    showImage(isNaN(idx) ? 0 : idx);
-    if (navEl) navEl.style.display = triggers.length <= 1 ? "none" : "";
+    const idx = parseInt((trigger && trigger.getAttribute("data-gallery-index")) || "0", 10);
+    const carousel = bootstrap.Carousel.getOrCreateInstance(carouselEl, { ride: false });
+    carousel.to(isNaN(idx) ? 0 : idx);
+    updateCounter(isNaN(idx) ? 0 : idx);
+    syncThumbs(isNaN(idx) ? 0 : idx);
   });
 
-  if (prevBtn) {
-    prevBtn.addEventListener("click", function (e) {
-      e.stopPropagation();
-      showImage(currentIndex - 1);
-    });
-  }
+  // Keep counter + thumbnails in sync as user navigates
+  carouselEl.addEventListener("slid.bs.carousel", function (e) {
+    updateCounter(e.to);
+    syncThumbs(e.to);
+  });
 
-  if (nextBtn) {
-    nextBtn.addEventListener("click", function (e) {
-      e.stopPropagation();
-      showImage(currentIndex + 1);
-    });
-  }
-
+  // Arrow key navigation — modal captures focus so we handle it here
   modal.addEventListener("keydown", function (e) {
-    if (e.key === "ArrowLeft") {
-      e.preventDefault();
-      showImage(currentIndex - 1);
-    } else if (e.key === "ArrowRight") {
-      e.preventDefault();
-      showImage(currentIndex + 1);
-    }
+    if (!modal.classList.contains("show")) return;
+    const carousel = bootstrap.Carousel.getInstance(carouselEl);
+    if (!carousel) return;
+    if (e.key === "ArrowLeft") { e.preventDefault(); carousel.prev(); }
+    if (e.key === "ArrowRight") { e.preventDefault(); carousel.next(); }
+  });
+}
+
+/**
+ * Keep the 1/x counter in sync with the Bootstrap carousel.
+ */
+/**
+ * Screenshot hero + thumbnail switcher.
+ * Clicking a thumbnail swaps the hero image and updates the modal trigger's
+ * data attributes so the lightbox opens at the correct image.
+ */
+function initScreenshotThumbnails() {
+  const hero = document.getElementById("screenshotHero");
+  const heroImg = document.getElementById("screenshotHeroImg");
+  const thumbs = document.querySelectorAll(".screenshot-thumb");
+
+  if (!hero || !heroImg || !thumbs.length) return;
+
+  thumbs.forEach(function (thumb) {
+    thumb.addEventListener("click", function () {
+      const src = this.dataset.src;
+      const alt = this.dataset.alt;
+      const index = this.dataset.index;
+
+      heroImg.src = src;
+      heroImg.alt = alt;
+
+      hero.setAttribute("data-image-src", src);
+      hero.setAttribute("data-image-alt", alt);
+      hero.setAttribute("data-gallery-index", index);
+
+      thumbs.forEach(function (t) { t.classList.remove("screenshot-thumb--active"); });
+      this.classList.add("screenshot-thumb--active");
+    });
+  });
+}
+
+/**
+ * Toggle between grid and hero+thumbnail screenshot layouts.
+ * Preference is persisted to localStorage so it survives page reloads.
+ */
+function initScreenshotViewToggle() {
+  const toggle = document.getElementById("screenshotViewToggle");
+  const gridView = document.getElementById("screenshotsGridView");
+  const heroView = document.getElementById("screenshotsHeroView");
+
+  if (!toggle || !gridView || !heroView) return;
+
+  const STORAGE_KEY = "screenshotView";
+  const buttons = toggle.querySelectorAll("[data-view]");
+
+  function applyView(view) {
+    const isGrid = view === "grid";
+    gridView.classList.toggle("d-none", !isGrid);
+    heroView.classList.toggle("d-none", isGrid);
+    buttons.forEach(function (btn) {
+      btn.classList.toggle("active", btn.dataset.view === view);
+    });
+    try { localStorage.setItem(STORAGE_KEY, view); } catch (e) {}
+  }
+
+  buttons.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      applyView(this.dataset.view);
+    });
   });
 
-  modal.addEventListener("hidden.bs.modal", function () {
-    modalImg.src = "";
-    modalImg.alt = "";
-  });
+  var saved = "hero";
+  try { saved = localStorage.getItem(STORAGE_KEY) || "hero"; } catch (e) {}
+  applyView(saved);
 }
 
 /**

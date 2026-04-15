@@ -599,6 +599,41 @@ a:hover {
   box-shadow: var(--shadow-md);
 }
 
+.screenshot-frame--hero {
+  aspect-ratio: 16 / 9;
+  max-height: 480px;
+}
+
+.screenshot-thumb {
+  flex-shrink: 0;
+  width: 100px;
+  height: 64px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-muted);
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.15s ease, opacity 0.15s ease;
+  opacity: 0.6;
+}
+
+.screenshot-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.screenshot-thumb:hover {
+  opacity: 0.85;
+}
+
+.screenshot-thumb--active {
+  border-color: var(--color-text);
+  opacity: 1;
+}
+
 .detail-image-modal {
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -611,6 +646,22 @@ a:hover {
   height: auto;
   object-fit: contain;
   max-height: 75vh;
+}
+
+#modalCarousel .carousel-inner {
+  aspect-ratio: 16 / 10;
+  background: #111;
+}
+
+#modalCarousel .carousel-item {
+  height: 100%;
+}
+
+#modalCarousel .carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 /* ==========================================
