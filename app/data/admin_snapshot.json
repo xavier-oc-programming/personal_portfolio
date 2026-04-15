@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-15T08:56:57Z",
+  "snapshot_at": "2026-04-15T08:57:34Z",
   "projects": [
     {
       "id": 1,
@@ -1750,30 +1750,36 @@
     },
     {
       "id": 44,
-      "slug": "numpy-arrays",
-      "title": "NumPy N-Dimensional Arrays",
+      "slug": "numpy-ndarray-computation",
+      "title": "NumPy NDArray Computation",
       "primary_category": "data",
-      "short_description": "Explores NumPy array operations, broadcasting, reshaping, and mathematical computation on multi-dimensional data.",
-      "full_description": "A structured exploration of NumPy covering array creation, indexing, slicing, broadcasting, reshaping, and mathematical operations on multi-dimensional data. Foundational work for the machine learning projects that follow.",
+      "short_description": "NumPy fundamentals explored through 12 hands-on exercises: ndarray creation, slicing, broadcasting, matrix multiplication, and image manipulation including greyscale conversion and colour inversion applied to real images as 3D arrays.",
+      "full_description": "This project works through the core NumPy concepts every data scientist needs: creating and inspecting n-dimensional arrays, slicing and reversing them, performing linear-algebra-style operations, and manipulating images purely as numerical data. It follows a structured theory-plus-practice layout, with annotated lesson notebooks alongside a full exercise notebook where all twelve course challenges are solved. The image processing section is a particular highlight — discovering that a JPEG is just a (H, W, 3) array of uint8 values, and that flipping or solarising it is a one-liner, genuinely changes how you think about numerical computation.",
       "featured": false,
       "featured_order": null,
-      "date": "2026-03-04",
-      "problem": null,
-      "solution": null,
-      "challenges": null,
-      "results": null,
+      "date": "2026-04-13",
+      "problem": "Python lists feel natural for small collections, but they fall apart the moment you need to do any serious numerical work. Multiplying a list by a scalar just repeats it; adding two lists concatenates them; looping over millions of elements in pure Python is painfully slow. There's also a conceptual gap: most learners think of arrays as one-dimensional, so the jump to matrices and 3D tensors can feel abstract and intimidating. And the link between numerical arrays and something tangible — like an image — is rarely made explicit early enough to make the concepts stick.",
+      "solution": "I worked through NumPy's ndarray from first principles, building up from 1D vectors to 2D matrices to 3D tensors, and at each level applying real operations rather than just reading documentation. Broadcasting and scalar arithmetic are demonstrated against both toy arrays and a full raccoon image loaded from SciPy's built-in datasets. The image processing section grounds the abstract ideas concretely: a JPEG loaded with Pillow becomes a (H, W, 3) ndarray, and greyscale conversion is just a dot product with the ITU-R BT.709 luminance weights. The project is split into theory notebooks (annotated concepts) and a practice notebook (twelve exercises with solutions), so the reasoning behind each method is always one file away.",
+      "challenges": "The trickiest part was the greyscale conversion. It's not obvious why multiplying a (H, W, 3) array by a length-3 vector with the @ operator collapses the colour channels into a single luminance value — that requires understanding both NumPy's matrix multiplication rules and the specific meaning of the BT.709 weights. Getting the shapes right (ensuring the sRGB array and grey_vals vector were compatible for the dot product) took some deliberate thinking about axis ordering. The other subtle point was making sure the practice notebook used relative paths to the data directory rather than hardcoded absolute paths, which would have silently broken on any other machine.",
+      "results": "Working through this day gave me a solid intuition for thinking in arrays rather than loops, and for reasoning about shape and dimensionality before touching any code. The image manipulation exercises in particular made the ndarray model feel tangible and memorable rather than abstract. I'd like to extend this further with NumPy's structured arrays and more involved linear algebra operations. The structured theory/practice split also turned out to be a genuinely useful way to organise a learning project — keeping annotated notes and exercise solutions in separate files makes it much easier to review later.",
       "tags": [
+        "python",
         "data-analysis",
-        "machine-learning"
+        "visualisation",
+        "beginner"
       ],
       "tech_stack": [
         "Python",
-        "NumPy"
+        "NumPy",
+        "Matplotlib",
+        "SciPy",
+        "Pillow",
+        "Jupyter Notebook"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/numpy-arrays/card/numpy6.png",
-      "repo_url": null,
+      "repo_url": "https://github.com/xavier-oc-programming/numpy-ndarray-computation",
       "live_url": null,
       "demo_url": null
     },
