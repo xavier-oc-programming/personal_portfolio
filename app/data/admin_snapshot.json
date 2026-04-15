@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-15T13:06:10Z",
+  "snapshot_at": "2026-04-15T13:26:00Z",
   "projects": [
     {
       "id": 1,
@@ -838,13 +838,8 @@
         "Sunrise-Sunset API",
         "Gmail SMTP"
       ],
-      "screenshots": [
-        "images/projects/iss-overhead-notifier/screenshots/Screenshot_2026-04-15_at_15.05.17.png",
-        "images/projects/iss-overhead-notifier/screenshots/Screenshot_2026-04-15_at_15.05.25.png"
-      ],
-      "videos": [
-        "videos/projects/iss-overhead-notifier/Screen_Recording_2026-04-15_at_15.03.19.mov"
-      ],
+      "screenshots": [],
+      "videos": [],
       "card_image": "images/projects/iss-overhead-notifier/card/iss2.gif",
       "repo_url": "https://github.com/xavier-oc-programming/iss-overhead-notifier",
       "live_url": null,
@@ -884,7 +879,9 @@
         "GitHub Actions"
       ],
       "screenshots": [],
-      "videos": [],
+      "videos": [
+        "videos/projects/rain-alert-sms/Screen_Recording_2026-04-15_at_15.21.17.mov"
+      ],
       "card_image": "images/projects/sms-sender/card/sms.png",
       "repo_url": "https://github.com/xavier-oc-programming/rain-alert-sms",
       "live_url": null,
