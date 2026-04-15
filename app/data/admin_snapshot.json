@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-15T12:35:41Z",
+  "snapshot_at": "2026-04-15T12:35:59Z",
   "projects": [
     {
       "id": 1,
@@ -792,9 +792,7 @@
         "GitHub Actions"
       ],
       "screenshots": [],
-      "videos": [
-        "videos/projects/birthday-email-bot/Screen_Recording_2026-04-14_at_15.23.36.mov"
-      ],
+      "videos": [],
       "card_image": "images/projects/birthday-email-automator/card/birthday2.png",
       "repo_url": "https://github.com/xavier-oc-programming/birthday-email-bot",
       "live_url": null,
