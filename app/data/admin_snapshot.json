@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-15T08:58:41Z",
+  "snapshot_at": "2026-04-15T09:03:10Z",
   "projects": [
     {
       "id": 1,
@@ -1822,34 +1822,36 @@
     },
     {
       "id": 46,
-      "slug": "nobel-prize-analysis",
-      "title": "Nobel Prize Analysis",
+      "slug": "nobel-prize-data-analysis",
+      "title": "Nobel Prize Data Analysis",
       "primary_category": "data",
-      "short_description": "Explores over 100 years of Nobel Prize data to surface trends by country, gender, and category with interactive charts.",
-      "full_description": "A comprehensive data analysis of the Nobel Prize dataset spanning over a century of awards. Explores trends by country, gender, age, and prize category using Pandas for aggregation and Plotly, Matplotlib, and Seaborn for a range of static and interactive visualisations.",
-      "featured": true,
+      "short_description": "Explores 120+ years of Nobel Prize records to uncover trends in gender, nationality, research institutions, and laureate age — using Plotly choropleth maps, Seaborn regression plots, and Matplotlib dual-axis charts.",
+      "full_description": "I dug into a dataset of Nobel Prize laureates going back to 1901 to answer questions about the famous prize and its history: how many women have actually won, which countries dominate, and whether scientists are getting older when they finally receive the prize. The analysis spans gender breakdowns, country rankings, research institution hotspots, and age distributions across all six prize categories. It uses Plotly for interactive charts, Matplotlib for trend overlays with rolling averages, and Seaborn for statistical visualisations. It's a thorough end-to-end pandas project — from raw CSV to interactive insight.",
+      "featured": false,
       "featured_order": 3,
-      "date": "2026-02-20",
-      "problem": "The Nobel Prize dataset spans over 120 years of awards across six categories — surface-level summaries miss the structural patterns in who wins, when, and from where.",
-      "solution": "Performed a full exploratory analysis using Pandas for aggregation and filtering, and produced a range of visualisations in Plotly, Matplotlib, and Seaborn to surface trends by country, gender, age distribution, and prize category over time.",
-      "challenges": "Handling missing values and inconsistent country entries across 120+ years of records. Choosing the right chart type for each finding so that results were interpretable at a glance rather than requiring explanation.",
-      "results": "Surfaced clear, concrete trends: the US dominates prize totals since 1950; male recipients outnumber female by approximately 18:1 across the full dataset; Physics laureates skew significantly older than Literature recipients. Interactive Plotly charts make every finding navigable and presentation-ready.",
+      "date": "2026-04-13",
+      "problem": "A raw dataset of 1,000+ Nobel laureate records going back to 1901 doesn't tell you much on its own — the interesting patterns are buried across decades, categories, and geographies. I wanted to answer specific questions: when did the US start dominating, which organisations produce the most laureates, are prizes going to older scientists now than a century ago? Without proper aggregation and visualisation, those questions are impossible to answer by eye. The dataset also has quirks — birth countries that no longer exist, missing dates, organisations only relevant to certain categories — that need careful handling before any analysis is meaningful.",
+      "solution": "I loaded the CSV with pandas and worked through a cleaning pass: converting birth dates to datetime, parsing the fractional prize share into a float percentage, and computing each laureate's age at the time of the award. Aggregations used groupby with various functions, cumulative sums for the country race chart, and 5-year rolling averages for the trend overlays. Plotly Express handled the interactive charts (donut, bar, choropleth, sunburst, line), Matplotlib added dual-axis scatter and line charts, and Seaborn produced the statistical visualisations (histplot, regplot with LOWESS, boxplot, lmplot). Keeping everything in a single practice notebook made it easy to follow the full analysis from start to finish.",
+      "challenges": "The trickiest part was the cumulative country race chart — it required grouping by both country and year, computing a running total within each country group, then filtering to the top 10 by final count. Getting the groupby and cumsum to produce the right shape without duplicating rows took a few attempts. The dual y-axis Matplotlib chart was also fiddly: inverting the secondary axis so that a rising prize-sharing trend reads as a downward visual movement required careful axis management. Choosing birth_country_current over birth_country was also a meaningful decision — using historical borders would significantly inflate some countries' totals and undercount others.",
+      "results": "The analysis surfaced some genuinely interesting patterns: the US surged past every other country around the 1930s and never looked back, fewer than 6% of individual prizes have gone to women, and laureates are winning about a decade later in life now than they were in 1900. It gave me solid practice with the full pandas-to-visualisation pipeline and reinforced when to reach for Plotly (interactive exploration), Matplotlib (fine-grained multi-axis control), and Seaborn (statistical summaries). If I were to extend it, I'd add a time-series breakdown by category to see whether the age trend holds equally across Physics, Chemistry, and Medicine.",
       "tags": [
         "data-analysis",
-        "visualisation"
+        "visualisation",
+        "python"
       ],
       "tech_stack": [
         "Python",
-        "Pandas",
-        "Plotly",
+        "pandas",
+        "NumPy",
+        "Plotly Express",
         "Matplotlib",
         "Seaborn",
-        "NumPy"
+        "Jupyter Notebook"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/nobel-prize-analysis/card/nobel_p.webp",
-      "repo_url": null,
+      "repo_url": "https://github.com/xavier-oc-programming/nobel-prize-data-analysis",
       "live_url": null,
       "demo_url": null
     },
