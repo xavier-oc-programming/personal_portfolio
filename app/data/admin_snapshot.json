@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-15T12:36:32Z",
+  "snapshot_at": "2026-04-15T12:36:53Z",
   "projects": [
     {
       "id": 1,
@@ -791,7 +791,11 @@
         "pathlib",
         "GitHub Actions"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/birthday-email-bot/screenshots/Screenshot_2026-04-15_at_14.34.30.png",
+        "images/projects/birthday-email-bot/screenshots/Screenshot_2026-04-15_at_14.34.52.png",
+        "images/projects/birthday-email-bot/screenshots/Screenshot_2026-04-15_at_14.35.12.png"
+      ],
       "videos": [
         "videos/projects/birthday-email-bot/Screen_Recording_2026-04-15_at_14.32.38.mov"
       ],
