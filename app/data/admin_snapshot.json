@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-15T08:56:07Z",
+  "snapshot_at": "2026-04-15T08:56:57Z",
   "projects": [
     {
       "id": 1,
@@ -1719,28 +1719,32 @@
       "slug": "android-app-store-analysis",
       "title": "Android App Store Analysis",
       "primary_category": "data",
-      "short_description": "Analyses Google Play Store data to identify trends in app categories, ratings, installs, and pricing.",
-      "full_description": "A data analysis of the Google Play Store dataset exploring category distribution, rating patterns, install counts, and pricing strategies across different app types. Uses Pandas for cleaning and aggregation, and Plotly for interactive charts.",
+      "short_description": "Analyses 10,000+ Google Play Store apps with pandas and Plotly to answer real market questions: which categories are most competitive, how much a paid app earns, and how many downloads you give up by charging.",
+      "full_description": "I analysed a Kaggle dataset of 10,841 Google Play Store apps scraped in 2018, cleaning and transforming the raw data to answer six concrete market intelligence questions. The analysis covers category competition, content rating distribution, genre popularity, the free-vs-paid download gap, revenue estimates, and pricing strategy — all visualised with interactive Plotly charts. It's the kind of work that companies like App Annie and Sensor Tower do professionally, and a great hands-on way to practise a full pandas pipeline from messy CSV to polished insight.",
       "featured": false,
       "featured_order": null,
-      "date": "2026-03-02",
-      "problem": null,
-      "solution": null,
-      "challenges": null,
-      "results": null,
+      "date": "2026-04-15",
+      "problem": "App store market intelligence is genuinely hard to come by without paid tools. When you're deciding whether to build a free or paid app, or which category to target, you're largely guessing unless you can get your hands on real data. The raw Kaggle scrape arrives with dirty types — install counts stored as \"10,000+\" strings with commas, prices as \"$0.99\" with dollar signs, NaN-riddled rating columns, and duplicate entries that skew every calculation. Without a clean, methodical pipeline, none of the downstream analysis is trustworthy, and the questions that actually matter — \"which categories are oversaturated?\" or \"will a paid app ever recoup development costs?\" — stay unanswered.",
+      "solution": "I built a step-by-step pandas pipeline that takes the raw CSV through cleaning (dropping unused columns, removing NaN rows, deduplicating on App/Type/Price), type conversion (stripping symbols and casting Installs and Price to numeric), and then a series of aggregations to answer each business question. For genre analysis, I used .str.split(';').stack().value_counts() to flatten semi-colon-separated genre strings into a single countable Series. For competitive analysis, I ran .groupby('Category').agg() twice — once for app count, once for total installs — then merged the two frames into a scatter plot showing concentration vs popularity. All seven final charts use Plotly Express for interactive, export-ready output.",
+      "challenges": "The trickiest part was the Genres column, which stores compound values like \"Action;Action & Adventure\" in a single string. A naive .value_counts() on the raw column treats that as one unique genre rather than two, completely misrepresenting the data. I explored and documented two flattening approaches — .str.split(expand=True).stack() and .str.split().explode() — so the tradeoffs are visible in the notebooks. The other challenge was duplicate handling: .drop_duplicates() without a subset removes rows only when every column matches, which silently kept duplicate apps with slightly differing review counts. Specifying subset=['App', 'Type', 'Price'] was the right fix, and I kept the broken naive attempt in the notebook to show exactly why it fails.",
+      "results": "The analysis produces seven interactive Plotly charts that give a clear market picture: Games and Family dominate in volume, but categories like Beauty and Events have far fewer apps competing for installs — a potential opportunity signal for a developer choosing where to build. The median paid app earns a fraction of what free apps achieve in installs, and most paid categories don't recoup a typical $30k development budget from sales alone. I got much more comfortable thinking carefully about what \"duplicate\" actually means for a given dataset, and how compound string columns need special handling before any aggregation is meaningful. If I were to extend this, I'd update to a more recent scrape and layer in a simple model predicting install count from category, price, and content rating.",
       "tags": [
         "data-analysis",
-        "visualisation"
+        "data-pipeline",
+        "visualisation",
+        "python"
       ],
       "tech_stack": [
         "Python",
-        "Pandas",
-        "Plotly"
+        "pandas",
+        "NumPy",
+        "Plotly Express",
+        "Jupyter Notebook"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/android-app-store-analysis/card/android.webp",
-      "repo_url": null,
+      "repo_url": "https://github.com/xavier-oc-programming/android-app-store-analysis",
       "live_url": null,
       "demo_url": null
     },
