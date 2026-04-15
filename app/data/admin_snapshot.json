@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-14T18:21:04Z",
+  "snapshot_at": "2026-04-15T08:56:07Z",
   "projects": [
     {
       "id": 1,
@@ -1681,31 +1681,36 @@
     },
     {
       "id": 42,
-      "slug": "google-trends-analysis",
+      "slug": "google-trends-time-series-analysis",
       "title": "Google Trends Time Series Analysis",
       "primary_category": "data",
-      "short_description": "Analyses and visualises Google Trends data over time, resampling time series to identify meaningful patterns.",
-      "full_description": "A time series analysis of Google Trends data examining search interest patterns over time. Uses Pandas for date parsing, resampling, and rolling averages, and Matplotlib for multi-series trend visualisation. Demonstrates temporal data handling and pattern extraction.",
+      "short_description": "Explores whether Google search trends correlate with Tesla stock prices, Bitcoin prices, and U.S. unemployment rates, using pandas resampling, rolling averages, and dual-axis Matplotlib charts.",
+      "full_description": "This project asks a genuinely interesting question: does public interest in something, measured by Google search volume, actually track with real-world outcomes like stock prices or unemployment rates? I worked with five datasets covering Tesla, Bitcoin, and U.S. unemployment, and built a series of dual-axis time series charts to compare each against its corresponding Google Trends data. The key technical hurdle was that the datasets don't share the same time frequency — Bitcoin price data is daily while everything else is monthly — so a lot of the work went into resampling and smoothing before any visualisation could happen.",
       "featured": false,
       "featured_order": null,
-      "date": "2026-02-28",
-      "problem": null,
-      "solution": null,
-      "challenges": null,
-      "results": null,
+      "date": "2026-01-15",
+      "problem": "Comparing Google Trends search data against financial or economic datasets sounds straightforward until you actually try it. The first problem is frequency mismatch: Bitcoin price arrives daily, but Google Trends exports monthly, so you can't plot them on the same axis without deciding how to collapse daily data into monthly observations. The second problem is noise: Google Trends search volume is spiky and reactive, so a single news event can create a visual outlier that drowns out the underlying pattern. Without resampling and smoothing, the charts would be misleading rather than illuminating. I also wanted to understand what happens when you extend a dataset with a dramatic outlier year and whether including 2020 changes the story the unemployment data tells.",
+      "solution": "I loaded all five CSV files with pd.read_csv() and immediately converted every date column to a proper datetime type before doing anything else. Daily Bitcoin prices were collapsed to month-end observations using .resample('ME').last(), choosing the last trading price of the month as the representative value for that period. For the unemployment analysis, I computed a 6-month rolling average with .rolling(window=6).mean() to smooth week-to-week search noise and expose the multi-month trend. All three comparisons were visualised as dual-axis line charts using Matplotlib's twinx(), with matplotlib.dates YearLocator and MonthLocator controlling the x-axis tick marks so that years are labelled and months appear as unlabelled minor ticks.",
+      "challenges": "The x-axis tick formatting was the thing that took the most iteration to get right. When a chart spans 10 to 15 years of monthly data, the default Matplotlib behaviour is to either cram in too many labels or show only a handful, and both outcomes look messy. Getting YearLocator, MonthLocator, and DateFormatter to work together correctly required reading the matplotlib.dates documentation carefully and understanding the distinction between major and minor locators. The other genuinely interesting challenge was discovering that when I loaded the unemployment dataset extended to 2020, the COVID spike was so extreme it completely rescaled both axes, which changed the visual story of the entire 2004-2019 period and raised real questions about how to present long-run data that contains an outlier of that magnitude.",
+      "results": "The correlations turned out to be more visible than I expected, particularly for Bitcoin where spikes in news search volume line up fairly clearly with price movements, and for unemployment where the search trend appears to lead the official rate by a month or two. I came away with a solid and transferable workflow for time series comparison: check frequencies first, resample to align, smooth if needed, then plot with dual axes. Working with the 2020 unemployment data was an unexpectedly good lesson in how framing affects interpretation, since adding one year of extreme data completely recontextualised 15 years of prior history. If I revisited this, I'd move the charts into Plotly so the reader could hover over data points and explore the correlations interactively rather than reading a static image.",
       "tags": [
         "data-analysis",
-        "visualisation"
+        "visualisation",
+        "python",
+        "beginner"
       ],
       "tech_stack": [
         "Python",
-        "Pandas",
-        "Matplotlib"
+        "pandas",
+        "matplotlib",
+        "matplotlib.dates",
+        "NumPy",
+        "Jupyter Notebook"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/google-trends-analysis/card/Screenshot_2026-03-24_at_16.56.55.png",
-      "repo_url": null,
+      "repo_url": "https://github.com/xavier-oc-programming/google-trends-time-series-analysis",
       "live_url": null,
       "demo_url": null
     },
