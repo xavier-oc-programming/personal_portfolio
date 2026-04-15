@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-15T08:57:34Z",
+  "snapshot_at": "2026-04-15T08:58:41Z",
   "projects": [
     {
       "id": 1,
@@ -1785,33 +1785,38 @@
     },
     {
       "id": 45,
-      "slug": "linear-regression-seaborn",
-      "title": "Linear Regression with Seaborn",
+      "slug": "movie-budget-linear-regression-analysis",
+      "title": "Linear Regression Analysis — Movie Budget",
       "primary_category": "data",
-      "short_description": "Applies and visualises linear regression on a real dataset, exploring correlation and predictive modelling fundamentals.",
-      "full_description": "A data science project that applies linear regression to a real-world dataset to model relationships between variables. Uses Seaborn for correlation plots and regression visualisation, and scikit-learn for model fitting. An introduction to predictive modelling methodology.",
+      "short_description": "Applies linear regression to 5,000+ films to answer whether bigger budgets mean bigger box office. Covers data cleaning, Seaborn bubble charts, regplot decade comparisons, and a scikit-learn model with slope, R², and predictions.",
+      "full_description": "This project analyses a dataset of 5,391 films spanning over a century of cinema to quantify the relationship between production budget and worldwide box-office revenue. Starting from raw, currency-formatted data, the pipeline cleans the dataset, explores zero-revenue films, visualises the budget-to-revenue relationship across decades, and fits a scikit-learn LinearRegression model to extract a concrete numerical answer. It's a complete data analysis workflow in a single Jupyter environment — cleaning, subsetting, visualising, and modelling all in one place.",
       "featured": false,
       "featured_order": null,
-      "date": "2026-03-06",
-      "problem": null,
-      "solution": null,
-      "challenges": null,
-      "results": null,
+      "date": "2026-04-13",
+      "problem": "When you look at a film's production budget and its box-office gross, the relationship feels obvious — spend more, earn more. But \"feels obvious\" isn't analysis. The raw dataset arrives with budget and revenue stored as currency strings like \"$110,000\", which means no numeric operation works out of the box, and any comparison or correlation before cleaning would be meaningless. On top of that, a significant number of films in the dataset report $0 in worldwide revenue, which could skew the regression badly if left in without investigation. The question worth asking is whether those zeroes represent unreleased films, bad data, or domestic-only releases — and the answer changes the shape of the analysis.",
+      "solution": "The pipeline starts by stripping \"$\" and \",\" from three columns simultaneously using nested loops, then converts them to float and drops nulls and duplicates — making the data numeric before touching anything else. Zero-revenue films are isolated and inspected by release date to determine whether they're genuinely unreleased rather than missing data. From there, the analysis subsets international releases (where worldwide gross exceeds domestic gross), buckets films by decade using floor division on the release year, and overlays two sns.regplot() calls on the same Axes to compare how the budget-to-revenue line looks for older vs. newer films. Finally, a scikit-learn LinearRegression is fitted on budget vs. worldwide gross, extracting the slope, intercept, and R², and used to make a point prediction for a given budget.",
+      "challenges": "The trickiest part was the currency cleaning — the columns aren't just numeric with a prefix, they're full strings with both a \"$\" symbol and thousands-separator commas (e.g. \"$11,000,000\"), so a simple .str.strip(\"$\") or int cast fails immediately. The solution was a nested loop over a list of characters to strip, applied across all three money columns, before a single .astype(float) finalised the conversion. The zero-revenue investigation was also more nuanced than expected: filtering for films where USD_Worldwide_Gross == 0 and then inspecting their release dates revealed that many were future-dated at time of dataset creation rather than films that genuinely earned nothing — a meaningful distinction that justified keeping them out of the regression.",
+      "results": "The finished model confirms the intuition with actual numbers: budget is a statistically meaningful predictor of worldwide revenue, and the R² gives a quantified sense of how much variation budget alone explains. The decade comparison using regplot() makes it visually clear that the relationship is steeper for newer films — blockbuster economics have changed. Working through this project gave me a solid handle on the full pandas cleaning loop, Seaborn's statistical chart layer, and the scikit-learn fit-score-predict pattern. If I returned to it, I'd add a log transformation on both axes — the raw budget and revenue distributions are heavily right-skewed, and a log-log regression would likely produce a better-fitting and more interpretable model.",
       "tags": [
         "data-analysis",
         "machine-learning",
-        "visualisation"
+        "visualisation",
+        "python",
+        "beginner"
       ],
       "tech_stack": [
         "Python",
-        "Pandas",
-        "Seaborn",
-        "scikit-learn"
+        "pandas",
+        "numpy",
+        "matplotlib",
+        "seaborn",
+        "scikit-learn",
+        "Jupyter"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/linear-regression-seaborn/card/Screenshot_2026-03-26_at_10.38.27.png",
-      "repo_url": null,
+      "repo_url": "https://github.com/xavier-oc-programming/movie-budget-linear-regression-analysis",
       "live_url": null,
       "demo_url": null
     },
