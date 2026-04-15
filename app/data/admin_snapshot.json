@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-15T09:03:10Z",
+  "snapshot_at": "2026-04-15T09:04:03Z",
   "projects": [
     {
       "id": 1,
@@ -1857,32 +1857,38 @@
     },
     {
       "id": 47,
-      "slug": "handwashing-discovery-analysis",
-      "title": "Handwashing Discovery Analysis",
+      "slug": "semmelweis-handwashing-data-analysis",
+      "title": "Semmelweis Handwashing Data Analysis",
       "primary_category": "data",
-      "short_description": "Recreates the historical data analysis behind Semmelweis's discovery of handwashing using statistical visualisation.",
-      "full_description": "A historical data analysis project that reconstructs Ignaz Semmelweis's 19th-century discovery linking handwashing to reduced patient mortality. Uses Pandas for data preparation and Matplotlib and Seaborn to visualise the dramatic reduction in death rates after the intervention.",
+      "short_description": "Pandas analysis of 1840s Vienna hospital records proving Dr Semmelweis's handwashing discovery. Rolling averages, Plotly and Seaborn visualisations, and a t-test confirm a ~50% drop in maternal mortality at p < 0.01.",
+      "full_description": "This project re-analyses the original hospital records published by Dr Ignaz Semmelweis in 1861 to answer one question: did mandatory handwashing actually save lives? Using monthly and yearly mortality data from two Vienna maternity clinics (1841-1849), the analysis reconstructs Semmelweis's argument from raw numbers through to a formal hypothesis test. It covers the full data analysis pipeline -- exploration, transformation, visualisation, and statistical validation -- using the core Python data science stack.",
       "featured": false,
       "featured_order": null,
-      "date": "2026-02-22",
-      "problem": null,
-      "solution": null,
-      "challenges": null,
-      "results": null,
+      "date": "2026-04-13",
+      "problem": "Dr Semmelweis noticed that women delivering in Clinic 1 (staffed by doctors who also performed autopsies) were dying at dramatically higher rates than those in Clinic 2 (staffed by midwives with no autopsy contact). He had the data. He even had the intervention -- mandatory handwashing from June 1846 -- and the death rate dropped almost immediately. But without a way to visualise the effect clearly or quantify its statistical significance, his argument was easy to dismiss. The real problem this project tackles is making that evidence speak for itself: turning raw birth and death counts into a structured, verifiable, data-driven case.",
+      "solution": "The analysis is split across four practice notebooks following the natural progression of an investigation: explore the raw data, compare the two clinics, isolate the handwashing effect, and validate it statistically. Pandas handles all data manipulation -- boolean filtering to split data before and after June 1846, column arithmetic for monthly death rates, and a 6-month rolling average to smooth noise. Plotly produces interactive line charts and box plots for the clinic comparison and distribution shift, while Seaborn's KDE plots show the full distributional change. The final step uses `scipy.stats.ttest_ind()` to run an independent samples t-test, giving the result a p-value to stand behind.",
+      "challenges": "The trickiest moment was the KDE plot. By default, Seaborn's `kdeplot()` extends the probability density into negative territory -- which is physically meaningless for a death rate. Spotting that artefact and fixing it with the `clip=(0, 1)` parameter was a good reminder that visualisation defaults don't always respect domain constraints. The rolling average was another small trap: calling `.rolling(6).mean()` on a DataFrame with the date as a regular column silently drops it, so the date column had to be promoted to the index with `.set_index('date')` first before the calculation, then referenced back through the index for plotting.",
+      "results": "The analysis confirms what Semmelweis observed: the average monthly death rate fell from ~10.5% before handwashing to ~5.0% after -- roughly a 2x improvement. The t-test returns p < 0.01, meaning there is less than a 1% probability the improvement was due to random variation. What I found most interesting is how the KDE and histogram charts make the shift feel tangible in a way raw averages don't -- the two distributions barely overlap. This project was a solid exercise in building a complete analytical argument, and it showed me how much the choice of chart type affects how convincing the conclusion feels.",
       "tags": [
         "data-analysis",
-        "visualisation"
+        "visualisation",
+        "python",
+        "beginner"
       ],
       "tech_stack": [
         "Python",
-        "Pandas",
+        "pandas",
+        "NumPy",
         "Matplotlib",
-        "Seaborn"
+        "Seaborn",
+        "Plotly",
+        "SciPy",
+        "Jupyter"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/handwashing-discovery-analysis/card/hand.jpg",
-      "repo_url": null,
+      "repo_url": "https://github.com/xavier-oc-programming/semmelweis-handwashing-data-analysis",
       "live_url": null,
       "demo_url": null
     },
