@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-15T16:29:52Z",
+  "snapshot_at": "2026-04-15T16:30:12Z",
   "projects": [
     {
       "id": 1,
@@ -916,7 +916,10 @@
         "python-dotenv",
         "GitHub Actions"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/stock-trading-news-alert/screenshots/Screenshot_2026-04-15_at_18.28.16.png",
+        "images/projects/stock-trading-news-alert/screenshots/Screenshot_2026-04-15_at_18.28.41.png"
+      ],
       "videos": [
         "videos/projects/stock-trading-news-alert/Screen_Recording_2026-04-15_at_18.24.23.mov"
       ],
