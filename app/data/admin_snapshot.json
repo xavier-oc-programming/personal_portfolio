@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-15T13:27:39Z",
+  "snapshot_at": "2026-04-15T16:29:52Z",
   "projects": [
     {
       "id": 1,
@@ -878,13 +878,8 @@
         "requests",
         "GitHub Actions"
       ],
-      "screenshots": [
-        "images/projects/rain-alert-sms/screenshots/Screenshot_2026-04-15_at_15.26.44.png",
-        "images/projects/rain-alert-sms/screenshots/Screenshot_2026-04-15_at_15.27.20.png"
-      ],
-      "videos": [
-        "videos/projects/rain-alert-sms/Screen_Recording_2026-04-15_at_15.21.17.mov"
-      ],
+      "screenshots": [],
+      "videos": [],
       "card_image": "images/projects/sms-sender/card/sms.png",
       "repo_url": "https://github.com/xavier-oc-programming/rain-alert-sms",
       "live_url": null,
@@ -922,7 +917,9 @@
         "GitHub Actions"
       ],
       "screenshots": [],
-      "videos": [],
+      "videos": [
+        "videos/projects/stock-trading-news-alert/Screen_Recording_2026-04-15_at_18.24.23.mov"
+      ],
       "card_image": "images/projects/stock-trading-news-alert/card/stock.jpeg",
       "repo_url": "https://github.com/xavier-oc-programming/stock-trading-news-alert",
       "live_url": null,
