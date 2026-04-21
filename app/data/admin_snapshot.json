@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-21T11:33:58Z",
+  "snapshot_at": "2026-04-21T11:34:27Z",
   "projects": [
     {
       "id": 1,
@@ -965,7 +965,9 @@
         "images/projects/habit-tracker-pixela/screenshots/Screenshot_2026-04-21_at_13.13.52.png",
         "images/projects/habit-tracker-pixela/screenshots/Screenshot_2026-04-21_at_13.21.06.png"
       ],
-      "videos": [],
+      "videos": [
+        "videos/projects/habit-tracker-pixela/Screen_Recording_2026-04-21_at_13.31.16.mov"
+      ],
       "card_image": "images/projects/habit-tracker/card/habit.webp",
       "repo_url": "https://github.com/xavier-oc-programming/habit-tracker-pixela",
       "live_url": null,
