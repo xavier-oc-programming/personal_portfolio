@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-15T16:30:12Z",
+  "snapshot_at": "2026-04-21T11:05:15Z",
   "projects": [
     {
       "id": 1,
@@ -916,12 +916,9 @@
         "python-dotenv",
         "GitHub Actions"
       ],
-      "screenshots": [
-        "images/projects/stock-trading-news-alert/screenshots/Screenshot_2026-04-15_at_18.28.16.png",
-        "images/projects/stock-trading-news-alert/screenshots/Screenshot_2026-04-15_at_18.28.41.png"
-      ],
+      "screenshots": [],
       "videos": [
-        "videos/projects/stock-trading-news-alert/Screen_Recording_2026-04-15_at_18.24.23.mov"
+        "videos/projects/stock-trading-news-alert/0.mov"
       ],
       "card_image": "images/projects/stock-trading-news-alert/card/stock.jpeg",
       "repo_url": "https://github.com/xavier-oc-programming/stock-trading-news-alert",
