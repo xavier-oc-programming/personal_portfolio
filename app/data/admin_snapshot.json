@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-27T12:20:28Z",
+  "snapshot_at": "2026-04-27T12:20:55Z",
   "projects": [
     {
       "id": 1,
@@ -980,7 +980,7 @@
       "primary_category": "software",
       "short_description": "Log workouts to Google Sheets using plain English. Describe your session and the script parses it via Nutritionix, then writes each exercise as a timestamped row to your spreadsheet via Sheety. Built in two versions: a course script and an OOP refactor.",
       "full_description": "This project takes plain-English workout descriptions and turns them into structured spreadsheet rows automatically. You type something like \"I ran 5km and did 20 minutes of yoga,\" and the script figures out the exercise name, duration, and calories burned, then logs each one with a timestamp directly into a Google Sheet. It was built as Day 38 of the 100 Days of Code course and ships in two versions: the original single-file course script and a refactored build split into proper OOP modules with credentials loaded from a .env file.",
-      "featured": false,
+      "featured": true,
       "featured_order": null,
       "date": "2025-12-02",
       "problem": "Tracking workouts manually is tedious enough that most people stop doing it. You finish a session, open a spreadsheet, try to remember exactly how long you went, estimate the calories, type it all in -- and by the time you've done that three times, you've already given up. Standard fitness apps solve the entry problem but lock your data in proprietary formats with no easy way to query or extend it. A personal Google Sheet gives you full control, but it doesn't reduce the manual effort at all. What I wanted was something that could sit between \"I just finished a run\" and \"that's in my spreadsheet\" with as little friction as possible.",
