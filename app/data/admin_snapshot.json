@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-27T12:21:26Z",
+  "snapshot_at": "2026-04-27T12:23:00Z",
   "projects": [
     {
       "id": 1,
@@ -976,7 +976,7 @@
     {
       "id": 23,
       "slug": "workout-tracking-google-sheets",
-      "title": "Workout Tracker — Google Sheets",
+      "title": "Workout Tracker",
       "primary_category": "software",
       "short_description": "Log workouts to Google Sheets using plain English. Describe your session and the script parses it via Nutritionix, then writes each exercise as a timestamped row to your spreadsheet via Sheety. Built in two versions: a course script and an OOP refactor.",
       "full_description": "This project takes plain-English workout descriptions and turns them into structured spreadsheet rows automatically. You type something like \"I ran 5km and did 20 minutes of yoga,\" and the script figures out the exercise name, duration, and calories burned, then logs each one with a timestamp directly into a Google Sheet. It was built as Day 38 of the 100 Days of Code course and ships in two versions: the original single-file course script and a refactored build split into proper OOP modules with credentials loaded from a .env file.",
