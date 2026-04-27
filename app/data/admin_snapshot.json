@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-27T12:19:27Z",
+  "snapshot_at": "2026-04-27T12:20:28Z",
   "projects": [
     {
       "id": 1,
@@ -988,6 +988,7 @@
       "challenges": "The trickiest detail was the Sheety POST body field naming. The key in the JSON payload has to match the column header in the Google Sheet exactly, including capitalisation, spacing, and punctuation -- \"duration (minutes)\" not \"duration_minutes\" or \"durationMinutes\". Getting this wrong produces a silent 200 response where the row is created but the column is just empty, which is easy to miss if you're not checking the sheet carefully. The other tricky bit was the sys.path.insert placement in the advanced build. Sibling imports (from client import NutritionixClient) need the advanced/ directory on the path, but that directory isn't available when the script is launched via subprocess.run from menu.py in the project root. Inserting the path at the top of main.py, before any local imports, makes it work correctly regardless of how the script is invoked.",
       "results": "This project shows the practical skill of chaining two APIs to automate something genuinely useful -- the kind of integration work that comes up constantly in backend and automation roles. The refactor from a single procedural file into NutritionixClient and SheetWriter demonstrates that I can decompose working code into independently testable units without changing its behaviour. I also got a solid feel for where HTTP Basic Auth fits compared to Bearer tokens and why Sheety's column-name sensitivity is the kind of footgun that bites you silently. If I extended this, I'd add a PUT route for correcting an existing entry and a GET route to display recent history before logging -- small additions that would make it genuinely usable day-to-day rather than just a demo.",
       "tags": [
+        "LLM",
         "api-integration",
         "authentication",
         "automation",
@@ -1005,7 +1006,8 @@
         "Nutritionix API",
         "Sheety API",
         "Google Sheets",
-        "HTTP Basic Auth"
+        "HTTP Basic Auth",
+        "OllamaLLM"
       ],
       "screenshots": [
         "images/projects/workout-tracking-google-sheets/screenshots/Screenshot_2026-04-27_at_14.16.07.png",
