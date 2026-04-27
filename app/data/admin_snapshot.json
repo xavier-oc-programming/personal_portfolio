@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-27T12:19:05Z",
+  "snapshot_at": "2026-04-27T12:19:27Z",
   "projects": [
     {
       "id": 1,
@@ -1013,7 +1013,9 @@
         "images/projects/workout-tracking-google-sheets/screenshots/Screenshot_2026-04-27_at_14.17.13.png",
         "images/projects/workout-tracking-google-sheets/screenshots/Screenshot_2026-04-27_at_14.17.56.png"
       ],
-      "videos": [],
+      "videos": [
+        "videos/projects/workout-tracking-google-sheets/Screen_Recording_2026-04-27_at_14.13.57.mov"
+      ],
       "card_image": "images/projects/workout-tracker/card/tracker3.webp",
       "repo_url": "https://github.com/xavier-oc-programming/workout-tracking-google-sheets",
       "live_url": null,
