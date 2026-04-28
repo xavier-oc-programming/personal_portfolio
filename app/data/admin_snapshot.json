@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-28T11:11:53Z",
+  "snapshot_at": "2026-04-28T11:12:01Z",
   "projects": [
     {
       "id": 1,
@@ -570,7 +570,9 @@
         "images/projects/pomodoro-app-python/screenshots/Screenshot_2026-04-14_at_09.54.43.png",
         "images/projects/pomodoro-app-python/screenshots/Screenshot_2026-04-14_at_09.54.56.png"
       ],
-      "videos": [],
+      "videos": [
+        "https://youtu.be/jXegFGB1B64"
+      ],
       "card_image": "images/projects/pomodoro-app/card/pomodoro.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/pomodoro-app-python",
       "live_url": null,
