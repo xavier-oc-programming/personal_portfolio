@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-28T09:22:53Z",
+  "snapshot_at": "2026-04-28T09:31:06Z",
   "projects": [
     {
       "id": 1,
@@ -1064,7 +1064,9 @@
         "images/projects/amazon-price-tracker-automation/screenshots/Screenshot_2026-04-28_at_11.16.59.png",
         "images/projects/amazon-price-tracker-automation/screenshots/Screenshot_2026-04-28_at_11.19.21.png"
       ],
-      "videos": [],
+      "videos": [
+        "videos/projects/amazon-price-tracker-automation/Screen_Recording_2026-04-28_at_11.27.32.mov"
+      ],
       "card_image": "images/projects/amazon-price-tracker/card/amazon.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/amazon-price-tracker-automation",
       "live_url": null,
