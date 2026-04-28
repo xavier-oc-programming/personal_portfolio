@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-28T11:53:09Z",
+  "snapshot_at": "2026-04-28T11:58:11Z",
   "projects": [
     {
       "id": 1,
@@ -272,9 +272,7 @@
         "images/projects/quiz-game-python/screenshots/Screenshot_2026-04-13_at_18.24.52.png",
         "images/projects/quiz-game-python/screenshots/Screenshot_2026-04-13_at_18.24.59.png"
       ],
-      "videos": [
-        "videos/projects/quiz-game-python/Screen_Recording_2026-04-13_at_18.27.36.mov"
-      ],
+      "videos": [],
       "card_image": "images/projects/quiz-game/card/quiz_terminal.png",
       "repo_url": "https://github.com/xavier-oc-programming/quiz-game-python",
       "live_url": null,
