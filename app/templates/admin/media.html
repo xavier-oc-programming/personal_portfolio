@@ -92,12 +92,18 @@
         {% if project.videos %}
           <div class="row g-2 mb-3">
             {% for vid in project.videos %}
+              {% set is_youtube = vid.startswith('http') %}
               <div class="col-12 col-sm-6">
                 <div class="border rounded p-2 d-flex align-items-center gap-2">
-                  <span class="text-muted small text-truncate flex-grow-1" title="{{ vid }}">{{ vid.split('/')[-1] }}</span>
+                  {% if is_youtube %}
+                    <span class="badge bg-danger me-1">YT</span>
+                  {% endif %}
+                  <span class="text-muted small text-truncate flex-grow-1" title="{{ vid }}">
+                    {{ vid.split('/')[-1] if not is_youtube else vid }}
+                  </span>
                   <form method="POST" action="{{ url_for('admin.media_delete', slug=project.slug) }}">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-                    <input type="hidden" name="type" value="video" />
+                    <input type="hidden" name="type" value="{{ 'youtube' if is_youtube else 'video' }}" />
                     <input type="hidden" name="path" value="{{ vid }}" />
                     <button type="submit" class="btn btn-sm btn-outline-danger py-0 px-1"
                             onclick="return confirm('Remove video?')">&times;</button>
@@ -111,12 +117,21 @@
         {% endif %}
 
         <form method="POST" action="{{ url_for('admin.media_upload_video', slug=project.slug) }}"
-              enctype="multipart/form-data" class="d-flex gap-2 align-items-end">
+              enctype="multipart/form-data" class="d-flex gap-2 align-items-end mb-2">
           {{ video_form.hidden_tag() }}
           <div class="flex-grow-1">
             {{ video_form.video(class="form-control form-control-sm") }}
           </div>
           {{ video_form.submit(class="btn btn-dark btn-sm") }}
+        </form>
+
+        <form method="POST" action="{{ url_for('admin.media_add_youtube', slug=project.slug) }}"
+              class="d-flex gap-2 align-items-end">
+          {{ youtube_form.hidden_tag() }}
+          <div class="flex-grow-1">
+            {{ youtube_form.youtube_url(class="form-control form-control-sm", placeholder="https://www.youtube.com/watch?v=...") }}
+          </div>
+          {{ youtube_form.submit(class="btn btn-danger btn-sm") }}
         </form>
       </div>
     </div>

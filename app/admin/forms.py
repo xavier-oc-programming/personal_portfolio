@@ -64,3 +64,11 @@ class VideoForm(FlaskForm):
         validators=[FileAllowed(ALLOWED_VIDEO_EXTENSIONS, "Videos only (mp4, webm, mov).")],
     )
     submit = SubmitField("Upload Video")
+
+
+class YouTubeForm(FlaskForm):
+    youtube_url = StringField(
+        "YouTube URL",
+        validators=[DataRequired(), URL(), Length(max=255)],
+    )
+    submit = SubmitField("Add YouTube Video")

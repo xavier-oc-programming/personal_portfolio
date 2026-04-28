@@ -19,6 +19,7 @@ Routes:
     POST /admin/projects/<slug>/media/screenshot - Upload screenshots (multi-file)
     POST /admin/projects/<slug>/media/screenshots/reorder - Reorder screenshots
     POST /admin/projects/<slug>/media/video    - Upload video
+    POST /admin/projects/<slug>/media/youtube  - Add YouTube video URL
     POST /admin/projects/<slug>/media/delete   - Delete a media file
     GET  /admin/featured           - Drag-and-drop featured order page
     POST /admin/featured/reorder   - Save new featured order
@@ -53,7 +54,7 @@ from flask import (
 from werkzeug.utils import secure_filename
 
 from app.admin import admin_bp
-from app.admin.forms import CardImageForm, ProjectForm, ScreenshotForm, VideoForm
+from app.admin.forms import CardImageForm, ProjectForm, ScreenshotForm, VideoForm, YouTubeForm
 from app.models.models import ContactMessage, Project, db
 
 
@@ -505,6 +506,7 @@ def project_media(slug: str):
         card_form=CardImageForm(),
         screenshot_form=ScreenshotForm(),
         video_form=VideoForm(),
+        youtube_form=YouTubeForm(),
     )
 
 
@@ -613,6 +615,27 @@ def media_upload_video(slug: str):
     return redirect(url_for("admin.project_media", slug=slug))
 
 
+@admin_bp.post("/projects/<slug>/media/youtube")
+@_require_admin
+def media_add_youtube(slug: str):
+    project = Project.query.filter_by(slug=slug).first_or_404()
+    form = YouTubeForm()
+
+    if form.validate_on_submit():
+        url = form.youtube_url.data.strip()
+        vids = project.videos
+        if url not in vids:
+            vids.append(url)
+            project.videos = vids
+            db.session.commit()
+        _github_commit_full_snapshot()
+        flash("YouTube video added.", "success")
+    else:
+        flash("Invalid YouTube URL.", "danger")
+
+    return redirect(url_for("admin.project_media", slug=slug))
+
+
 @admin_bp.post("/projects/<slug>/media/delete")
 @_require_admin
 def media_delete(slug: str):
@@ -643,6 +666,11 @@ def media_delete(slug: str):
         if abs_path.exists():
             abs_path.unlink()
         flash("Video removed.", "success")
+
+    elif media_type == "youtube":
+        project.videos = [v for v in project.videos if v != rel_path]
+        db.session.commit()
+        flash("YouTube video removed.", "success")
 
     else:
         flash("Unknown media type.", "danger")
