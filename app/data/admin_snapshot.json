@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-28T11:35:50Z",
+  "snapshot_at": "2026-04-28T11:38:55Z",
   "projects": [
     {
       "id": 1,
@@ -618,9 +618,7 @@
         "images/projects/password-manager-app/screenshots/Screenshot_2026-04-14_at_10.11.12.png",
         "images/projects/password-manager-app/screenshots/Screenshot_2026-04-14_at_10.11.27.png"
       ],
-      "videos": [
-        "videos/projects/password-manager-app/Screen_Recording_2026-04-14_at_10.08.40.mov"
-      ],
+      "videos": [],
       "card_image": "images/projects/password-manager/card/password.png",
       "repo_url": "https://github.com/xavier-oc-programming/password-manager-app",
       "live_url": null,
