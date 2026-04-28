@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-28T11:15:25Z",
+  "snapshot_at": "2026-04-28T11:16:45Z",
   "projects": [
     {
       "id": 1,
@@ -400,9 +400,7 @@
         "images/projects/turtle-crossing/screenshots/Screenshot_2026-04-13_at_18.54.58.png",
         "images/projects/turtle-crossing/screenshots/Screenshot_2026-04-13_at_18.55.03.png"
       ],
-      "videos": [
-        "videos/projects/turtle-crossing/Screen_Recording_2026-04-13_at_18.56.14.mov"
-      ],
+      "videos": [],
       "card_image": "images/projects/turtle-crossing/card/turtle.jpg",
       "repo_url": null,
       "live_url": null,
