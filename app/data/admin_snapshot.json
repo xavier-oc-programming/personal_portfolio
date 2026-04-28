@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-28T11:32:08Z",
+  "snapshot_at": "2026-04-28T11:32:13Z",
   "projects": [
     {
       "id": 1,
@@ -362,7 +362,9 @@
         "images/projects/pong-python-turtle/screenshots/Screenshot_2026-04-13_at_18.44.42.png",
         "images/projects/pong-python-turtle/screenshots/Screenshot_2026-04-13_at_18.44.52.png"
       ],
-      "videos": [],
+      "videos": [
+        "https://youtu.be/TRQ-kzQgXVI"
+      ],
       "card_image": "images/projects/pong/card/pong.png",
       "repo_url": "https://github.com/xavier-oc-programming/pong-game-python-tkinter",
       "live_url": null,
