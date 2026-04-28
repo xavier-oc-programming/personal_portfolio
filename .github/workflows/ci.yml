@@ -1,6 +1,6 @@
 name: CI/CD
 
-# triggers deploy after tests pass
+# triggers deploy after tests pass - synced
 
 on:
   push:
