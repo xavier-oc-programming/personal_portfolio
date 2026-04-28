@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-28T09:42:05Z",
+  "snapshot_at": "2026-04-28T09:51:58Z",
   "projects": [
     {
       "id": 1,
@@ -95,8 +95,8 @@
       "primary_category": "software",
       "short_description": "Terminal Blackjack in Python — two versions side by side. Procedural course solution plus a full OOP rebuild with animated ASCII card UI, chip system, split, double down, insurance, and difficulty modes.",
       "full_description": "A Day 11 project from the 100 Days of Code bootcamp, built in two versions to show architectural growth. The original follows the course spec closely in ~75 lines of procedural Python. The advanced version is a complete rebuild with a four-file modular architecture, a 4-deck shoe, a chip-based betting system, casino-style side bets (split, double down, insurance), three difficulty modes, an animated terminal UI with ASCII card art, and a session statistics screen. Both versions launch from a shared root menu and share a single ASCII logo asset.",
-      "featured": false,
-      "featured_order": null,
+      "featured": true,
+      "featured_order": 11,
       "date": "2026-04-13",
       "problem": "The Day 11 course brief produces a minimal working game — cards dealt, hit or stand, result printed — but nothing that feels like a real product or demonstrates meaningful Python depth. There is no sense of stakes without chips, no replay incentive, no visual feedback beyond raw score printouts, and no architectural separation between game logic and output. A single flat file with hardcoded print statements is not a portfolio piece, and it doesn't exercise the Python features introduced across the first eleven days of the course in any cohesive way.",
       "solution": "Two versions were built and shipped side by side so the contrast is visible. The original implements the course spec as written. The advanced version enforces a strict four-file separation: config.py holds every constant, blackjack.py contains pure game logic with zero I/O using dataclasses and enums, display.py owns all terminal rendering and animations, and main.py orchestrates the round loop. Chip accounting uses a pre-deduction model — the bet is removed upfront and chip_delta returns what to add back — which keeps split-hand accounting clean. A finite 4-deck shoe with automatic reshuffle replaces the course's infinite random sampling, more closely modelling real casino play.",
@@ -893,7 +893,7 @@
       "short_description": "Monitors a stock's daily price change and fires WhatsApp alerts with the top 3 news headlines via Twilio whenever the move exceeds a configurable threshold.",
       "full_description": "Stock Trading News Alert watches a ticker (default: TSLA) every morning, fetches the two most recent closing prices from Alpha Vantage, and calculates the percentage change overnight. If the move clears a threshold, it pulls the top three related headlines from NewsAPI and fires one WhatsApp message per article through Twilio. The advanced build refactors the course script into three single-responsibility classes — StockClient, NewsClient, and SmsSender — wired together by a clean orchestrator, with every constant centralised in config.py and a GitHub Actions workflow running the whole thing on a weekday schedule automatically.",
       "featured": true,
-      "featured_order": 3,
+      "featured_order": 9,
       "date": "2025-11-26",
       "problem": "Keeping up with stock movements manually means either staring at a ticker all day or missing a big move entirely. Most retail investors want a simple \"something happened, here's why\" nudge — not a dashboard to babysit. The course exercise surfaced an extra wrinkle: Twilio trial accounts restrict outbound SMS to a verified number tied to that specific account, so the alert would silently fail for anyone who hadn't pre-registered their number. There also wasn't a guard against hammering the daily message cap, which on a trial account sits at around nine SMS — easy to blow through if you're testing or if the threshold is set to zero.",
       "solution": "The original build chains three REST APIs in a single script: Alpha Vantage for OHLCV data, NewsAPI for recent headlines, and Twilio for delivery. The advanced build splits this into three classes — StockClient handles the Alpha Vantage fetch and returns a (perc_diff, abs_diff) tuple; NewsClient queries NewsAPI and returns a list of article dicts; SmsSender wraps Twilio, enforces a local daily quota via a small JSON file in advanced/data/, and exposes a build_body() classmethod for formatting. The channel switch (SMS vs WhatsApp) lives in config.py as a single CHANNEL constant — main.py reads it and picks the right environment variables and character limit, so flipping between delivery modes is a one-line change. A GitHub Actions workflow runs the script on weekdays at 06:00 UTC with all credentials loaded from repository secrets.",
@@ -916,14 +916,8 @@
         "python-dotenv",
         "GitHub Actions"
       ],
-      "screenshots": [
-        "images/projects/stock-trading-news-alert/screenshots/1.png",
-        "images/projects/stock-trading-news-alert/screenshots/2.png",
-        "images/projects/stock-trading-news-alert/screenshots/3.png"
-      ],
-      "videos": [
-        "videos/projects/stock-trading-news-alert/0.mov"
-      ],
+      "screenshots": [],
+      "videos": [],
       "card_image": "images/projects/stock-trading-news-alert/card/stock.jpeg",
       "repo_url": "https://github.com/xavier-oc-programming/stock-trading-news-alert",
       "live_url": null,
@@ -959,15 +953,8 @@
         "python-dotenv",
         "Pixela API"
       ],
-      "screenshots": [
-        "images/projects/habit-tracker-pixela/screenshots/Screenshot_2026-04-21_at_13.11.56.png",
-        "images/projects/habit-tracker-pixela/screenshots/Screenshot_2026-04-21_at_13.12.59.png",
-        "images/projects/habit-tracker-pixela/screenshots/Screenshot_2026-04-21_at_13.13.52.png",
-        "images/projects/habit-tracker-pixela/screenshots/Screenshot_2026-04-21_at_13.21.06.png"
-      ],
-      "videos": [
-        "videos/projects/habit-tracker-pixela/Screen_Recording_2026-04-21_at_13.31.16.mov"
-      ],
+      "screenshots": [],
+      "videos": [],
       "card_image": "images/projects/habit-tracker/card/habit.webp",
       "repo_url": "https://github.com/xavier-oc-programming/habit-tracker-pixela",
       "live_url": null,
@@ -976,19 +963,18 @@
     {
       "id": 23,
       "slug": "workout-tracking-google-sheets",
-      "title": "Workout Tracker",
+      "title": "Workout Tracker — Google Sheets",
       "primary_category": "software",
-      "short_description": "Log workouts to Google Sheets using plain English. A local LLM parses your session, calories are calculated via the MET formula, and each exercise is written as a timestamped row — no manual entry.",
-      "full_description": "I built a natural language workout logger that writes directly to Google Sheets. You type a plain-English description of your session and the app handles the rest — a locally-running LLM (llama3.2 via Ollama) parses the exercise name and duration, calories are computed using the standard MET formula, and each exercise is logged as a timestamped row via the Sheety REST API. Built as Day 38 of 100 Days of Code, then significantly extended after the original API dependency was discontinued mid-development.",
-      "featured": true,
-      "featured_order": 5,
+      "short_description": "Log workouts to Google Sheets using plain English. Describe your session and the script parses it via Nutritionix, then writes each exercise as a timestamped row to your spreadsheet via Sheety. Built in two versions: a course script and an OOP refactor.",
+      "full_description": "This project takes plain-English workout descriptions and turns them into structured spreadsheet rows automatically. You type something like \"I ran 5km and did 20 minutes of yoga,\" and the script figures out the exercise name, duration, and calories burned, then logs each one with a timestamp directly into a Google Sheet. It was built as Day 38 of the 100 Days of Code course and ships in two versions: the original single-file course script and a refactored build split into proper OOP modules with credentials loaded from a .env file.",
+      "featured": false,
+      "featured_order": null,
       "date": "2025-12-02",
-      "problem": "Tracking workouts manually is tedious enough that most people stop doing it. You finish a session, open a spreadsheet, try to remember how long each exercise took, estimate the calories, type it all in — and after a few sessions you've already given up. The course solution used Nutritionix for natural language parsing, but Nutritionix discontinued its free tier during development, breaking the core feature entirely and forcing me to rethink the architecture from scratch.",
-      "solution": "I replaced Nutritionix with a locally-running LLM via Ollama — no API key, no account, no cost, works offline. The user types a free-form workout description; llama3.2 extracts the exercise name and duration as structured JSON; a built-in MET table calculates calories deterministically; and the Sheety API writes each exercise as a new row in Google Sheets with Basic Auth. I added a synonym map to normalise variant names (jogging → Running, swam → Swimming), a disambiguation prompt for vague inputs like \"went to the gym\", and a session loop so an entire workout can be logged without returning to the menu.",
-      "challenges": "Nutritionix discontinued its free tier mid-project, eliminating the only free cloud API that handled natural language → structured exercise data in one call. Every alternative required structured input, and the constraint — free for anyone who clones the repo, no sign-ups — ruled out paid replacements. I switched to Ollama and kept the natural language UX intact. The next issue was calorie accuracy: the LLM returned inconsistent numbers for the same exercise on different runs. I removed calorie estimation from the model entirely and calculated it locally using the MET formula instead. I also had to fix name consistency — the model kept returning past-tense verbs like \"Swam\" and \"Ran\", causing duplicate entries in the sheet. I solved this with prompt engineering and a deterministic synonym map as a fallback. Finally, vague inputs like \"went to the gym\" caused the model to guess randomly, so I built a pre-Ollama disambiguation step that detects trigger words, presents 19 gym-specific options, extracts any duration already mentioned in the input via regex, and rewrites the query before sending it to the model.",
-      "results": "I ended up with a fully working natural language workout logger that's free for any user with no configuration beyond Sheety credentials. The project went well beyond the course scope — I had to solve a real API discontinuation, rethink the calorie calculation approach, and engineer around LLM unreliability. It demonstrates OOP module design, REST API integration, local LLM orchestration, prompt engineering, MET-based scientific calculation, and regex input parsing, all built in response to constraints that emerged during development rather than planned upfront.",
+      "problem": "Tracking workouts manually is tedious enough that most people stop doing it. You finish a session, open a spreadsheet, try to remember exactly how long you went, estimate the calories, type it all in -- and by the time you've done that three times, you've already given up. Standard fitness apps solve the entry problem but lock your data in proprietary formats with no easy way to query or extend it. A personal Google Sheet gives you full control, but it doesn't reduce the manual effort at all. What I wanted was something that could sit between \"I just finished a run\" and \"that's in my spreadsheet\" with as little friction as possible.",
+      "solution": "The script chains two APIs together. Nutritionix exposes a natural language endpoint that accepts free-form workout descriptions and returns structured exercise data -- name, duration in minutes, calories burned -- calibrated to the user's body stats (weight, height, age, gender). Sheety wraps any Google Sheet in a REST API, so each parsed exercise gets POSTed as a row with an automatic date and time stamp. The advanced build decomposes this into two classes: NutritionixClient handles all fetching and SheetWriter handles all posting, wired together by a thin orchestrator in main.py. All constants live in config.py and credentials come from a .env file so nothing sensitive touches the codebase.",
+      "challenges": "The trickiest detail was the Sheety POST body field naming. The key in the JSON payload has to match the column header in the Google Sheet exactly, including capitalisation, spacing, and punctuation -- \"duration (minutes)\" not \"duration_minutes\" or \"durationMinutes\". Getting this wrong produces a silent 200 response where the row is created but the column is just empty, which is easy to miss if you're not checking the sheet carefully. The other tricky bit was the sys.path.insert placement in the advanced build. Sibling imports (from client import NutritionixClient) need the advanced/ directory on the path, but that directory isn't available when the script is launched via subprocess.run from menu.py in the project root. Inserting the path at the top of main.py, before any local imports, makes it work correctly regardless of how the script is invoked.",
+      "results": "This project shows the practical skill of chaining two APIs to automate something genuinely useful -- the kind of integration work that comes up constantly in backend and automation roles. The refactor from a single procedural file into NutritionixClient and SheetWriter demonstrates that I can decompose working code into independently testable units without changing its behaviour. I also got a solid feel for where HTTP Basic Auth fits compared to Bearer tokens and why Sheety's column-name sensitivity is the kind of footgun that bites you silently. If I extended this, I'd add a PUT route for correcting an existing entry and a GET route to display recent history before logging -- small additions that would make it genuinely usable day-to-day rather than just a demo.",
       "tags": [
-        "LLM",
         "api-integration",
         "authentication",
         "automation",
@@ -1001,22 +987,15 @@
       ],
       "tech_stack": [
         "Python",
-        "Ollama",
-        "llama3.2",
+        "requests",
+        "python-dotenv",
+        "Nutritionix API",
         "Sheety API",
         "Google Sheets",
-        "requests",
-        "python-dotenv"
+        "HTTP Basic Auth"
       ],
-      "screenshots": [
-        "images/projects/workout-tracking-google-sheets/screenshots/Screenshot_2026-04-27_at_14.16.07.png",
-        "images/projects/workout-tracking-google-sheets/screenshots/Screenshot_2026-04-27_at_14.16.46.png",
-        "images/projects/workout-tracking-google-sheets/screenshots/Screenshot_2026-04-27_at_14.17.13.png",
-        "images/projects/workout-tracking-google-sheets/screenshots/Screenshot_2026-04-27_at_14.17.56.png"
-      ],
-      "videos": [
-        "videos/projects/workout-tracking-google-sheets/Screen_Recording_2026-04-27_at_14.13.57.mov"
-      ],
+      "screenshots": [],
+      "videos": [],
       "card_image": "images/projects/workout-tracker/card/tracker3.webp",
       "repo_url": "https://github.com/xavier-oc-programming/workout-tracking-google-sheets",
       "live_url": null,
@@ -1027,46 +1006,36 @@
       "slug": "amazon-price-tracker-automation",
       "title": "Amazon Price Tracker Automation",
       "primary_category": "software",
-      "short_description": "Scrapes an Amazon product page daily and emails you when the price drops below a target. Full automation lifecycle — scheduling, status checks, and removal — through an interactive terminal menu. No manual crontab editing required.",
-      "full_description": "Watches a product page on amazon.es and emails you the moment the price drops below a threshold you set. There are two builds: the original course script (single flat file) and an advanced OOP version with separate modules for scraping, notification, and configuration. The advanced build runs automatically every day and sends confirmation emails with the live price whenever you install or remove the schedule.",
+      "short_description": "Scrapes an Amazon product page daily and sends a Gmail alert when the price drops below your target. Full cron lifecycle management (install, check, remove) built into an interactive terminal menu.",
+      "full_description": "Amazon Price Tracker Automation watches a product page on amazon.es and emails you the moment the price drops below a threshold you set. It handles the full automation lifecycle — scheduling, status checks, and removal — through a clean interactive terminal menu so you never have to touch a crontab manually. There are two builds: the original course script (single flat file) and an advanced OOP version with separate modules for scraping, notification, and configuration. The advanced build is the one that runs automatically every day and sends you confirmation emails with the live price whenever you install or remove the schedule.",
       "featured": false,
       "featured_order": null,
       "date": "2026-01-02",
-      "problem": "Manually checking Amazon for a price drop is the kind of thing you tell yourself you'll remember to do and then forget completely. Browser extensions exist but they tie you to a specific browser being open, and most price-tracking services don't cover regional Amazon stores like amazon.es. I wanted something that would just run in the background on my own machine, check the price once a day, and email me if it was worth buying — no third-party accounts, no subscriptions, no browser dependency. The harder part was that amazon.es returns prices in a different format than amazon.com (currency codes and non-breaking spaces instead of the € symbol), and running the check from a cloud server like GitHub Actions turns out to be basically useless because Amazon detects datacenter IPs and serves a bot-detection page instead of the real product.",
-      "solution": "The scraper uses requests with a full set of browser-spoofing headers matching a real Firefox session on macOS to fetch the product page, then BeautifulSoup to locate the price element and a regex to extract and normalise the price across every format Amazon uses by region — €59,99, $129.99, EUR\\xa068.30 — all handled cleanly. If the price is below the target, smtplib sends an alert email via Gmail SMTP over STARTTLS. The advanced build separates this into three independent modules (AmazonScraper, EmailNotifier, config.py) wired by a main.py orchestrator, with all constants in one place so changing the product or target price is a one-line edit. Three bash shell scripts (setup_cron.sh, check_cron.sh, remove_cron.sh) handle the full cron lifecycle and are surfaced as options 3–5 in the interactive menu. The menu passes sys.executable to the cron installer so the scheduled job always runs with the exact same Python interpreter and virtual environment — not the system Python, which may lack the required packages. When you install or remove the schedule, the script fetches the current live price and includes it in the confirmation email.",
-      "challenges": "The biggest surprise was discovering that GitHub Actions is effectively useless for scraping Amazon. The workflow file is in the repo for reference, but Amazon's bot detection recognises Microsoft Azure datacenter IP ranges and returns a stripped page with no price element — regardless of how realistic the headers look. The fix was local macOS cron, which runs from a home ISP IP indistinguishable from a real browser visit. The second challenge was price format inconsistency: amazon.es was returning prices as \"EUR\\xa068.30\" — the currency code as text, followed by a non-breaking space, followed by the number — which broke the original regex that only looked for €/$£ symbols. Extending the parser to handle currency code prefixes, non-breaking spaces, and both EU comma-decimal and US dot-decimal formats without breaking existing cases took careful regex work. Getting macOS to actually allow crontab writes from the terminal was also trickier than expected — Full Disk Access has to be granted manually in System Settings, and the error message when it's blocked is silent, so the setup script now explicitly detects the failure and prints the exact navigation path to fix it.",
-      "results": "The project ended up well beyond the original course exercise — a fully automated daily tracker with a complete cron lifecycle built into a menu, confirmation emails with live price data at the moment of scheduling, and a clean OOP architecture where every module has one job. Gained a solid understanding of how Amazon serves different page formats depending on region and IP reputation, and of the practical difference between cloud CI/CD scheduling (great for stateless code, bad for scraping commercial sites) and local cron. Also got comfortable writing bash scripts that interact with the macOS crontab safely — checking for duplicates, detecting permission failures, and passing the active Python interpreter through so the scheduled job always runs in the right environment.",
+      "problem": "Manually checking Amazon for a price drop on something you want to buy is the kind of thing you tell yourself you'll remember to do and then forget completely. Browser extensions exist but they tie you to a specific browser being open, and most price-tracking services don't cover regional Amazon stores like amazon.es. I wanted something that would just run in the background on my own machine, check the price once a day, and email me if it was worth buying — no third-party accounts, no subscriptions, no browser dependency. The harder part was that amazon.es returns prices in a different format than amazon.com (currency codes and non-breaking spaces instead of the € symbol), and running the check from a cloud server like GitHub Actions turns out to be basically useless because Amazon detects datacenter IPs and serves a bot-detection page instead of the real product.",
+      "solution": "The scraper uses requests with a full set of browser-spoofing headers (matching a real Firefox session on macOS) to fetch the product page, then BeautifulSoup to locate the price element and a regex to extract and normalise the price across every format Amazon uses by region — €59,99, $129.99, EUR\\xa068.30 — all handled cleanly. If the price is below the target, smtplib sends an alert email via Gmail SMTP over STARTTLS. The advanced build separates this into three independent modules (AmazonScraper, EmailNotifier, config.py) wired by a main.py orchestrator, with all constants in one place so changing the product or target price is a one-line edit. Three bash shell scripts (setup_cron.sh, check_cron.sh, remove_cron.sh) handle the full cron lifecycle and are surfaced as options 3–5 in the interactive menu, so the whole thing is usable without ever manually editing a crontab. When you install or remove the schedule, the script fetches the current live price and includes it in the confirmation email so you always know where things stand.",
+      "challenges": "The biggest surprise was discovering that GitHub Actions is effectively useless for scraping Amazon. The workflow file is in the repo for reference, but Amazon's bot detection recognises Microsoft Azure datacenter IP ranges (which is what GitHub Actions runs on) and returns a stripped page with no price element — regardless of how realistic the headers look. The fix was local macOS cron, which runs from my home ISP IP and is indistinguishable from a real browser visit. The second challenge was price format inconsistency: amazon.es was returning prices as \"EUR\\xa068.30\" — the currency code as text, followed by a non-breaking space, followed by the number — which completely broke the original regex that only looked for €/$/£ symbols. Extending the parser to handle currency code prefixes, non-breaking spaces, and both EU comma-decimal and US dot-decimal formats without breaking any of the existing cases took some careful regex work. Getting macOS to actually allow crontab writes from the terminal was also trickier than expected — Full Disk Access has to be granted manually in System Settings, and the error message when it's blocked is silent, so the setup script now explicitly detects the failure and prints the exact navigation path to fix it.",
+      "results": "The project ended up well beyond the original course exercise — it's a fully automated daily tracker with a complete cron lifecycle built into a menu, confirmation emails with live price data at the moment of scheduling, and a clean OOP architecture where every module has one job. I got a solid understanding of how Amazon serves different page formats depending on region and IP reputation, and of the practical difference between cloud CI/CD scheduling (great for stateless code, bad for scraping commercial sites) and local cron. I also got comfortable writing bash scripts that interact with the macOS crontab safely — checking for duplicates, detecting permission failures, and passing the active Python interpreter through so the scheduled job always runs in the right environment. If I extended this further I'd add a config file for tracking multiple products in a single run and log the price history to a CSV so you can see the trend over time.",
       "tags": [
         "automation",
         "web-scraping",
         "python",
         "oop",
         "cli",
-        "scripting",
-        "terminal-ux"
+        "terminal-ux",
+        "scripting"
       ],
       "tech_stack": [
         "Python",
         "requests",
         "BeautifulSoup4",
+        "smtplib",
         "python-dotenv",
         "regex",
         "bash",
         "macOS cron"
       ],
-      "screenshots": [
-        "images/projects/amazon-price-tracker-automation/screenshots/1.png",
-        "images/projects/amazon-price-tracker-automation/screenshots/2.png",
-        "images/projects/amazon-price-tracker-automation/screenshots/Screenshot_2026-04-28_at_11.12.40.png",
-        "images/projects/amazon-price-tracker-automation/screenshots/Screenshot_2026-04-28_at_11.14.39.png",
-        "images/projects/amazon-price-tracker-automation/screenshots/Screenshot_2026-04-28_at_11.15.09.png",
-        "images/projects/amazon-price-tracker-automation/screenshots/Screenshot_2026-04-28_at_11.15.35.png",
-        "images/projects/amazon-price-tracker-automation/screenshots/Screenshot_2026-04-28_at_11.16.59.png",
-        "images/projects/amazon-price-tracker-automation/screenshots/Screenshot_2026-04-28_at_11.19.21.png"
-      ],
-      "videos": [
-        "videos/projects/amazon-price-tracker-automation/Screen_Recording_2026-04-28_at_11.27.32.mov"
-      ],
+      "screenshots": [],
+      "videos": [],
       "card_image": "images/projects/amazon-price-tracker/card/amazon.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/amazon-price-tracker-automation",
       "live_url": null,
