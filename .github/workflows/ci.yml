@@ -73,6 +73,9 @@ jobs:
           path: ~/.npm-global
           key: railway-cli-${{ runner.os }}
 
+      - name: Pull latest snapshot
+        run: git pull origin main
+
       - name: Deploy to Railway
         run: |
           npm config set prefix ~/.npm-global
