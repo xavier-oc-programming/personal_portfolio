@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-28T11:50:16Z",
+  "snapshot_at": "2026-04-28T11:50:23Z",
   "projects": [
     {
       "id": 1,
@@ -1000,7 +1000,9 @@
         "HTTP Basic Auth"
       ],
       "screenshots": [],
-      "videos": [],
+      "videos": [
+        "https://youtu.be/lXI2O2fvNzg"
+      ],
       "card_image": "images/projects/workout-tracker/card/tracker3.webp",
       "repo_url": "https://github.com/xavier-oc-programming/workout-tracking-google-sheets",
       "live_url": null,
