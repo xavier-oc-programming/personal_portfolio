@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-28T09:03:00Z",
+  "snapshot_at": "2026-04-28T09:22:53Z",
   "projects": [
     {
       "id": 1,
@@ -1054,7 +1054,16 @@
         "bash",
         "macOS cron"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/amazon-price-tracker-automation/screenshots/1.png",
+        "images/projects/amazon-price-tracker-automation/screenshots/2.png",
+        "images/projects/amazon-price-tracker-automation/screenshots/Screenshot_2026-04-28_at_11.12.40.png",
+        "images/projects/amazon-price-tracker-automation/screenshots/Screenshot_2026-04-28_at_11.14.39.png",
+        "images/projects/amazon-price-tracker-automation/screenshots/Screenshot_2026-04-28_at_11.15.09.png",
+        "images/projects/amazon-price-tracker-automation/screenshots/Screenshot_2026-04-28_at_11.15.35.png",
+        "images/projects/amazon-price-tracker-automation/screenshots/Screenshot_2026-04-28_at_11.16.59.png",
+        "images/projects/amazon-price-tracker-automation/screenshots/Screenshot_2026-04-28_at_11.19.21.png"
+      ],
       "videos": [],
       "card_image": "images/projects/amazon-price-tracker/card/amazon.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/amazon-price-tracker-automation",
