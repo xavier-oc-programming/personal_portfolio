@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-28T09:31:06Z",
+  "snapshot_at": "2026-04-28T09:42:05Z",
   "projects": [
     {
       "id": 1,
@@ -1105,7 +1105,13 @@
         "threading",
         "re"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/cookie-clicker-bot/screenshots/Screenshot_2026-04-28_at_11.39.13.png",
+        "images/projects/cookie-clicker-bot/screenshots/Screenshot_2026-04-28_at_11.39.53.png",
+        "images/projects/cookie-clicker-bot/screenshots/Screenshot_2026-04-28_at_11.40.08.png",
+        "images/projects/cookie-clicker-bot/screenshots/Screenshot_2026-04-28_at_11.40.40.png",
+        "images/projects/cookie-clicker-bot/screenshots/Screenshot_2026-04-28_at_11.41.11.png"
+      ],
       "videos": [],
       "card_image": "images/projects/cookie-clicker-bot/card/Screenshot_2026-04-14_at_15.00.06.png",
       "repo_url": "https://github.com/xavier-oc-programming/cookie-clicker-bot",
