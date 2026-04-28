@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-28T11:59:16Z",
+  "snapshot_at": "2026-04-28T13:17:41Z",
   "projects": [
     {
       "id": 1,
@@ -273,7 +273,7 @@
         "images/projects/quiz-game-python/screenshots/Screenshot_2026-04-13_at_18.24.59.png"
       ],
       "videos": [
-        "https://youtu.be/caycT2Iqaug"
+        "videos/projects/quiz-game-python/Screen_Recording_2026-04-13_at_18.27.36.mov"
       ],
       "card_image": "images/projects/quiz-game/card/quiz_terminal.png",
       "repo_url": "https://github.com/xavier-oc-programming/quiz-game-python",
@@ -316,7 +316,7 @@
         "images/projects/snake-game-python/screenshots/Screenshot_2026-04-13_at_18.34.03.png"
       ],
       "videos": [
-        "https://youtu.be/C0MRLG73jo0"
+        "videos/projects/snake-game-python/Screen_Recording_2026-04-13_at_18.35.57.mov"
       ],
       "card_image": "images/projects/snake-game/card/snake.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/snake-game-python",
@@ -1134,7 +1134,10 @@
         "subprocess",
         "GitHub Actions"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/gym-booking-bot/screenshots/Screenshot_2026-04-28_at_15.16.31.png",
+        "images/projects/gym-booking-bot/screenshots/Screenshot_2026-04-28_at_15.16.48.png"
+      ],
       "videos": [],
       "card_image": "images/projects/gym-routine-automator/card/gym.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/gym-booking-bot",
