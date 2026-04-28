@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-28T11:50:23Z",
+  "snapshot_at": "2026-04-28T11:51:01Z",
   "projects": [
     {
       "id": 1,
@@ -999,7 +999,12 @@
         "Google Sheets",
         "HTTP Basic Auth"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/workout-tracking-google-sheets/screenshots/Screenshot_2026-04-27_at_14.16.07.png",
+        "images/projects/workout-tracking-google-sheets/screenshots/Screenshot_2026-04-27_at_14.16.46.png",
+        "images/projects/workout-tracking-google-sheets/screenshots/Screenshot_2026-04-27_at_14.17.13.png",
+        "images/projects/workout-tracking-google-sheets/screenshots/Screenshot_2026-04-27_at_14.17.56.png"
+      ],
       "videos": [
         "https://youtu.be/lXI2O2fvNzg"
       ],
