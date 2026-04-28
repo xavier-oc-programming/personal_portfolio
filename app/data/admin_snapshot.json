@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-28T11:33:54Z",
+  "snapshot_at": "2026-04-28T11:34:08Z",
   "projects": [
     {
       "id": 1,
@@ -530,7 +530,6 @@
         "images/projects/miles-to-km-converter/screenshots/Screenshot_2026-04-14_at_09.41.34.png"
       ],
       "videos": [
-        "videos/projects/miles-to-km-converter/Screen_Recording_2026-04-14_at_09.40.21.mov",
         "https://youtu.be/dkTO5YuItSA"
       ],
       "card_image": "images/projects/miles-to-km-converter/card/Screenshot_2026-03-26_at_12.49.16.png",
