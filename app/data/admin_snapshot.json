@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-28T11:12:01Z",
+  "snapshot_at": "2026-04-28T11:15:19Z",
   "projects": [
     {
       "id": 1,
@@ -749,9 +749,7 @@
         "images/projects/mail-merge-python/screenshots/Screenshot_2026-04-14_at_15.22.43.png",
         "images/projects/mail-merge-python/screenshots/Screenshot_2026-04-14_at_15.23.02.png"
       ],
-      "videos": [
-        "videos/projects/mail-merge-python/Screen_Recording_2026-04-14_at_15.23.36.mov"
-      ],
+      "videos": [],
       "card_image": "images/projects/mail-merge-automator/card/mail.png",
       "repo_url": "https://github.com/xavier-oc-programming/mail-merge-python",
       "live_url": null,
