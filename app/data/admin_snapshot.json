@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-28T11:45:15Z",
+  "snapshot_at": "2026-04-28T11:45:22Z",
   "projects": [
     {
       "id": 1,
@@ -39,7 +39,9 @@
         "images/projects/hangman/screenshots/Screenshot_2026-03-24_at_10.44.26.png",
         "images/projects/hangman/screenshots/Screenshot_2026-03-24_at_10.44.39.png"
       ],
-      "videos": [],
+      "videos": [
+        "https://youtu.be/272fe7BA4IQ"
+      ],
       "card_image": "images/projects/hangman/card/hangman_card.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/hangman_beginner_project_xoc",
       "live_url": null,
