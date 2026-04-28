@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-28T13:17:41Z",
+  "snapshot_at": "2026-04-28T13:18:02Z",
   "projects": [
     {
       "id": 1,
@@ -1135,8 +1135,8 @@
         "GitHub Actions"
       ],
       "screenshots": [
-        "images/projects/gym-booking-bot/screenshots/Screenshot_2026-04-28_at_15.16.31.png",
-        "images/projects/gym-booking-bot/screenshots/Screenshot_2026-04-28_at_15.16.48.png"
+        "images/projects/gym-booking-bot/screenshots/Screenshot_2026-04-28_at_15.16.48.png",
+        "images/projects/gym-booking-bot/screenshots/Screenshot_2026-04-28_at_15.16.31.png"
       ],
       "videos": [],
       "card_image": "images/projects/gym-routine-automator/card/gym.jpg",
