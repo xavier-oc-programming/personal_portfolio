@@ -73,7 +73,7 @@ def _require_admin(f):
 
 def _split_csv(value: str) -> list[str]:
     """Convert a comma-separated string into a cleaned list of non-empty strings."""
-    return [item.strip().lower() for item in (value or "").split(",") if item.strip()]
+    return [item.strip() for item in (value or "").split(",") if item.strip()]
 
 
 def _get_project_static_dir(slug: str) -> Path:
@@ -881,7 +881,7 @@ def tags():
 @admin_bp.post("/tags/add")
 @_require_admin
 def tag_add():
-    tag = request.form.get("tag", "").strip().lower()
+    tag = request.form.get("tag", "").strip()
     slugs = request.form.getlist("slugs")
 
     if not tag:
