@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-29T09:10:17Z",
+  "snapshot_at": "2026-04-29T09:10:22Z",
   "projects": [
     {
       "id": 1,
@@ -1134,9 +1134,7 @@
         "subprocess",
         "GitHub Actions"
       ],
-      "screenshots": [
-        "images/projects/gym-booking-bot/screenshots/Screenshot_2026-04-28_at_15.16.31.png"
-      ],
+      "screenshots": [],
       "videos": [
         "https://youtu.be/QWY824fahEQ"
       ],
