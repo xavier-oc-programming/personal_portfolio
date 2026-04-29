@@ -3,6 +3,7 @@ name: CI/CD
 # triggers deploy after tests pass - tag casing fix
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
     paths:

@@ -265,9 +265,26 @@ Defined in `.github/workflows/ci.yml`.
 3. Run the full test suite against the real database
 
 **On push to `main` only (after tests pass):**
-4. Deploy to Railway automatically
+4. Pull the latest snapshot from GitHub (ensures the most recent admin changes are included)
+5. Deploy to Railway automatically
 
 A failed test blocks deployment. The pipeline will not ship broken code.
+
+### Manual deploy
+
+The workflow supports `workflow_dispatch` — you can trigger a full test + deploy run manually at any time from the GitHub Actions UI without pushing any code:
+
+1. Go to the GitHub repo → **Actions** tab
+2. Select the **CI/CD** workflow in the left sidebar
+3. Click **Run workflow** → **Run workflow**
+
+This is useful when you've made data-only changes (tag renames, snapshot updates) that don't touch any code file and therefore don't trigger the path filters automatically.
+
+### Snapshot commits and `[skip ci]`
+
+Every admin write (editing a project, uploading media, renaming a tag) automatically commits an updated `admin_snapshot.json` to GitHub with the message `data: update admin snapshot [skip ci]`. The `[skip ci]` flag tells GitHub Actions to skip the workflow entirely for that commit — no tests run, no deploy triggers.
+
+This is intentional. Snapshot commits are data backups, not code changes. They don't need to be tested or deployed independently. When a real code change is pushed next, the deploy step pulls the latest snapshot (including any admin changes made since the last deploy) before uploading to Railway.
 
 To enable Railway deployment from the pipeline, add a `RAILWAY_PORTFOLIO_TOKEN` secret to the GitHub repository (Settings → Secrets and variables → Actions). The token must be a **project-level** token generated from Railway's project settings, not an account API token.
 
@@ -359,6 +376,9 @@ The admin is the only interface that modifies production data. A bug in a delete
 
 **Why is the snapshot sync authoritative?**
 On startup in development, the app syncs its local database from `admin_snapshot.json`. The sync is authoritative — projects in the database that are absent from the snapshot are deleted, not preserved. This ensures that deletions made on the live site (which commit an updated snapshot to GitHub) are reflected locally after a `git pull`, without any manual database cleanup.
+
+**Why does the deploy step pull the latest snapshot before uploading?**
+The CI/CD workflow is triggered by code changes, not data changes. Between two code pushes, the admin may have committed several snapshot updates (tagged `[skip ci]`). Without a `git pull` in the deploy job, the runner would upload the snapshot as of the triggering commit — potentially missing recent admin edits. The pull step ensures the deploy always includes the most current snapshot, keeping the Railway database in sync with the latest admin state.
 
 **Why is filtering client-side?**
 The projects page fetches the full project list once from `/api/v1/projects` on load and caches it in memory. Every subsequent filter or sort is instant — no network round-trip, no page reload. This architecture also demonstrates that the API can serve as the data source for a decoupled front end.
