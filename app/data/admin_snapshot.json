@@ -680,7 +680,7 @@
       "challenges": "The trickiest part was the two-phase startup: `Display.__init__` receives an `on_category_select` callback, but the quiz callbacks (`on_true`, `on_false`) can't exist until after the API fetch — which only happens after the user picks a category. That meant `Display` needed a second entry point, `start_quiz(on_true, on_false)`, called from `main.py` once the `QuizBrain` was ready. The other tricky bit was giving the user visual feedback (\"Loading questions…\") before the blocking network call. Tkinter won't repaint until the event loop gets control back, so the loading text would never appear if I called `fetch_questions()` synchronously right after hiding the selector. The fix was scheduling the API call with `root.after(50, ...)`, giving tkinter one render cycle to paint the canvas before the request goes out.",
       "results": "The project gave me a solid feel for applying MVC thinking in a desktop GUI context — separating what the app knows from what it shows is just as valuable in Tkinter as it is anywhere else. I came away with a much clearer mental model of how tkinter's event loop works and where blocking calls will bite you. If I were to extend it I'd move the API call to a background thread with `threading.Thread` and use `root.after()` to poll for the result, which would eliminate the brief freeze entirely. The two-build structure also turned out to be a nice way to document the progression from \"course solution\" to \"production-shaped code\" in a single repo.",
       "tags": [
-        "API-INTEGRATION",
+        "API-integration",
         "game",
         "GUI",
         "OOP",
@@ -817,7 +817,7 @@
       "challenges": "The trickiest part of this project wasn't the APIs — it was credential safety. The original course file stored a real Gmail app password as a string literal, which made it into the initial git commit and got pushed to a public GitHub repo before the problem was caught. Fixing it properly meant doing a full clean rebuild from a temp directory rather than trying to rewrite history with rebase, since the template's recovery procedure explicitly prohibits that path. A second structural challenge was naming: having both an original/ folder on main and an original branch created constant git ambiguity — git checkout original would fail because it couldn't tell which one was meant. Renaming the branch to source resolved this permanently and made the intent clearer.",
       "results": "The finished project demonstrates how to chain multiple public APIs together, handle credentials safely across both local and CI environments, and design modules with clear separation of concerns. Migrating from a while True polling loop to a GitHub Actions cron job turned out to be the more interesting architectural lesson — it reframes the script as a stateless function rather than a long-running process, which is both simpler and more robust. If I were extending it further, I'd add a run log to the Actions summary so you can see a timeline of when the ISS was overhead, and possibly filter notifications to only send once per pass rather than potentially emailing multiple times in the same five-minute window.",
       "tags": [
-        "API-INTEGRATION",
+        "API-integration",
         "automation",
         "deployment",
         "OOP",
@@ -858,7 +858,7 @@
       "challenges": "The trickiest part wasn't the API calls — it was credential hygiene. One of the course exploration files had real API keys and phone numbers hardcoded directly in the source, which could have been committed to a public GitHub repo without a careful pre-staging scan. Catching that before any git add happened was the right call, and it shaped the template rule added afterwards: always grep for credential patterns before staging. The second challenge was the menu UX: without an input(\"Press Enter...\") pause after subprocess.run(), any error from the build was wiped off the screen the instant the menu loop cleared the console, making debugging nearly impossible. A one-line fix, but one that required experiencing the failure to notice.",
       "results": "The bot now runs autonomously every morning and sends a WhatsApp message before the day starts — no manual action required. Building it solidified the core credential management pattern I'll use in every project that touches an external API: .env locally, .env.example committed, GitHub Secrets in CI, and load_dotenv() as a no-op bridge between the two. The OOP refactor made the separation of concerns genuinely obvious rather than theoretical — WeatherFetcher and Notifier can each be tested or swapped without touching anything else. If I rebuilt it, I'd add a proper logging layer instead of print() statements so the GitHub Actions run history is more useful for debugging.",
       "tags": [
-        "API-INTEGRATION",
+        "API-integration",
         "authentication",
         "automation",
         "OOP",
@@ -898,7 +898,7 @@
       "challenges": "The trickiest part was the Twilio trial account restriction — the SMS from-number worked in the course demo but threw a 21660 \"number mismatch\" error on a different account because trial accounts only allow sending from their own verified number. Switching to the WhatsApp sandbox (whatsapp:+14155238886) solved it cleanly since that number is shared across all Twilio trial accounts. Getting the character limit right for WhatsApp vs SMS also needed care: SMS has a hard UCS-2 segment limit of around 70 characters, but WhatsApp has a 4096-character ceiling, so the same clamp_ucs2() helper needed a configurable limit rather than a hardcoded 65. The local quota guard had a subtle path bug too — QUOTA_FILE was originally set with Path(\".sms_quota.json\"), which resolves relative to the working directory at runtime; when launched from menu.py with a different cwd, the file landed in the wrong place. Anchoring it to Path(__file__).parent fixed it permanently.",
       "results": "The project demonstrates how to wire multiple REST APIs together in a clean, testable architecture — each module owns exactly one concern and could be swapped out without touching the others. It also shows how to handle real-world API friction: trial account restrictions, rate-limit responses, and daily quota management. The GitHub Actions workflow means the alert actually runs automatically every weekday without any manual intervention, which turns a course exercise into a genuinely useful tool. If I were extending it, I'd add a portfolio of tickers (not just TSLA), persist the last-seen percentage change to avoid re-alerting on the same move, and look at NewsAPI's paid tier for same-day articles — the free tier has a 24-hour delay that blunts the relevance of the headlines.",
       "tags": [
-        "API-INTEGRATION",
+        "API-integration",
         "automation",
         "OOP",
         "python",
@@ -936,7 +936,7 @@
       "challenges": "The trickiest part was making the setup steps idempotent. Pixela returns HTTP 409 when a user or graph already exists, which raise_for_status() treats as a failure — so every run after the first would print scary-looking errors for steps that had actually succeeded. The naive fix would be to wrap everything in a blanket try/except, but that would also swallow real errors like auth failures or network timeouts. The solution was to intercept 409 specifically: check the status code before calling raise_for_status(), print a silent skip message, and let all other non-2xx codes fall through to the error handler as normal. Clean re-runs without hiding legitimate failures.",
       "results": "This project gave me a solid grounding in REST API design beyond just GET requests — custom headers, JSON request bodies, and the semantic difference between POST, PUT, and DELETE. The OOP refactor made me think carefully about separation of concerns: what belongs in the client versus the orchestrator. I also learned that idempotency is something you have to design for explicitly, not something APIs just hand you. If I were to extend this, I'd add a way to list recent pixels and show a text summary of the week, so you can review your history without opening a browser.",
       "tags": [
-        "API-INTEGRATION",
+        "API-integration",
         "REST-API",
         "CLI",
         "terminal-ux",
@@ -981,7 +981,7 @@
       "results": "I ended up with a fully working natural language workout logger that's free for any user with no configuration beyond Sheety credentials. The project went well beyond the course scope — I had to solve a real API discontinuation, rethink the calorie calculation approach, and engineer around LLM unreliability. It demonstrates OOP module design, REST API integration, local LLM orchestration, prompt engineering, MET-based scientific calculation, and regex input parsing, all built in response to constraints that emerged during development rather than planned upfront.",
       "tags": [
         "LLM",
-        "API-INTEGRATION",
+        "API-integration",
         "authentication",
         "automation",
         "CLI",
@@ -1307,7 +1307,7 @@
       "challenges": "The trickiest part was tkinter's PhotoImage garbage collection behaviour. If you assign a PhotoImage to a local variable, Python's garbage collector can destroy it before tkinter ever renders it -- and the image silently disappears with no error. The fix is to store references on the window object (course solution) or on self (advanced build) so the image stays alive for the widget's lifetime. The second challenge was making asset paths work correctly when menu.py launches the script as a subprocess with a different working directory -- solved by resolving paths via Path(__file__).parent.parent rather than relying on wherever the script happens to be called from.",
       "results": "This project taught me a pattern I have used in every GUI project since: keep image references alive on a long-lived object, and always resolve asset paths relative to __file__. The OOP refactor also showed me concretely why encapsulation matters -- module-level globals like canvas and quote_text work fine for a script this small, but they become a maintenance headache the moment you want to test or extend anything. I would add error handling for network failures next -- right now a failed request raises an unhandled exception and the app crashes, which is not a great user experience for something as important as Ron Swanson quotes.",
       "tags": [
-        "API-INTEGRATION",
+        "API-integration",
         "beginner",
         "GUI",
         "OOP",
@@ -1342,7 +1342,7 @@
       "challenges": "The hardest problem was that the original API was being decommissioned mid-project, returning 500s on every call, which meant finding and integrating a replacement from scratch. I evaluated several alternatives before landing on SerpApi, which scrapes Google Flights and returns real prices with a simple API key and no OAuth2 flow. SerpApi's data model is also different from a traditional flights API: it takes a specific outbound and return date rather than a date range, and it has no IATA lookup endpoint, so airport codes have to be pre-filled in the sheet manually. Parsing the nested response structure (best_flights, other_flights, and layovers arrays) cleanly into FlightData objects also required careful handling to avoid KeyError crashes on missing fields.",
       "results": "The project is fully functional: it scans the sheet, searches Google Flights in real time, and delivers WhatsApp and email alerts when a deal lands. I came away with a much deeper understanding of multi-API orchestration, specifically what it actually takes to swap one external service for another cleanly without rewiring everything else. The two-build structure was a deliberate choice to show the before/after of a refactor: same logic, cleaner architecture, easier to extend. If I were taking it further, I'd add a date-range loop so each run checks multiple departure windows rather than a single fixed date, and I'd look at scheduling it as a daily cron job so it runs without me having to remember to trigger it.",
       "tags": [
-        "API-INTEGRATION",
+        "API-integration",
         "automation",
         "dataclasses",
         "OOP",
@@ -1386,7 +1386,7 @@
       "challenges": "Getting the fuzzy matching calibrated was the trickiest part — too strict and you reject valid songs with minor title differences, too loose and you accept wrong ones. Billboard has some genuinely edge-case entries: dual-title songs like \"Candle In The Wind 1997/Something About The Way You Look Tonight\" would never match as a full string, so the enhanced version splits on \"/\" and tries each part separately. Multi-artist tracks — \"LL Cool J, Method Man, Redman, DMX, Canibus And Master P\" — score poorly on artist comparison because Spotify may credit the same track differently, so the threshold is adaptively relaxed for three or more featured artists. The broad fallback query blends title score (70%) with a year-match bonus (30%) rather than artist comparison, which proved more reliable for catching stragglers without pulling in unrelated songs that share a common short title.",
       "results": "The tool reliably matches 95–97% of any given week's Hot 100 — the 1998-03-01 test run found 97 out of 100 songs, with the three unmatched being genuinely obscure catalogue gaps on Spotify's end rather than matching failures. The project gave me hands-on experience with OAuth 2.0 flows in practice, designing a fuzzy-matching pipeline with principled fallback logic, and refactoring a working procedural script into clean OOP modules without changing any behaviour. If I were building this again I'd add a local cache so repeated runs on the same date skip the 100 Spotify search calls, and I'd experiment with Spotify's audio features API to add decade-accurate mood filters on top of the chart data.",
       "tags": [
-        "API-INTEGRATION",
+        "API-integration",
         "authentication",
         "automation",
         "OOP",
@@ -1514,7 +1514,7 @@
         "python",
         "CRUD",
         "REST-API",
-        "API-INTEGRATION",
+        "API-integration",
         "beginner"
       ],
       "tech_stack": [
