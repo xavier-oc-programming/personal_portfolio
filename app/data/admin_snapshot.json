@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-29T09:16:14Z",
+  "snapshot_at": "2026-04-29T09:59:05Z",
   "projects": [
     {
       "id": 1,
@@ -1176,7 +1176,9 @@
         "ChromeDriver"
       ],
       "screenshots": [],
-      "videos": [],
+      "videos": [
+        "https://youtu.be/tekVPF9Tskc"
+      ],
       "card_image": "images/projects/tinder-bot/card/tinder.webp",
       "repo_url": "https://github.com/xavier-oc-programming/tinder-bot-automation",
       "live_url": null,
