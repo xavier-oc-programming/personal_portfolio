@@ -41,6 +41,7 @@ The portfolio itself is the proof of skill.
 - Docker + Docker Compose (optional — for the containerised local stack)
 - A [Railway](https://railway.app) account for production deployment
 - A [GitHub](https://github.com) account with this repo pushed (for CI/CD and snapshot auto-commits)
+- A custom domain (optional — if you want the site at `yourname.com` instead of the Railway-generated URL)
 
 A local PostgreSQL instance is not required — the app falls back to SQLite automatically when `DATABASE_URL` is not set.
 
@@ -499,6 +500,12 @@ Copy `.env.example` to `.env` and fill in the values. Never commit `.env`.
 5. Railway reads `railway.toml` and builds using the `Dockerfile`. On every deploy, `entrypoint.sh` runs database migrations and the seeder before starting Gunicorn.
 
 6. **CI/CD** — deployments are triggered automatically by the GitHub Actions pipeline after tests pass. See [CI/CD pipeline](#12-cicd-pipeline).
+
+7. **(Optional) Custom domain** — if you own a domain and want the site at `yourname.com`:
+   - Go to your Railway service → **Settings → Networking → Custom Domain**.
+   - Enter your domain (e.g. `yourname.com` or `www.yourname.com`) and Railway will show you a CNAME target.
+   - In your domain registrar's DNS settings, add a **CNAME record** pointing your domain to the Railway-provided target.
+   - DNS propagation typically takes a few minutes to a few hours. Railway provisions an SSL certificate automatically once the record resolves.
 
 ---
 
