@@ -2,11 +2,11 @@
 
 A production-grade portfolio web application built entirely in Python and Flask. Fully deployed, database-backed, and maintained without touching code — through a custom admin dashboard. Exposes all project data through a versioned public REST API. Ships with automated tests and a CI/CD pipeline.
 
-**Live site → [xavieroc.dev](https://xavieroc.dev)**
+**Live site → [xavieroc.dev](https://www.xavieroc.dev)**
 &nbsp;&nbsp;·&nbsp;&nbsp;
-**API → [xavieroc.dev/api/v1/projects](https://xavieroc.dev/api/v1/projects)**
+**API → [xavieroc.dev/api/v1/projects](https://www.xavieroc.dev/api/v1/projects)**
 &nbsp;&nbsp;·&nbsp;&nbsp;
-**API docs → [xavieroc.dev/api](https://xavieroc.dev/api)**
+**API docs → [xavieroc.dev/api](https://www.xavieroc.dev/api)**
 
 Most developer portfolios are static HTML pages or no-code website builders. This one is a full-stack web application — the same kind of system you would build professionally. It handles authentication, database reads and writes, file uploads, form validation, spam protection, email notifications, and automated deployment.
 
@@ -125,19 +125,19 @@ GET   /admin/tags          →  Tag management
 
 ```bash
 # All projects — returns the full list
-curl https://xavieroc.dev/api/v1/projects
+curl https://www.xavieroc.dev/api/v1/projects
 
 # Filter by category, tag, or featured status
-curl https://xavieroc.dev/api/v1/projects?category=web
-curl https://xavieroc.dev/api/v1/projects?tag=OOP
-curl https://xavieroc.dev/api/v1/projects?featured=true
+curl https://www.xavieroc.dev/api/v1/projects?category=web
+curl https://www.xavieroc.dev/api/v1/projects?tag=OOP
+curl https://www.xavieroc.dev/api/v1/projects?featured=true
 
 # Single project — replace slug with any project identifier
-curl https://xavieroc.dev/api/v1/projects/snake-game-python
+curl https://www.xavieroc.dev/api/v1/projects/snake-game-python
 
 # Taxonomy — all categories or tags with project counts
-curl https://xavieroc.dev/api/v1/categories
-curl https://xavieroc.dev/api/v1/tags
+curl https://www.xavieroc.dev/api/v1/categories
+curl https://www.xavieroc.dev/api/v1/tags
 ```
 
 ---
