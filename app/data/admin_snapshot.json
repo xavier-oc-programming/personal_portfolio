@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-29T09:59:05Z",
+  "snapshot_at": "2026-04-29T10:05:52Z",
   "projects": [
     {
       "id": 1,
@@ -1175,7 +1175,15 @@
         "python-dotenv",
         "ChromeDriver"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/tinder-bot-automation/screenshots/Screenshot_2026-04-29_at_11.59.42.png",
+        "images/projects/tinder-bot-automation/screenshots/Screenshot_2026-04-29_at_12.02.19.png",
+        "images/projects/tinder-bot-automation/screenshots/Screenshot_2026-04-29_at_12.03.04.png",
+        "images/projects/tinder-bot-automation/screenshots/Screenshot_2026-04-29_at_12.03.22.png",
+        "images/projects/tinder-bot-automation/screenshots/Screenshot_2026-04-29_at_12.03.34.png",
+        "images/projects/tinder-bot-automation/screenshots/Screenshot_2026-04-29_at_12.03.57.png",
+        "images/projects/tinder-bot-automation/screenshots/Screenshot_2026-04-29_at_12.04.02_2.png"
+      ],
       "videos": [
         "https://youtu.be/tekVPF9Tskc"
       ],
