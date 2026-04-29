@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-29T09:10:22Z",
+  "snapshot_at": "2026-04-29T09:10:27Z",
   "projects": [
     {
       "id": 1,
@@ -1135,9 +1135,7 @@
         "GitHub Actions"
       ],
       "screenshots": [],
-      "videos": [
-        "https://youtu.be/QWY824fahEQ"
-      ],
+      "videos": [],
       "card_image": "images/projects/gym-routine-automator/card/gym.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/gym-booking-bot",
       "live_url": null,
