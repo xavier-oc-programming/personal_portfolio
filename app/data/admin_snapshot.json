@@ -16,11 +16,11 @@
       "challenges": "The biggest challenge in the advanced rebuild was designing clean separation of concerns across six modules while keeping the code readable for someone who might inspect it. Managing ANSI escape codes for in-place terminal animation (line-by-line hangman drawing, flashing win banner, typewriter effects) without corrupting the layout took significant iteration.",
       "results": "Two fully playable versions of the same game that together tell a clear story of growth. The project demonstrates not just Python fundamentals, but the ability to revisit earlier work with a critical eye and rebuild it at a significantly higher level.",
       "tags": [
-        "cli",
+        "CLI",
         "game",
         "python",
         "beginner",
-        "oop",
+        "OOP",
         "terminal"
       ],
       "tech_stack": [
@@ -62,7 +62,7 @@
       "challenges": "Implementing frequency analysis correctly required choosing a scoring function that works on short texts — sum of squared errors against\r\n   the English letter frequency distribution, scored as negative so float(\"-inf\") initialises the baseline naturally. Capturing arrow-key\r\n  presses without waiting for Enter required dropping the terminal into raw mode via termios and tty, then parsing the \\x1b[A escape      \r\n  sequence manually.",
       "results": "Two fully functional independent programs launched from a shared menu. The advanced version supports 5 modes (Caesar, Vigenère, brute   \r\n  force, frequency analysis, file encrypt/decrypt), zero external dependencies, and a navigation system where Enter stays in the current\r\n  mode and Up arrow returns to the menu. Both versions preserved side-by-side to show the before/after progression.",
       "tags": [
-        "cli",
+        "CLI",
         "scripting",
         "terminal-ux"
       ],
@@ -104,8 +104,8 @@
       "tags": [
         "game",
         "python",
-        "oop",
-        "cli",
+        "OOP",
+        "CLI",
         "terminal",
         "terminal-ux",
         "dataclasses",
@@ -156,9 +156,9 @@
       "challenges": "The trickiest design decision was making the zero-UI-imports rule actually work. The solution was GuessResult as an enum — GameState.guess() returns a value, main.py reads it and decides what to show. The logic layer never needs to know a terminal exists. A less obvious problem was ASCII art in Python triple-quoted strings: a backslash at the end of a line is silently treated as a line continuation, so lines were merging with no error and no warning. I had to double every backslash in the logo string to fix it. Getting raw keypress detection working for the post-game navigation (up arrow, Enter, q without needing Enter) also required dropping into tty/termios to bypass Python's line-buffered input.",
       "results": "The project does what I wanted — the architecture makes the scope concepts tangible rather than just described. Seeing the two versions next to each other makes it obvious why passing data in and returning it out is cleaner than reaching into global state. The thing I'm most happy with is the GuessResult enum design: it kept the logic layer genuinely portable and made main.py read almost like pseudocode. If I were to extend it, I'd add a high score tracker and pull the file I/O into its own module — the architecture is already set up for that cleanly.",
       "tags": [
-        "cli",
+        "CLI",
         "game",
-        "oop",
+        "OOP",
         "python",
         "terminal",
         "terminal-ux",
@@ -201,8 +201,8 @@
         "terminal",
         "terminal-ux",
         "dataclasses",
-        "oop",
-        "cli",
+        "OOP",
+        "CLI",
         "beginner"
       ],
       "tech_stack": [
@@ -241,8 +241,8 @@
       "tags": [
         "game",
         "python",
-        "oop",
-        "cli",
+        "OOP",
+        "CLI",
         "terminal",
         "terminal-ux",
         "dataclasses",
@@ -296,9 +296,9 @@
       "results": "The project shows that even a small, well-understood game becomes significantly more readable and extensible when layered properly. I got solid practice separating logic from presentation, managing turtle's event model without blocking, and building terminal UX that feels intentional. The modular architecture means any layer — physics, rendering, scoring — can be swapped or extended without touching the others. If I extended this further, I'd add difficulty levels via increasing speed and a proper top-5 leaderboard rather than a single persisted score.",
       "tags": [
         "game",
-        "oop",
+        "OOP",
         "python",
-        "gui",
+        "GUI",
         "dataclasses",
         "terminal-ux"
       ],
@@ -339,8 +339,8 @@
       "results": "This project ended up teaching me a lot more than just Pong — it became a practical study in how to structure a Python GUI application so it stays readable and extensible as features get added. Having zero UI imports in the logic files makes the game loop genuinely easy to follow: every line is either \"update this value\" or \"tell the display about this value,\" with no turtle calls hiding inside the logic. If I were doing it again I'd use a second dedicated writer turtle for the score HUD to avoid the pattern where every overlay has to call render_score() after clearing the writer. Overall though, I'm pleased with how clean the module boundaries turned out, and the process of debugging the Space key handoff and the sys.exit fix gave me a solid mental model of how turtle's event system actually works under the hood.",
       "tags": [
         "game",
-        "gui",
-        "oop",
+        "GUI",
+        "OOP",
         "python",
         "terminal-ux"
       ],
@@ -384,7 +384,7 @@
       "challenges": null,
       "results": null,
       "tags": [
-        "gui",
+        "GUI",
         "game"
       ],
       "tech_stack": [
@@ -471,8 +471,8 @@
       "results": "The project shows a clear before-and-after on the same problem -- procedural vs. OOP, mixed concerns vs. strictly separated -- which I think is more useful to a reader than either version alone. The advanced build's Display isolation means the entire terminal interface could be swapped for a GUI by replacing one file and touching nothing else, which is a fun thing to actually be able to say about your code. I learned that separation of concerns isn't just an organizational preference -- it's about what you can change or test independently without things breaking in unexpected places. If I extended this, I'd swap round() for Python's Decimal type for proper monetary arithmetic, and add a low-stock warning before resources run out rather than a hard stop after.",
       "tags": [
         "python",
-        "cli",
-        "oop",
+        "CLI",
+        "OOP",
         "terminal",
         "terminal-ux",
         "beginner",
@@ -514,8 +514,8 @@
       "results": "The project demonstrates a practical separation-of-concerns pattern for tkinter that scales cleanly to more complex apps. Converter is independently testable, Display is fully swappable, and config.py means any constant change is a single-line edit. If I were to extend this — adding a history log, more unit types, or a dark mode — none of those changes would require touching the conversion logic. The portfolio structure (menu launcher, ASCII art, full README, original + advanced branches) is now a reusable template I'm applying across all my Day X tkinter projects.",
       "tags": [
         "beginner",
-        "gui",
-        "oop",
+        "GUI",
+        "OOP",
         "python",
         "productivity"
       ],
@@ -551,8 +551,8 @@
       "challenges": "The trickiest design question was where to put the countdown loop. root.after() is inherently UI-side (it needs a live Tk root), but the \"what happens when the countdown hits zero\" logic is application-side. The clean answer was to give Display a private _tick() method that decrements and reschedules itself, and an on_tick_complete callback it fires when the count reaches zero — so Display drives the loop but has no idea what to do when it ends. Keeping original/main.py truly verbatim (only the Path(__file__).parent path fix allowed) also required resisting the urge to tidy anything else up, which turned out to be a useful discipline in restraint. Getting the branch strategy right — original frozen at the course snapshot, all portfolio structure on main only — also needed careful git sequencing to avoid contaminating the reference branch.",
       "results": "The project demonstrates a full procedural-to-OOP refactor of a real tkinter app with identical behaviour and radically better structure. The callback injection pattern means Display could be swapped for a different frontend without touching any timer logic — the separation is genuine, not cosmetic. I learned that the discipline of \"no magic numbers anywhere\" forces harder thinking up front about what constants actually mean, and the result is a config.py that doubles as documentation. If I built this again I'd add a way to customise session lengths directly from the UI so users don't have to open config.py — a settings panel would be a natural next step.",
       "tags": [
-        "gui",
-        "oop",
+        "GUI",
+        "OOP",
         "productivity",
         "python",
         "scope",
@@ -592,11 +592,11 @@
       "challenges": "The trickiest design call in the advanced build was figuring out exactly where to draw the line between Display and app.py. My first instinct was to let Display handle the messagebox dialogs directly — it already owns the widgets, so it felt natural. But that would mean Display was making decisions (is the search result empty? should we warn?) instead of just rendering. The fix was to have Display expose thin wrappers like show_info and ask_ok_cancel, and let app.py call them based on what the logic returned. That way Display is genuinely passive — it never decides anything. A subtler edge case was the search distinguishing \"the data file doesn't exist yet\" from \"the website isn't in the file\" — both come back as falsy from the logic layer but need different error messages, so the orchestrator has to check them separately.",
       "results": "The biggest takeaway was how much cleaner event-driven GUI code becomes when you commit fully to callback injection. In the original build, generate_password() reaches directly into the widget to insert its result — tight coupling that makes it impossible to test the generation logic on its own. In the advanced build, PasswordManager.generate_password() just returns a string, which I could drop into a unit test in three lines. I'd probably add a delete-credential flow next, and maybe a show-all view if the app grew. Most practically, I now reach for named constants almost reflexively — PASSWORD_ENTRY_WIDTH communicates intent in a way that 20 never will.",
       "tags": [
-        "gui",
-        "oop",
+        "GUI",
+        "OOP",
         "python",
         "productivity",
-        "crud",
+        "CRUD",
         "beginner",
         "terminal-ux"
       ],
@@ -641,8 +641,8 @@
       "results": "This project demonstrates clean separation of concerns in a tkinter app — something the course doesn't cover but which makes the code dramatically easier to reason about and extend. Replacing pandas with the stdlib csv module in the advanced build cut startup time noticeably and removed a third-party dependency entirely. I learned that even small GUI apps benefit a lot from keeping logic and display in separate classes, especially once timer state and edge cases start piling up. The one thing I'd add next is a visible counter showing how many words remain in the deck — right now there's no progress indicator, which makes the session feel a bit open-ended.",
       "tags": [
         "python",
-        "gui",
-        "oop",
+        "GUI",
+        "OOP",
         "productivity",
         "beginner"
       ],
@@ -680,12 +680,12 @@
       "challenges": "The trickiest part was the two-phase startup: `Display.__init__` receives an `on_category_select` callback, but the quiz callbacks (`on_true`, `on_false`) can't exist until after the API fetch — which only happens after the user picks a category. That meant `Display` needed a second entry point, `start_quiz(on_true, on_false)`, called from `main.py` once the `QuizBrain` was ready. The other tricky bit was giving the user visual feedback (\"Loading questions…\") before the blocking network call. Tkinter won't repaint until the event loop gets control back, so the loading text would never appear if I called `fetch_questions()` synchronously right after hiding the selector. The fix was scheduling the API call with `root.after(50, ...)`, giving tkinter one render cycle to paint the canvas before the request goes out.",
       "results": "The project gave me a solid feel for applying MVC thinking in a desktop GUI context — separating what the app knows from what it shows is just as valuable in Tkinter as it is anywhere else. I came away with a much clearer mental model of how tkinter's event loop works and where blocking calls will bite you. If I were to extend it I'd move the API call to a background thread with `threading.Thread` and use `root.after()` to poll for the result, which would eliminate the brief freeze entirely. The two-build structure also turned out to be a nice way to document the progression from \"course solution\" to \"production-shaped code\" in a single repo.",
       "tags": [
-        "api-integration",
+        "API-INTEGRATION",
         "game",
-        "gui",
-        "oop",
+        "GUI",
+        "OOP",
         "python",
-        "rest-api",
+        "REST-API",
         "beginner"
       ],
       "tech_stack": [
@@ -726,8 +726,8 @@
       "tags": [
         "automation",
         "beginner",
-        "cli",
-        "oop",
+        "CLI",
+        "OOP",
         "productivity",
         "python",
         "scripting",
@@ -773,9 +773,9 @@
         "automation",
         "python",
         "scripting",
-        "oop",
+        "OOP",
         "productivity",
-        "cli",
+        "CLI",
         "terminal-ux",
         "deployment"
       ],
@@ -817,12 +817,12 @@
       "challenges": "The trickiest part of this project wasn't the APIs — it was credential safety. The original course file stored a real Gmail app password as a string literal, which made it into the initial git commit and got pushed to a public GitHub repo before the problem was caught. Fixing it properly meant doing a full clean rebuild from a temp directory rather than trying to rewrite history with rebase, since the template's recovery procedure explicitly prohibits that path. A second structural challenge was naming: having both an original/ folder on main and an original branch created constant git ambiguity — git checkout original would fail because it couldn't tell which one was meant. Renaming the branch to source resolved this permanently and made the intent clearer.",
       "results": "The finished project demonstrates how to chain multiple public APIs together, handle credentials safely across both local and CI environments, and design modules with clear separation of concerns. Migrating from a while True polling loop to a GitHub Actions cron job turned out to be the more interesting architectural lesson — it reframes the script as a stateless function rather than a long-running process, which is both simpler and more robust. If I were extending it further, I'd add a run log to the Actions summary so you can see a timeline of when the ISS was overhead, and possibly filter notifications to only send once per pass rather than potentially emailing multiple times in the same five-minute window.",
       "tags": [
-        "api-integration",
+        "API-INTEGRATION",
         "automation",
         "deployment",
-        "oop",
+        "OOP",
         "python",
-        "rest-api",
+        "REST-API",
         "scripting",
         "terminal-ux"
       ],
@@ -858,12 +858,12 @@
       "challenges": "The trickiest part wasn't the API calls — it was credential hygiene. One of the course exploration files had real API keys and phone numbers hardcoded directly in the source, which could have been committed to a public GitHub repo without a careful pre-staging scan. Catching that before any git add happened was the right call, and it shaped the template rule added afterwards: always grep for credential patterns before staging. The second challenge was the menu UX: without an input(\"Press Enter...\") pause after subprocess.run(), any error from the build was wiped off the screen the instant the menu loop cleared the console, making debugging nearly impossible. A one-line fix, but one that required experiencing the failure to notice.",
       "results": "The bot now runs autonomously every morning and sends a WhatsApp message before the day starts — no manual action required. Building it solidified the core credential management pattern I'll use in every project that touches an external API: .env locally, .env.example committed, GitHub Secrets in CI, and load_dotenv() as a no-op bridge between the two. The OOP refactor made the separation of concerns genuinely obvious rather than theoretical — WeatherFetcher and Notifier can each be tested or swapped without touching anything else. If I rebuilt it, I'd add a proper logging layer instead of print() statements so the GitHub Actions run history is more useful for debugging.",
       "tags": [
-        "api-integration",
+        "API-INTEGRATION",
         "authentication",
         "automation",
-        "oop",
+        "OOP",
         "python",
-        "rest-api",
+        "REST-API",
         "scripting",
         "terminal",
         "terminal-ux"
@@ -898,11 +898,11 @@
       "challenges": "The trickiest part was the Twilio trial account restriction — the SMS from-number worked in the course demo but threw a 21660 \"number mismatch\" error on a different account because trial accounts only allow sending from their own verified number. Switching to the WhatsApp sandbox (whatsapp:+14155238886) solved it cleanly since that number is shared across all Twilio trial accounts. Getting the character limit right for WhatsApp vs SMS also needed care: SMS has a hard UCS-2 segment limit of around 70 characters, but WhatsApp has a 4096-character ceiling, so the same clamp_ucs2() helper needed a configurable limit rather than a hardcoded 65. The local quota guard had a subtle path bug too — QUOTA_FILE was originally set with Path(\".sms_quota.json\"), which resolves relative to the working directory at runtime; when launched from menu.py with a different cwd, the file landed in the wrong place. Anchoring it to Path(__file__).parent fixed it permanently.",
       "results": "The project demonstrates how to wire multiple REST APIs together in a clean, testable architecture — each module owns exactly one concern and could be swapped out without touching the others. It also shows how to handle real-world API friction: trial account restrictions, rate-limit responses, and daily quota management. The GitHub Actions workflow means the alert actually runs automatically every weekday without any manual intervention, which turns a course exercise into a genuinely useful tool. If I were extending it, I'd add a portfolio of tickers (not just TSLA), persist the last-seen percentage change to avoid re-alerting on the same move, and look at NewsAPI's paid tier for same-day articles — the free tier has a 24-hour delay that blunts the relevance of the headlines.",
       "tags": [
-        "api-integration",
+        "API-INTEGRATION",
         "automation",
-        "oop",
+        "OOP",
         "python",
-        "rest-api",
+        "REST-API",
         "scripting",
         "terminal-ux"
       ],
@@ -936,11 +936,11 @@
       "challenges": "The trickiest part was making the setup steps idempotent. Pixela returns HTTP 409 when a user or graph already exists, which raise_for_status() treats as a failure — so every run after the first would print scary-looking errors for steps that had actually succeeded. The naive fix would be to wrap everything in a blanket try/except, but that would also swallow real errors like auth failures or network timeouts. The solution was to intercept 409 specifically: check the status code before calling raise_for_status(), print a silent skip message, and let all other non-2xx codes fall through to the error handler as normal. Clean re-runs without hiding legitimate failures.",
       "results": "This project gave me a solid grounding in REST API design beyond just GET requests — custom headers, JSON request bodies, and the semantic difference between POST, PUT, and DELETE. The OOP refactor made me think carefully about separation of concerns: what belongs in the client versus the orchestrator. I also learned that idempotency is something you have to design for explicitly, not something APIs just hand you. If I were to extend this, I'd add a way to list recent pixels and show a text summary of the week, so you can review your history without opening a browser.",
       "tags": [
-        "api-integration",
-        "rest-api",
-        "cli",
+        "API-INTEGRATION",
+        "REST-API",
+        "CLI",
         "terminal-ux",
-        "oop",
+        "OOP",
         "productivity",
         "python",
         "beginner"
@@ -980,15 +980,15 @@
       "challenges": "Nutritionix discontinued its free tier mid-project, eliminating the only free cloud API that handled natural language → structured exercise data in one call. Every alternative required structured input, and the constraint — free for anyone who clones the repo, no sign-ups — ruled out paid replacements. I switched to Ollama and kept the natural language UX intact. The next issue was calorie accuracy: the LLM returned inconsistent numbers for the same exercise on different runs. I removed calorie estimation from the model entirely and calculated it locally using the MET formula instead. I also had to fix name consistency — the model kept returning past-tense verbs like \"Swam\" and \"Ran\", causing duplicate entries in the sheet. I solved this with prompt engineering and a deterministic synonym map as a fallback. Finally, vague inputs like \"went to the gym\" caused the model to guess randomly, so I built a pre-Ollama disambiguation step that detects trigger words, presents 19 gym-specific options, extracts any duration already mentioned in the input via regex, and rewrites the query before sending it to the model.",
       "results": "I ended up with a fully working natural language workout logger that's free for any user with no configuration beyond Sheety credentials. The project went well beyond the course scope — I had to solve a real API discontinuation, rethink the calorie calculation approach, and engineer around LLM unreliability. It demonstrates OOP module design, REST API integration, local LLM orchestration, prompt engineering, MET-based scientific calculation, and regex input parsing, all built in response to constraints that emerged during development rather than planned upfront.",
       "tags": [
-        "llm",
-        "api-integration",
+        "LLM",
+        "API-INTEGRATION",
         "authentication",
         "automation",
-        "cli",
-        "oop",
+        "CLI",
+        "OOP",
         "productivity",
         "python",
-        "rest-api",
+        "REST-API",
         "terminal-ux"
       ],
       "tech_stack": [
@@ -1032,8 +1032,8 @@
         "automation",
         "web-scraping",
         "python",
-        "oop",
-        "cli",
+        "OOP",
+        "CLI",
         "terminal-ux",
         "scripting"
       ],
@@ -1072,7 +1072,7 @@
         "automation",
         "browser-automation",
         "game",
-        "oop",
+        "OOP",
         "python",
         "scripting",
         "terminal-ux"
@@ -1120,9 +1120,9 @@
         "automation",
         "browser-automation",
         "python",
-        "oop",
+        "OOP",
         "scripting",
-        "cli",
+        "CLI",
         "terminal-ux"
       ],
       "tech_stack": [
@@ -1164,7 +1164,7 @@
         "automation",
         "browser-automation",
         "python",
-        "oop",
+        "OOP",
         "authentication",
         "terminal-ux"
       ],
@@ -1200,7 +1200,7 @@
         "automation",
         "browser-automation",
         "python",
-        "oop",
+        "OOP",
         "web-scraping",
         "scripting"
       ],
@@ -1235,7 +1235,7 @@
       "tags": [
         "automation",
         "browser-automation",
-        "oop",
+        "OOP",
         "python",
         "scripting",
         "web-scraping"
@@ -1272,7 +1272,7 @@
         "automation",
         "browser-automation",
         "data-pipeline",
-        "oop",
+        "OOP",
         "productivity",
         "python",
         "scripting",
@@ -1307,12 +1307,12 @@
       "challenges": "The trickiest part was tkinter's PhotoImage garbage collection behaviour. If you assign a PhotoImage to a local variable, Python's garbage collector can destroy it before tkinter ever renders it -- and the image silently disappears with no error. The fix is to store references on the window object (course solution) or on self (advanced build) so the image stays alive for the widget's lifetime. The second challenge was making asset paths work correctly when menu.py launches the script as a subprocess with a different working directory -- solved by resolving paths via Path(__file__).parent.parent rather than relying on wherever the script happens to be called from.",
       "results": "This project taught me a pattern I have used in every GUI project since: keep image references alive on a long-lived object, and always resolve asset paths relative to __file__. The OOP refactor also showed me concretely why encapsulation matters -- module-level globals like canvas and quote_text work fine for a script this small, but they become a maintenance headache the moment you want to test or extend anything. I would add error handling for network failures next -- right now a failed request raises an unhandled exception and the app crashes, which is not a great user experience for something as important as Ron Swanson quotes.",
       "tags": [
-        "api-integration",
+        "API-INTEGRATION",
         "beginner",
-        "gui",
-        "oop",
+        "GUI",
+        "OOP",
         "python",
-        "rest-api"
+        "REST-API"
       ],
       "tech_stack": [
         "Python",
@@ -1342,13 +1342,13 @@
       "challenges": "The hardest problem was that the original API was being decommissioned mid-project, returning 500s on every call, which meant finding and integrating a replacement from scratch. I evaluated several alternatives before landing on SerpApi, which scrapes Google Flights and returns real prices with a simple API key and no OAuth2 flow. SerpApi's data model is also different from a traditional flights API: it takes a specific outbound and return date rather than a date range, and it has no IATA lookup endpoint, so airport codes have to be pre-filled in the sheet manually. Parsing the nested response structure (best_flights, other_flights, and layovers arrays) cleanly into FlightData objects also required careful handling to avoid KeyError crashes on missing fields.",
       "results": "The project is fully functional: it scans the sheet, searches Google Flights in real time, and delivers WhatsApp and email alerts when a deal lands. I came away with a much deeper understanding of multi-API orchestration, specifically what it actually takes to swap one external service for another cleanly without rewiring everything else. The two-build structure was a deliberate choice to show the before/after of a refactor: same logic, cleaner architecture, easier to extend. If I were taking it further, I'd add a date-range loop so each run checks multiple departure windows rather than a single fixed date, and I'd look at scheduling it as a daily cron job so it runs without me having to remember to trigger it.",
       "tags": [
-        "api-integration",
+        "API-INTEGRATION",
         "automation",
         "dataclasses",
-        "oop",
+        "OOP",
         "productivity",
         "python",
-        "rest-api",
+        "REST-API",
         "terminal",
         "terminal-ux"
       ],
@@ -1386,12 +1386,12 @@
       "challenges": "Getting the fuzzy matching calibrated was the trickiest part — too strict and you reject valid songs with minor title differences, too loose and you accept wrong ones. Billboard has some genuinely edge-case entries: dual-title songs like \"Candle In The Wind 1997/Something About The Way You Look Tonight\" would never match as a full string, so the enhanced version splits on \"/\" and tries each part separately. Multi-artist tracks — \"LL Cool J, Method Man, Redman, DMX, Canibus And Master P\" — score poorly on artist comparison because Spotify may credit the same track differently, so the threshold is adaptively relaxed for three or more featured artists. The broad fallback query blends title score (70%) with a year-match bonus (30%) rather than artist comparison, which proved more reliable for catching stragglers without pulling in unrelated songs that share a common short title.",
       "results": "The tool reliably matches 95–97% of any given week's Hot 100 — the 1998-03-01 test run found 97 out of 100 songs, with the three unmatched being genuinely obscure catalogue gaps on Spotify's end rather than matching failures. The project gave me hands-on experience with OAuth 2.0 flows in practice, designing a fuzzy-matching pipeline with principled fallback logic, and refactoring a working procedural script into clean OOP modules without changing any behaviour. If I were building this again I'd add a local cache so repeated runs on the same date skip the 100 Spotify search calls, and I'd experiment with Spotify's audio features API to add decade-accurate mood filters on top of the chart data.",
       "tags": [
-        "api-integration",
+        "API-INTEGRATION",
         "authentication",
         "automation",
-        "oop",
+        "OOP",
         "python",
-        "rest-api",
+        "REST-API",
         "scripting",
         "web-scraping"
       ],
@@ -1428,9 +1428,9 @@
         "web-app",
         "python",
         "authentication",
-        "crud",
+        "CRUD",
         "deployment",
-        "oop"
+        "OOP"
       ],
       "tech_stack": [
         "Flask",
@@ -1474,7 +1474,7 @@
       "tags": [
         "web-app",
         "python",
-        "crud",
+        "CRUD",
         "beginner"
       ],
       "tech_stack": [
@@ -1512,9 +1512,9 @@
       "tags": [
         "web-app",
         "python",
-        "crud",
-        "rest-api",
-        "api-integration",
+        "CRUD",
+        "REST-API",
+        "API-INTEGRATION",
         "beginner"
       ],
       "tech_stack": [
@@ -1552,10 +1552,10 @@
       "results": "The project gave me a solid, hands-on understanding of how REST APIs are actually structured — not just the happy path, but error responses, partial updates, and input normalisation. I can now design and document an API in Postman, protect an endpoint with a token, and serialise a SQLAlchemy model to JSON cleanly. If I were extending it I'd swap the query-parameter API key for an `Authorization` header, add pagination to `/all`, and seed the database from a fixture file so new clones start with data. It's a compact project but it covers a surprisingly wide slice of real backend work.",
       "tags": [
         "python",
-        "rest-api",
-        "crud",
+        "REST-API",
+        "CRUD",
         "web-app",
-        "oop"
+        "OOP"
       ],
       "tech_stack": [
         "Python",
@@ -1590,9 +1590,9 @@
       "results": "The project shows how to decompose a procedural script into proper OOP layers without over-engineering it — three focused modules, each with a clear responsibility and no circular imports. The callback injection pattern means `Display` is completely decoupled from `Quiz`: you could swap the tkinter front-end for a web interface without touching the guessing logic at all. Working through the coordinate transform was a good reminder that \"the data is already there\" doesn't mean it's in the right form — a two-line conversion unlocked the whole advanced build. If I were to extend this further, I'd add a timed mode and a high-score leaderboard persisted to a local JSON file.",
       "tags": [
         "game",
-        "gui",
+        "GUI",
         "python",
-        "oop",
+        "OOP",
         "beginner",
         "scope"
       ],
@@ -1976,8 +1976,8 @@
       "challenges": "The trickiest part was detecting the up arrow key as a return-to-menu signal without pulling in any third-party library. Normal input() never sees arrow keys — readline intercepts them before Python does. Switching the terminal to raw mode with termios and tty meant I had to manually handle everything: echoing typed characters, backspace, Enter (which arrives as \\r in raw mode, not \\n), and Ctrl+C. The up arrow is a three-byte escape sequence (\\x1b[A), so I had to read one character at a time and branch accordingly. The final wrinkle was that tcgetattr crashes when stdin is a pipe rather than a real TTY, which I only discovered during smoke testing — so I added an isatty() check that falls back to plain readline automatically.",
       "results": "This project shows I can take a course exercise and extend it into a structured, portfolio-worthy piece of software without losing sight of what made the original worth building. I got genuinely hands-on with how raw terminal input works under the hood — something most developers never need to touch — and got comfortable with Python's subprocess module for multi-script orchestration. The two-build structure works well as a teaching artefact: flip between the original and the refactor and the design decisions become self-evident. If I were to keep going, I'd add punctuation to the Morse dictionary and a reverse mode that converts Morse back to text.",
       "tags": [
-        "cli",
-        "oop",
+        "CLI",
+        "OOP",
         "python",
         "scripting",
         "terminal",
@@ -2016,13 +2016,13 @@
       "tags": [
         "web-app",
         "python",
-        "rest-api",
+        "REST-API",
         "authentication",
-        "crud",
+        "CRUD",
         "deployment",
         "flask",
         "admin-dashboard",
-        "ci-cd"
+        "CI-CD"
       ],
       "tech_stack": [
         "Python",

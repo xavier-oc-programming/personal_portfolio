@@ -66,7 +66,7 @@ def _normalize_tag(tag: str | None) -> str | None:
     if not tag:
         return None
 
-    normalized_tag = tag.strip().lower()
+    normalized_tag = tag.strip()
 
     if not normalized_tag:
 
@@ -122,12 +122,11 @@ def _get_available_tags() -> list[str]:
 
     for project in all_projects:
         for tag in project.tags:
-            normalized_tag = str(tag).strip().lower()
+            t = str(tag).strip()
+            if t:
+                tag_set.add(t)
 
-            if normalized_tag:
-                tag_set.add(normalized_tag)
-
-    return sorted(tag_set)
+    return sorted(tag_set, key=str.lower)
 
 
 def _get_category_counts() -> dict[str, int]:
