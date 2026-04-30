@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-30T12:23:56Z",
+  "snapshot_at": "2026-04-30T12:38:46Z",
   "projects": [
     {
       "id": 1,
@@ -1269,7 +1269,9 @@
         "ChromeDriver"
       ],
       "screenshots": [],
-      "videos": [],
+      "videos": [
+        "https://youtu.be/QqvojO_zyAs"
+      ],
       "card_image": "images/projects/instagram-follower-bot/card/insta_2.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/instagram-follower-bot",
       "live_url": null,
