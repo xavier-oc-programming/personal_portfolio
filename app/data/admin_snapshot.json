@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-29T10:05:52Z",
+  "snapshot_at": "2026-04-30T12:17:49Z",
   "projects": [
     {
       "id": 1,
@@ -1222,7 +1222,9 @@
         "python-dotenv"
       ],
       "screenshots": [],
-      "videos": [],
+      "videos": [
+        "https://youtu.be/6lC4t3VtPCc"
+      ],
       "card_image": "images/projects/internet-speed-twitter-bot/card/i_speed.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/internet-speed-twitter-bot",
       "live_url": null,
