@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-04-30T12:17:49Z",
+  "snapshot_at": "2026-04-30T12:23:56Z",
   "projects": [
     {
       "id": 1,
@@ -1221,7 +1221,16 @@
         "pyperclip",
         "python-dotenv"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/internet-speed-twitter-bot/screenshots/Screenshot_2026-04-30_at_14.21.34_2.png",
+        "images/projects/internet-speed-twitter-bot/screenshots/Screenshot_2026-04-30_at_14.21.52_2.png",
+        "images/projects/internet-speed-twitter-bot/screenshots/Screenshot_2026-04-30_at_14.21.54_2.png",
+        "images/projects/internet-speed-twitter-bot/screenshots/Screenshot_2026-04-30_at_14.21.57_2.png",
+        "images/projects/internet-speed-twitter-bot/screenshots/Screenshot_2026-04-30_at_14.22.39_2.png",
+        "images/projects/internet-speed-twitter-bot/screenshots/Screenshot_2026-04-30_at_14.22.48_2.png",
+        "images/projects/internet-speed-twitter-bot/screenshots/Screenshot_2026-04-30_at_14.22.49_2.png",
+        "images/projects/internet-speed-twitter-bot/screenshots/Screenshot_2026-04-30_at_14.23.00_2.png"
+      ],
       "videos": [
         "https://youtu.be/6lC4t3VtPCc"
       ],
