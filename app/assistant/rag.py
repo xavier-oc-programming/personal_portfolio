@@ -3,9 +3,13 @@ app/assistant/rag.py
 
 RAG (Retrieval-Augmented Generation) engine for the AI portfolio assistant.
 
-Loads Xavier's knowledge base from Markdown files, indexes them in a
-ChromaDB vector store using local sentence-transformer embeddings, and
-answers questions by retrieving relevant context before calling Gemini.
+Loads Xavier's knowledge base from:
+  - Markdown files: CV, skills, personal narrative (app/data/knowledge/)
+  - Database:       Project records (live data from the portfolio DB)
+
+Indexes everything in a ChromaDB vector store using local sentence-transformer
+embeddings, and answers questions by retrieving relevant context before calling
+the Groq LLM.
 """
 
 from __future__ import annotations
@@ -34,32 +38,47 @@ SYSTEM_PROMPT = (
 
 SOURCE_NAME_MAP: dict[str, str] = {
     "xavier_cv": "CV",
-    "xavier_projects": "Projects",
     "xavier_skills": "Skills",
     "xavier_about": "About",
 }
 
 SOURCE_URL_MAP: dict[str, str] = {
     "xavier_cv": "/about",
-    "xavier_projects": "/projects",
     "xavier_skills": "/about",
     "xavier_about": "/about",
 }
 
+STATIC_KNOWLEDGE_FILES = ["xavier_cv.md", "xavier_skills.md", "xavier_about.md"]
 
-def _annotate_project_chunks(chunks: list) -> list:
-    """Tag each chunk from xavier_projects.md with its project title."""
-    current_title: str | None = None
-    for chunk in chunks:
-        if "xavier_projects" not in chunk.metadata.get("source", ""):
-            continue
-        for line in chunk.page_content.split("\n"):
-            if line.startswith("## "):
-                current_title = line[3:].strip()
-                break
-        if current_title:
-            chunk.metadata["project_title"] = current_title
-    return chunks
+
+def _project_to_text(project: Any) -> str:
+    """Convert a Project DB record to a rich text document for indexing."""
+    parts = [f"## {project.title}"]
+    if project.short_description:
+        parts.append(project.short_description)
+    if project.full_description:
+        parts.append(project.full_description)
+    if project.problem:
+        parts.append(f"Problem: {project.problem}")
+    if project.solution:
+        parts.append(f"Solution: {project.solution}")
+    if project.challenges:
+        parts.append(f"Challenges: {project.challenges}")
+    if project.results:
+        parts.append(f"Results: {project.results}")
+    if project.tech_stack:
+        stack = project.tech_stack if isinstance(project.tech_stack, list) else []
+        if stack:
+            parts.append(f"Tech stack: {', '.join(stack)}")
+    if project.tags:
+        tags = project.tags if isinstance(project.tags, list) else []
+        if tags:
+            parts.append(f"Tags: {', '.join(tags)}")
+    if project.live_url:
+        parts.append(f"Live: {project.live_url}")
+    if project.repo_url:
+        parts.append(f"Repository: {project.repo_url}")
+    return "\n\n".join(parts)
 
 
 class RAGEngine:
@@ -74,8 +93,12 @@ class RAGEngine:
         """
         Build or load the vector index and initialise the LLM.
 
-        Skips silently if GOOGLE_API_KEY is not configured.
+        Skips silently if GROQ_API_KEY is not configured.
         Stores self on app.extensions['rag_engine'] so routes can access it.
+
+        Knowledge sources:
+          - xavier_cv.md, xavier_skills.md, xavier_about.md (static markdown)
+          - All Project records from the portfolio database
         """
         api_key = app.config.get("GROQ_API_KEY")
 
@@ -84,9 +107,9 @@ class RAGEngine:
             return
 
         try:
-            from langchain_community.document_loaders import DirectoryLoader, TextLoader
             from langchain_community.embeddings import HuggingFaceEmbeddings
             from langchain_chroma import Chroma
+            from langchain_core.documents import Document
             from langchain_groq import ChatGroq
             from langchain_text_splitters import RecursiveCharacterTextSplitter
         except ImportError as exc:
@@ -96,11 +119,6 @@ class RAGEngine:
 
         knowledge_dir = Path(app.root_path) / "data" / "knowledge"
         chroma_dir = Path(app.root_path) / "data" / "chroma_db"
-
-        if not knowledge_dir.exists():
-            app.logger.warning("Knowledge base directory not found — skipping RAG init.")
-            app.extensions["rag_engine"] = None
-            return
 
         try:
             embeddings = HuggingFaceEmbeddings(
@@ -116,20 +134,55 @@ class RAGEngine:
                     embedding_function=embeddings,
                 )
             else:
-                loader = DirectoryLoader(
-                    str(knowledge_dir),
-                    glob="**/*.md",
-                    loader_cls=TextLoader,
-                    loader_kwargs={"encoding": "utf-8"},
-                )
-                docs = loader.load()
+                docs: list[Document] = []
+
+                # Load static knowledge files (CV, skills, about)
+                for filename in STATIC_KNOWLEDGE_FILES:
+                    filepath = knowledge_dir / filename
+                    if filepath.exists():
+                        text = filepath.read_text(encoding="utf-8")
+                        stem = Path(filename).stem
+                        docs.append(Document(
+                            page_content=text,
+                            metadata={"source": stem},
+                        ))
+
+                # Load project documents from the database
+                with app.app_context():
+                    try:
+                        from app.models.models import Project
+                        projects = Project.query.all()
+                        for project in projects:
+                            docs.append(Document(
+                                page_content=_project_to_text(project),
+                                metadata={
+                                    "source": "db_project",
+                                    "project_title": project.title,
+                                    "project_slug": project.slug,
+                                },
+                            ))
+                        app.logger.info(
+                            "Loaded %d project documents from database.", len(projects)
+                        )
+                    except Exception:
+                        app.logger.exception(
+                            "Failed to load project documents from DB — "
+                            "falling back to xavier_projects.md if present."
+                        )
+                        # Fallback: load xavier_projects.md if available
+                        fallback = knowledge_dir / "xavier_projects.md"
+                        if fallback.exists():
+                            text = fallback.read_text(encoding="utf-8")
+                            docs.append(Document(
+                                page_content=text,
+                                metadata={"source": "xavier_projects"},
+                            ))
 
                 splitter = RecursiveCharacterTextSplitter(
                     chunk_size=500,
                     chunk_overlap=50,
                 )
                 chunks = splitter.split_documents(docs)
-                chunks = _annotate_project_chunks(chunks)
 
                 vector_store = Chroma.from_documents(
                     documents=chunks,
@@ -164,7 +217,7 @@ class RAGEngine:
                      Only the last 4 exchanges (8 messages) are used.
 
         Returns:
-            Dict with 'answer' (str) and 'sources' (list of readable source names).
+            Dict with 'answer' (str) and 'sources' (list of {name, url} dicts).
         """
         if not self._initialized:
             raise RuntimeError("RAG engine is not initialised.")
@@ -175,24 +228,18 @@ class RAGEngine:
 
         sources: list[dict[str, str]] = []
         seen: set[str] = set()
+
         for doc in docs:
-            stem = Path(doc.metadata.get("source", "")).stem
+            project_slug: str | None = doc.metadata.get("project_slug")
             project_title: str | None = doc.metadata.get("project_title")
 
-            if project_title and stem == "xavier_projects":
+            if project_slug and project_title:
                 if project_title in seen:
                     continue
                 seen.add(project_title)
-                url = "/projects"
-                try:
-                    from app.models.models import Project
-                    match = Project.query.filter_by(title=project_title).first()
-                    if match:
-                        url = f"/projects/{match.slug}"
-                except Exception:
-                    pass
-                sources.append({"name": project_title, "url": url})
+                sources.append({"name": project_title, "url": f"/projects/{project_slug}"})
             else:
+                stem = Path(doc.metadata.get("source", "")).stem
                 name = SOURCE_NAME_MAP.get(
                     stem,
                     stem.replace("xavier_", "").replace("_", " ").title(),
@@ -200,8 +247,7 @@ class RAGEngine:
                 if name in seen:
                     continue
                 seen.add(name)
-                url = SOURCE_URL_MAP.get(stem, "/")
-                sources.append({"name": name, "url": url})
+                sources.append({"name": name, "url": SOURCE_URL_MAP.get(stem, "/")})
 
         context = "\n\n".join(
             f"[{i + 1}] {doc.page_content}" for i, doc in enumerate(docs)
