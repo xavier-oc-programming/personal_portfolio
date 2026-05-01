@@ -2,7 +2,7 @@
 
 ![Python 3.11](https://img.shields.io/badge/Python-3.11-blue)
 ![LangChain](https://img.shields.io/badge/LangChain-0.3-green)
-![Gemini 1.5 Flash](https://img.shields.io/badge/Gemini-1.5%20Flash-orange)
+![Gemini 2.5 Flash](https://img.shields.io/badge/Gemini-2.5%20Flash-orange)
 ![ChromaDB](https://img.shields.io/badge/ChromaDB-0.5-purple)
 ![sentence-transformers](https://img.shields.io/badge/sentence--transformers-3.3-yellow)
 ![Flask](https://img.shields.io/badge/Flask-3.1-lightgrey)
@@ -11,7 +11,7 @@ A conversational AI assistant embedded in xavieroc.dev. Answers recruiter and vi
 
 **Live → [xavieroc.dev/assistant](https://www.xavieroc.dev/assistant)**
 &nbsp;&nbsp;·&nbsp;&nbsp;
-**Model → Gemini 1.5 Flash (free tier)**
+**Model → Gemini 2.5 Flash (free tier)**
 &nbsp;&nbsp;·&nbsp;&nbsp;
 **Embeddings → sentence-transformers/all-MiniLM-L6-v2 (local, free)**
 
@@ -158,7 +158,7 @@ What happens on each chat request:
 3. **Embed** — the user's question is converted to a 384-dimensional vector using `all-MiniLM-L6-v2` running locally
 4. **Search** — ChromaDB performs cosine similarity search and returns the 4 most semantically relevant chunks from the knowledge base
 5. **Build prompt** — system prompt + last 4 conversation exchanges + numbered context chunks + current question are assembled into a LangChain message list
-6. **Generate** — `ChatGoogleGenerativeAI` sends the message list to Gemini 1.5 Flash (temperature 0.3, max 512 output tokens)
+6. **Generate** — `ChatGoogleGenerativeAI` sends the message list to Gemini 2.5 Flash (temperature 0.3, max 512 output tokens)
 7. **Return** — the route returns `{"answer": response_text, "sources": [readable_source_names]}` as JSON
 
 ---
