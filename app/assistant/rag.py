@@ -50,6 +50,9 @@ SOURCE_URL_MAP: dict[str, str] = {
 
 STATIC_KNOWLEDGE_FILES = ["xavier_cv.md", "xavier_skills.md", "xavier_about.md"]
 
+# Tags too broad to be useful as filter links — almost every project has these
+GENERIC_TAGS = {"python", "oop", "programming", "software", "development", "code"}
+
 
 def _project_to_text(project: Any) -> str:
     """Convert a Project DB record to a rich text document for indexing."""
@@ -262,9 +265,10 @@ class RAGEngine:
                 static_sources.append({"name": name, "url": SOURCE_URL_MAP.get(stem, "/")})
 
         if len(project_docs) > 1:
-            # Try to find a common tag across all retrieved project docs
+            # Try to find a common non-generic tag across all retrieved project docs
             tag_sets = [p["tags"] for p in project_docs if p["tags"]]
             common_tags = set.intersection(*tag_sets) if tag_sets else set()
+            common_tags -= {t for t in common_tags if t.lower() in GENERIC_TAGS}
 
             if common_tags:
                 tag = sorted(common_tags)[0]
