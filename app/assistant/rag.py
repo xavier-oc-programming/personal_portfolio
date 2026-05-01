@@ -39,6 +39,28 @@ SOURCE_NAME_MAP: dict[str, str] = {
     "xavier_about": "About",
 }
 
+SOURCE_URL_MAP: dict[str, str] = {
+    "xavier_cv": "/about",
+    "xavier_projects": "/projects",
+    "xavier_skills": "/about",
+    "xavier_about": "/about",
+}
+
+
+def _annotate_project_chunks(chunks: list) -> list:
+    """Tag each chunk from xavier_projects.md with its project title."""
+    current_title: str | None = None
+    for chunk in chunks:
+        if "xavier_projects" not in chunk.metadata.get("source", ""):
+            continue
+        for line in chunk.page_content.split("\n"):
+            if line.startswith("## "):
+                current_title = line[3:].strip()
+                break
+        if current_title:
+            chunk.metadata["project_title"] = current_title
+    return chunks
+
 
 class RAGEngine:
     """Manages the vector store, retriever, and LLM for the assistant."""
@@ -107,6 +129,7 @@ class RAGEngine:
                     chunk_overlap=50,
                 )
                 chunks = splitter.split_documents(docs)
+                chunks = _annotate_project_chunks(chunks)
 
                 vector_store = Chroma.from_documents(
                     documents=chunks,
@@ -150,17 +173,35 @@ class RAGEngine:
 
         docs = self._retriever.invoke(message)
 
-        sources: list[str] = []
+        sources: list[dict[str, str]] = []
         seen: set[str] = set()
         for doc in docs:
             stem = Path(doc.metadata.get("source", "")).stem
-            name = SOURCE_NAME_MAP.get(
-                stem,
-                stem.replace("xavier_", "").replace("_", " ").title(),
-            )
-            if name not in seen:
+            project_title: str | None = doc.metadata.get("project_title")
+
+            if project_title and stem == "xavier_projects":
+                if project_title in seen:
+                    continue
+                seen.add(project_title)
+                url = "/projects"
+                try:
+                    from app.models.models import Project
+                    match = Project.query.filter_by(title=project_title).first()
+                    if match:
+                        url = f"/projects/{match.slug}"
+                except Exception:
+                    pass
+                sources.append({"name": project_title, "url": url})
+            else:
+                name = SOURCE_NAME_MAP.get(
+                    stem,
+                    stem.replace("xavier_", "").replace("_", " ").title(),
+                )
+                if name in seen:
+                    continue
                 seen.add(name)
-                sources.append(name)
+                url = SOURCE_URL_MAP.get(stem, "/")
+                sources.append({"name": name, "url": url})
 
         context = "\n\n".join(
             f"[{i + 1}] {doc.page_content}" for i, doc in enumerate(docs)
