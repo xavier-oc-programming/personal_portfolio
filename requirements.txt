@@ -25,6 +25,6 @@ langchain-community==0.4.1
 langchain-chroma==1.1.0
 langchain-groq==1.1.2
 langchain-text-splitters==1.1.2
-chromadb==0.5.23
+chromadb==1.5.8
 sentence-transformers==3.3.0
 flask-limiter==3.8.0
