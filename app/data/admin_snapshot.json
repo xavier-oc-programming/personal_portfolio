@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-01T10:05:50Z",
+  "snapshot_at": "2026-05-01T10:13:16Z",
   "projects": [
     {
       "id": 1,
@@ -2112,7 +2112,14 @@
         "Railway",
         "GitHub Actions"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/ai-portfolio-assistant/screenshots/1.png",
+        "images/projects/ai-portfolio-assistant/screenshots/2.png",
+        "images/projects/ai-portfolio-assistant/screenshots/3.png",
+        "images/projects/ai-portfolio-assistant/screenshots/4.png",
+        "images/projects/ai-portfolio-assistant/screenshots/5.png",
+        "images/projects/ai-portfolio-assistant/screenshots/6.png"
+      ],
       "videos": [],
       "card_image": null,
       "repo_url": "https://github.com/xavier-oc-programming/personal_portfolio",
