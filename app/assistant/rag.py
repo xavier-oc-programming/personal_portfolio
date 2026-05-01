@@ -226,28 +226,36 @@ class RAGEngine:
 
         docs = self._retriever.invoke(message)
 
-        sources: list[dict[str, str]] = []
-        seen: set[str] = set()
+        project_sources: list[dict[str, str]] = []
+        static_sources: list[dict[str, str]] = []
+        seen_projects: set[str] = set()
+        seen_static: set[str] = set()
 
         for doc in docs:
             project_slug: str | None = doc.metadata.get("project_slug")
             project_title: str | None = doc.metadata.get("project_title")
 
             if project_slug and project_title:
-                if project_title in seen:
+                if project_title in seen_projects:
                     continue
-                seen.add(project_title)
-                sources.append({"name": project_title, "url": f"/projects/{project_slug}"})
+                seen_projects.add(project_title)
+                project_sources.append({"name": project_title, "url": f"/projects/{project_slug}"})
             else:
                 stem = Path(doc.metadata.get("source", "")).stem
                 name = SOURCE_NAME_MAP.get(
                     stem,
                     stem.replace("xavier_", "").replace("_", " ").title(),
                 )
-                if name in seen:
+                if name in seen_static:
                     continue
-                seen.add(name)
-                sources.append({"name": name, "url": SOURCE_URL_MAP.get(stem, "/")})
+                seen_static.add(name)
+                static_sources.append({"name": name, "url": SOURCE_URL_MAP.get(stem, "/")})
+
+        # Collapse multiple project sources into a single "Browse Projects" link
+        if len(project_sources) > 1:
+            sources = [{"name": "Browse Projects", "url": "/projects"}] + static_sources
+        else:
+            sources = project_sources + static_sources
 
         context = "\n\n".join(
             f"[{i + 1}] {doc.page_content}" for i, doc in enumerate(docs)
