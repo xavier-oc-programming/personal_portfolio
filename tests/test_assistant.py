@@ -32,7 +32,10 @@ def mock_rag_engine(app):
     mock_engine = MagicMock()
     mock_engine.chat.return_value = {
         "answer": "Xavier is a Python developer based in Madrid.",
-        "sources": ["CV", "Projects"],
+        "sources": [
+            {"name": "CV", "url": "/about"},
+            {"name": "Personal Portfolio Website", "url": "/projects/personal-portfolio-website"},
+        ],
     }
     app.extensions["rag_engine"] = mock_engine
     yield mock_engine

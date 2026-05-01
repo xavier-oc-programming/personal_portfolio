@@ -194,10 +194,11 @@ The snapshot commit is what keeps the database recoverable — every admin save 
 ### AI assistant (`/assistant`)
 - Conversational chat interface powered by RAG (Retrieval-Augmented Generation)
 - Answers questions about Xavier's projects, skills, experience, and availability
-- Grounded in four knowledge documents — CV, projects, skills, personal narrative
+- Knowledge sources: static markdown (CV, skills, narrative) + live portfolio database (all projects)
+- Project knowledge is always in sync with the DB — new projects appear after the next deploy
 - Local embeddings via `sentence-transformers/all-MiniLM-L6-v2` (no API cost)
 - Llama 3.3 70B via Groq free tier (1,500 requests/day)
-- Source citations on every answer — links to the relevant portfolio page
+- Smart source citations — single project links to its detail page; multiple projects link to the most relevant filtered tag or category page, falling back to `/projects`
 - Chat history persisted in localStorage with clear and restore
 - Per-IP rate limiting (15 RPM, 1,500 RPD) via flask-limiter
 - Graceful degradation — shows "coming soon" if `GROQ_API_KEY` is not set

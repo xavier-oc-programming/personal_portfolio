@@ -276,19 +276,14 @@
       const bubbleClass = isUser ? "user-bubble" : "assistant-bubble";
 
       let sourcesHtml = "";
-      const SOURCE_LINKS = {
-        "CV":       "/about",
-        "About":    "/about",
-        "Projects": "/projects",
-        "Skills":   "/about",
-      };
 
       if (!isUser && sources && sources.length > 0) {
         sourcesHtml = '<div class="mt-1">';
         sourcesHtml += '<span style="font-size:0.72rem;color:var(--color-text-muted);">Source: </span>';
         sources.forEach(s => {
-          const href = SOURCE_LINKS[s] || "#";
-          sourcesHtml += `<a href="${href}" target="_blank" class="source-tag">${escapeHtml(s)}</a>`;
+          const name = typeof s === "object" ? s.name : s;
+          const href = typeof s === "object" ? s.url : "#";
+          sourcesHtml += `<a href="${href}" target="_blank" class="source-tag">${escapeHtml(name)}</a>`;
         });
         sourcesHtml += '</div>';
       }
