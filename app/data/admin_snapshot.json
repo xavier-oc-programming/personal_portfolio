@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-01T10:13:16Z",
+  "snapshot_at": "2026-05-01T10:14:54Z",
   "projects": [
     {
       "id": 1,
@@ -2121,7 +2121,7 @@
         "images/projects/ai-portfolio-assistant/screenshots/6.png"
       ],
       "videos": [],
-      "card_image": null,
+      "card_image": "images/projects/ai-portfolio-assistant/card/Understanding_RAG.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/personal_portfolio",
       "live_url": "https://www.xavieroc.dev/assistant",
       "demo_url": null
