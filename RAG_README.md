@@ -2,7 +2,7 @@
 
 ![Python 3.11](https://img.shields.io/badge/Python-3.11-blue)
 ![LangChain](https://img.shields.io/badge/LangChain-0.3-green)
-![Llama 3.3](https://img.shields.io/badge/Llama-3.3%2070B-orange)
+![Llama 3.3](https://img.shields.io/badge/Llama-3.3%2070B-orange)—
 ![ChromaDB](https://img.shields.io/badge/ChromaDB-0.5-purple)
 ![sentence-transformers](https://img.shields.io/badge/sentence--transformers-3.3-yellow)
 ![Flask](https://img.shields.io/badge/Flask-3.1-lightgrey)
@@ -114,9 +114,9 @@ app/
 │   ├── chroma_db/           ← persisted vector store (gitignored)
 │   └── knowledge/
 │       ├── xavier_cv.md
-│       ├── xavier_projects.md
 │       ├── xavier_skills.md
-│       └── xavier_about.md
+│       └── xavier_about.md  ← static markdown (CV, skills, narrative)
+│       (projects loaded live from portfolio database — not a file)
 └── templates/
     └── assistant/
         └── assistant.html   ← Bootstrap 5 chat UI
@@ -127,8 +127,8 @@ app/
 1. Browser sends `POST /assistant/chat` with `{"message": "...", "history": [...]}`
 2. `routes.py` validates the message, checks the API key, and calls `rag_engine.chat()`
 3. `rag_engine.chat()` embeds the question, retrieves top-4 chunks, builds a prompt with context + history, and calls Llama 3.3 70B via Groq
-4. The route returns `{"answer": "...", "sources": [...]}` as JSON
-5. The frontend appends the message bubble and source tags without a page reload
+4. The route returns `{"answer": "...", "sources": [...]}` as JSON — sources are `{name, url}` objects linking to specific portfolio pages
+5. The frontend appends the message bubble and clickable source tags without a page reload
 
 The `RAGEngine` instance is stored on `app.extensions["rag_engine"]` at startup so the index is never rebuilt per-request.
 
@@ -136,16 +136,23 @@ The `RAGEngine` instance is stored on `app.extensions["rag_engine"]` at startup 
 
 ## 4. Knowledge base
 
-Source documents live in `app/data/knowledge/` and are loaded at app startup. Each file is a Markdown document covering one aspect of Xavier's profile.
+The knowledge base has two sources, both indexed at startup:
+
+**Static Markdown files** (`app/data/knowledge/`):
 
 | File | Contents | Purpose |
 |------|----------|---------|
 | `xavier_cv.md` | Personal info, work experience, education, certifications, availability | Answers recruiter questions about background and status |
-| `xavier_projects.md` | Detailed descriptions of all major projects with tech stacks | Answers questions about what Xavier has built |
 | `xavier_skills.md` | Full skills breakdown by category (languages, frameworks, data, AI, tools) | Answers questions about specific technologies |
 | `xavier_about.md` | Personal narrative, career transition story, motivation | Answers questions about who Xavier is and why he chose tech |
 
-All four files are indexed together. Each is split into 500-character chunks with 50-character overlap so context is never cut off mid-sentence.
+**Portfolio database** (live, queried at index-build time):
+
+Every `Project` record is converted to a rich text document containing the title, short and full description, problem, solution, challenges, results, tech stack, tags, and links. The project slug, category, and tags are stored as ChromaDB metadata so source links can point directly to the right portfolio page.
+
+This means project knowledge is always in sync with the database — adding or updating a project via the admin dashboard takes effect on the next deploy (Railway rebuilds the index fresh every deploy).
+
+All documents are split into 500-character chunks with 50-character overlap.
 
 ---
 
@@ -159,7 +166,7 @@ What happens on each chat request:
 4. **Search** — ChromaDB performs cosine similarity search and returns the 4 most semantically relevant chunks from the knowledge base
 5. **Build prompt** — system prompt + last 4 conversation exchanges + numbered context chunks + current question are assembled into a LangChain message list
 6. **Generate** — `ChatGroq` sends the message list to Llama 3.3 70B (temperature 0.3, max 512 output tokens)
-7. **Return** — the route returns `{"answer": response_text, "sources": [readable_source_names]}` as JSON
+7. **Return** — the route returns `{"answer": response_text, "sources": [{"name": str, "url": str}, ...]}` as JSON. Source URLs are smart: a single matched project links to its detail page (`/projects/slug`), multiple projects from the same tag link to the filtered tag page (`/projects?tag=Games`), multiple projects from the same category link to the category page (`/projects/data`), and a mixed result set links to `/projects`
 
 ---
 
@@ -189,9 +196,11 @@ Rate limit state is stored in memory (single-instance deployment on Railway). Wh
 |------|-----------|-------------|
 | `RAGEngine` | class | Manages vector store, retriever, and LLM lifecycle |
 | `RAGEngine.init_app` | `(app: Flask) -> None` | Builds or loads the ChromaDB index and initialises the LLM. Stores self on `app.extensions["rag_engine"]`. No-ops silently if API key is missing. |
-| `RAGEngine.chat` | `(message: str, history: list[dict]) -> dict` | Retrieves top-4 chunks, builds a prompted message list, calls Llama 3.3, returns `{"answer": str, "sources": list}` |
+| `RAGEngine.chat` | `(message: str, history: list[dict]) -> dict` | Retrieves top-4 chunks, builds a prompted message list, calls Llama 3.3, returns `{"answer": str, "sources": list[{name, url}]}` |
 | `SYSTEM_PROMPT` | `str` | The system instruction sent to the LLM on every request |
-| `SOURCE_NAME_MAP` | `dict[str, str]` | Maps knowledge base filenames to human-readable source labels |
+| `SOURCE_NAME_MAP` | `dict[str, str]` | Maps static knowledge filenames to human-readable labels |
+| `SOURCE_URL_MAP` | `dict[str, str]` | Maps static knowledge filenames to portfolio page URLs |
+| `_project_to_text` | `(project) -> str` | Converts a Project DB record to a rich text document for indexing |
 
 ### `app/assistant/routes.py`
 
