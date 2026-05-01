@@ -166,7 +166,7 @@ What happens on each chat request:
 4. **Search** — ChromaDB performs cosine similarity search and returns the 4 most semantically relevant chunks from the knowledge base
 5. **Build prompt** — system prompt + last 4 conversation exchanges + numbered context chunks + current question are assembled into a LangChain message list
 6. **Generate** — `ChatGroq` sends the message list to Llama 3.3 70B (temperature 0.3, max 512 output tokens)
-7. **Return** — the route returns `{"answer": response_text, "sources": [{"name": str, "url": str}, ...]}` as JSON. Source URLs are smart: a single matched project links to its detail page (`/projects/slug`), multiple projects from the same tag link to the filtered tag page (`/projects?tag=Games`), multiple projects from the same category link to the category page (`/projects/data`), and a mixed result set links to `/projects`
+7. **Return** — the route returns `{"answer": response_text, "sources": [{"name": str, "url": str}, ...]}` as JSON. Source URLs are smart: a single matched project links to its detail page (`/projects/slug`); multiple projects collapse to a filtered link — the most frequent non-generic tag across retrieved projects wins (`/projects?tag=flask`), falling back to a shared category (`/projects/data`), then `/projects` if there is no clear match
 
 ---
 
