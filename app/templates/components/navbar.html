@@ -73,6 +73,16 @@
               API
             </a>
           </li>
+
+          <li class="nav-item">
+            <a
+              class="nav-link {% if request.path.startswith('/assistant') %}active fw-semibold{% endif %}"
+              href="{{ url_for('assistant.assistant_page') }}"
+              {% if request.path.startswith('/assistant') %}aria-current="page"{% endif %}
+            >
+              Assistant
+            </a>
+          </li>
         </ul>
       </div>
     </div>
