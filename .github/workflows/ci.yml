@@ -58,6 +58,7 @@ jobs:
           ADMIN_PASSWORD: test-password
           SECRET_KEY: test-secret-key
           TESTING: 'true'
+          GROQ_API_KEY: ""
         run: pytest -v
 
   deploy:

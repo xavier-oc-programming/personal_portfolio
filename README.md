@@ -1,14 +1,14 @@
 # Xavier OC — Developer Portfolio
 
-A production-grade portfolio web application built entirely in Python and Flask. Fully deployed, database-backed, and maintained without touching code — through a custom admin dashboard. Exposes all project data through a versioned public REST API. Ships with automated tests and a CI/CD pipeline.
+A production-grade portfolio web application built entirely in Python and Flask. Fully deployed, database-backed, and maintained without touching code — through a custom admin dashboard. Exposes all project data through a versioned public REST API. Ships with an AI assistant powered by RAG, automated tests, and a CI/CD pipeline.
 
 **Live site → [xavieroc.dev](https://www.xavieroc.dev)**
 &nbsp;&nbsp;·&nbsp;&nbsp;
-**API → [xavieroc.dev/api/v1/projects](https://www.xavieroc.dev/api/v1/projects)**
+**Assistant → [xavieroc.dev/assistant](https://www.xavieroc.dev/assistant)**
 &nbsp;&nbsp;·&nbsp;&nbsp;
 **API docs → [xavieroc.dev/api](https://www.xavieroc.dev/api)**
 
-Most developer portfolios are static HTML pages or no-code website builders. This one is a full-stack web application — the same kind of system you would build professionally. It handles authentication, database reads and writes, file uploads, form validation, spam protection, email notifications, and automated deployment.
+Most developer portfolios are static HTML pages or no-code website builders. This one is a full-stack web application — the same kind of system you would build professionally. It handles authentication, database reads and writes, file uploads, form validation, spam protection, email notifications, AI-powered chat, and automated deployment.
 
 The portfolio itself is the proof of skill.
 
@@ -104,6 +104,7 @@ GET  /projects/software    →  Software projects pre-filtered
 GET  /projects/<slug>      →  Individual project detail page
 GET  /about                →  Developer profile
 GET  /contact              →  Contact form
+GET  /assistant            →  AI portfolio assistant (chat)
 GET  /api                  →  Interactive API documentation
 ```
 
@@ -190,6 +191,17 @@ The snapshot commit is what keeps the database recoverable — every admin save 
 - Google Analytics integration
 - Sitemap and robots.txt
 
+### AI assistant (`/assistant`)
+- Conversational chat interface powered by RAG (Retrieval-Augmented Generation)
+- Answers questions about Xavier's projects, skills, experience, and availability
+- Grounded in four knowledge documents — CV, projects, skills, personal narrative
+- Local embeddings via `sentence-transformers/all-MiniLM-L6-v2` (no API cost)
+- Llama 3.3 70B via Groq free tier (1,500 requests/day)
+- Source citations on every answer — links to the relevant portfolio page
+- Chat history persisted in localStorage with clear and restore
+- Per-IP rate limiting (15 RPM, 1,500 RPD) via flask-limiter
+- Graceful degradation — shows "coming soon" if `GROQ_API_KEY` is not set
+
 ### Admin dashboard (`/admin`)
 - Password-protected session auth
 - Full project CRUD — create, edit, delete with a rich form covering all content fields
@@ -235,6 +247,8 @@ Every response uses a consistent JSON envelope:
 /projects/software                  GET          Software projects
 /projects/<slug>                    GET          Project detail
 /contact                            GET POST     Contact form
+/assistant                          GET          AI assistant chat page
+/assistant/chat                     POST         AI assistant chat API (JSON)
 /api                                GET          API documentation
 /robots.txt                         GET          SEO robots file
 /sitemap.xml                        GET          SEO sitemap
@@ -295,15 +309,20 @@ Browser
   ├── Admin routes (admin blueprint)
   │     /admin/*                       → Jinja2 templates → HTML
   │
-  └── API routes (api blueprint)
-        /api/v1/*                      → JSON responses
+  ├── API routes (api blueprint)
+  │     /api/v1/*                      → JSON responses
+  │
+  └── Assistant routes (assistant blueprint)
+        /assistant                     → Jinja2 template → HTML
+        /assistant/chat                → JSON (RAG + Groq)
 ```
 
-Three Flask blueprints:
+Four Flask blueprints:
 
 - **Main app** (`app/app.py`) — public-facing routes, contact form, spam protection, snapshot sync
 - **Admin blueprint** (`app/admin/`) — password-protected management, media uploads, GitHub auto-commits, backups
 - **API blueprint** (`app/api/`) — versioned REST endpoints, JSON envelope helpers
+- **Assistant blueprint** (`app/assistant/`) — RAG chat endpoint, rate limiting, Groq LLM integration
 
 ```
 app/
@@ -315,10 +334,16 @@ app/
 ├── api/
 │   ├── __init__.py     Blueprint registration
 │   └── routes.py       REST API endpoints and JSON envelope helpers
+├── assistant/
+│   ├── __init__.py     Blueprint + flask-limiter instance
+│   ├── routes.py       GET /assistant, POST /assistant/chat
+│   └── rag.py          RAGEngine — ChromaDB indexing, retrieval, Groq LLM
 ├── data/
 │   ├── projects.py     Seed data — fallback for projects not in snapshot
 │   ├── admin_snapshot.json  Live source of truth — committed on every admin write
-│   └── backup/         Timestamped JSON snapshots (last 25 kept)
+│   ├── backup/         Timestamped JSON snapshots (last 25 kept)
+│   ├── chroma_db/      Persisted vector store (gitignored)
+│   └── knowledge/      Markdown knowledge base (CV, projects, skills, about)
 ├── models/
 │   └── models.py       SQLAlchemy models — Project, ContactMessage
 ├── seed_projects.py    Database seeder — runs on every deploy
@@ -332,13 +357,15 @@ app/
 │   └── videos/         Local video files per project (small clips only)
 └── templates/
     ├── components/     Reusable partials (navbar, footer, cards, etc.)
-    └── admin/          Admin-only templates
+    ├── admin/          Admin-only templates
+    └── assistant/      AI assistant chat template
 
 tests/
 ├── conftest.py             Fixtures (app, client, seeded database)
 ├── test_public_routes.py   Public route status codes
 ├── test_admin_routes.py    Auth protection and login flow
-└── test_api.py             API responses, envelope shape, filters
+├── test_api.py             API responses, envelope shape, filters
+└── test_assistant.py       Assistant routes — validation, mocked RAG, rate limits
 
 .github/workflows/
 └── ci.yml              Test on every push/PR · Deploy to Railway on main
@@ -475,6 +502,7 @@ wsgi.py                 Gunicorn entry point
 | `FLASK_ENV` | No | `development` or `production` — defaults to `development` |
 | `GITHUB_TOKEN` | No | Personal access token with repo write permission — enables snapshot auto-commits |
 | `GITHUB_REPO` | No | Repository in `owner/repo` format — required alongside `GITHUB_TOKEN` |
+| `GROQ_API_KEY` | No | Free Groq API key from console.groq.com — enables the AI assistant. If absent, assistant shows a "coming soon" page. |
 
 Copy `.env.example` to `.env` and fill in the values. Never commit `.env`.
 
@@ -496,6 +524,7 @@ Copy `.env.example` to `.env` and fill in the values. Never commit `.env`.
    | `ADMIN_PASSWORD` | Your chosen admin password |
    | `GITHUB_TOKEN` | Personal access token with repo write permission |
    | `GITHUB_REPO` | `your-username/personal_portfolio` |
+   | `GROQ_API_KEY` | Free key from console.groq.com — enables the AI assistant |
 
 5. Railway reads `railway.toml` and builds using the `Dockerfile`. On every deploy, `entrypoint.sh` runs database migrations and the seeder before starting Gunicorn.
 
@@ -608,3 +637,11 @@ The projects page fetches the full project list once from `/api/v1/projects` on 
 | `pytest` | `tests/` | Test runner |
 | `pytest-flask` | `tests/` | Flask test client fixtures |
 | `email-validator` | `forms.py` | WTForms email field validation |
+| `langchain` | `assistant/rag.py` | Core LangChain framework — message types, chain building |
+| `langchain-community` | `assistant/rag.py` | `HuggingFaceEmbeddings`, `DirectoryLoader`, `TextLoader` |
+| `langchain-chroma` | `assistant/rag.py` | LangChain integration for ChromaDB vector store |
+| `langchain-groq` | `assistant/rag.py` | LangChain integration for Groq (`ChatGroq`) |
+| `langchain-text-splitters` | `assistant/rag.py` | `RecursiveCharacterTextSplitter` for document chunking |
+| `chromadb` | `assistant/rag.py` | Local persistent vector store |
+| `sentence-transformers` | `assistant/rag.py` | Local embedding model (`all-MiniLM-L6-v2`) |
+| `flask-limiter` | `assistant/` | Per-IP rate limiting on the chat endpoint |

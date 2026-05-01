@@ -25,6 +25,7 @@ Run locally (from repo root):
 from __future__ import annotations
 
 import json
+import os
 import time
 from datetime import datetime
 from pathlib import Path
@@ -32,12 +33,14 @@ from typing import Any
 
 import resend
 
-from flask import Flask, Response, abort, flash, redirect, render_template, request, session, url_for
+from flask import Flask, Response, abort, flash, jsonify, redirect, render_template, request, session, url_for
 from flask_cors import CORS
 from flask_wtf.csrf import CSRFProtect
 
 from app.admin import admin_bp
 from app.api import api_bp
+from app.assistant import assistant_bp, limiter as assistant_limiter
+from app.assistant.rag import RAGEngine
 from app.config import get_config_class
 from app.forms import ContactForm, MAX_EMAIL_LENGTH, MAX_MESSAGE_LENGTH, MAX_NAME_LENGTH
 from app.models.models import ContactMessage, Project, db
@@ -344,11 +347,29 @@ def create_app() -> Flask:
         if app.config.get("DEBUG"):
             _sync_from_snapshot(app)
 
-    CSRFProtect(app)
+    csrf = CSRFProtect(app)
     CORS(app, resources={r"/api/*": {"origins": "*"}})
+
+    app.config["GROQ_API_KEY"] = os.environ.get("GROQ_API_KEY")
 
     app.register_blueprint(admin_bp)
     app.register_blueprint(api_bp)
+    app.register_blueprint(assistant_bp)
+    csrf.exempt(assistant_bp)
+
+    assistant_limiter.init_app(app)
+
+    rag_engine = RAGEngine()
+    rag_engine.init_app(app)
+
+    @app.errorhandler(429)
+    def rate_limit_exceeded(error):
+        desc = str(error.description).lower() if hasattr(error, "description") else ""
+        if "per day" in desc:
+            msg = "Sorry — the assistant has hit its daily request limit. Please try again tomorrow."
+        else:
+            msg = "Sorry — too many requests. Please wait a minute and try again."
+        return jsonify({"error": msg}), 429
 
     @app.context_processor
     def inject_global_template_vars():

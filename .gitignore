@@ -16,3 +16,6 @@ __pycache__/
 
 # Optional: Jupyter checkpoints
 .ipynb_checkpoints/
+
+# ChromaDB vector store (built at runtime from knowledge base)
+app/data/chroma_db/
