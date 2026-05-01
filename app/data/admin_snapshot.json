@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-01T10:29:55Z",
+  "snapshot_at": "2026-05-01T15:40:26Z",
   "projects": [
     {
       "id": 1,
@@ -2124,6 +2124,40 @@
       "card_image": "images/projects/ai-portfolio-assistant/card/Understanding_RAG.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/personal_portfolio",
       "live_url": "https://www.xavieroc.dev/assistant",
+      "demo_url": null
+    },
+    {
+      "id": 52,
+      "slug": "numpy-pandas-benchmark",
+      "title": "NumPy vs Pandas Performance Benchmark",
+      "primary_category": "data",
+      "short_description": "I benchmarked NumPy and Pandas across seven common operations at 100k, 1M, and 10M rows to find out exactly when each library wins — and by how much. The answer turned out to be more nuanced than I expected.",
+      "full_description": "I kept hearing that NumPy is faster than Pandas — and in a lot of cases that's true.\r\nBut I wanted to know by how much, and whether it's actually a fair universal claim.\r\nTurns out it isn't. So I built this project to get real numbers.\r\n\r\nI benchmarked seven operations across three dataset sizes using time.perf_counter()\r\nwith 5 runs averaged per measurement. All data is generated synthetically with a\r\nfixed seed so the results are fully reproducible. Everything is explored in a Jupyter\r\nnotebook with four chart types, and the raw numbers are exported to results.json.",
+      "featured": false,
+      "featured_order": null,
+      "date": "2026-05-01",
+      "problem": "I'd been told that NumPy is faster overall, but that felt too broad to be useful.\r\nFaster at what, exactly? And by how much? I wanted to know whether the advice held\r\nacross different operations and dataset sizes, or whether it was really just true in\r\nspecific situations that people had generalised a bit too confidently.",
+      "solution": "I generated a synthetic dataset with four columns — price, quantity, category, score —\r\nand timed seven operations for both libraries at 100k, 1M, and 10M rows. NumPy uses\r\na structured array with named fields; Pandas uses a DataFrame built from the same\r\nseed so the values are identical. I used time.perf_counter() over 5 runs for each\r\nmeasurement, then visualised the results across four chart types to make the patterns\r\neasy to read.",
+      "challenges": "Getting the comparison to be genuinely fair took more thought than I expected. I had\r\nto make sure both libraries were working with the exact same data — same seed, same\r\nvalues, matching dtypes. The groupby benchmark was the most revealing: NumPy needs a\r\nPython-level loop over five boolean masks, while Pandas uses a hash-based engine under\r\nthe hood. Watching NumPy win at 100k rows and then lose convincingly at 1M was the\r\nmoment the project clicked for me — the crossover is real and it has a clear reason.",
+      "results": "The \"NumPy is faster\" claim holds for some things and completely falls apart for others.\r\nNumPy is 1.5–1.9× faster at sorting at every scale I tested. But Pandas fillna beats\r\nthe NumPy np.where equivalent by 3.3× at 10M rows. Pandas groupby goes from slower\r\nat 100k to 1.44× faster at 1M and beyond. Boolean filtering consistently favours\r\nPandas by ~1.47×. The honest answer is: it depends on the operation, and the scale\r\nmatters more than most people realise.",
+      "tags": [
+        "data-analysis",
+        "visualisation",
+        "python"
+      ],
+      "tech_stack": [
+        "Python",
+        "NumPy",
+        "Pandas",
+        "Matplotlib",
+        "Seaborn",
+        "Jupyter"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": "https://github.com/xavier-oc-programming/numpy-pandas-benchmark",
+      "live_url": null,
       "demo_url": null
     }
   ],
