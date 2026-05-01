@@ -38,7 +38,7 @@
         <h1 class="h3 mb-1">Ask Xavier's Assistant</h1>
         <p class="text-secondary mb-0">
           Ask anything about Xavier's projects, skills, experience, or availability.
-          Powered by Gemini 1.5 Flash + RAG.
+          Powered by Llama 3.3 + RAG.
         </p>
       </div>
 
@@ -51,7 +51,7 @@
         aria-label="Chat conversation"
       >
         <!-- Welcome message -->
-        <div class="d-flex mb-3">
+        <div id="welcome-message" class="d-flex mb-3">
           <div class="flex-shrink-0 me-2">
             <div
               class="rounded-circle d-flex align-items-center justify-content-center"
@@ -123,11 +123,17 @@
           Send
         </button>
       </form>
-      <div class="d-flex justify-content-between mt-1 px-1">
-        <small class="text-secondary" id="char-counter" style="font-size:0.78rem;"></small>
-        <small class="text-secondary" style="font-size:0.78rem;">
-          Answers grounded in Xavier's CV and project documents
-        </small>
+      <div class="d-flex justify-content-between align-items-center mt-2 px-1">
+        <div class="d-flex align-items-center gap-2">
+          <small class="text-secondary" id="char-counter" style="font-size:0.78rem;"></small>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <button id="restore-btn" type="button" class="btn btn-sm btn-outline-secondary d-none" style="font-size:0.75rem;padding:0.15rem 0.6rem;">Restore</button>
+          <button id="clear-btn" type="button" class="btn btn-sm btn-outline-secondary" style="font-size:0.75rem;padding:0.15rem 0.6rem;">Clear chat</button>
+          <small class="text-secondary" style="font-size:0.78rem;">
+            Answers grounded in Xavier's CV and project documents
+          </small>
+        </div>
       </div>
 
     </div>
@@ -186,6 +192,16 @@
     font-weight: 500;
     margin-top: 0.35rem;
     margin-right: 0.25rem;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .source-tag:hover {
+    background: #bfdbfe;
+    color: var(--color-accent);
+  }
+  .source-tag:visited {
+    background: #ede9fe;
+    color: #6d28d9;
   }
 </style>
 
@@ -198,8 +214,45 @@
     const typingEl     = document.getElementById("typing-indicator");
     const starterChips = document.getElementById("starter-chips");
     const charCounter  = document.getElementById("char-counter");
+    const clearBtn     = document.getElementById("clear-btn");
+    const restoreBtn   = document.getElementById("restore-btn");
+
+    const STORAGE_KEY  = "xavier_assistant_history";
+    const BACKUP_KEY   = "xavier_assistant_history_backup";
 
     let conversationHistory = [];
+
+    function saveHistory() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(conversationHistory));
+    }
+
+    function loadHistory() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      } catch { return []; }
+    }
+
+    function clearHistory() {
+      const backup = localStorage.getItem(STORAGE_KEY);
+      if (backup && backup !== "[]") {
+        localStorage.setItem(BACKUP_KEY, backup);
+        restoreBtn.classList.remove("d-none");
+      }
+      localStorage.removeItem(STORAGE_KEY);
+      conversationHistory = [];
+    }
+
+    function restoreHistory() {
+      try {
+        const backup = JSON.parse(localStorage.getItem(BACKUP_KEY) || "[]");
+        if (backup.length) {
+          conversationHistory = backup;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(backup));
+          return backup;
+        }
+      } catch {}
+      return [];
+    }
 
     function scrollToBottom() {
       chatWindow.scrollTop = chatWindow.scrollHeight;
@@ -223,11 +276,19 @@
       const bubbleClass = isUser ? "user-bubble" : "assistant-bubble";
 
       let sourcesHtml = "";
+      const SOURCE_LINKS = {
+        "CV":       "/about",
+        "About":    "/about",
+        "Projects": "/projects",
+        "Skills":   "/about",
+      };
+
       if (!isUser && sources && sources.length > 0) {
         sourcesHtml = '<div class="mt-1">';
         sourcesHtml += '<span style="font-size:0.72rem;color:var(--color-text-muted);">Source: </span>';
         sources.forEach(s => {
-          sourcesHtml += `<span class="source-tag">${escapeHtml(s)}</span>`;
+          const href = SOURCE_LINKS[s] || "#";
+          sourcesHtml += `<a href="${href}" target="_blank" class="source-tag">${escapeHtml(s)}</a>`;
         });
         sourcesHtml += '</div>';
       }
@@ -236,7 +297,7 @@
         ${avatarHtml}
         <div style="max-width:82%;">
           <div class="px-3 py-2 ${bubbleClass}" style="font-size:0.9rem;line-height:1.55;">
-            ${escapeHtml(text).replace(/\n/g, "<br>")}
+            ${isUser ? escapeHtml(text) : renderMarkdown(text)}
           </div>
           ${sourcesHtml}
         </div>`;
@@ -253,6 +314,14 @@
         .replace(/"/g, "&quot;");
     }
 
+    function renderMarkdown(str) {
+      return escapeHtml(str)
+        .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+        .replace(/\*(.+?)\*/g, "<em>$1</em>")
+        .replace(/(^|\n)\* /g, "$1• ")
+        .replace(/\n/g, "<br>");
+    }
+
     function setLoading(loading) {
       sendBtn.disabled = loading;
       chatInput.disabled = loading;
@@ -264,6 +333,7 @@
       if (!text.trim()) return;
 
       starterChips.classList.add("d-none");
+      restoreBtn.classList.add("d-none");
       appendMessage("user", text);
       conversationHistory.push({ role: "user", content: text });
       chatInput.value = "";
@@ -281,9 +351,14 @@
         });
 
         if (resp.status === 429) {
+          const limitData = await resp.json().catch(() => ({}));
+          const isDaily = (limitData.error || "").toLowerCase().includes("daily") ||
+                          (limitData.error || "").toLowerCase().includes("tomorrow");
           appendMessage(
             "assistant",
-            "Xavier's assistant is having a short rest — try again in a minute.",
+            isDaily
+              ? "Sorry — the assistant has hit its daily request limit. Please try again tomorrow."
+              : "Sorry — too many requests. Please wait a minute and try again.",
             []
           );
           return;
@@ -301,7 +376,8 @@
         }
 
         appendMessage("assistant", data.answer, data.sources);
-        conversationHistory.push({ role: "assistant", content: data.answer });
+        conversationHistory.push({ role: "assistant", content: data.answer, sources: data.sources });
+        saveHistory();
 
       } catch {
         appendMessage(
@@ -329,6 +405,40 @@
         sendMessage(btn.textContent.trim());
       });
     });
+
+    function removeConversationMessages() {
+      chatWindow.querySelectorAll(".d-flex.mb-3, .d-flex.justify-content-end.mb-3").forEach(el => {
+        if (el.id !== "welcome-message") el.remove();
+      });
+    }
+
+    clearBtn.addEventListener("click", () => {
+      clearHistory();
+      removeConversationMessages();
+      starterChips.classList.remove("d-none");
+      restoreBtn.classList.remove("d-none");
+    });
+
+    restoreBtn.addEventListener("click", () => {
+      const saved = restoreHistory();
+      if (!saved.length) return;
+      removeConversationMessages();
+      saved.forEach(turn => {
+        appendMessage(turn.role, turn.content, turn.sources || []);
+      });
+      starterChips.classList.add("d-none");
+      restoreBtn.classList.add("d-none");
+    });
+
+    // Replay saved history on page load
+    const saved = loadHistory();
+    if (saved.length) {
+      conversationHistory = saved;
+      starterChips.classList.add("d-none");
+      saved.forEach(turn => {
+        appendMessage(turn.role, turn.content, turn.sources || []);
+      });
+    }
 
     scrollToBottom();
   })();

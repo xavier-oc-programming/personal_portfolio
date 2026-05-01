@@ -347,14 +347,15 @@ def create_app() -> Flask:
         if app.config.get("DEBUG"):
             _sync_from_snapshot(app)
 
-    CSRFProtect(app)
+    csrf = CSRFProtect(app)
     CORS(app, resources={r"/api/*": {"origins": "*"}})
 
-    app.config["GOOGLE_API_KEY"] = os.environ.get("GOOGLE_API_KEY")
+    app.config["GROQ_API_KEY"] = os.environ.get("GROQ_API_KEY")
 
     app.register_blueprint(admin_bp)
     app.register_blueprint(api_bp)
     app.register_blueprint(assistant_bp)
+    csrf.exempt(assistant_bp)
 
     assistant_limiter.init_app(app)
 
@@ -363,7 +364,12 @@ def create_app() -> Flask:
 
     @app.errorhandler(429)
     def rate_limit_exceeded(error):
-        return jsonify({"error": "Too many requests — try again in a minute"}), 429
+        desc = str(error.description).lower() if hasattr(error, "description") else ""
+        if "per day" in desc:
+            msg = "Sorry — the assistant has hit its daily request limit. Please try again tomorrow."
+        else:
+            msg = "Sorry — too many requests. Please wait a minute and try again."
+        return jsonify({"error": msg}), 429
 
     @app.context_processor
     def inject_global_template_vars():

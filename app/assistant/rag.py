@@ -55,7 +55,7 @@ class RAGEngine:
         Skips silently if GOOGLE_API_KEY is not configured.
         Stores self on app.extensions['rag_engine'] so routes can access it.
         """
-        api_key = app.config.get("GOOGLE_API_KEY")
+        api_key = app.config.get("GROQ_API_KEY")
 
         if not api_key:
             app.extensions["rag_engine"] = None
@@ -65,7 +65,7 @@ class RAGEngine:
             from langchain_community.document_loaders import DirectoryLoader, TextLoader
             from langchain_community.embeddings import HuggingFaceEmbeddings
             from langchain_chroma import Chroma
-            from langchain_google_genai import ChatGoogleGenerativeAI
+            from langchain_groq import ChatGroq
             from langchain_text_splitters import RecursiveCharacterTextSplitter
         except ImportError as exc:
             app.logger.error("RAG dependencies not installed: %s", exc)
@@ -116,11 +116,11 @@ class RAGEngine:
 
             self._retriever = vector_store.as_retriever(search_kwargs={"k": 4})
 
-            self._llm = ChatGoogleGenerativeAI(
-                model="gemini-2.5-flash",
-                google_api_key=api_key,
+            self._llm = ChatGroq(
+                model="llama-3.3-70b-versatile",
+                api_key=api_key,
                 temperature=0.3,
-                max_output_tokens=512,
+                max_tokens=512,
             )
 
             self._initialized = True

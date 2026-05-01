@@ -58,7 +58,7 @@ jobs:
           ADMIN_PASSWORD: test-password
           SECRET_KEY: test-secret-key
           TESTING: 'true'
-          GOOGLE_API_KEY: ""
+          GROQ_API_KEY: ""
         run: pytest -v
 
   deploy:

@@ -19,7 +19,7 @@ MAX_MESSAGE_LENGTH = 500
 @assistant_bp.get("")
 def assistant_page() -> str:
     """Render the assistant chat page."""
-    api_key = current_app.config.get("GOOGLE_API_KEY")
+    api_key = current_app.config.get("GROQ_API_KEY")
     return render_template("assistant/assistant.html", has_api_key=bool(api_key))
 
 
@@ -39,7 +39,7 @@ def chat():
         400: {"error": str}  — invalid or missing message
         503: {"error": str}  — API key not set or engine unavailable
     """
-    api_key = current_app.config.get("GOOGLE_API_KEY")
+    api_key = current_app.config.get("GROQ_API_KEY")
     if not api_key:
         return (
             jsonify({"error": "Assistant unavailable — API key not configured"}),
@@ -69,7 +69,13 @@ def chat():
     try:
         result = rag_engine.chat(message=message, history=history)
         return jsonify(result), 200
-    except Exception:
+    except Exception as exc:
+        exc_str = str(exc).lower()
+        if "resource_exhausted" in exc_str or "quota" in exc_str or "429" in exc_str:
+            return (
+                jsonify({"error": "Sorry — the assistant has hit its daily request limit. Please try again tomorrow."}),
+                429,
+            )
         current_app.logger.exception("RAG engine chat failed.")
         return (
             jsonify({"error": "The assistant encountered an error — please try again."}),

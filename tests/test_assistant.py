@@ -4,7 +4,7 @@ tests/test_assistant.py
 Tests for the AI portfolio assistant blueprint.
 
 All tests mock the RAG engine and Gemini API so they pass in CI
-without a real GOOGLE_API_KEY.
+without a real GROQ_API_KEY.
 """
 
 import json
@@ -20,10 +20,10 @@ import pytest
 
 @pytest.fixture
 def api_key_set(app):
-    """Temporarily set GOOGLE_API_KEY in app config."""
-    app.config["GOOGLE_API_KEY"] = "fake-test-key"
+    """Temporarily set GROQ_API_KEY in app config."""
+    app.config["GROQ_API_KEY"] = "fake-test-key"
     yield
-    app.config["GOOGLE_API_KEY"] = None
+    app.config["GROQ_API_KEY"] = None
 
 
 @pytest.fixture
@@ -64,7 +64,7 @@ def test_get_assistant_with_api_key(client, api_key_set):
 
 
 def test_post_chat_no_api_key(client):
-    """POST /assistant/chat returns 503 when GOOGLE_API_KEY is not set."""
+    """POST /assistant/chat returns 503 when GROQ_API_KEY is not set."""
     response = client.post(
         "/assistant/chat",
         data=json.dumps({"message": "hello", "history": []}),
