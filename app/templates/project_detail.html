@@ -61,7 +61,7 @@
         {% endif %}
 
         {% if project and project.full_description %}
-          {% set description = project.full_description %}
+          {% set description = project.full_description | nl2br %}
         {% else %}
           {% set description = "This page displays details for a single project." %}
         {% endif %}
@@ -183,28 +183,28 @@
           <div class="mb-4">
             <h3 class="h5 mb-2">Problem</h3>
             <p class="text-secondary mb-0">
-              {{ project.problem if project and project.problem else "Placeholder: describe the problem this project solves." }}
+              {{ (project.problem | nl2br) if project and project.problem else "Placeholder: describe the problem this project solves." }}
             </p>
           </div>
 
           <div class="mb-4">
             <h3 class="h5 mb-2">Solution</h3>
             <p class="text-secondary mb-0">
-              {{ project.solution if project and project.solution else "Placeholder: summarize your approach and what you built." }}
+              {{ (project.solution | nl2br) if project and project.solution else "Placeholder: summarize your approach and what you built." }}
             </p>
           </div>
 
           <div class="mb-4">
             <h3 class="h5 mb-2">Challenges</h3>
             <p class="text-secondary mb-0">
-              {{ project.challenges if project and project.challenges else "Placeholder: note the main technical challenges and how you overcame them." }}
+              {{ (project.challenges | nl2br) if project and project.challenges else "Placeholder: note the main technical challenges and how you overcame them." }}
             </p>
           </div>
 
           <div>
             <h3 class="h5 mb-2">Results / Metrics</h3>
             <p class="text-secondary mb-0">
-              {{ project.results if project and project.results else "Placeholder: include outcomes, improvements, performance, or what you learned." }}
+              {{ (project.results | nl2br) if project and project.results else "Placeholder: include outcomes, improvements, performance, or what you learned." }}
             </p>
           </div>
         </div>

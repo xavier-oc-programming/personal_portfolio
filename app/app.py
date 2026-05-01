@@ -36,6 +36,7 @@ import resend
 from flask import Flask, Response, abort, flash, jsonify, redirect, render_template, request, session, url_for
 from flask_cors import CORS
 from flask_wtf.csrf import CSRFProtect
+from markupsafe import Markup, escape
 
 from app.admin import admin_bp
 from app.api import api_bp
@@ -346,6 +347,10 @@ def create_app() -> Flask:
         db.create_all()
         if app.config.get("DEBUG"):
             _sync_from_snapshot(app)
+
+    @app.template_filter("nl2br")
+    def nl2br_filter(value: str) -> Markup:
+        return Markup(escape(value).replace("\n\n", Markup("<br><br>")).replace("\n", Markup("<br>")))
 
     csrf = CSRFProtect(app)
     CORS(app, resources={r"/api/*": {"origins": "*"}})
