@@ -265,26 +265,31 @@ class RAGEngine:
                 static_sources.append({"name": name, "url": SOURCE_URL_MAP.get(stem, "/")})
 
         if len(project_docs) > 1:
-            # Try to find a common non-generic tag across all retrieved project docs
-            tag_sets = [p["tags"] for p in project_docs if p["tags"]]
-            common_tags = set.intersection(*tag_sets) if tag_sets else set()
-            common_tags -= {t for t in common_tags if t.lower() in GENERIC_TAGS}
+            # Find the most frequent non-generic tag across retrieved project docs
+            from collections import Counter
+            tag_counter: Counter = Counter()
+            for p in project_docs:
+                for t in p["tags"]:
+                    if t.lower() not in GENERIC_TAGS:
+                        tag_counter[t] += 1
 
-            if common_tags:
-                tag = sorted(common_tags)[0]
-                browse_url = f"/projects?tag={tag}"
-                browse_name = f"{tag} Projects"
-            else:
+            browse_url = "/projects"
+            browse_name = "Browse Projects"
+
+            if tag_counter:
+                # Pick the most common tag — must appear in at least half the docs
+                top_tag, top_count = tag_counter.most_common(1)[0]
+                if top_count >= max(1, len(project_docs) // 2):
+                    browse_url = f"/projects?tag={top_tag}"
+                    browse_name = f"{top_tag} Projects"
+
+            if browse_url == "/projects":
                 # Fall back to common category
                 categories = [p["category"] for p in project_docs if p["category"]]
-                unique_categories = set(categories)
-                if len(unique_categories) == 1:
-                    cat = unique_categories.pop()
+                if categories and len(set(categories)) == 1:
+                    cat = categories[0]
                     browse_url = f"/projects/{cat}"
                     browse_name = f"{cat.title()} Projects"
-                else:
-                    browse_url = "/projects"
-                    browse_name = "Browse Projects"
 
             sources = [{"name": browse_name, "url": browse_url}] + static_sources
         else:
