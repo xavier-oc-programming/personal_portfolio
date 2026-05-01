@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-01T15:40:26Z",
+  "snapshot_at": "2026-05-01T15:40:44Z",
   "projects": [
     {
       "id": 1,
@@ -2129,7 +2129,7 @@
     {
       "id": 52,
       "slug": "numpy-pandas-benchmark",
-      "title": "NumPy vs Pandas Performance Benchmark",
+      "title": "Data Ansalysis — NumPy vs Pandas Performance",
       "primary_category": "data",
       "short_description": "I benchmarked NumPy and Pandas across seven common operations at 100k, 1M, and 10M rows to find out exactly when each library wins — and by how much. The answer turned out to be more nuanced than I expected.",
       "full_description": "I kept hearing that NumPy is faster than Pandas — and in a lot of cases that's true.\r\nBut I wanted to know by how much, and whether it's actually a fair universal claim.\r\nTurns out it isn't. So I built this project to get real numbers.\r\n\r\nI benchmarked seven operations across three dataset sizes using time.perf_counter()\r\nwith 5 runs averaged per measurement. All data is generated synthetically with a\r\nfixed seed so the results are fully reproducible. Everything is explored in a Jupyter\r\nnotebook with four chart types, and the raw numbers are exported to results.json.",
