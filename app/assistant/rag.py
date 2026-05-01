@@ -153,12 +153,15 @@ class RAGEngine:
                         from app.models.models import Project
                         projects = Project.query.all()
                         for project in projects:
+                            tags = project.tags if isinstance(project.tags, list) else []
                             docs.append(Document(
                                 page_content=_project_to_text(project),
                                 metadata={
                                     "source": "db_project",
                                     "project_title": project.title,
                                     "project_slug": project.slug,
+                                    "project_category": project.primary_category or "",
+                                    "project_tags": ",".join(tags),
                                 },
                             ))
                         app.logger.info(
@@ -226,7 +229,7 @@ class RAGEngine:
 
         docs = self._retriever.invoke(message)
 
-        project_sources: list[dict[str, str]] = []
+        project_docs: list[dict] = []
         static_sources: list[dict[str, str]] = []
         seen_projects: set[str] = set()
         seen_static: set[str] = set()
@@ -239,7 +242,14 @@ class RAGEngine:
                 if project_title in seen_projects:
                     continue
                 seen_projects.add(project_title)
-                project_sources.append({"name": project_title, "url": f"/projects/{project_slug}"})
+                project_docs.append({
+                    "name": project_title,
+                    "url": f"/projects/{project_slug}",
+                    "category": doc.metadata.get("project_category", ""),
+                    "tags": set(
+                        t.strip() for t in doc.metadata.get("project_tags", "").split(",") if t.strip()
+                    ),
+                })
             else:
                 stem = Path(doc.metadata.get("source", "")).stem
                 name = SOURCE_NAME_MAP.get(
@@ -251,11 +261,30 @@ class RAGEngine:
                 seen_static.add(name)
                 static_sources.append({"name": name, "url": SOURCE_URL_MAP.get(stem, "/")})
 
-        # Collapse multiple project sources into a single "Browse Projects" link
-        if len(project_sources) > 1:
-            sources = [{"name": "Browse Projects", "url": "/projects"}] + static_sources
+        if len(project_docs) > 1:
+            # Try to find a common tag across all retrieved project docs
+            tag_sets = [p["tags"] for p in project_docs if p["tags"]]
+            common_tags = set.intersection(*tag_sets) if tag_sets else set()
+
+            if common_tags:
+                tag = sorted(common_tags)[0]
+                browse_url = f"/projects?tag={tag}"
+                browse_name = f"{tag} Projects"
+            else:
+                # Fall back to common category
+                categories = [p["category"] for p in project_docs if p["category"]]
+                unique_categories = set(categories)
+                if len(unique_categories) == 1:
+                    cat = unique_categories.pop()
+                    browse_url = f"/projects/{cat}"
+                    browse_name = f"{cat.title()} Projects"
+                else:
+                    browse_url = "/projects"
+                    browse_name = "Browse Projects"
+
+            sources = [{"name": browse_name, "url": browse_url}] + static_sources
         else:
-            sources = project_sources + static_sources
+            sources = [{"name": p["name"], "url": p["url"]} for p in project_docs] + static_sources
 
         context = "\n\n".join(
             f"[{i + 1}] {doc.page_content}" for i, doc in enumerate(docs)
