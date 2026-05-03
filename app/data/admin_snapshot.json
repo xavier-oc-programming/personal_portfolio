@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-03T09:10:33Z",
+  "snapshot_at": "2026-05-03T09:11:13Z",
   "projects": [
     {
       "id": 1,
@@ -2213,7 +2213,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "images/projects/cnn-food-classifier/card/CNN_card.png",
       "repo_url": "https://github.com/xavier-oc-programming/cnn-food-classifier",
       "live_url": "https://huggingface.co/spaces/xavier-oc-machinelearn/cnn-food-classifier",
       "demo_url": "https://huggingface.co/spaces/xavier-oc-machinelearn/cnn-food-classifier"
