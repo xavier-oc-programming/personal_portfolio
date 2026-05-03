@@ -110,7 +110,7 @@ class RAGEngine:
             return
 
         try:
-            from langchain_community.embeddings import HuggingFaceEmbeddings
+            from langchain_huggingface import HuggingFaceEmbeddings
             from langchain_chroma import Chroma
             from langchain_core.documents import Document
             from langchain_groq import ChatGroq
