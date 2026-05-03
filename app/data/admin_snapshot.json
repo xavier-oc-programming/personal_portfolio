@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-03T09:15:46Z",
+  "snapshot_at": "2026-05-03T09:15:53Z",
   "projects": [
     {
       "id": 1,
@@ -2212,11 +2212,11 @@
         "scikit-learn"
       ],
       "screenshots": [
+        "images/projects/cnn-food-classifier/screenshots/Screenshot_2026-05-03_at_11.14.37.png",
         "images/projects/cnn-food-classifier/screenshots/01_training_curves.png",
         "images/projects/cnn-food-classifier/screenshots/02_sample_predictions.png",
         "images/projects/cnn-food-classifier/screenshots/03_confusion_matrix.png",
         "images/projects/cnn-food-classifier/screenshots/04_finetuning_curves.png",
-        "images/projects/cnn-food-classifier/screenshots/Screenshot_2026-05-03_at_11.14.37.png",
         "images/projects/cnn-food-classifier/screenshots/Screenshot_2026-05-03_at_11.14.58.png"
       ],
       "videos": [],
