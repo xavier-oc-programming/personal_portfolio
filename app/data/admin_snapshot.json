@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-03T09:15:55Z",
+  "snapshot_at": "2026-05-03T09:20:03Z",
   "projects": [
     {
       "id": 1,
@@ -2176,7 +2176,7 @@
       "primary_category": "data",
       "short_description": "I built a convolutional neural network that classifies food images into 101 categories using two-stage transfer learning with MobileNetV2. Upload any food photo and get instant top-3 predictions with confidence scores — live on Hugging Face Spaces.",
       "full_description": "The model lives at Hugging Face Spaces and lets anyone upload a food photo to get instant predictions across 101 categories — from apple pie to waffles. It identifies the most likely dish and surfaces the top 3 predictions with confidence scores.\r\n\r\nThe architecture is built on MobileNetV2 pretrained on ImageNet, which already knows how to detect edges, textures, and shapes from 1.2M images. Rather than training from scratch — which would require far more data and compute — I reused those learned features and trained only what needed to be food-specific.\r\n\r\nStage 1 freezes the entire MobileNetV2 base and trains a lightweight classification head on top: GlobalAveragePooling → Dense(256, ReLU) → Dropout(0.3) → Dense(101, softmax). This converges quickly and reaches ~62% validation accuracy in 20 epochs at lr=0.0001.\r\n\r\nStage 2 unfreezes the top 30 layers of the base and fine-tunes the full model end-to-end at lr=1e-5 — gentle enough to refine the pretrained weights toward food-specific features without overwriting them. This pushes validation accuracy to ~68.3%.\r\n\r\nThe training pipeline uses tf.data with mixed float16 precision throughout for ~30% faster throughput on Apple M1 Metal GPU. The app is deployed as a Gradio interface on Hugging Face Spaces — users upload a photo, the model preprocesses it to 224×224, normalises pixel values, and returns the top 3 predicted classes with confidence scores.",
-      "featured": false,
+      "featured": true,
       "featured_order": null,
       "date": "2026-05-03",
       "problem": "Training a food classifier from scratch across 101 categories requires far more data, compute, and time than the Food-101 dataset alone can support — especially for visually similar pairs like beef tartare vs tuna tartare or spaghetti bolognese vs carbonara where even humans struggle.",
