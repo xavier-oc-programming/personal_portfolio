@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-03T09:11:13Z",
+  "snapshot_at": "2026-05-03T09:13:59Z",
   "projects": [
     {
       "id": 1,
@@ -2211,7 +2211,12 @@
         "Seaborn",
         "scikit-learn"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/cnn-food-classifier/screenshots/01_training_curves.png",
+        "images/projects/cnn-food-classifier/screenshots/02_sample_predictions.png",
+        "images/projects/cnn-food-classifier/screenshots/03_confusion_matrix.png",
+        "images/projects/cnn-food-classifier/screenshots/04_finetuning_curves.png"
+      ],
       "videos": [],
       "card_image": "images/projects/cnn-food-classifier/card/CNN_card.png",
       "repo_url": "https://github.com/xavier-oc-programming/cnn-food-classifier",
