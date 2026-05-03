@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-03T09:20:25Z",
+  "snapshot_at": "2026-05-03T09:55:18Z",
   "projects": [
     {
       "id": 1,
@@ -2164,7 +2164,7 @@
         "images/projects/numpy-pandas-benchmark/screenshots/Screenshot_2026-05-01_at_17.45.00.png"
       ],
       "videos": [],
-      "card_image": null,
+      "card_image": "images/projects/numpy-pandas-benchmark/card/Screenshot_2026-05-03_at_11.51.23.png",
       "repo_url": "https://github.com/xavier-oc-programming/numpy-pandas-benchmark",
       "live_url": null,
       "demo_url": null
