@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-01T15:47:40Z",
+  "snapshot_at": "2026-05-03T08:58:53Z",
   "projects": [
     {
       "id": 1,
@@ -2168,6 +2168,55 @@
       "repo_url": "https://github.com/xavier-oc-programming/numpy-pandas-benchmark",
       "live_url": null,
       "demo_url": null
+    },
+    {
+      "id": 53,
+      "slug": "cnn-food-classifier",
+      "title": "CNN Food Classifier",
+      "primary_category": "web",
+      "short_description": "CNN that classifies food images into 101 categories using MobileNetV2 transfer learning. Trained on Food-101 (101,000 images), achieves 68% validation accuracy, deployed live on Hugging Face Spaces with a Gradio interface.",
+      "full_description": "A convolutional neural network that classifies food images into 101 categories using two-stage transfer learning with MobileNetV2 pretrained on ImageNet.\r\n\r\nStage 1 — the base is frozen and only a custom classification head is trained (GlobalAveragePooling → Dense(256) → Dropout → Dense(101, softmax)).\r\n\r\nStage 2 — the top 30 base layers are unfrozen and the full model is fine-tuned end-to-end at a 10x lower learning rate.\r\n\r\nTrained on Food-101 (75,750 train / 25,250 validation images across 101 categories). Deployed as a Gradio web app on Hugging Face Spaces — users upload any food photo and receive top-3 predictions with confidence scores.",
+      "featured": true,
+      "featured_order": null,
+      "date": "2026-05-03",
+      "problem": "Identifying food from photos requires a model that can distinguish subtle visual differences across 101 categories, including visually similar dishes (beef tartare vs tuna tartare, spaghetti bolognese vs spaghetti carbonara) and highly varied presentations of the same food.\r\n\r\nTraining a CNN from scratch on this scale would require far more data, compute, and time than available.",
+      "solution": "Applied transfer learning using MobileNetV2 as a frozen feature extractor, reusing features learned from 1.2M ImageNet images.\r\n\r\nStage 1 — trained a lightweight classification head on Food-101 (lr=0.0001, 20 epochs, horizontal flip augmentation only), reaching ~62% validation accuracy.\r\n\r\nStage 2 — unfroze the top 30 MobileNetV2 layers and fine-tuned at lr=1e-5 for 10 additional epochs, pushing validation accuracy to ~68.3%.\r\n\r\nMixed float16 precision was used throughout for ~30% faster training on Apple M1 Metal GPU.",
+      "challenges": "- TensorFlow 2.16 incompatible with Python 3.13 on Hugging Face Spaces — resolved by pinning python_version to 3.11 in the Space config.\r\n- Hugging Face's new xet binary storage requirement rejected PNG plot files via LFS — resolved by excluding plots from the Space repo (not needed for inference).\r\n- Food-101 at 224x224 float32 requires ~14GB RAM — .cache() had to be omitted from the tf.data pipeline to avoid crashing on a 16GB machine.\r\n- Gradio 6.0 moved theme from Interface constructor to launch() — fixed deprecation warning by updating the call signature.",
+      "results": "- 68.3% validation accuracy on Food-101 (101 classes, 25,250 val images)\r\n- Best performing classes: Edamame 96%, Waffles 94%, Sushi 93%, Pizza 92%, Hot Dog 91%\r\n- Hardest classes: Chocolate Mousse 43%, Beef Tartare 47%, Tuna Tartare 49%\r\n- Live demo deployed on Hugging Face Spaces with top-3 predictions and confidence scores\r\n- Full training notebook with inline outputs and visualisations committed to GitHub",
+      "tags": [
+        "machine-learning",
+        "deep-learning",
+        "computer-vision",
+        "transfer-learning",
+        "neural-network",
+        "image-classification",
+        "data-analysis",
+        "data-pipeline",
+        "visualisation",
+        "deployment",
+        "web-app",
+        "hugging-face",
+        "python"
+      ],
+      "tech_stack": [
+        "Python",
+        "TensorFlow",
+        "Keras",
+        "MobileNetV2",
+        "Gradio",
+        "Hugging Face Spaces",
+        "Food-101",
+        "NumPy",
+        "Matplotlib",
+        "Seaborn",
+        "scikit-learn"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": "https://github.com/xavier-oc-programming/cnn-food-classifier",
+      "live_url": "https://huggingface.co/spaces/xavier-oc-machinelearn/cnn-food-classifier",
+      "demo_url": "https://huggingface.co/spaces/xavier-oc-machinelearn/cnn-food-classifier"
     }
   ],
   "messages": []
