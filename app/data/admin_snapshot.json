@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-03T09:13:59Z",
+  "snapshot_at": "2026-05-03T09:15:46Z",
   "projects": [
     {
       "id": 1,
@@ -2215,7 +2215,9 @@
         "images/projects/cnn-food-classifier/screenshots/01_training_curves.png",
         "images/projects/cnn-food-classifier/screenshots/02_sample_predictions.png",
         "images/projects/cnn-food-classifier/screenshots/03_confusion_matrix.png",
-        "images/projects/cnn-food-classifier/screenshots/04_finetuning_curves.png"
+        "images/projects/cnn-food-classifier/screenshots/04_finetuning_curves.png",
+        "images/projects/cnn-food-classifier/screenshots/Screenshot_2026-05-03_at_11.14.37.png",
+        "images/projects/cnn-food-classifier/screenshots/Screenshot_2026-05-03_at_11.14.58.png"
       ],
       "videos": [],
       "card_image": "images/projects/cnn-food-classifier/card/CNN_card.png",
