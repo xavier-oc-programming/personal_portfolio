@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-04T15:34:06Z",
+  "snapshot_at": "2026-05-04T15:35:27Z",
   "projects": [
     {
       "id": 1,
@@ -2263,7 +2263,13 @@
         "AWS ECR",
         "API Gateway",
         "Amazon Bedrock",
-        "Claude Haiku 4.5"
+        "Claude Haiku 4.5",
+        "sentiment-analysis",
+        "serverless",
+        "AWS",
+        "Docker",
+        "text-classification",
+        "benchmarking"
       ],
       "screenshots": [],
       "videos": [],
