@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-04T15:33:02Z",
+  "snapshot_at": "2026-05-04T15:33:52Z",
   "projects": [
     {
       "id": 1,
@@ -2267,7 +2267,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": "images/projects/imdb-sentiment-classifier/card/sentiment.webp",
+      "card_image": null,
       "repo_url": "https://github.com/xavier-oc-programming/imdb-sentiment-classifier",
       "live_url": "https://5llpfbqfph.execute-api.eu-west-1.amazonaws.com",
       "demo_url": "https://5llpfbqfph.execute-api.eu-west-1.amazonaws.com"
