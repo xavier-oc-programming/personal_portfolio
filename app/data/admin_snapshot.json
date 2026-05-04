@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-04T15:36:00Z",
+  "snapshot_at": "2026-05-04T15:36:30Z",
   "projects": [
     {
       "id": 1,
@@ -2250,7 +2250,13 @@
         "visualisation",
         "python",
         "web-app",
-        "LLM"
+        "LLM",
+        "sentiment-analysis",
+        "serverless",
+        "AWS",
+        "Docker",
+        "text-classification",
+        "benchmarking"
       ],
       "tech_stack": [
         "Python",
@@ -2263,13 +2269,7 @@
         "AWS ECR",
         "API Gateway",
         "Amazon Bedrock",
-        "Claude Haiku 4.5",
-        "sentiment-analysis",
-        "serverless",
-        "AWS",
-        "Docker",
-        "text-classification",
-        "benchmarking"
+        "Claude Haiku 4.5"
       ],
       "screenshots": [],
       "videos": [],
