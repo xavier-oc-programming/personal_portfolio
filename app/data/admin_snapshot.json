@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-04T15:38:35Z",
+  "snapshot_at": "2026-05-05T07:42:36Z",
   "projects": [
     {
       "id": 1,
@@ -1308,7 +1308,15 @@
         "Selenium",
         "undetected-chromedriver"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/zillow-scraper-form-bot/screenshots/Screenshot_2026-05-05_at_09.14.35.png",
+        "images/projects/zillow-scraper-form-bot/screenshots/Screenshot_2026-05-05_at_09.15.24.png",
+        "images/projects/zillow-scraper-form-bot/screenshots/Screenshot_2026-05-05_at_09.15.38.png",
+        "images/projects/zillow-scraper-form-bot/screenshots/Screenshot_2026-05-05_at_09.16.09.png",
+        "images/projects/zillow-scraper-form-bot/screenshots/Screenshot_2026-05-05_at_09.16.38.png",
+        "images/projects/zillow-scraper-form-bot/screenshots/Screenshot_2026-05-05_at_09.17.26.png",
+        "images/projects/zillow-scraper-form-bot/screenshots/Screenshot_2026-05-05_at_09.17.55.png"
+      ],
       "videos": [],
       "card_image": "images/projects/web-scraping-data-entry-bot/card/scrape.webp",
       "repo_url": "https://github.com/xavier-oc-programming/zillow-scraper-form-bot",
