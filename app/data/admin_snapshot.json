@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-05T08:37:23Z",
+  "snapshot_at": "2026-05-05T08:41:35Z",
   "projects": [
     {
       "id": 1,
@@ -1404,7 +1404,10 @@
         "pathlib",
         "datetime"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/flight-club/screenshots/Screenshot_2026-05-05_at_10.39.05.png",
+        "images/projects/flight-club/screenshots/Screenshot_2026-05-05_at_10.40.52.png"
+      ],
       "videos": [
         "https://youtu.be/4xf0jlof__s"
       ],
