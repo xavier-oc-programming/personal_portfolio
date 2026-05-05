@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-05T07:45:50Z",
+  "snapshot_at": "2026-05-05T07:57:26Z",
   "projects": [
     {
       "id": 1,
@@ -1353,7 +1353,12 @@
         "requests",
         "pathlib"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/ron-swanson-quotes/screenshots/Screenshot_2026-05-05_at_09.55.10.png",
+        "images/projects/ron-swanson-quotes/screenshots/Screenshot_2026-05-05_at_09.55.22.png",
+        "images/projects/ron-swanson-quotes/screenshots/Screenshot_2026-05-05_at_09.55.28.png",
+        "images/projects/ron-swanson-quotes/screenshots/Screenshot_2026-05-05_at_09.55.42.png"
+      ],
       "videos": [],
       "card_image": "images/projects/ron-quotes-app/card/ron-swanson1.png",
       "repo_url": "https://github.com/xavier-oc-programming/ron-swanson-quotes",
