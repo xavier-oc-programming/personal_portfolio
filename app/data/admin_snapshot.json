@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-05T08:41:35Z",
+  "snapshot_at": "2026-05-05T09:08:19Z",
   "projects": [
     {
       "id": 1,
@@ -1449,7 +1449,9 @@
         "python-dotenv"
       ],
       "screenshots": [],
-      "videos": [],
+      "videos": [
+        "https://youtu.be/A4sJv3RbJR4"
+      ],
       "card_image": "images/projects/spotify-playlist-generator/card/playlist.png",
       "repo_url": "https://github.com/xavier-oc-programming/day46-spotify-time-machine",
       "live_url": null,
