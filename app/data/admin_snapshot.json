@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-05T07:42:36Z",
+  "snapshot_at": "2026-05-05T07:45:50Z",
   "projects": [
     {
       "id": 1,
@@ -1317,7 +1317,9 @@
         "images/projects/zillow-scraper-form-bot/screenshots/Screenshot_2026-05-05_at_09.17.26.png",
         "images/projects/zillow-scraper-form-bot/screenshots/Screenshot_2026-05-05_at_09.17.55.png"
       ],
-      "videos": [],
+      "videos": [
+        "https://youtu.be/8456KyKN8CM"
+      ],
       "card_image": "images/projects/web-scraping-data-entry-bot/card/scrape.webp",
       "repo_url": "https://github.com/xavier-oc-programming/zillow-scraper-form-bot",
       "live_url": null,
