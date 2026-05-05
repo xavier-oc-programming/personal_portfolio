@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-05T07:57:42Z",
+  "snapshot_at": "2026-05-05T08:37:23Z",
   "projects": [
     {
       "id": 1,
@@ -1405,7 +1405,9 @@
         "datetime"
       ],
       "screenshots": [],
-      "videos": [],
+      "videos": [
+        "https://youtu.be/4xf0jlof__s"
+      ],
       "card_image": "images/projects/flight-deal-finder/card/flight.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/flight-club",
       "live_url": null,
