@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-06T11:06:01Z",
+  "snapshot_at": "2026-05-06T11:06:19Z",
   "projects": [
     {
       "id": 1,
@@ -1523,7 +1523,8 @@
         "python-dotenv"
       ],
       "screenshots": [
-        "images/projects/day-62-coffee-wifi/screenshots/Screenshot_2026-05-06_at_13.00.34.png"
+        "images/projects/day-62-coffee-wifi/screenshots/Screenshot_2026-05-06_at_13.00.34.png",
+        "images/projects/day-62-coffee-wifi/screenshots/Screenshot_2026-05-06_at_13.06.04.png"
       ],
       "videos": [
         "https://youtu.be/50h9N6yUv6s"
