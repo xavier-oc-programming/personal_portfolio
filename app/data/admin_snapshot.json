@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-05T09:08:19Z",
+  "snapshot_at": "2026-05-06T10:26:44Z",
   "projects": [
     {
       "id": 1,
@@ -1462,14 +1462,14 @@
       "slug": "first-blog-project",
       "title": "Xavier's Blog",
       "primary_category": "web",
-      "short_description": "Full-stack Flask blog with user authentication, admin-only post management, rich-text comments, Gravatar avatars, and production deployment to Render with PostgreSQL.",
-      "full_description": "A fully deployed Flask blog where users can register, log in, and leave rich-text comments on posts. The first registered account becomes the permanent admin with exclusive rights to create, edit, and delete posts. Built with Flask-Login, SQLAlchemy, and CKEditor, then deployed to Render backed by PostgreSQL and served by Gunicorn.",
+      "short_description": "Full-stack Flask blog with user authentication, admin-only post management, rich-text comments, Gravatar avatars, and production deployment to Render with Neon PostgreSQL.",
+      "full_description": "A fully deployed Flask blog where users can register, log in, and leave rich-text comments on posts. The first registered account becomes the permanent admin with exclusive rights to create, edit, and delete posts. Built with Flask-Login, SQLAlchemy, and CKEditor, then deployed to Render backed by Neon PostgreSQL and served by Gunicorn.",
       "featured": false,
       "featured_order": null,
       "date": "2026-01-06",
       "problem": "Most early Flask projects stay on localhost and never make it to the web — which means the deployment gap never gets bridged. Getting a database-backed, authenticated web app from a local SQLite dev environment to a live production server involves a surprisingly large number of moving parts: WSGI servers, environment variables, managed databases, and hosting configuration. Without working through this end-to-end, it's easy to assume deployment \"just works\" and get stuck when it doesn't. Day 71 was specifically about closing that gap and understanding what actually changes between local and production.",
       "solution": "I built the blog on Flask with SQLAlchemy models for users, posts, and comments — all wired together with foreign key relationships and back-references. Flask-Login handles session management, Werkzeug hashes passwords, and Flask-WTF validates every form with CSRF protection. For deployment, I added a Procfile pointing Render to Gunicorn, swapped the database connection to pull from a DB_URI environment variable (falling back to SQLite locally), and configured all secrets through Render's environment tab. The same main.py runs in both contexts — the only difference is which environment variables are set.",
-      "challenges": "The trickiest part was getting the database configuration right across two environments without duplicating code or hardcoding anything. SQLite works great locally with zero setup, but PostgreSQL on Render needs a full connection string — and the app needs to handle both without knowing in advance which one it'll get. The solution was a single os.environ.get(\"DB_URI\", \"sqlite:///posts.db\") call that cleanly handles both cases. A secondary challenge was making sure db.create_all() ran safely on Render without wiping existing data on re-deploys — running it inside the app context on startup turned out to be the right call for this stage.",
+      "challenges": "The trickiest part was getting the database configuration right across two environments without duplicating code or hardcoding anything. SQLite works great locally with zero setup, but PostgreSQL on Render needs a full connection string — and the app needs to handle both without knowing in advance which one it'll get. The solution was a single os.environ.get(\"DB_URI\", \"sqlite:///posts.db\") call that cleanly handles both cases. A secondary challenge was making sure db.create_all() ran safely on Render without wiping existing data on re-deploys — running it inside the app context on startup turned out to be the right call for this stage. A further challenge was database persistence: Render's free PostgreSQL tier deletes the database after 90 days, which is unacceptable for a portfolio project. The solution was to use Neon — a serverless PostgreSQL provider with a free tier that doesn't expire — and point the DB_URI environment variable at Neon's connection string instead. No code changes were required.",
       "results": "The blog is live on Render and works end-to-end: registration, login, post creation, commenting, and admin controls all function in production exactly as they do locally. This project gave me a real feel for what deployment actually involves — not just \"push to GitHub\" but environment variables, WSGI servers, managed databases, and the differences between dev and prod configs. If I were building on this, I'd add email verification on registration and paginate the post list — but as a first full deployment, it does exactly what it's supposed to.",
       "tags": [
         "web-app",
@@ -1477,7 +1477,8 @@
         "authentication",
         "CRUD",
         "deployment",
-        "OOP"
+        "OOP",
+        "flask"
       ],
       "tech_stack": [
         "Flask",
@@ -1491,17 +1492,15 @@
         "Werkzeug",
         "WTForms",
         "Gunicorn",
+        "Neon",
         "PostgreSQL",
-        "SQLite",
-        "python-dotenv",
-        "psycopg2-binary",
-        "Jinja2"
+        "psycopg2"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/blog-capstone/card/Screenshot_2026-03-24_at_16.46.13.png",
       "repo_url": "https://github.com/xavier-oc-programming/first_blog_project",
-      "live_url": null,
+      "live_url": "https://first-blog-project-hihz.onrender.com",
       "demo_url": null
     },
     {
