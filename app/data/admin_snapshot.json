@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-06T10:26:44Z",
+  "snapshot_at": "2026-05-06T10:44:13Z",
   "projects": [
     {
       "id": 1,
@@ -1497,7 +1497,9 @@
         "psycopg2"
       ],
       "screenshots": [],
-      "videos": [],
+      "videos": [
+        "https://youtu.be/5mnD2UOxTbk"
+      ],
       "card_image": "images/projects/blog-capstone/card/Screenshot_2026-03-24_at_16.46.13.png",
       "repo_url": "https://github.com/xavier-oc-programming/first_blog_project",
       "live_url": "https://first-blog-project-hihz.onrender.com",
