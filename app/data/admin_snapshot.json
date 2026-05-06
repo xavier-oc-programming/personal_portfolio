@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-06T10:51:33Z",
+  "snapshot_at": "2026-05-06T10:52:44Z",
   "projects": [
     {
       "id": 1,
@@ -1477,7 +1477,11 @@
         "images/projects/first-blog-project/screenshots/Screenshot_2026-05-06_at_12.46.16.png",
         "images/projects/first-blog-project/screenshots/Screenshot_2026-05-06_at_12.46.28.png",
         "images/projects/first-blog-project/screenshots/Screenshot_2026-05-06_at_12.46.44.png",
-        "images/projects/first-blog-project/screenshots/Screenshot_2026-05-06_at_12.47.31.png"
+        "images/projects/first-blog-project/screenshots/Screenshot_2026-05-06_at_12.47.31.png",
+        "images/projects/first-blog-project/screenshots/Screenshot_2026-05-06_at_12.48.00.png",
+        "images/projects/first-blog-project/screenshots/Screenshot_2026-05-06_at_12.48.15.png",
+        "images/projects/first-blog-project/screenshots/Screenshot_2026-05-06_at_12.48.53.png",
+        "images/projects/first-blog-project/screenshots/Screenshot_2026-05-06_at_12.49.31.png"
       ],
       "videos": [],
       "card_image": "images/projects/blog-capstone/card/Screenshot_2026-03-24_at_16.46.13.png",
