@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-06T11:37:33Z",
+  "snapshot_at": "2026-05-06T11:39:17Z",
   "projects": [
     {
       "id": 1,
@@ -1576,7 +1576,9 @@
         "images/projects/top-10-movies/screenshots/Screenshot_2026-05-06_at_13.27.23.png",
         "images/projects/top-10-movies/screenshots/Screenshot_2026-05-06_at_13.27.27.png"
       ],
-      "videos": [],
+      "videos": [
+        "https://youtu.be/XKbrbw63IWM"
+      ],
       "card_image": "images/projects/top-10-movies/card/top_10_movies.png",
       "repo_url": "https://github.com/xavier-oc-programming/top-10-movies-flask-web-app",
       "live_url": null,
