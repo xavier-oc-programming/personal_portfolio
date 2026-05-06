@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-06T10:53:15Z",
+  "snapshot_at": "2026-05-06T11:05:43Z",
   "projects": [
     {
       "id": 1,
@@ -1523,7 +1523,9 @@
         "python-dotenv"
       ],
       "screenshots": [],
-      "videos": [],
+      "videos": [
+        "https://youtu.be/50h9N6yUv6s"
+      ],
       "card_image": "images/projects/coffee-wifi-finder/card/coffee.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/day-62-coffee-wifi",
       "live_url": null,
