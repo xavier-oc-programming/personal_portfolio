@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-07T15:58:28Z",
+  "snapshot_at": "2026-05-07T15:58:34Z",
   "projects": [
     {
       "id": 1,
@@ -1616,6 +1616,7 @@
         "Postman"
       ],
       "screenshots": [
+        "images/projects/cafe-wifi-api/screenshots/Screenshot_2026-05-07_at_17.58.05.png",
         "images/projects/cafe-wifi-api/screenshots/Screenshot_2026-05-07_at_17.48.32.png",
         "images/projects/cafe-wifi-api/screenshots/Screenshot_2026-05-07_at_17.48.35.png",
         "images/projects/cafe-wifi-api/screenshots/Screenshot_2026-05-07_at_17.48.51.png",
@@ -1623,8 +1624,7 @@
         "images/projects/cafe-wifi-api/screenshots/Screenshot_2026-05-07_at_17.49.16.png",
         "images/projects/cafe-wifi-api/screenshots/Screenshot_2026-05-07_at_17.49.57.png",
         "images/projects/cafe-wifi-api/screenshots/Screenshot_2026-05-07_at_17.50.42.png",
-        "images/projects/cafe-wifi-api/screenshots/Screenshot_2026-05-07_at_17.50.58.png",
-        "images/projects/cafe-wifi-api/screenshots/Screenshot_2026-05-07_at_17.58.05.png"
+        "images/projects/cafe-wifi-api/screenshots/Screenshot_2026-05-07_at_17.50.58.png"
       ],
       "videos": [
         "https://youtu.be/1Es8aPirRgQ"
