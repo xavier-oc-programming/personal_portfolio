@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-07T15:57:30Z",
+  "snapshot_at": "2026-05-07T15:58:28Z",
   "projects": [
     {
       "id": 1,
@@ -1623,7 +1623,8 @@
         "images/projects/cafe-wifi-api/screenshots/Screenshot_2026-05-07_at_17.49.16.png",
         "images/projects/cafe-wifi-api/screenshots/Screenshot_2026-05-07_at_17.49.57.png",
         "images/projects/cafe-wifi-api/screenshots/Screenshot_2026-05-07_at_17.50.42.png",
-        "images/projects/cafe-wifi-api/screenshots/Screenshot_2026-05-07_at_17.50.58.png"
+        "images/projects/cafe-wifi-api/screenshots/Screenshot_2026-05-07_at_17.50.58.png",
+        "images/projects/cafe-wifi-api/screenshots/Screenshot_2026-05-07_at_17.58.05.png"
       ],
       "videos": [
         "https://youtu.be/1Es8aPirRgQ"
