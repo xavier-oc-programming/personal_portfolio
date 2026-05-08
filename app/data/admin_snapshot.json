@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-08T10:24:54Z",
+  "snapshot_at": "2026-05-08T10:26:46Z",
   "projects": [
     {
       "id": 1,
@@ -1657,8 +1657,8 @@
       "slug": "college-major-salary-pandas",
       "title": "College Major vs Your Salary — Data Exploration with Pandas",
       "primary_category": "data",
-      "short_description": "Analysed salary outcomes across 51 undergraduate majors from a WSJ/PayScale survey of 1.2M Americans. Engineered 7 derived metrics to challenge the \"pick STEM\" advice with data. Key finding: STEM and HASS grow at nearly identical rates; Economics' P90 ceiling beats every engineering field.",
-      "full_description": "Does your degree category actually determine your earning trajectory? This analysis uses a WSJ/PayScale survey of 1.2 million Americans to answer that question with data, challenging the standard \"pick STEM\" advice across 51 undergraduate majors. The pipeline runs from raw CSV to actionable findings: loading, profiling, cleaning a trailing NaN footer row, engineering seven derived columns (Spread, Growth %, Safety score, Rank Change, Salary Band, Group Average, vs-Group-Average), then ranking majors across four lenses — lowest risk, highest ceiling, biggest growers, and biggest rank climbers. A full correlation matrix and seven charts round out the analysis. Structured as a standalone script (analysis.py) and an annotated notebook (analysis.ipynb) with inline key-finding callouts at each point of discovery. Key findings: Chemical Engineering tops mid-career at $107,000; Math grows 103.52% from start to mid-career; Nursing has the tightest salary spread ($50,700); Economics has the highest P90 ceiling at $210,000; starting salary strongly predicts mid-career salary (Pearson r = 0.848); STEM and HASS have nearly identical growth trajectories (70.40% vs 68.86%).",
+      "short_description": "Does picking STEM actually guarantee better earnings? This analysis of 1.2M graduate salaries across 51 majors says it's more complicated. STEM leads on starting salary — but growth rates are nearly identical to HASS, and Economics' earnings ceiling beats every engineering field.",
+      "full_description": "The standard advice is \"pick STEM.\" This analysis uses a WSJ/PayScale survey of 1.2 million Americans to stress-test that claim across 51 undergraduate majors. By engineering salary risk scores, growth trajectories, earnings ceilings, and rank-change metrics, the data reveals a more nuanced picture: STEM leads on starting salary, but HASS majors grow at nearly the same rate. Math more than doubles in salary by mid-career. Economics' top earners out-earn every engineering field. And the safest long-term bet by earnings predictability isn't engineering at all — it's Nursing. The analysis surfaces 8 concrete findings through a full EDA pipeline, correlation analysis, and 7 charts, all committed to the repo and visible without running code.",
       "featured": false,
       "featured_order": null,
       "date": "2026-04-13",
