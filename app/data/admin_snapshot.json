@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-09T11:29:55Z",
+  "snapshot_at": "2026-05-09T11:30:57Z",
   "projects": [
     {
       "id": 1,
@@ -1727,7 +1727,10 @@
         "Adzuna API",
         "GitHub Octoverse"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/language-market-index/screenshots/composite_scores.png",
+        "images/projects/language-market-index/screenshots/score_breakdown_by_source.png"
+      ],
       "videos": [],
       "card_image": "images/projects/programming-languages-visualisation/card/languages2.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/programming-language-trends-analysis",
