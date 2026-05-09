@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-09T11:29:32Z",
+  "snapshot_at": "2026-05-09T11:29:55Z",
   "projects": [
     {
       "id": 1,
@@ -1692,7 +1692,7 @@
     {
       "id": 40,
       "slug": "language-market-index",
-      "title": "Programming Language Workforce Strategy",
+      "title": "Programming Language Workforce Strategy — Data Analysis",
       "primary_category": "data",
       "short_description": "Stack Overflow lost 97.7% of its post volume since 2016 — and its momentum now anti-correlates with hiring demand. This project proves the signal is broken, then builds a four-source replacement index to answer which languages to hire for.",
       "full_description": "Stack Overflow was the de facto measure of developer activity for over a decade. But by December 2025 it had lost 97.7% of its peak post volume — and a Pearson correlation of −0.26 between SO momentum and job market demand reveals something worse than noise: the signal is inverted. Languages declining fastest on SO are the ones employers are most actively hiring for. Any workforce strategy built on raw SO counts points in the wrong direction.\r\n\r\nThe first notebook establishes this forensically. Seven analytical lenses — platform velocity, pre/post ChatGPT window comparisons, language share, momentum scoring, lifecycle classification, and OLS regression against job data — converge on the same conclusion: ChatGPT didn't break Stack Overflow, it accelerated a structural decline already underway since 2017, and it did so hardest in the ecosystems where AI tooling is strongest. Python's SO count fell 59.9% precisely because Python developers were the earliest adopters of AI-assisted coding.\r\n\r\nThe second notebook builds the replacement. The Language Market Index (LMI) aggregates four independent signals — Adzuna job postings (35%), GitHub Octoverse activity (30%), SO Developer Survey usage (25%), and TIOBE ratings (10%) — normalised to a common 0–100 scale before weighting. Python leads at 88.4/100 across every weighting scenario tested. The index and its methodology are exposed through an interactive Flask dashboard where stakeholders can adjust weights in real time and watch the rankings respond.",
