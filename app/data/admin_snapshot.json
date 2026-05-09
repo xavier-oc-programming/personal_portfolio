@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-09T11:32:27Z",
+  "snapshot_at": "2026-05-09T11:33:01Z",
   "projects": [
     {
       "id": 1,
@@ -1728,6 +1728,7 @@
         "GitHub Octoverse"
       ],
       "screenshots": [
+        "images/projects/language-market-index/screenshots/Screenshot_2026-05-09_at_13.32.01.png",
         "images/projects/language-market-index/screenshots/composite_scores.png",
         "images/projects/language-market-index/screenshots/score_breakdown_by_source.png",
         "images/projects/language-market-index/screenshots/language_momentum_score.png",
@@ -1738,8 +1739,7 @@
         "images/projects/language-market-index/screenshots/pre_post_chatgpt_drop_per_language.png",
         "images/projects/language-market-index/screenshots/so_momentum_vs_job_demand.png",
         "images/projects/language-market-index/screenshots/total_monthly_posts_decline.png",
-        "images/projects/language-market-index/screenshots/Screenshot_2026-05-09_at_13.31.55.png",
-        "images/projects/language-market-index/screenshots/Screenshot_2026-05-09_at_13.32.01.png"
+        "images/projects/language-market-index/screenshots/Screenshot_2026-05-09_at_13.31.55.png"
       ],
       "videos": [],
       "card_image": "images/projects/programming-languages-visualisation/card/languages2.jpg",
