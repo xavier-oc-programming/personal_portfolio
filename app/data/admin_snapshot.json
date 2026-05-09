@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-09T11:30:57Z",
+  "snapshot_at": "2026-05-09T11:31:19Z",
   "projects": [
     {
       "id": 1,
@@ -1729,7 +1729,15 @@
       ],
       "screenshots": [
         "images/projects/language-market-index/screenshots/composite_scores.png",
-        "images/projects/language-market-index/screenshots/score_breakdown_by_source.png"
+        "images/projects/language-market-index/screenshots/score_breakdown_by_source.png",
+        "images/projects/language-market-index/screenshots/language_momentum_score.png",
+        "images/projects/language-market-index/screenshots/language_share_over_time.png",
+        "images/projects/language-market-index/screenshots/lifecycle_matrix_volume_vs_momentum.png",
+        "images/projects/language-market-index/screenshots/month_over_month_velocity.png",
+        "images/projects/language-market-index/screenshots/monthly_posts_per_language.png",
+        "images/projects/language-market-index/screenshots/pre_post_chatgpt_drop_per_language.png",
+        "images/projects/language-market-index/screenshots/so_momentum_vs_job_demand.png",
+        "images/projects/language-market-index/screenshots/total_monthly_posts_decline.png"
       ],
       "videos": [],
       "card_image": "images/projects/programming-languages-visualisation/card/languages2.jpg",
