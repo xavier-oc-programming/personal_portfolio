@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-09T11:33:03Z",
+  "snapshot_at": "2026-05-09T11:35:52Z",
   "projects": [
     {
       "id": 1,
@@ -1741,7 +1741,9 @@
         "images/projects/language-market-index/screenshots/so_momentum_vs_job_demand.png",
         "images/projects/language-market-index/screenshots/total_monthly_posts_decline.png"
       ],
-      "videos": [],
+      "videos": [
+        "https://youtu.be/UYg5XsEEMUA"
+      ],
       "card_image": "images/projects/programming-languages-visualisation/card/languages2.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/programming-language-trends-analysis",
       "live_url": null,
