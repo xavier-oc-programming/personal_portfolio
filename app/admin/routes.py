@@ -195,7 +195,7 @@ def _github_put_content(repo_file_path: str, content_bytes: bytes, commit_messag
 
 
 def _github_commit_file(file_path: Path, commit_message: str | None = None) -> bool:
-    """Commit a static file to GitHub. Returns True on success."""
+    """Commit a single static file to GitHub via the Contents API."""
     static_dir = Path(current_app.root_path) / "static"
     try:
         rel = str(file_path.relative_to(static_dir)).replace("\\", "/")
@@ -206,13 +206,89 @@ def _github_commit_file(file_path: Path, commit_message: str | None = None) -> b
     return _github_put_content(f"app/static/{rel}", content, commit_message or f"media: upload {file_path.name}")
 
 
-def _github_commit_files_async(file_paths: list[Path], commit_messages: list[str], snapshot_msg: str, app) -> None:
-    """Commit files to GitHub in a background thread, then update snapshot."""
+def _github_batch_commit(file_paths: list[Path], commit_message: str) -> bool:
+    """
+    Commit multiple static files to GitHub in a single commit using the Git Data API.
+    Falls back to per-file commits if the batch fails.
+    """
+    import base64
+    import urllib.request
+    import urllib.error
+
+    token = current_app.config.get("GITHUB_TOKEN")
+    repo = current_app.config.get("GITHUB_REPO")
+    if not token or not repo:
+        return False
+
+    static_dir = Path(current_app.root_path) / "static"
+    headers = {
+        "Authorization": f"token {token}",
+        "Accept": "application/vnd.github.v3+json",
+        "Content-Type": "application/json",
+        "User-Agent": "portfolio-admin",
+    }
+
+    def _api(path: str, data: dict | None = None, method: str | None = None):
+        url = f"https://api.github.com/repos/{repo}/{path}"
+        body = json.dumps(data).encode() if data else None
+        req = urllib.request.Request(url, data=body, headers=headers, method=method or ("POST" if body else "GET"))
+        with urllib.request.urlopen(req, timeout=30) as r:
+            return json.loads(r.read())
+
+    try:
+        # 1. Get current HEAD
+        ref = _api("git/ref/heads/main")
+        head_sha = ref["object"]["sha"]
+
+        # 2. Get base tree SHA
+        commit_info = _api(f"git/commits/{head_sha}")
+        base_tree_sha = commit_info["tree"]["sha"]
+
+        # 3. Create blobs for each file
+        tree_entries = []
+        for fp in file_paths:
+            try:
+                rel = str(fp.relative_to(static_dir)).replace("\\", "/")
+            except ValueError:
+                continue
+            with open(fp, "rb") as f:
+                content_b64 = base64.b64encode(f.read()).decode()
+            blob = _api("git/blobs", {"content": content_b64, "encoding": "base64"})
+            tree_entries.append({
+                "path": f"app/static/{rel}",
+                "mode": "100644",
+                "type": "blob",
+                "sha": blob["sha"],
+            })
+
+        if not tree_entries:
+            return False
+
+        # 4. Create new tree
+        new_tree = _api("git/trees", {"base_tree": base_tree_sha, "tree": tree_entries})
+
+        # 5. Create commit
+        new_commit = _api("git/commits", {
+            "message": f"{commit_message} [skip ci]",
+            "tree": new_tree["sha"],
+            "parents": [head_sha],
+        })
+
+        # 6. Update ref
+        _api("git/refs/heads/main", {"sha": new_commit["sha"]}, method="PATCH")
+        return True
+
+    except Exception:
+        # Fall back to per-file commits
+        return all(_github_commit_file(fp) for fp in file_paths)
+
+
+def _github_commit_files_async(file_paths: list[Path], commit_message: str, snapshot_msg: str, app) -> None:
+    """Batch-commit files to GitHub in a background thread, then update snapshot."""
     import threading
     def _run():
         with app.app_context():
-            for fp, msg in zip(file_paths, commit_messages):
-                _github_commit_file(fp, msg)
+            _github_batch_commit(file_paths, commit_message)
             _github_commit_full_snapshot(snapshot_msg)
     threading.Thread(target=_run, daemon=True).start()
 
@@ -534,7 +610,7 @@ def media_upload_card(slug: str):
         db.session.commit()
         _github_commit_files_async(
             [file_path],
-            [f"media: add card image for {project.title}"],
+            f"media: add card image for {project.title}",
             f"data: card image added for {project.title}",
             current_app._get_current_object(),
         )
@@ -579,7 +655,7 @@ def media_upload_screenshot(slug: str):
         db.session.commit()
         _github_commit_files_async(
             saved_paths,
-            [f"media: add screenshot {i + 1}/{count} for {project.title}" for i in range(count)],
+            f"media: add {count} screenshot(s) for {project.title}",
             f"data: {count} screenshot(s) added for {project.title}",
             current_app._get_current_object(),
         )
