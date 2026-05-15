@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-15T10:56:24Z",
+  "snapshot_at": "2026-05-15T11:43:59Z",
   "projects": [
     {
       "id": 1,
@@ -1034,7 +1034,9 @@
         "macOS cron"
       ],
       "screenshots": [],
-      "videos": [],
+      "videos": [
+        "https://youtu.be/fN3u1DCKKkc"
+      ],
       "card_image": "images/projects/amazon-price-tracker/card/amazon.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/amazon-price-tracker-automation",
       "live_url": null,
