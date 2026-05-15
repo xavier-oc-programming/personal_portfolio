@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-15T16:00:35Z",
+  "snapshot_at": "2026-05-15T16:01:09Z",
   "projects": [
     {
       "id": 1,
@@ -2397,7 +2397,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "images/projects/nyc-airbnb-data-pipeline/card/data_pipeline.webp",
       "repo_url": "https://github.com/xavier-oc-programming/nyc-airbnb-data-pipeline",
       "live_url": null,
       "demo_url": null
