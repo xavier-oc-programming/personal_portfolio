@@ -519,12 +519,14 @@ def media_upload_card(slug: str):
         file_path = dest / filename
         project.card_image = _static_rel(file_path)
         db.session.commit()
-        _github_commit_file(file_path)
+        file_committed = _github_commit_file(file_path)
         backed_up = _github_commit_full_snapshot()
-        if backed_up:
+        if file_committed and backed_up:
             flash("Card image uploaded and committed to GitHub.", "success")
+        elif not file_committed:
+            flash("Card image uploaded but the file was NOT committed to GitHub — it will be lost on redeploy. Try again.", "danger")
         else:
-            flash("Card image uploaded but GitHub snapshot failed — use Force Sync on the dashboard.", "warning")
+            flash("Card image committed but snapshot failed — use Force Sync on the dashboard.", "warning")
     else:
         flash("No valid image file provided.", "danger")
 
@@ -563,13 +565,15 @@ def media_upload_screenshot(slug: str):
     if count:
         project.screenshots = shots
         db.session.commit()
-        for fp in saved_paths:
-            _github_commit_file(fp)
+        failed_files = [fp for fp in saved_paths if not _github_commit_file(fp)]
         backed_up = _github_commit_full_snapshot()
-        if backed_up:
-            flash(f"{count} screenshot(s) uploaded and committed to GitHub.", "success")
+        if failed_files:
+            names = ", ".join(fp.name for fp in failed_files)
+            flash(f"{count} screenshot(s) uploaded but {len(failed_files)} were NOT committed to GitHub ({names}) — they will be lost on redeploy. Try again.", "danger")
+        elif not backed_up:
+            flash(f"{count} screenshot(s) committed but snapshot failed — use Force Sync on the dashboard.", "warning")
         else:
-            flash(f"{count} screenshot(s) uploaded but GitHub snapshot failed — use Force Sync on the dashboard.", "warning")
+            flash(f"{count} screenshot(s) uploaded and committed to GitHub.", "success")
     else:
         flash("No valid image files provided.", "danger")
 
@@ -609,12 +613,14 @@ def media_upload_video(slug: str):
             vids.append(rel_path)
             project.videos = vids
             db.session.commit()
-        _github_commit_file(file_path)
+        file_committed = _github_commit_file(file_path)
         backed_up = _github_commit_full_snapshot()
-        if backed_up:
+        if file_committed and backed_up:
             flash("Video uploaded and committed to GitHub.", "success")
+        elif not file_committed:
+            flash("Video uploaded but the file was NOT committed to GitHub — it will be lost on redeploy. Try again.", "danger")
         else:
-            flash("Video uploaded but GitHub snapshot failed — use Force Sync on the dashboard.", "warning")
+            flash("Video committed but snapshot failed — use Force Sync on the dashboard.", "warning")
     else:
         flash("No valid video file provided.", "danger")
 
