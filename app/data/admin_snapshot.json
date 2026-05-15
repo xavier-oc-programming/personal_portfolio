@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-15T16:00:23Z",
+  "snapshot_at": "2026-05-15T16:00:35Z",
   "projects": [
     {
       "id": 1,
@@ -2362,7 +2362,7 @@
     {
       "id": 55,
       "slug": "nyc-airbnb-data-pipeline",
-      "title": "NYC Airbnb Data Preprocessing Pipeline",
+      "title": "Data Preprocessing Pipeline — NYC Airbnb",
       "primary_category": "data",
       "short_description": "A production-grade, class-based data preprocessing pipeline built in Python on the NYC Airbnb Open Dataset (48,895 listings). Handles missing values, outliers, duplicates, encoding, and scaling — then generates five before/after diagnostic visualisations.",
       "full_description": "This pipeline takes one of the messiest real-world datasets available — the NYC Airbnb Open Data — and transforms it into a clean, analysis-ready form through a fully modular, reusable architecture. The codebase is structured around four independent classes (DataLoader, DataCleaner, DataVisualizer, PipelineReport) that can each be imported individually into any downstream data project.\r\n\r\nThe pipeline runs eight deterministic steps: load, inspect, handle missing values, remove duplicates, cap outliers via IQR fencing, label-encode categoricals, MinMax-scale numerics, and print a full transformation report. Every decision is logged internally, and five auto-generated charts make each transformation visible and explainable — from raw missing-value bands to before/after price distributions and a Pearson correlation heatmap on the cleaned data.",
