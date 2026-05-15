@@ -2,7 +2,13 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-<h2 class="mb-4 fw-bold">Dashboard</h2>
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="fw-bold mb-0">Dashboard</h2>
+  <form method="POST" action="{{ url_for('admin.force_sync_snapshot') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button type="submit" class="btn btn-outline-warning btn-sm">Force Sync Snapshot</button>
+  </form>
+</div>
 
 <!-- Stats row -->
 <div class="row g-3 mb-4">

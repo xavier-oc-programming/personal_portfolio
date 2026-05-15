@@ -347,6 +347,8 @@ def create_app() -> Flask:
         db.create_all()
         if app.config.get("DEBUG"):
             _sync_from_snapshot(app)
+        elif Project.query.count() == 0:
+            _sync_from_snapshot(app)
 
     @app.template_filter("nl2br")
     def nl2br_filter(value: str) -> Markup:

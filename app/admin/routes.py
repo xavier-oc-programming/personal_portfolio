@@ -413,11 +413,10 @@ def project_new():
         _backup_projects()
         backed_up = _github_commit_full_snapshot()
 
-        flash(
-            f"Project '{project.title}' created and backed up to GitHub." if backed_up
-            else f"Project '{project.title}' created.",
-            "success",
-        )
+        if backed_up:
+            flash(f"Project '{project.title}' created and backed up to GitHub.", "success")
+        else:
+            flash(f"Project '{project.title}' created but GitHub snapshot failed — use Force Sync on the dashboard.", "warning")
         return redirect(url_for("admin.project_edit", slug=project.slug))
 
     if form.errors:
@@ -455,11 +454,10 @@ def project_edit(slug: str):
         _backup_projects()
         backed_up = _github_commit_full_snapshot()
 
-        flash(
-            f"Project '{project.title}' updated and backed up to GitHub." if backed_up
-            else f"Project '{project.title}' updated.",
-            "success",
-        )
+        if backed_up:
+            flash(f"Project '{project.title}' updated and backed up to GitHub.", "success")
+        else:
+            flash(f"Project '{project.title}' updated but GitHub snapshot failed — use Force Sync on the dashboard.", "warning")
         return redirect(url_for("admin.project_edit", slug=project.slug))
 
     if form.errors:
@@ -483,11 +481,10 @@ def project_delete(slug: str):
     db.session.commit()
     _backup_projects()
     backed_up = _github_commit_full_snapshot()
-    flash(
-        f"Project '{title}' deleted and snapshot backed up to GitHub." if backed_up
-        else f"Project '{title}' deleted.",
-        "success",
-    )
+    if backed_up:
+        flash(f"Project '{title}' deleted and snapshot backed up to GitHub.", "success")
+    else:
+        flash(f"Project '{title}' deleted but GitHub snapshot failed — use Force Sync on the dashboard.", "warning")
     return redirect(url_for("admin.projects"))
 
 
@@ -523,8 +520,11 @@ def media_upload_card(slug: str):
         project.card_image = _static_rel(file_path)
         db.session.commit()
         _github_commit_file(file_path)
-        _github_commit_full_snapshot()
-        flash("Card image uploaded and committed to GitHub.", "success")
+        backed_up = _github_commit_full_snapshot()
+        if backed_up:
+            flash("Card image uploaded and committed to GitHub.", "success")
+        else:
+            flash("Card image uploaded but GitHub snapshot failed — use Force Sync on the dashboard.", "warning")
     else:
         flash("No valid image file provided.", "danger")
 
@@ -565,8 +565,11 @@ def media_upload_screenshot(slug: str):
         db.session.commit()
         for fp in saved_paths:
             _github_commit_file(fp)
-        _github_commit_full_snapshot()
-        flash(f"{count} screenshot(s) uploaded and committed to GitHub.", "success")
+        backed_up = _github_commit_full_snapshot()
+        if backed_up:
+            flash(f"{count} screenshot(s) uploaded and committed to GitHub.", "success")
+        else:
+            flash(f"{count} screenshot(s) uploaded but GitHub snapshot failed — use Force Sync on the dashboard.", "warning")
     else:
         flash("No valid image files provided.", "danger")
 
@@ -607,8 +610,11 @@ def media_upload_video(slug: str):
             project.videos = vids
             db.session.commit()
         _github_commit_file(file_path)
-        _github_commit_full_snapshot()
-        flash("Video uploaded and committed to GitHub.", "success")
+        backed_up = _github_commit_full_snapshot()
+        if backed_up:
+            flash("Video uploaded and committed to GitHub.", "success")
+        else:
+            flash("Video uploaded but GitHub snapshot failed — use Force Sync on the dashboard.", "warning")
     else:
         flash("No valid video file provided.", "danger")
 
@@ -781,6 +787,21 @@ def message_delete(message_id: int):
     _github_commit_full_snapshot()
     flash("Message deleted.", "success")
     return redirect(url_for("admin.messages"))
+
+
+# ---------------------------------------------------------------------------
+# Force sync
+# ---------------------------------------------------------------------------
+
+@admin_bp.post("/sync-snapshot")
+@_require_admin
+def force_sync_snapshot():
+    backed_up = _github_commit_full_snapshot()
+    if backed_up:
+        flash("Snapshot synced to GitHub successfully.", "success")
+    else:
+        flash("GitHub snapshot sync failed. Check your GitHub token / network and try again.", "danger")
+    return redirect(url_for("admin.dashboard"))
 
 
 # ---------------------------------------------------------------------------
