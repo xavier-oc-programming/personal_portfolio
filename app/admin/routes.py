@@ -206,14 +206,14 @@ def _github_commit_file(file_path: Path, commit_message: str | None = None) -> b
     return _github_put_content(f"app/static/{rel}", content, commit_message or f"media: upload {file_path.name}")
 
 
-def _github_batch_commit(file_paths: list[Path], commit_message: str) -> bool:
+def _github_batch_commit(file_paths: list[Path], commit_message: str, extra_blobs: list[dict] | None = None) -> bool:
     """
-    Commit multiple static files to GitHub in a single commit using the Git Data API.
-    Falls back to per-file commits if the batch fails.
+    Commit multiple files to GitHub in a single commit using the Git Data API.
+    extra_blobs: list of {"path": str, "content": bytes} for non-static files (e.g. snapshot).
+    Falls back to per-file Contents API on failure.
     """
     import base64
     import urllib.request
-    import urllib.error
 
     token = current_app.config.get("GITHUB_TOKEN")
     repo = current_app.config.get("GITHUB_REPO")
@@ -236,16 +236,12 @@ def _github_batch_commit(file_paths: list[Path], commit_message: str) -> bool:
             return json.loads(r.read())
 
     try:
-        # 1. Get current HEAD
         ref = _api("git/ref/heads/main")
         head_sha = ref["object"]["sha"]
+        base_tree_sha = _api(f"git/commits/{head_sha}")["tree"]["sha"]
 
-        # 2. Get base tree SHA
-        commit_info = _api(f"git/commits/{head_sha}")
-        base_tree_sha = commit_info["tree"]["sha"]
-
-        # 3. Create blobs for each file
         tree_entries = []
+
         for fp in file_paths:
             try:
                 rel = str(fp.relative_to(static_dir)).replace("\\", "/")
@@ -254,99 +250,81 @@ def _github_batch_commit(file_paths: list[Path], commit_message: str) -> bool:
             with open(fp, "rb") as f:
                 content_b64 = base64.b64encode(f.read()).decode()
             blob = _api("git/blobs", {"content": content_b64, "encoding": "base64"})
-            tree_entries.append({
-                "path": f"app/static/{rel}",
-                "mode": "100644",
-                "type": "blob",
-                "sha": blob["sha"],
-            })
+            tree_entries.append({"path": f"app/static/{rel}", "mode": "100644", "type": "blob", "sha": blob["sha"]})
+
+        for eb in (extra_blobs or []):
+            content_b64 = base64.b64encode(eb["content"]).decode()
+            blob = _api("git/blobs", {"content": content_b64, "encoding": "base64"})
+            tree_entries.append({"path": eb["path"], "mode": "100644", "type": "blob", "sha": blob["sha"]})
 
         if not tree_entries:
             return False
 
-        # 4. Create new tree
         new_tree = _api("git/trees", {"base_tree": base_tree_sha, "tree": tree_entries})
-
-        # 5. Create commit
         new_commit = _api("git/commits", {
             "message": f"{commit_message} [skip ci]",
             "tree": new_tree["sha"],
             "parents": [head_sha],
         })
-
-        # 6. Update ref
         _api("git/refs/heads/main", {"sha": new_commit["sha"]}, method="PATCH")
         return True
 
     except Exception:
-        # Fall back to per-file commits
         return all(_github_commit_file(fp) for fp in file_paths)
 
 
-def _github_commit_files_async(file_paths: list[Path], commit_message: str, snapshot_msg: str, app) -> None:
-    """Batch-commit files to GitHub in a background thread, then update snapshot."""
+def _build_snapshot_blob() -> bytes:
+    """Build the admin_snapshot.json content as bytes."""
+    projects = Project.query.order_by(Project.id.asc()).all()
+    messages = ContactMessage.query.order_by(ContactMessage.created_at.desc()).all()
+    data = {
+        "snapshot_at": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "projects": [
+            {
+                "id": p.id, "slug": p.slug, "title": p.title,
+                "primary_category": p.primary_category,
+                "short_description": p.short_description,
+                "full_description": p.full_description,
+                "featured": p.featured, "featured_order": p.featured_order,
+                "date": p.date, "problem": p.problem, "solution": p.solution,
+                "challenges": p.challenges, "results": p.results,
+                "tags": p.tags, "tech_stack": p.tech_stack,
+                "screenshots": p.screenshots, "videos": p.videos,
+                "card_image": p.card_image, "repo_url": p.repo_url,
+                "live_url": p.live_url, "demo_url": p.demo_url,
+            }
+            for p in projects
+        ],
+        "messages": [
+            {"id": m.id, "name": m.name, "email": m.email, "message": m.message,
+             "created_at": m.created_at.strftime("%Y-%m-%dT%H:%M:%SZ")}
+            for m in messages
+        ],
+    }
+    return json.dumps(data, indent=2, ensure_ascii=False).encode()
+
+
+def _github_commit_files_async(file_paths: list[Path], commit_message: str, app) -> None:
+    """Batch-commit files + snapshot to GitHub in one commit, in a background thread."""
     import threading
     def _run():
         with app.app_context():
-            _github_batch_commit(file_paths, commit_message)
-            _github_commit_full_snapshot(snapshot_msg)
+            snapshot_bytes = _build_snapshot_blob()
+            _github_batch_commit(
+                file_paths,
+                commit_message,
+                extra_blobs=[{"path": "app/data/admin_snapshot.json", "content": snapshot_bytes}],
+            )
     threading.Thread(target=_run, daemon=True).start()
 
 
 
 
 def _github_commit_full_snapshot(message: str | None = None) -> bool:
-    """
-    Commit a full JSON snapshot of all projects and messages to GitHub.
-    Saved as app/data/admin_snapshot.json. Returns True on success.
-    """
-    projects = Project.query.order_by(Project.id.asc()).all()
-    messages = ContactMessage.query.order_by(ContactMessage.created_at.desc()).all()
-
-    data = {
-        "snapshot_at": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "projects": [
-            {
-                "id": p.id,
-                "slug": p.slug,
-                "title": p.title,
-                "primary_category": p.primary_category,
-                "short_description": p.short_description,
-                "full_description": p.full_description,
-                "featured": p.featured,
-                "featured_order": p.featured_order,
-                "date": p.date,
-                "problem": p.problem,
-                "solution": p.solution,
-                "challenges": p.challenges,
-                "results": p.results,
-                "tags": p.tags,
-                "tech_stack": p.tech_stack,
-                "screenshots": p.screenshots,
-                "videos": p.videos,
-                "card_image": p.card_image,
-                "repo_url": p.repo_url,
-                "live_url": p.live_url,
-                "demo_url": p.demo_url,
-            }
-            for p in projects
-        ],
-        "messages": [
-            {
-                "id": m.id,
-                "name": m.name,
-                "email": m.email,
-                "message": m.message,
-                "created_at": m.created_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
-            }
-            for m in messages
-        ],
-    }
-
-    content = json.dumps(data, indent=2, ensure_ascii=False).encode()
+    """Commit admin_snapshot.json to GitHub via the Contents API."""
     return _github_put_content(
         "app/data/admin_snapshot.json",
-        content,
+        _build_snapshot_blob(),
         message or "data: update admin snapshot",
     )
 
@@ -611,7 +589,6 @@ def media_upload_card(slug: str):
         _github_commit_files_async(
             [file_path],
             f"media: add card image for {project.title}",
-            f"data: card image added for {project.title}",
             current_app._get_current_object(),
         )
         flash("Card image uploaded — committing to GitHub in the background.", "success")
@@ -656,7 +633,6 @@ def media_upload_screenshot(slug: str):
         _github_commit_files_async(
             saved_paths,
             f"media: add {count} screenshot(s) for {project.title}",
-            f"data: {count} screenshot(s) added for {project.title}",
             current_app._get_current_object(),
         )
         flash(f"{count} screenshot(s) uploaded — committing to GitHub in the background.", "success")
