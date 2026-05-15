@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-15T16:01:09Z",
+  "snapshot_at": "2026-05-15T16:02:51Z",
   "projects": [
     {
       "id": 1,
@@ -2395,7 +2395,13 @@
         "Seaborn",
         "Jupyter"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/nyc-airbnb-data-pipeline/screenshots/01_missing_heatmap.png",
+        "images/projects/nyc-airbnb-data-pipeline/screenshots/02_price_distribution.png",
+        "images/projects/nyc-airbnb-data-pipeline/screenshots/03_outlier_boxplots.png",
+        "images/projects/nyc-airbnb-data-pipeline/screenshots/04_neighbourhood_breakdown.png",
+        "images/projects/nyc-airbnb-data-pipeline/screenshots/05_correlation_heatmap.png"
+      ],
       "videos": [],
       "card_image": "images/projects/nyc-airbnb-data-pipeline/card/data_pipeline.webp",
       "repo_url": "https://github.com/xavier-oc-programming/nyc-airbnb-data-pipeline",
