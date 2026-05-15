@@ -579,7 +579,7 @@ def media_upload_screenshot(slug: str):
         db.session.commit()
         _github_commit_files_async(
             saved_paths,
-            [f"media: add screenshot {fp.name} for {project.title}" for fp in saved_paths],
+            [f"media: add screenshot {i + 1}/{count} for {project.title}" for i in range(count)],
             f"data: {count} screenshot(s) added for {project.title}",
             current_app._get_current_object(),
         )
