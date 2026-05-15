@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-15T12:36:19Z",
+  "snapshot_at": "2026-05-15T12:36:37Z",
   "projects": [
     {
       "id": 1,
@@ -2340,7 +2340,10 @@
         "Amazon Bedrock",
         "Claude Haiku 4.5"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/imdb-sentiment-classifier/screenshots/Screenshot_2026-05-15_at_14.19.16.png",
+        "images/projects/imdb-sentiment-classifier/screenshots/Screenshot_2026-05-15_at_14.19.29.png"
+      ],
       "videos": [],
       "card_image": "images/projects/imdb-sentiment-classifier/card/bedrock.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/imdb-sentiment-classifier",
