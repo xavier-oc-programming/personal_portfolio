@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-15T12:36:57Z",
+  "snapshot_at": "2026-05-15T12:44:18Z",
   "projects": [
     {
       "id": 1,
@@ -2351,7 +2351,9 @@
         "images/projects/imdb-sentiment-classifier/screenshots/06_roc_curves.png",
         "images/projects/imdb-sentiment-classifier/screenshots/07_confidence_distribution.png"
       ],
-      "videos": [],
+      "videos": [
+        "https://youtu.be/BYZUf1sfJ5o"
+      ],
       "card_image": "images/projects/imdb-sentiment-classifier/card/bedrock.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/imdb-sentiment-classifier",
       "live_url": "https://5llpfbqfph.execute-api.eu-west-1.amazonaws.com",
