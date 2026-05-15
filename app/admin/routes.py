@@ -305,16 +305,16 @@ def _build_snapshot_blob() -> bytes:
 
 
 def _github_commit_files_async(file_paths: list[Path], commit_message: str, app) -> None:
-    """Batch-commit files + snapshot to GitHub in one commit, in a background thread."""
+    """Batch-commit media files to GitHub in one commit, in a background thread.
+
+    The snapshot is NOT included here — it is committed synchronously by project
+    CRUD routes. Including it here caused a race condition where a slow background
+    thread could overwrite a newer snapshot that included a freshly-created project.
+    """
     import threading
     def _run():
         with app.app_context():
-            snapshot_bytes = _build_snapshot_blob()
-            _github_batch_commit(
-                file_paths,
-                commit_message,
-                extra_blobs=[{"path": "app/data/admin_snapshot.json", "content": snapshot_bytes}],
-            )
+            _github_batch_commit(file_paths, commit_message)
     threading.Thread(target=_run, daemon=True).start()
 
 

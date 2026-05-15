@@ -83,12 +83,16 @@ def seed_projects() -> None:
 
         snapshot_slugs = {p["slug"] for p in snapshot_projects}
         seed_slugs = {p["slug"] for p in PROJECTS}
-        all_known_slugs = snapshot_slugs | seed_slugs
 
-        # Delete projects no longer in either source
-        Project.query.filter(Project.slug.notin_(all_known_slugs)).delete(
-            synchronize_session=False
-        )
+        # Only remove projects that were defined in projects.py but are no longer
+        # in the snapshot (i.e. explicitly deleted via admin). Admin-created projects
+        # (not in projects.py) are never auto-deleted here — they can only be removed
+        # by the admin panel, which deletes them from the DB directly.
+        removed_from_seed = seed_slugs - snapshot_slugs
+        if removed_from_seed:
+            Project.query.filter(Project.slug.in_(removed_from_seed)).delete(
+                synchronize_session=False
+            )
 
         # Restore all projects from the snapshot (authoritative for everything)
         for data in snapshot_projects:
