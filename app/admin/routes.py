@@ -87,22 +87,10 @@ def _get_project_video_dir(slug: str) -> Path:
 
 
 def _save_file(file, dest_dir: Path) -> str:
-    from PIL import Image
-    import io
-
     dest_dir.mkdir(parents=True, exist_ok=True)
-    original_name = secure_filename(file.filename)
-    stem = Path(original_name).stem
-    dest_path = dest_dir / f"{stem}.jpg"
-
-    img = Image.open(file.stream)
-    if img.mode in ("RGBA", "P"):
-        img = img.convert("RGB")
-    max_dim = 1920
-    if img.width > max_dim or img.height > max_dim:
-        img.thumbnail((max_dim, max_dim), Image.LANCZOS)
-    img.save(dest_path, "JPEG", quality=85, optimize=True)
-    return dest_path.name
+    filename = secure_filename(file.filename)
+    file.save(dest_dir / filename)
+    return filename
 
 
 def _backup_dir() -> Path:
@@ -206,7 +194,7 @@ def _github_put_content(repo_file_path: str, content_bytes: bytes, commit_messag
         return False
 
 
-def _github_commit_file(file_path: Path) -> bool:
+def _github_commit_file(file_path: Path, commit_message: str | None = None) -> bool:
     """Commit a static file to GitHub. Returns True on success."""
     static_dir = Path(current_app.root_path) / "static"
     try:
@@ -215,12 +203,23 @@ def _github_commit_file(file_path: Path) -> bool:
         return False
     with open(file_path, "rb") as f:
         content = f.read()
-    return _github_put_content(f"app/static/{rel}", content, f"media: upload {file_path.name}")
+    return _github_put_content(f"app/static/{rel}", content, commit_message or f"media: upload {file_path.name}")
+
+
+def _github_commit_files_async(file_paths: list[Path], commit_messages: list[str], snapshot_msg: str, app) -> None:
+    """Commit files to GitHub in a background thread, then update snapshot."""
+    import threading
+    def _run():
+        with app.app_context():
+            for fp, msg in zip(file_paths, commit_messages):
+                _github_commit_file(fp, msg)
+            _github_commit_full_snapshot(snapshot_msg)
+    threading.Thread(target=_run, daemon=True).start()
 
 
 
 
-def _github_commit_full_snapshot() -> bool:
+def _github_commit_full_snapshot(message: str | None = None) -> bool:
     """
     Commit a full JSON snapshot of all projects and messages to GitHub.
     Saved as app/data/admin_snapshot.json. Returns True on success.
@@ -272,7 +271,7 @@ def _github_commit_full_snapshot() -> bool:
     return _github_put_content(
         "app/data/admin_snapshot.json",
         content,
-        "data: update admin snapshot",
+        message or "data: update admin snapshot",
     )
 
 
@@ -425,7 +424,7 @@ def project_new():
         db.session.add(project)
         db.session.commit()
         _backup_projects()
-        backed_up = _github_commit_full_snapshot()
+        backed_up = _github_commit_full_snapshot(f"data: add project '{project.title}'")
 
         if backed_up:
             flash(f"Project '{project.title}' created and backed up to GitHub.", "success")
@@ -466,7 +465,7 @@ def project_edit(slug: str):
         _populate_project_from_form(project, form)
         db.session.commit()
         _backup_projects()
-        backed_up = _github_commit_full_snapshot()
+        backed_up = _github_commit_full_snapshot(f"data: update project '{project.title}'")
 
         if backed_up:
             flash(f"Project '{project.title}' updated and backed up to GitHub.", "success")
@@ -494,7 +493,7 @@ def project_delete(slug: str):
     db.session.delete(project)
     db.session.commit()
     _backup_projects()
-    backed_up = _github_commit_full_snapshot()
+    backed_up = _github_commit_full_snapshot(f"data: delete project '{title}'")
     if backed_up:
         flash(f"Project '{title}' deleted and snapshot backed up to GitHub.", "success")
     else:
@@ -533,14 +532,13 @@ def media_upload_card(slug: str):
         file_path = dest / filename
         project.card_image = _static_rel(file_path)
         db.session.commit()
-        file_committed = _github_commit_file(file_path)
-        backed_up = _github_commit_full_snapshot()
-        if file_committed and backed_up:
-            flash("Card image uploaded and committed to GitHub.", "success")
-        elif not file_committed:
-            flash("Card image uploaded but NOT committed to GitHub — it will be lost on redeploy. Try again.", "danger")
-        else:
-            flash("Card image committed but snapshot failed — use Force Sync on the dashboard.", "warning")
+        _github_commit_files_async(
+            [file_path],
+            [f"media: add card image for {project.title}"],
+            f"data: card image added for {project.title}",
+            current_app._get_current_object(),
+        )
+        flash("Card image uploaded — committing to GitHub in the background.", "success")
     else:
         flash("No valid image file provided.", "danger")
 
@@ -579,15 +577,13 @@ def media_upload_screenshot(slug: str):
     if count:
         project.screenshots = shots
         db.session.commit()
-        failed_files = [fp for fp in saved_paths if not _github_commit_file(fp)]
-        backed_up = _github_commit_full_snapshot()
-        if failed_files:
-            names = ", ".join(fp.name for fp in failed_files)
-            flash(f"{count} screenshot(s) uploaded but {len(failed_files)} NOT committed to GitHub ({names}) — try again.", "danger")
-        elif not backed_up:
-            flash(f"{count} screenshot(s) committed but snapshot failed — use Force Sync.", "warning")
-        else:
-            flash(f"{count} screenshot(s) uploaded and committed to GitHub.", "success")
+        _github_commit_files_async(
+            saved_paths,
+            [f"media: add screenshot {fp.name} for {project.title}" for fp in saved_paths],
+            f"data: {count} screenshot(s) added for {project.title}",
+            current_app._get_current_object(),
+        )
+        flash(f"{count} screenshot(s) uploaded — committing to GitHub in the background.", "success")
     else:
         flash("No valid image files provided.", "danger")
 
