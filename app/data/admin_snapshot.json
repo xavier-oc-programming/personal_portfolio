@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-15T11:43:59Z",
+  "snapshot_at": "2026-05-15T12:05:50Z",
   "projects": [
     {
       "id": 1,
@@ -1033,7 +1033,14 @@
         "bash",
         "macOS cron"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/amazon-price-tracker-automation/screenshots/Screenshot_2026-04-28_at_11.12.40.png",
+        "images/projects/amazon-price-tracker-automation/screenshots/Screenshot_2026-04-28_at_11.14.39.png",
+        "images/projects/amazon-price-tracker-automation/screenshots/Screenshot_2026-04-28_at_11.15.09.png",
+        "images/projects/amazon-price-tracker-automation/screenshots/Screenshot_2026-04-28_at_11.15.35.png",
+        "images/projects/amazon-price-tracker-automation/screenshots/Screenshot_2026-04-28_at_11.16.59.png",
+        "images/projects/amazon-price-tracker-automation/screenshots/Screenshot_2026-04-28_at_11.19.21.png"
+      ],
       "videos": [
         "https://youtu.be/fN3u1DCKKkc"
       ],
