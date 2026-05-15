@@ -36,6 +36,7 @@ from __future__ import annotations
 
 import json
 import os
+import threading
 from datetime import datetime
 from functools import wraps
 from pathlib import Path
@@ -204,6 +205,16 @@ def _github_commit_file(file_path: Path) -> bool:
     with open(file_path, "rb") as f:
         content = f.read()
     return _github_put_content(f"app/static/{rel}", content, f"media: upload {file_path.name}")
+
+
+def _github_commit_files_async(file_paths: list[Path], app) -> None:
+    """Commit multiple files to GitHub in a background thread."""
+    def _run():
+        with app.app_context():
+            for fp in file_paths:
+                _github_commit_file(fp)
+            _github_commit_full_snapshot()
+    threading.Thread(target=_run, daemon=True).start()
 
 
 def _github_commit_full_snapshot() -> bool:
@@ -519,14 +530,8 @@ def media_upload_card(slug: str):
         file_path = dest / filename
         project.card_image = _static_rel(file_path)
         db.session.commit()
-        file_committed = _github_commit_file(file_path)
-        backed_up = _github_commit_full_snapshot()
-        if file_committed and backed_up:
-            flash("Card image uploaded and committed to GitHub.", "success")
-        elif not file_committed:
-            flash("Card image uploaded but the file was NOT committed to GitHub — it will be lost on redeploy. Try again.", "danger")
-        else:
-            flash("Card image committed but snapshot failed — use Force Sync on the dashboard.", "warning")
+        _github_commit_files_async([file_path], current_app._get_current_object())
+        flash("Card image uploaded. Committing to GitHub in the background — this takes a few seconds.", "success")
     else:
         flash("No valid image file provided.", "danger")
 
@@ -565,15 +570,8 @@ def media_upload_screenshot(slug: str):
     if count:
         project.screenshots = shots
         db.session.commit()
-        failed_files = [fp for fp in saved_paths if not _github_commit_file(fp)]
-        backed_up = _github_commit_full_snapshot()
-        if failed_files:
-            names = ", ".join(fp.name for fp in failed_files)
-            flash(f"{count} screenshot(s) uploaded but {len(failed_files)} were NOT committed to GitHub ({names}) — they will be lost on redeploy. Try again.", "danger")
-        elif not backed_up:
-            flash(f"{count} screenshot(s) committed but snapshot failed — use Force Sync on the dashboard.", "warning")
-        else:
-            flash(f"{count} screenshot(s) uploaded and committed to GitHub.", "success")
+        _github_commit_files_async(saved_paths, current_app._get_current_object())
+        flash(f"{count} screenshot(s) uploaded. Committing to GitHub in the background — this takes a few seconds.", "success")
     else:
         flash("No valid image files provided.", "danger")
 
