@@ -804,6 +804,48 @@ def force_sync_snapshot():
     return redirect(url_for("admin.dashboard"))
 
 
+@admin_bp.post("/restore-from-snapshot")
+@_require_admin
+def restore_from_snapshot():
+    snapshot_path = Path(current_app.root_path) / "data" / "admin_snapshot.json"
+    if not snapshot_path.exists():
+        flash("admin_snapshot.json not found.", "danger")
+        return redirect(url_for("admin.dashboard"))
+
+    with open(snapshot_path) as f:
+        snapshot = json.load(f)
+
+    for record in snapshot.get("projects", []):
+        project = Project.query.filter_by(slug=record["slug"]).first()
+        if project is None:
+            project = Project(slug=record["slug"])
+            db.session.add(project)
+        project.title             = record["title"]
+        project.primary_category  = record["primary_category"]
+        project.short_description = record["short_description"]
+        project.full_description  = record["full_description"]
+        project.featured          = record.get("featured", False)
+        project.featured_order    = record.get("featured_order")
+        project.date              = record.get("date")
+        project.problem           = record.get("problem")
+        project.solution          = record.get("solution")
+        project.challenges        = record.get("challenges")
+        project.results           = record.get("results")
+        project.tags              = record.get("tags", [])
+        project.tech_stack        = record.get("tech_stack", [])
+        project.screenshots       = record.get("screenshots", [])
+        project.videos            = record.get("videos", [])
+        project.card_image        = record.get("card_image")
+        project.repo_url          = record.get("repo_url")
+        project.live_url          = record.get("live_url")
+        project.demo_url          = record.get("demo_url")
+
+    db.session.commit()
+    count = len(snapshot.get("projects", []))
+    flash(f"Database restored from snapshot ({count} projects).", "success")
+    return redirect(url_for("admin.dashboard"))
+
+
 # ---------------------------------------------------------------------------
 # Backups
 # ---------------------------------------------------------------------------

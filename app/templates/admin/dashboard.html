@@ -4,10 +4,16 @@
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
   <h2 class="fw-bold mb-0">Dashboard</h2>
-  <form method="POST" action="{{ url_for('admin.force_sync_snapshot') }}">
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <button type="submit" class="btn btn-outline-warning btn-sm">Force Sync Snapshot</button>
-  </form>
+  <div class="d-flex gap-2">
+    <form method="POST" action="{{ url_for('admin.force_sync_snapshot') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button type="submit" class="btn btn-outline-warning btn-sm">Force Sync Snapshot</button>
+    </form>
+    <form method="POST" action="{{ url_for('admin.restore_from_snapshot') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button type="submit" class="btn btn-outline-info btn-sm">Restore from Snapshot</button>
+    </form>
+  </div>
 </div>
 
 <!-- Stats row -->
