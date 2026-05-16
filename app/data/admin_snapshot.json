@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-16T10:01:01Z",
+  "snapshot_at": "2026-05-16T10:01:55Z",
   "projects": [
     {
       "id": 1,
@@ -1804,7 +1804,9 @@
         "Jupyter",
         "GitHub Actions"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/lego-dataset-analysis/screenshots/Screenshot_2026-05-16_at_10.17.48.png"
+      ],
       "videos": [],
       "card_image": "images/projects/lego-dataset-analysis/card/lego2.png",
       "repo_url": "https://github.com/xavier-oc-programming/lego-dataset-analysis",
