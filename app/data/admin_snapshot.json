@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-16T15:53:20Z",
+  "snapshot_at": "2026-05-16T16:10:56Z",
   "projects": [
     {
       "id": 1,
@@ -1852,7 +1852,15 @@
         "Jupyter",
         "GitHub Actions"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/google-trends-time-series-analysis/screenshots/bitcoin_price_vs_search.png",
+        "images/projects/google-trends-time-series-analysis/screenshots/tesla_price_vs_search_v1.png",
+        "images/projects/google-trends-time-series-analysis/screenshots/tesla_price_vs_search_v2.png",
+        "images/projects/google-trends-time-series-analysis/screenshots/tesla_price_vs_search.png",
+        "images/projects/google-trends-time-series-analysis/screenshots/unemployment_rolling_avg.png",
+        "images/projects/google-trends-time-series-analysis/screenshots/unemployment_search_vs_rate_2004_19.png",
+        "images/projects/google-trends-time-series-analysis/screenshots/unemployment_with_2020.png"
+      ],
       "videos": [],
       "card_image": "images/projects/google-trends-analysis/card/Screenshot_2026-03-24_at_16.56.55.png",
       "repo_url": "https://github.com/xavier-oc-programming/google-trends-time-series-analysis",
