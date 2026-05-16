@@ -237,7 +237,15 @@ document.addEventListener('DOMContentLoaded', function () {
      'repo_url', 'live_url', 'demo_url'].forEach(function (field) {
       const el = document.getElementById(field);
       if (el && data[field] != null) {
-        el.value = String(data[field]).trim();
+        const val = data[field];
+        if (field === 'date' && val instanceof Date) {
+          const y = val.getUTCFullYear();
+          const m = String(val.getUTCMonth() + 1).padStart(2, '0');
+          const d = String(val.getUTCDate()).padStart(2, '0');
+          el.value = `${y}-${m}-${d}`;
+        } else {
+          el.value = String(val).trim();
+        }
       }
     });
 
