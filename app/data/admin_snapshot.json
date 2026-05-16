@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-16T10:01:55Z",
+  "snapshot_at": "2026-05-16T10:03:09Z",
   "projects": [
     {
       "id": 1,
@@ -1805,7 +1805,17 @@
         "GitHub Actions"
       ],
       "screenshots": [
-        "images/projects/lego-dataset-analysis/screenshots/Screenshot_2026-05-16_at_10.17.48.png"
+        "images/projects/lego-dataset-analysis/screenshots/Screenshot_2026-05-16_at_10.17.48.png",
+        "images/projects/lego-dataset-analysis/screenshots/colour_introductions_by_decade.png",
+        "images/projects/lego-dataset-analysis/screenshots/colour_palette_growth.png",
+        "images/projects/lego-dataset-analysis/screenshots/colour_palette_swatches.png",
+        "images/projects/lego-dataset-analysis/screenshots/complexity_clusters_by_theme.png",
+        "images/projects/lego-dataset-analysis/screenshots/complexity_clusters_scatter.png",
+        "images/projects/lego-dataset-analysis/screenshots/licensed_vs_original.png",
+        "images/projects/lego-dataset-analysis/screenshots/minifig_density_by_decade.png",
+        "images/projects/lego-dataset-analysis/screenshots/minifig_density_scatter.png",
+        "images/projects/lego-dataset-analysis/screenshots/minifig_licensed_vs_original.png",
+        "images/projects/lego-dataset-analysis/screenshots/theme_hierarchy_top15.png"
       ],
       "videos": [],
       "card_image": "images/projects/lego-dataset-analysis/card/lego2.png",
