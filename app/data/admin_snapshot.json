@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-15T16:02:51Z",
+  "snapshot_at": "2026-05-16T09:58:58Z",
   "projects": [
     {
       "id": 1,
@@ -1779,32 +1779,36 @@
       "slug": "lego-dataset-analysis",
       "title": "LEGO Dataset Analysis",
       "primary_category": "data",
-      "short_description": "Exploratory analysis of 11,000+ LEGO sets using pandas and matplotlib — uncovering colour stats, debut year, largest sets, year-on-year growth, complexity trends, and top themes by set count.",
-      "full_description": "I built a full data analysis pipeline across three relational datasets from Rebrickable covering LEGO colours, sets, and themes. The analysis answers questions about the company's history — from its first sets in 1949 to the explosion of licensed themes around 2000. All wrangling is done with pandas (groupby, agg, merge) and results are visualised as a dual-axis line chart, a scatter plot, and a bar chart. It's a single notebook that tells a coherent story about how LEGO evolved over 70+ years.",
+      "short_description": "LEGO nearly went bankrupt in 1998. Star Wars launched in 1999. This project uses 70 years of product data to quantify what happened next — licensed share, complexity growth, minifigure density, and colour palette expansion measured across 15,710 sets.",
+      "full_description": "LEGO posted its first loss in 1998 and was close to insolvency by 2003. The turnaround coincided with Star Wars (1999) and Harry Potter (2001). This project uses Rebrickable's complete product history — 15,710 sets, 596 themes, 135 colours, and 25,000 minifigure inventory records — to quantify what that shift looked like across six analyses: did licensed IP transform what LEGO makes, or just how much of it?\r\n\r\nLicensed IP classification (manually reviewed ground-truth CSV across all 596 themes) shows share grew from 0% to a 31.5% peak — significant but never the majority. K-Means complexity clustering on part count and era-relative complexity segments the full catalogue into four tiers (Starter through Expert) and shows Creator Expert and the UCS dominate the Expert band. Colour palette evolution, traced through a four-table inventory join, shows 53 of 132 production colours were introduced in the 2000s alone — tracking the licensed IP timeline. Recursive theme hierarchy resolution walks the self-referential parent_id tree to rank root parent lines by cumulative set count. A decade summary table covers every key metric from the 1940s to 2020s. The concluding minifigure density analysis is the strongest finding: figures per 100 parts grew 57% between the 1970s and 2010s, and licensed and density trends move in lockstep from 2000 — sets became character-delivery vehicles at precisely the moment franchise deals scaled up.",
       "featured": false,
       "featured_order": null,
-      "date": "2026-04-13",
-      "problem": "LEGO has been releasing sets since 1949, but the raw Rebrickable data — three CSV files covering 11,000+ sets, 135 colours, and 457 themes — doesn't tell you much on its own. To understand how the company grew, you need to aggregate by year, join across tables, and chart the results. The most interesting question (which theme has the most sets?) can't even be answered from sets.csv alone because theme names live in a completely separate themes.csv, connected only by a foreign key. Without merging and aggregating correctly you just see numeric IDs and miss the whole story. The data also contains partial-year entries that silently distort any time-series chart if you don't account for them.",
-      "solution": "I built the analysis as a single Jupyter notebook using pandas for all wrangling and matplotlib for every chart. The pipeline loads all three CSVs, explores colours with .nunique() and .groupby('is_trans'), then aggregates sets.csv by year using .agg() to produce both a set count and a unique-theme count per year. A dual-axis line chart using ax.twinx() overlays both metrics on a shared time axis despite their different scales. Average part count per year comes from .groupby().agg({'num_parts': mean}) and is plotted as a scatter chart to show the complexity trend. For theme ranking, I used .value_counts() to count sets per theme_id, converted the Series to a DataFrame, then merged it with themes.csv on the id key to resolve actual theme names before plotting the top 10 as a bar chart.",
-      "challenges": "The hardest part was getting the dual-axis chart right. Plotting sets-per-year and themes-per-year on a single y-axis produces a misleading chart because the two series live on totally different scales — sets reach ~900 by 2019 while themes peak around ~100. The fix was ax.twinx() to give each series its own independent y-axis, then matching each axis label and tick colour to its line so the reader can tell them apart instantly. A quieter but equally important problem was the incomplete final two years in the dataset — the CSV was exported mid-year, so a simple [:-2] slice was needed on both time series to avoid a fake drop at the right edge of the charts.",
-      "results": "The analysis confirmed LEGO's dramatic expansion from a handful of sets per year in the 1950s to hundreds per year by the 2010s, with a clear inflection point around 1999-2000 when licensed themes like Star Wars and Harry Potter came on board. Average part count per set has also risen steadily over time, showing that modern LEGO is genuinely more complex than early LEGO. This project gave me solid hands-on practice with groupby aggregation, cross-table merging, and multi-axis matplotlib charts — the pandas patterns that show up again and again in real analysis work. If I revisited it, I'd dig into the parent_id column in themes.csv to group sub-themes under their parents and get a cleaner split between LEGO's own IP and licensed franchises.",
+      "date": "2026-05-16",
+      "problem": "LEGO's near-bankruptcy in 1998 and the subsequent licensing deals with Star Wars and Harry Potter represent one of the most documented corporate turnarounds in consumer goods. The business narrative is well known. What is less quantified is the product-level mechanism: did licensed IP change the nature of what LEGO manufactures, or just how much of it? Measuring that requires 70 years of set, theme, colour, and minifigure data joined across a relational schema and analysed across six dimensions simultaneously.",
+      "solution": "Six analyses across Rebrickable's complete dataset build the case. A manually reviewed ground-truth CSV classifies all 596 themes as Licensed or Original — string matching was ruled out because licensed themes register under non-licensed parent roots (Star Wars under Technic, licensed Advent calendars under Seasonal). K-Means clustering on part count and era-relative complexity identifies four product tiers. A four-table inventory join traces when each of the 135 colours first appeared in production. A recursive parent_id walk resolves the self-referential theme hierarchy to rank lines by cumulative set count. A decade summary table aggregates all key metrics. The minifigure density analysis cross-joins inventory, set, and IP-type data to measure character focus as a continuous variable over time.",
+      "challenges": "Resolving the self-referential theme hierarchy: themes.csv uses a parent_id foreign key pointing back to the same table. Required a recursive function to walk each theme to its root parent, then aggregate set counts across all descendants.\r\n\r\nLicensed IP classification at the theme level: string matching was ruled out because licensed themes are registered under non-licensed parent roots (Star Wars under Technic, licensed Advent calendars under Seasonal, licensed Juniors and Duplo sub-lines under their respective roots). Built a manually reviewed ground-truth CSV covering all 596 themes — fully auditable and immune to registration accidents.\r\n\r\nJoining inventory_parts.csv (122 MB uncompressed) to sets for year-per-colour analysis. Solved by committing the .gz (13 MB), decompressing at runtime, and reading only required columns to keep memory manageable.\r\n\r\nThe minifigure density finding required distinguishing unique character types (fig_num distinct count) from total figure quantity per set — the former being the meaningful signal for licensed IP collectibility, the latter inflated by bulk packs.",
+      "results": "Licensed themes peaked at 31.5% of annual releases in 2019 (0% before 1999).\r\nStar Wars is the largest licensed franchise with 776 sets across all theme registrations.\r\nMinifigure density grew 57% from 3.5 (1970s) to 5.5 per 100 parts (2010s).\r\nLicensed sets average 2.95 unique fig types vs 2.33 for original IP — a 27% premium.\r\nAmong multi-set franchises: UCS 6.4 unique fig types per set, Pirates of the Caribbean 4.7, Harry Potter and Indiana Jones 4.2.\r\nAverage parts per set grew 8× from 32 (1950s) to 259 (2020s).\r\n53 of 132 production colours were introduced in the 2000s alone.\r\nTransparent colours first appeared in 1954.\r\nTheme hierarchy reaches a maximum depth of 2 levels.\r\nTown is the largest parent theme with 1,304 cumulative sets.\r\nAnnual set volume grew from 5 sets (1940s) to 6,813 (2010s).",
       "tags": [
         "data-analysis",
+        "data-pipeline",
+        "machine-learning",
         "visualisation",
-        "python"
+        "python",
+        "CI-CD"
       ],
       "tech_stack": [
         "Python",
-        "pandas",
-        "numpy",
-        "matplotlib",
-        "Jupyter Notebook"
+        "Pandas",
+        "Matplotlib",
+        "scikit-learn",
+        "Jupyter",
+        "GitHub Actions"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/lego-dataset-analysis/card/lego2.png",
       "repo_url": "https://github.com/xavier-oc-programming/lego-dataset-analysis",
-      "live_url": null,
+      "live_url": "https://xavier-oc-programming.github.io/lego-dataset-analysis/rendered/",
       "demo_url": null
     },
     {
