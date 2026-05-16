@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-16T10:11:48Z",
+  "snapshot_at": "2026-05-16T15:53:20Z",
   "projects": [
     {
       "id": 1,
@@ -1828,33 +1828,35 @@
       "slug": "google-trends-time-series-analysis",
       "title": "Google Trends Time Series Analysis",
       "primary_category": "data",
-      "short_description": "Explores whether Google search trends correlate with Tesla stock prices, Bitcoin prices, and U.S. unemployment rates, using pandas resampling, rolling averages, and dual-axis Matplotlib charts.",
-      "full_description": "This project asks a genuinely interesting question: does public interest in something, measured by Google search volume, actually track with real-world outcomes like stock prices or unemployment rates? I worked with five datasets covering Tesla, Bitcoin, and U.S. unemployment, and built a series of dual-axis time series charts to compare each against its corresponding Google Trends data. The key technical hurdle was that the datasets don't share the same time frequency — Bitcoin price data is daily while everything else is monthly — so a lot of the work went into resampling and smoothing before any visualisation could happen.",
+      "short_description": "Three economic signals — Tesla, Bitcoin, and US unemployment — each paired with Google Trends search data across mismatched time frequencies and aligned by resampling. The 2020 COVID shock compressed months of unemployment pattern into weeks.",
+      "full_description": "This project asks whether public search interest — measured by Google Trends — reflects, anticipates, or follows real-world financial and economic outcomes. Three signal pairs are examined: Tesla stock price against web search popularity, Bitcoin market price against news search volume, and the official US unemployment rate against search interest in \"unemployment benefits.\" The core analytical challenge is frequency mismatch: Bitcoin price data is daily, while search data and unemployment figures arrive monthly. Resolving this requires resampling daily Bitcoin prices to month-end values before any comparison is valid. Rolling average smoothing is applied to unemployment search data to separate structural trend from seasonal noise.\r\nThe most striking result is the COVID-19 unemployment shock in 2020. Search interest for \"unemployment benefits\" and the official FRED unemployment rate spiked simultaneously — compressing a pattern that normally unfolds over quarters into a matter of weeks. Adding 2020 data also exposes a data integrity issue: Google Trends normalises index values to 100 within the selected period, so extending the range rescales the entire historical baseline. For Bitcoin, search volume leads price in several cycles — interest peaks one to two months before price does during speculative runs, then diverges during consolidation. Tesla search volume correlates more strongly with news events and product announcements than with earnings, with price movements often producing no visible search response while public controversies produce clear spikes.",
       "featured": false,
       "featured_order": null,
       "date": "2026-01-15",
-      "problem": "Comparing Google Trends search data against financial or economic datasets sounds straightforward until you actually try it. The first problem is frequency mismatch: Bitcoin price arrives daily, but Google Trends exports monthly, so you can't plot them on the same axis without deciding how to collapse daily data into monthly observations. The second problem is noise: Google Trends search volume is spiky and reactive, so a single news event can create a visual outlier that drowns out the underlying pattern. Without resampling and smoothing, the charts would be misleading rather than illuminating. I also wanted to understand what happens when you extend a dataset with a dramatic outlier year and whether including 2020 changes the story the unemployment data tells.",
-      "solution": "I loaded all five CSV files with pd.read_csv() and immediately converted every date column to a proper datetime type before doing anything else. Daily Bitcoin prices were collapsed to month-end observations using .resample('ME').last(), choosing the last trading price of the month as the representative value for that period. For the unemployment analysis, I computed a 6-month rolling average with .rolling(window=6).mean() to smooth week-to-week search noise and expose the multi-month trend. All three comparisons were visualised as dual-axis line charts using Matplotlib's twinx(), with matplotlib.dates YearLocator and MonthLocator controlling the x-axis tick marks so that years are labelled and months appear as unlabelled minor ticks.",
-      "challenges": "The x-axis tick formatting was the thing that took the most iteration to get right. When a chart spans 10 to 15 years of monthly data, the default Matplotlib behaviour is to either cram in too many labels or show only a handful, and both outcomes look messy. Getting YearLocator, MonthLocator, and DateFormatter to work together correctly required reading the matplotlib.dates documentation carefully and understanding the distinction between major and minor locators. The other genuinely interesting challenge was discovering that when I loaded the unemployment dataset extended to 2020, the COVID spike was so extreme it completely rescaled both axes, which changed the visual story of the entire 2004-2019 period and raised real questions about how to present long-run data that contains an outlier of that magnitude.",
-      "results": "The correlations turned out to be more visible than I expected, particularly for Bitcoin where spikes in news search volume line up fairly clearly with price movements, and for unemployment where the search trend appears to lead the official rate by a month or two. I came away with a solid and transferable workflow for time series comparison: check frequencies first, resample to align, smooth if needed, then plot with dual axes. Working with the 2020 unemployment data was an unexpectedly good lesson in how framing affects interpretation, since adding one year of extreme data completely recontextualised 15 years of prior history. If I revisited this, I'd move the charts into Plotly so the reader could hover over data points and explore the correlations interactively rather than reading a static image.",
+      "problem": "The three datasets operate at incompatible time frequencies: Bitcoin price is daily, Google Trends search data is monthly, and unemployment figures are monthly but seasonally noisy. Direct comparison is not possible until all signals share a common timeline and resolution. A secondary problem is the Google Trends normalisation behaviour — adding a new time period rescales all existing values, which affects how historical charts read and requires awareness when interpreting any cross-period comparison.",
+      "solution": "Daily Bitcoin prices are resampled to month-end frequency using pandas `.resample('ME').last()`, producing a monthly series that aligns directly with the search data. All date columns are parsed from strings to datetime objects to enable time-axis operations. A 6-month rolling average is applied to unemployment search data to smooth seasonal spikes and expose the underlying structural trend. Dual-axis Matplotlib charts with `twinx()` allow metrics on different scales — price in USD and search index 0–100 — to be compared visually on a single chart without distortion.",
+      "challenges": "The most technically interesting issue is Google Trends normalisation. When the 2020 dataset is added, Trends rescales all values so the maximum within the new period equals 100. This means the historical 2004–2019 search values are compressed downward — the same events look quieter in the extended chart than they did in the original. This is not a visual glitch but a fundamental data integrity constraint that affects interpretation: conclusions drawn from the 2004–2019 chart do not transfer directly to the 2004–2020 chart because the index values refer to different scales.",
+      "results": "The COVID-19 shock in 2020 produced an unprecedented simultaneous spike in both the official unemployment rate and search interest for \"unemployment benefits\" — the two signals moved together rather than one leading the other, which is the opposite of the pattern seen in the 2008–2010 recession. Bitcoin search interest leads price in multiple speculative cycles, with search peaks arriving one to two months ahead of price peaks. Tesla search volume responds to news events and product announcements rather than financial performance — earnings beats are largely invisible in the search data while high-profile public events produce clear and immediate spikes. The 6-month rolling average applied to unemployment search data reveals the structural employment cycle beneath the recurring seasonal search pattern, making trend direction unambiguous.",
       "tags": [
         "data-analysis",
         "visualisation",
-        "python"
+        "python",
+        "CI-CD",
+        "time-series",
+        "resampling"
       ],
       "tech_stack": [
         "Python",
         "pandas",
-        "matplotlib",
-        "matplotlib.dates",
-        "NumPy",
-        "Jupyter Notebook"
+        "Matplotlib",
+        "Jupyter",
+        "GitHub Actions"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/google-trends-analysis/card/Screenshot_2026-03-24_at_16.56.55.png",
       "repo_url": "https://github.com/xavier-oc-programming/google-trends-time-series-analysis",
-      "live_url": null,
+      "live_url": "https://xavier-oc-programming.github.io/google-trends-time-series-analysis/notebook_web_render/",
       "demo_url": null
     },
     {
