@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-17T10:53:32Z",
+  "snapshot_at": "2026-05-17T10:53:56Z",
   "projects": [
     {
       "id": 1,
@@ -2160,7 +2160,9 @@
         "sys"
       ],
       "screenshots": [],
-      "videos": [],
+      "videos": [
+        "https://youtu.be/k146oyFPQpg"
+      ],
       "card_image": "images/projects/morse-code-converter/card/morse3.webp",
       "repo_url": "https://github.com/xavier-oc-programming/morse-code-converter_mk1",
       "live_url": null,
