@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-17T10:25:19Z",
+  "snapshot_at": "2026-05-17T10:26:11Z",
   "projects": [
     {
       "id": 1,
@@ -1969,7 +1969,8 @@
         "GitHub Actions"
       ],
       "screenshots": [
-        "images/projects/movie-budget-linear-regression-analysis/screenshots/budget_vs_revenue_bubble.png"
+        "images/projects/movie-budget-linear-regression-analysis/screenshots/budget_vs_revenue_bubble.png",
+        "images/projects/movie-budget-linear-regression-analysis/screenshots/Screenshot_2026-05-17_at_12.25.56.png"
       ],
       "videos": [],
       "card_image": "images/projects/linear-regression-seaborn/card/Screenshot_2026-03-26_at_10.38.27.png",
