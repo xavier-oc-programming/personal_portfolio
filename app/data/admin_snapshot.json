@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-17T10:58:29Z",
+  "snapshot_at": "2026-05-17T10:58:50Z",
   "projects": [
     {
       "id": 1,
@@ -1442,7 +1442,9 @@
         "images/projects/spotify-musical-time-machine/screenshots/Screenshot_2026-05-17_at_12.56.58.png",
         "images/projects/spotify-musical-time-machine/screenshots/Screenshot_2026-05-17_at_12.57.59.png"
       ],
-      "videos": [],
+      "videos": [
+        "https://youtu.be/A4sJv3RbJR4"
+      ],
       "card_image": "images/projects/spotify-playlist-generator/card/playlist.png",
       "repo_url": "https://github.com/xavier-oc-programming/day46-spotify-time-machine",
       "live_url": null,
