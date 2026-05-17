@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-17T10:24:57Z",
+  "snapshot_at": "2026-05-17T10:25:19Z",
   "projects": [
     {
       "id": 1,
@@ -1968,7 +1968,9 @@
         "Jupyter",
         "GitHub Actions"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/movie-budget-linear-regression-analysis/screenshots/budget_vs_revenue_bubble.png"
+      ],
       "videos": [],
       "card_image": "images/projects/linear-regression-seaborn/card/Screenshot_2026-03-26_at_10.38.27.png",
       "repo_url": "https://github.com/xavier-oc-programming/movie-budget-linear-regression-analysis",
