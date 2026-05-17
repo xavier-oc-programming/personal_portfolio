@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-17T10:51:54Z",
+  "snapshot_at": "2026-05-17T10:53:32Z",
   "projects": [
     {
       "id": 1,
@@ -2022,7 +2022,7 @@
       "videos": [],
       "card_image": "images/projects/nobel-prize-analysis/card/nobel_p.webp",
       "repo_url": "https://github.com/xavier-oc-programming/nobel-prize-data-analysis",
-      "live_url": null,
+      "live_url": "https://xavier-oc-programming.github.io/nobel-prize-data-analysis/notebook_web_render/",
       "demo_url": null
     },
     {
