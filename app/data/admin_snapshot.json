@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-17T10:45:16Z",
+  "snapshot_at": "2026-05-17T10:46:45Z",
   "projects": [
     {
       "id": 1,
@@ -2099,7 +2099,9 @@
         "Plotly",
         "Jupyter Notebook"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/boston-house-price-analysis/screenshots/Screenshot_2026-05-17_at_12.46.23.png"
+      ],
       "videos": [],
       "card_image": "images/projects/house-price-prediction/card/house.webp",
       "repo_url": "https://github.com/xavier-oc-programming/boston-house-price-analysis",
