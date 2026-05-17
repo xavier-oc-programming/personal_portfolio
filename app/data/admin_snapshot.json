@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-17T10:44:52Z",
+  "snapshot_at": "2026-05-17T10:45:16Z",
   "projects": [
     {
       "id": 1,
@@ -2057,7 +2057,11 @@
         "GitHub Actions"
       ],
       "screenshots": [
-        "images/projects/semmelweis-handwashing-data-analysis/screenshots/Screenshot_2026-05-17_at_12.44.35.png"
+        "images/projects/semmelweis-handwashing-data-analysis/screenshots/Screenshot_2026-05-17_at_12.44.35.png",
+        "images/projects/semmelweis-handwashing-data-analysis/screenshots/death_rate_box.png",
+        "images/projects/semmelweis-handwashing-data-analysis/screenshots/death_rate_histogram.png",
+        "images/projects/semmelweis-handwashing-data-analysis/screenshots/death_rate_kde_unclipped.png",
+        "images/projects/semmelweis-handwashing-data-analysis/screenshots/death_rate_kde.png"
       ],
       "videos": [],
       "card_image": "images/projects/handwashing-discovery-analysis/card/hand.jpg",
