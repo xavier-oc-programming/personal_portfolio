@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-17T10:42:19Z",
+  "snapshot_at": "2026-05-17T10:44:10Z",
   "projects": [
     {
       "id": 1,
@@ -2030,19 +2030,20 @@
       "slug": "semmelweis-handwashing-data-analysis",
       "title": "Semmelweis Handwashing Data Analysis",
       "primary_category": "data",
-      "short_description": "Pandas analysis of 1840s Vienna hospital records proving Dr Semmelweis's handwashing discovery. Rolling averages, Plotly and Seaborn visualisations, and a t-test confirm a ~50% drop in maternal mortality at p < 0.01.",
-      "full_description": "This project re-analyses the original hospital records published by Dr Ignaz Semmelweis in 1861 to answer one question: did mandatory handwashing actually save lives? Using monthly and yearly mortality data from two Vienna maternity clinics (1841-1849), the analysis reconstructs Semmelweis's argument from raw numbers through to a formal hypothesis test. It covers the full data analysis pipeline -- exploration, transformation, visualisation, and statistical validation -- using the core Python data science stack.",
+      "short_description": "Re-examination of Dr Semmelweis's 1861 hospital records from Vienna General Hospital (1841–1849). Mandatory handwashing in June 1846 cut the average monthly death rate from 10.5% to 5.0% — confirmed statistically at p ≈ 0.00025.",
+      "full_description": "This project re-examines the original hospital records published by Dr Ignaz Semmelweis in 1861. The data covers 98 monthly observations across two maternity clinics at Vienna General Hospital from 1841 to 1849, with yearly aggregates that reveal a stark gap between Clinic 1 (staffed by doctors who also performed autopsies) and Clinic 2 (staffed by midwives with no autopsy contact). The pipeline runs from raw CSV ingestion through death-rate computation, clinic comparison, time-series splitting, distributional analysis, and a formal hypothesis test.\r\n\r\nMandatory chlorine handwashing, introduced in June 1846, cut the average monthly death rate from 10.5% to 5.0% — an absolute reduction of roughly 5.5 percentage points and approximately a twofold improvement in survival odds. Clinic 1 carried a death rate around three times higher than Clinic 2, isolating contamination from the autopsy room as the mechanism without the need for a controlled experiment. An independent-samples t-test yields t = 3.80, p = 0.00025, rejecting the null hypothesis at the 99% confidence level: the improvement is not due to random variation.",
       "featured": false,
       "featured_order": null,
       "date": "2026-04-13",
-      "problem": "Dr Semmelweis noticed that women delivering in Clinic 1 (staffed by doctors who also performed autopsies) were dying at dramatically higher rates than those in Clinic 2 (staffed by midwives with no autopsy contact). He had the data. He even had the intervention -- mandatory handwashing from June 1846 -- and the death rate dropped almost immediately. But without a way to visualise the effect clearly or quantify its statistical significance, his argument was easy to dismiss. The real problem this project tackles is making that evidence speak for itself: turning raw birth and death counts into a structured, verifiable, data-driven case.",
-      "solution": "The analysis is split across four practice notebooks following the natural progression of an investigation: explore the raw data, compare the two clinics, isolate the handwashing effect, and validate it statistically. Pandas handles all data manipulation -- boolean filtering to split data before and after June 1846, column arithmetic for monthly death rates, and a 6-month rolling average to smooth noise. Plotly produces interactive line charts and box plots for the clinic comparison and distribution shift, while Seaborn's KDE plots show the full distributional change. The final step uses `scipy.stats.ttest_ind()` to run an independent samples t-test, giving the result a p-value to stand behind.",
-      "challenges": "The trickiest moment was the KDE plot. By default, Seaborn's `kdeplot()` extends the probability density into negative territory -- which is physically meaningless for a death rate. Spotting that artefact and fixing it with the `clip=(0, 1)` parameter was a good reminder that visualisation defaults don't always respect domain constraints. The rolling average was another small trap: calling `.rolling(6).mean()` on a DataFrame with the date as a regular column silently drops it, so the date column had to be promoted to the index with `.set_index('date')` first before the calculation, then referenced back through the index for plotting.",
-      "results": "The analysis confirms what Semmelweis observed: the average monthly death rate fell from ~10.5% before handwashing to ~5.0% after -- roughly a 2x improvement. The t-test returns p < 0.01, meaning there is less than a 1% probability the improvement was due to random variation. What I found most interesting is how the KDE and histogram charts make the shift feel tangible in a way raw averages don't -- the two distributions barely overlap. This project was a solid exercise in building a complete analytical argument, and it showed me how much the choice of chart type affects how convincing the conclusion feels.",
+      "problem": "In the 1840s, childbed fever killed roughly one in ten women who gave birth at Vienna General Hospital. The cause was unknown and the mortality gap between the hospital's two clinics — one dramatically more lethal than the other — had no accepted explanation. The analytical problem is to determine whether a single procedural change (mandatory handwashing) caused the observed drop in deaths, or whether the improvement could be attributed to chance and natural variation.",
+      "solution": "The analysis splits the monthly dataset at June 1846 and computes a normalised death rate (deaths / births) for each period. Distributional differences between the two periods are visualised using Plotly box plots and histograms (with histnorm='percent' to correct for unequal period lengths) and a Seaborn KDE clipped to [0, 1] to avoid the physically impossible negative-rate tail produced by default kernel estimation. An independent-samples t-test from scipy.stats formalises whether the difference in means exceeds what random variation could explain.",
+      "challenges": "- The pre- and post-handwashing periods are not equal in length: 63 months before, 35 after. Raw histogram counts would make the shorter post-handwashing period look smaller even if its rates were identical, requiring normalisation to percent before comparison.\r\n- KDE estimation by default extends into negative death-rate territory, producing a misleading curve. Clipping to [0, 1] is necessary to represent the distribution honestly; the unclipped version is retained to show why the default fails.\r\n- The two clinics had different patient volumes year to year, so comparing raw death counts instead of proportional rates would confound size differences with outcome differences. Computing pct_deaths before any clinic comparison is a prerequisite for valid inference.",
+      "results": "- Overall probability of dying in childbirth at Vienna General Hospital in the 1840s: approximately 10%\r\n- Clinic 1 average annual death rate: approximately 10.5%; Clinic 2: approximately 3.9% — a gap of roughly 3×\r\n- Average monthly death rate before handwashing (pre-June 1846): 10.53%\r\n- Average monthly death rate after handwashing (from June 1846): 5.02%\r\n- Absolute reduction: approximately 5.5 percentage points; relative improvement: approximately 52%\r\n- t-statistic: 3.80; p-value: 0.00025 — statistically significant at the 99% confidence level",
       "tags": [
         "data-analysis",
         "visualisation",
-        "python"
+        "python",
+        "CI-CD"
       ],
       "tech_stack": [
         "Python",
@@ -2051,14 +2052,15 @@
         "Matplotlib",
         "Seaborn",
         "Plotly",
-        "SciPy",
-        "Jupyter"
+        "scipy",
+        "Jupyter",
+        "GitHub Actions"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/handwashing-discovery-analysis/card/hand.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/semmelweis-handwashing-data-analysis",
-      "live_url": null,
+      "live_url": "https://xavier-oc-programming.github.io/semmelweis-handwashing-data-analysis/",
       "demo_url": null
     },
     {
