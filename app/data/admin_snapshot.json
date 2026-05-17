@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-17T10:46:45Z",
+  "snapshot_at": "2026-05-17T10:46:57Z",
   "projects": [
     {
       "id": 1,
@@ -2100,7 +2100,27 @@
         "Jupyter Notebook"
       ],
       "screenshots": [
-        "images/projects/boston-house-price-analysis/screenshots/Screenshot_2026-05-17_at_12.46.23.png"
+        "images/projects/boston-house-price-analysis/screenshots/Screenshot_2026-05-17_at_12.46.23.png",
+        "images/projects/boston-house-price-analysis/screenshots/actual_vs_predicted.png",
+        "images/projects/boston-house-price-analysis/screenshots/distance_distribution.png",
+        "images/projects/boston-house-price-analysis/screenshots/highway_access_histogram.png",
+        "images/projects/boston-house-price-analysis/screenshots/jointplot_dis_nox.png",
+        "images/projects/boston-house-price-analysis/screenshots/jointplot_indus_nox.png",
+        "images/projects/boston-house-price-analysis/screenshots/jointplot_lstat_price.png",
+        "images/projects/boston-house-price-analysis/screenshots/jointplot_lstat_rm.png",
+        "images/projects/boston-house-price-analysis/screenshots/jointplot_rm_price.png",
+        "images/projects/boston-house-price-analysis/screenshots/log_actual_vs_predicted.png",
+        "images/projects/boston-house-price-analysis/screenshots/log_price_distribution.png",
+        "images/projects/boston-house-price-analysis/screenshots/log_residual_distribution.png",
+        "images/projects/boston-house-price-analysis/screenshots/log_residuals_vs_predicted.png",
+        "images/projects/boston-house-price-analysis/screenshots/pairplot.png",
+        "images/projects/boston-house-price-analysis/screenshots/price_distribution_normal.png",
+        "images/projects/boston-house-price-analysis/screenshots/price_distribution.png",
+        "images/projects/boston-house-price-analysis/screenshots/price_vs_log_price.png",
+        "images/projects/boston-house-price-analysis/screenshots/residual_distribution.png",
+        "images/projects/boston-house-price-analysis/screenshots/residuals_vs_predicted.png",
+        "images/projects/boston-house-price-analysis/screenshots/river_access_bar.png",
+        "images/projects/boston-house-price-analysis/screenshots/rooms_distribution.png"
       ],
       "videos": [],
       "card_image": "images/projects/house-price-prediction/card/house.webp",
