@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-17T10:41:11Z",
+  "snapshot_at": "2026-05-17T10:41:13Z",
   "projects": [
     {
       "id": 1,
@@ -2007,8 +2007,7 @@
         "Jupyter Notebook"
       ],
       "screenshots": [
-        "images/projects/nobel-prize-data-analysis/screenshots/Screenshot_2026-05-17_at_12.28.17.png",
-        "images/projects/nobel-prize-data-analysis/screenshots/world_choropleth.png"
+        "images/projects/nobel-prize-data-analysis/screenshots/Screenshot_2026-05-17_at_12.28.17.png"
       ],
       "videos": [],
       "card_image": "images/projects/nobel-prize-analysis/card/nobel_p.webp",
