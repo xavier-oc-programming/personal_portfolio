@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-17T10:19:50Z",
+  "snapshot_at": "2026-05-17T10:23:20Z",
   "projects": [
     {
       "id": 1,
@@ -1906,19 +1906,20 @@
       "slug": "numpy-ndarray-computation",
       "title": "NumPy NDArray Computation",
       "primary_category": "data",
-      "short_description": "NumPy fundamentals explored through 12 hands-on exercises: ndarray creation, slicing, broadcasting, matrix multiplication, and image manipulation including greyscale conversion and colour inversion applied to real images as 3D arrays.",
-      "full_description": "This project works through the core NumPy concepts every data scientist needs: creating and inspecting n-dimensional arrays, slicing and reversing them, performing linear-algebra-style operations, and manipulating images purely as numerical data. It follows a structured theory-plus-practice layout, with annotated lesson notebooks alongside a full exercise notebook where all twelve course challenges are solved. The image processing section is a particular highlight — discovering that a JPEG is just a (H, W, 3) array of uint8 values, and that flipping or solarising it is a one-liner, genuinely changes how you think about numerical computation.",
+      "short_description": "NumPy treats images as numbers — a 768 × 1024 photograph is a 3D array of integers. This project works through ndarray operations from first principles: slicing, broadcasting, matrix multiplication, and pixel-level transforms like greyscale conversion and colour inversion.",
+      "full_description": "At its core, this project asks a deceptively simple question: what actually is a digital image? The answer turns out to be a rank-3 tensor of integers — and once that's established, every image transformation becomes a straightforward array operation. The analysis works through NumPy's ndarray from the ground up, covering 1D vectors, 2D matrices, and 3D tensors, then applies the same ideas to real image data loaded from both SciPy's built-in datasets and a custom photograph.\r\n\r\nThe findings are concrete. A 768 × 1024 colour photograph contains 2,359,296 individual integer values. Converting it to greyscale requires a single dot product against three luminance weights — `sRGB_array @ [0.2126, 0.7152, 0.0722]` — collapsing the `(768, 1024, 3)` array to `(768, 1024)` in one step. Colour inversion is `255 - img`, applied simultaneously to all pixels via broadcasting. Spatial transforms — flipping, rotating — operate directly on array axes, with no pixel loop in sight.",
       "featured": false,
       "featured_order": null,
-      "date": "2026-04-13",
-      "problem": "Python lists feel natural for small collections, but they fall apart the moment you need to do any serious numerical work. Multiplying a list by a scalar just repeats it; adding two lists concatenates them; looping over millions of elements in pure Python is painfully slow. There's also a conceptual gap: most learners think of arrays as one-dimensional, so the jump to matrices and 3D tensors can feel abstract and intimidating. And the link between numerical arrays and something tangible — like an image — is rarely made explicit early enough to make the concepts stick.",
-      "solution": "I worked through NumPy's ndarray from first principles, building up from 1D vectors to 2D matrices to 3D tensors, and at each level applying real operations rather than just reading documentation. Broadcasting and scalar arithmetic are demonstrated against both toy arrays and a full raccoon image loaded from SciPy's built-in datasets. The image processing section grounds the abstract ideas concretely: a JPEG loaded with Pillow becomes a (H, W, 3) ndarray, and greyscale conversion is just a dot product with the ITU-R BT.709 luminance weights. The project is split into theory notebooks (annotated concepts) and a practice notebook (twelve exercises with solutions), so the reasoning behind each method is always one file away.",
-      "challenges": "The trickiest part was the greyscale conversion. It's not obvious why multiplying a (H, W, 3) array by a length-3 vector with the @ operator collapses the colour channels into a single luminance value — that requires understanding both NumPy's matrix multiplication rules and the specific meaning of the BT.709 weights. Getting the shapes right (ensuring the sRGB array and grey_vals vector were compatible for the dot product) took some deliberate thinking about axis ordering. The other subtle point was making sure the practice notebook used relative paths to the data directory rather than hardcoded absolute paths, which would have silently broken on any other machine.",
-      "results": "Working through this day gave me a solid intuition for thinking in arrays rather than loops, and for reasoning about shape and dimensionality before touching any code. The image manipulation exercises in particular made the ndarray model feel tangible and memorable rather than abstract. I'd like to extend this further with NumPy's structured arrays and more involved linear algebra operations. The structured theory/practice split also turned out to be a genuinely useful way to organise a learning project — keeping annotated notes and exercise solutions in separate files makes it much easier to review later.",
+      "date": "2026-04-15",
+      "problem": "Image processing libraries abstract away the underlying data structure, making it easy to apply transforms without understanding what they actually compute. The analytical problem is to make that structure explicit: represent images as raw numerical arrays and implement every transformation — normalisation, greyscale conversion, spatial flips, colour inversion — as a direct mathematical operation on the array values, so the relationship between the computation and the visual result is transparent.",
+      "solution": "Each image transformation is implemented as a NumPy array operation. Normalisation divides pixel values by 255 to map the range [0, 255] to [0, 1]. Greyscale conversion uses a dot product with ITU-R BT.709 luminance weights (0.2126 R, 0.7152 G, 0.0722 B), which weights green more heavily because human vision is most sensitive to it. Spatial transforms use `np.flip()` and `np.rot90()`, which return array views rather than copies, avoiding memory allocation. Colour inversion uses broadcasting: subtracting the entire array from 255 in a single vectorised operation.",
+      "challenges": "The greyscale conversion requires choosing the right luminance formula. Simple averaging (`(R + G + B) / 3`) produces incorrect perceptual brightness because human vision is not equally sensitive to all channels. The ITU-R BT.709 formula weights channels by their perceived luminance contribution, which is why the green weight (0.7152) is nearly ten times the blue weight (0.0722). Getting this right required understanding the difference between photometric and perceptual colour models, not just applying a formula.",
+      "results": "- The raccoon image (scipy.datasets.face()) is 768 × 1024 px — 786,432 pixels, or 2,359,296 individual uint8 values across 3 channels\r\n- The custom macaron photograph is 533 × 799 px — 426,267 pixels total\r\n- Greyscale conversion via luminance dot product reduces the data volume by two-thirds: (768, 1024, 3) → (768, 1024)\r\n- Broadcasting applies 255 - img to all 2,359,296 pixel values simultaneously with no Python loop\r\n- Matrix multiplication (4×2) @ (2×3) = (4×3) verified computationally with both np.matmul() and the @ operator producing identical results\r\n- np.linspace(0, 100, 9) produces exactly [0.0, 12.5, 25.0, 37.5, 50.0, 62.5, 75.0, 87.5, 100.0] — 9 values, both endpoints included\r\n- All 9 charts saved to plots/ at 150 dpi; notebook rendered to HTML and deployed via GitHub Actions on every push to main",
       "tags": [
-        "python",
         "data-analysis",
-        "visualisation"
+        "visualisation",
+        "python",
+        "CI-CD"
       ],
       "tech_stack": [
         "Python",
@@ -1926,13 +1927,14 @@
         "Matplotlib",
         "SciPy",
         "Pillow",
-        "Jupyter Notebook"
+        "Jupyter",
+        "GitHub Actions"
       ],
       "screenshots": [],
       "videos": [],
       "card_image": "images/projects/numpy-arrays/card/numpy6.png",
       "repo_url": "https://github.com/xavier-oc-programming/numpy-ndarray-computation",
-      "live_url": null,
+      "live_url": "https://xavier-oc-programming.github.io/numpy-ndarray-computation/notebook_web_render/",
       "demo_url": null
     },
     {
