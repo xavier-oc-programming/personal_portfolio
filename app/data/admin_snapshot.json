@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-17T10:26:11Z",
+  "snapshot_at": "2026-05-17T10:28:36Z",
   "projects": [
     {
       "id": 1,
@@ -2006,7 +2006,9 @@
         "Seaborn",
         "Jupyter Notebook"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/nobel-prize-data-analysis/screenshots/Screenshot_2026-05-17_at_12.28.17.png"
+      ],
       "videos": [],
       "card_image": "images/projects/nobel-prize-analysis/card/nobel_p.webp",
       "repo_url": "https://github.com/xavier-oc-programming/nobel-prize-data-analysis",
