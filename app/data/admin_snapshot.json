@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-17T10:42:04Z",
+  "snapshot_at": "2026-05-17T10:42:07Z",
   "projects": [
     {
       "id": 1,
@@ -2013,7 +2013,6 @@
         "images/projects/nobel-prize-data-analysis/screenshots/gender_by_category.png",
         "images/projects/nobel-prize-data-analysis/screenshots/gender_split_donut.png",
         "images/projects/nobel-prize-data-analysis/screenshots/prizes_per_category.png",
-        "images/projects/nobel-prize-data-analysis/screenshots/prizes_per_year.png",
         "images/projects/nobel-prize-data-analysis/screenshots/top20_birth_cities.png",
         "images/projects/nobel-prize-data-analysis/screenshots/top20_countries.png",
         "images/projects/nobel-prize-data-analysis/screenshots/top20_org_cities.png",
