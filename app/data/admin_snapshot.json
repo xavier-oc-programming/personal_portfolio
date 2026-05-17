@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-17T10:44:10Z",
+  "snapshot_at": "2026-05-17T10:44:52Z",
   "projects": [
     {
       "id": 1,
@@ -2056,7 +2056,9 @@
         "Jupyter",
         "GitHub Actions"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/semmelweis-handwashing-data-analysis/screenshots/Screenshot_2026-05-17_at_12.44.35.png"
+      ],
       "videos": [],
       "card_image": "images/projects/handwashing-discovery-analysis/card/hand.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/semmelweis-handwashing-data-analysis",
