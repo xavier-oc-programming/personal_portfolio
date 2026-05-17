@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-17T10:53:56Z",
+  "snapshot_at": "2026-05-17T10:54:17Z",
   "projects": [
     {
       "id": 1,
@@ -2159,7 +2159,10 @@
         "os",
         "sys"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/morse-code-converter/screenshots/Screenshot_2026-05-17_at_12.48.11.png",
+        "images/projects/morse-code-converter/screenshots/Screenshot_2026-05-17_at_12.48.27.png"
+      ],
       "videos": [
         "https://youtu.be/k146oyFPQpg"
       ],
