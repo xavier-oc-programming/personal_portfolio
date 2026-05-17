@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-17T10:28:36Z",
+  "snapshot_at": "2026-05-17T10:37:21Z",
   "projects": [
     {
       "id": 1,
@@ -2007,7 +2007,19 @@
         "Jupyter Notebook"
       ],
       "screenshots": [
-        "images/projects/nobel-prize-data-analysis/screenshots/Screenshot_2026-05-17_at_12.28.17.png"
+        "images/projects/nobel-prize-data-analysis/screenshots/Screenshot_2026-05-17_at_12.28.17.png",
+        "images/projects/nobel-prize-data-analysis/screenshots/categories_by_country.png",
+        "images/projects/nobel-prize-data-analysis/screenshots/cumulative_prizes_by_country.png",
+        "images/projects/nobel-prize-data-analysis/screenshots/gender_by_category.png",
+        "images/projects/nobel-prize-data-analysis/screenshots/gender_split_donut.png",
+        "images/projects/nobel-prize-data-analysis/screenshots/prizes_per_category.png",
+        "images/projects/nobel-prize-data-analysis/screenshots/prizes_per_year_with_share.png",
+        "images/projects/nobel-prize-data-analysis/screenshots/prizes_per_year.png",
+        "images/projects/nobel-prize-data-analysis/screenshots/top20_birth_cities.png",
+        "images/projects/nobel-prize-data-analysis/screenshots/top20_countries.png",
+        "images/projects/nobel-prize-data-analysis/screenshots/top20_org_cities.png",
+        "images/projects/nobel-prize-data-analysis/screenshots/top20_organisations.png",
+        "images/projects/nobel-prize-data-analysis/screenshots/world_choropleth.png"
       ],
       "videos": [],
       "card_image": "images/projects/nobel-prize-analysis/card/nobel_p.webp",
