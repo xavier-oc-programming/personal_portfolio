@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-18T18:21:28Z",
+  "snapshot_at": "2026-05-18T18:22:46Z",
   "projects": [
     {
       "id": 1,
@@ -2625,7 +2625,11 @@
         "seaborn",
         "boto3"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/spam-classifier/screenshots/Screenshot_2026-05-18_at_20.22.12.png",
+        "images/projects/spam-classifier/screenshots/Screenshot_2026-05-18_at_20.22.18.png",
+        "images/projects/spam-classifier/screenshots/Screenshot_2026-05-18_at_20.22.24.png"
+      ],
       "videos": [],
       "card_image": "images/projects/spam-classifier/card/Screenshot_2026-05-18_at_20.21.10.png",
       "repo_url": "https://github.com/xavier-oc-programming/spam-classifier",
