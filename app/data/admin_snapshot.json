@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-18T15:23:14Z",
+  "snapshot_at": "2026-05-18T15:24:03Z",
   "projects": [
     {
       "id": 1,
@@ -2574,7 +2574,7 @@
       "videos": [
         "https://youtu.be/BiAGerD0lHk"
       ],
-      "card_image": null,
+      "card_image": "images/projects/telco-churn-predictor/card/Screenshot_2026-05-18_at_17.23.40.png",
       "repo_url": "https://github.com/xavier-oc-programming/telco-churn-predictor",
       "live_url": "https://telco-churn-predictor.azurewebsites.net",
       "demo_url": "https://telco-churn-predictor.azurewebsites.net"
