@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-18T15:16:57Z",
+  "snapshot_at": "2026-05-18T15:17:06Z",
   "projects": [
     {
       "id": 1,
@@ -2502,7 +2502,7 @@
       "primary_category": "data",
       "short_description": "Churn prediction with SHAP explanations in plain business language. Logistic Regression wins (ROC-AUC 0.8362). Benchmarked against Amazon Bedrock Claude Haiku 4.5 zero-shot — tied at 70%. Flask API deployed on Azure App Service.",
       "full_description": "A production-grade churn prediction system trained on the IBM Telco Customer Churn dataset (7,043 customers, 26.5% churn rate). The system goes beyond a standard classifier — every prediction is accompanied by the top 3 risk factors and top 3 protective factors derived from SHAP values and expressed in plain English that a retention manager can act on without reading a confusion matrix.\r\n\r\nThree models were trained and compared: Logistic Regression, Random Forest, and XGBoost. Logistic Regression won by ROC-AUC (0.8362), outperforming XGBoost (0.8196) — a result explained by the fact that one-hot encoding of contract type, payment method, and internet service creates a largely linear feature space that benefits a linear classifier.\r\n\r\nA separate benchmarking script calls Amazon Bedrock (Claude Haiku 4.5) with plain-English customer summaries and no task-specific training. On a balanced 20-customer sample, Bedrock tied the trained XGBoost classifier at 70% accuracy — demonstrating both the ceiling of zero-shot LLM classification and the value of a trained model for production use.\r\n\r\nThe Flask API accepts customer attributes, preprocesses them to match the training pipeline exactly (manual one-hot encoding to avoid a single-row pd.get_dummies bug), runs the trained model, computes SHAP values, and returns the probability, risk tier, and natural-language factors in a single JSON response. Deployed on Azure App Service with gunicorn and a 600-second timeout to keep the SHAP explainer warm between requests.",
-      "featured": false,
+      "featured": true,
       "featured_order": null,
       "date": "2026-05-18",
       "problem": "Telecom companies lose 15–25% of customers annually to churn. Identifying at-risk customers before they cancel is worth millions in retained revenue — but a classifier score alone is not actionable. A retention team needs to know not just who is at risk, but why, and what specific intervention to offer.\r\n\r\nThe secondary problem: understanding where foundation models (LLMs) can replace a trained classifier versus where they fall short. For teams without labelled training data, knowing Bedrock's zero-shot ceiling on this task is a concrete, reproducible answer.",
