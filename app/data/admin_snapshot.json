@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-18T15:13:54Z",
+  "snapshot_at": "2026-05-18T15:14:00Z",
   "projects": [
     {
       "id": 1,
@@ -2557,6 +2557,8 @@
         "joblib"
       ],
       "screenshots": [
+        "images/projects/telco-churn-predictor/screenshots/Screenshot_2026-05-18_at_17.13.26.png",
+        "images/projects/telco-churn-predictor/screenshots/Screenshot_2026-05-18_at_17.13.32.png",
         "images/projects/telco-churn-predictor/screenshots/01_churn_distribution.png",
         "images/projects/telco-churn-predictor/screenshots/01_eda_combined.png",
         "images/projects/telco-churn-predictor/screenshots/02_churn_by_contract.png",
@@ -2567,8 +2569,6 @@
         "images/projects/telco-churn-predictor/screenshots/07_shap_waterfall_retained.png",
         "images/projects/telco-churn-predictor/screenshots/08_model_comparison.png",
         "images/projects/telco-churn-predictor/screenshots/09_bedrock_comparison.png",
-        "images/projects/telco-churn-predictor/screenshots/Screenshot_2026-05-18_at_17.13.26.png",
-        "images/projects/telco-churn-predictor/screenshots/Screenshot_2026-05-18_at_17.13.32.png",
         "images/projects/telco-churn-predictor/screenshots/Screenshot_2026-05-18_at_17.13.37.png"
       ],
       "videos": [],
