@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-18T15:23:00Z",
+  "snapshot_at": "2026-05-18T15:23:14Z",
   "projects": [
     {
       "id": 1,
@@ -2574,7 +2574,7 @@
       "videos": [
         "https://youtu.be/BiAGerD0lHk"
       ],
-      "card_image": "images/projects/telco-churn-predictor/card/Churn-Prediction-in-Retail-How-Data-Analytics-Improves-Customer-Retention-1.png",
+      "card_image": null,
       "repo_url": "https://github.com/xavier-oc-programming/telco-churn-predictor",
       "live_url": "https://telco-churn-predictor.azurewebsites.net",
       "demo_url": "https://telco-churn-predictor.azurewebsites.net"
