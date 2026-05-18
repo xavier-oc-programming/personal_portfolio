@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-18T18:22:46Z",
+  "snapshot_at": "2026-05-18T18:22:59Z",
   "projects": [
     {
       "id": 1,
@@ -2628,7 +2628,10 @@
       "screenshots": [
         "images/projects/spam-classifier/screenshots/Screenshot_2026-05-18_at_20.22.12.png",
         "images/projects/spam-classifier/screenshots/Screenshot_2026-05-18_at_20.22.18.png",
-        "images/projects/spam-classifier/screenshots/Screenshot_2026-05-18_at_20.22.24.png"
+        "images/projects/spam-classifier/screenshots/Screenshot_2026-05-18_at_20.22.24.png",
+        "images/projects/spam-classifier/screenshots/01_class_distribution.png",
+        "images/projects/spam-classifier/screenshots/05_evaluation.png",
+        "images/projects/spam-classifier/screenshots/09_bedrock_comparison.png"
       ],
       "videos": [],
       "card_image": "images/projects/spam-classifier/card/Screenshot_2026-05-18_at_20.21.10.png",
