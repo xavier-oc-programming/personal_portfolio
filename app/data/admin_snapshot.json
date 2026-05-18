@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-18T18:27:15Z",
+  "snapshot_at": "2026-05-18T18:27:23Z",
   "projects": [
     {
       "id": 1,
@@ -2636,7 +2636,7 @@
       "videos": [
         "https://youtu.be/mDzwXZ72VPQ"
       ],
-      "card_image": null,
+      "card_image": "images/projects/spam-classifier/card/Screenshot_2026-05-18_at_20.26.59.png",
       "repo_url": "https://github.com/xavier-oc-programming/spam-classifier",
       "live_url": "https://spam-classifier.azurewebsites.net",
       "demo_url": "https://spam-classifier.azurewebsites.net"
