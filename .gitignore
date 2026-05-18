@@ -19,3 +19,6 @@ __pycache__/
 
 # ChromaDB vector store (built at runtime from knowledge base)
 app/data/chroma_db/
+
+# VSCode user settings
+.vscode/settings.json
