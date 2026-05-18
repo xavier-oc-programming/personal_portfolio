@@ -67,6 +67,12 @@ To seed the database with all projects:
 python -m app.seed_projects    # reads admin_snapshot.json and populates the database
 ```
 
+After pulling new changes, sync the local SQLite database to match:
+
+```bash
+python -m app.local_seed       # same as above but always targets local SQLite, never production
+```
+
 **Docker alternative — full stack in one command:**
 
 ```bash
@@ -86,7 +92,7 @@ App available at `http://localhost:8000`. Database seeded automatically on first
 | Config | `.env` file | Environment variables on Railway |
 | `DATABASE_URL` set? | No — SQLite fallback | Yes — PostgreSQL connection string |
 | Entry point | `python -m app.app` | `entrypoint.sh` → `gunicorn wsgi:app` |
-| Seed on startup | Manual (`python -m app.seed_projects`) | Automatic (entrypoint runs seeder) |
+| Seed on startup | Manual (`python -m app.local_seed` after pull) | Automatic (entrypoint runs seeder) |
 | GitHub auto-commit | Only if `GITHUB_TOKEN` set | Always active |
 
 ---
@@ -347,7 +353,8 @@ app/
 │   └── knowledge/      Markdown knowledge base (CV, projects, skills, about)
 ├── models/
 │   └── models.py       SQLAlchemy models — Project, ContactMessage
-├── seed_projects.py    Database seeder — runs on every deploy
+├── seed_projects.py    Database seeder — runs on every deploy (targets DATABASE_URL)
+├── local_seed.py       Local-only seeder — syncs SQLite after git pull, ignores DATABASE_URL
 ├── static/
 │   ├── css/
 │   ├── js/
