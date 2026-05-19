@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-19T11:26:06Z",
+  "snapshot_at": "2026-05-19T11:28:15Z",
   "projects": [
     {
       "id": 1,
@@ -2703,7 +2703,7 @@
       "videos": [
         "https://youtu.be/QYW8XCsb7SA"
       ],
-      "card_image": null,
+      "card_image": "images/projects/customer-segmentation/card/Screenshot_2026-05-19_at_13.28.01.png",
       "repo_url": "https://github.com/xavier-oc-programming/customer-segmentation",
       "live_url": "https://customer-segmentation.azurewebsites.net",
       "demo_url": null
