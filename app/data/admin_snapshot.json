@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-19T11:23:55Z",
+  "snapshot_at": "2026-05-19T11:25:44Z",
   "projects": [
     {
       "id": 1,
@@ -2683,7 +2683,14 @@
         "Azure App Service",
         "gunicorn"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/customer-segmentation/screenshots/Screenshot_2026-05-19_at_13.24.30.png",
+        "images/projects/customer-segmentation/screenshots/Screenshot_2026-05-19_at_13.24.39.png",
+        "images/projects/customer-segmentation/screenshots/Screenshot_2026-05-19_at_13.24.44.png",
+        "images/projects/customer-segmentation/screenshots/Screenshot_2026-05-19_at_13.24.50.png",
+        "images/projects/customer-segmentation/screenshots/Screenshot_2026-05-19_at_13.25.02.png",
+        "images/projects/customer-segmentation/screenshots/Screenshot_2026-05-19_at_13.25.08.png"
+      ],
       "videos": [],
       "card_image": null,
       "repo_url": "https://github.com/xavier-oc-programming/customer-segmentation",
