@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-19T11:25:44Z",
+  "snapshot_at": "2026-05-19T11:26:06Z",
   "projects": [
     {
       "id": 1,
@@ -2689,9 +2689,20 @@
         "images/projects/customer-segmentation/screenshots/Screenshot_2026-05-19_at_13.24.44.png",
         "images/projects/customer-segmentation/screenshots/Screenshot_2026-05-19_at_13.24.50.png",
         "images/projects/customer-segmentation/screenshots/Screenshot_2026-05-19_at_13.25.02.png",
-        "images/projects/customer-segmentation/screenshots/Screenshot_2026-05-19_at_13.25.08.png"
+        "images/projects/customer-segmentation/screenshots/Screenshot_2026-05-19_at_13.25.08.png",
+        "images/projects/customer-segmentation/screenshots/01_feature_distributions.png",
+        "images/projects/customer-segmentation/screenshots/02_correlation_matrix.png",
+        "images/projects/customer-segmentation/screenshots/03_elbow_method.png",
+        "images/projects/customer-segmentation/screenshots/04_silhouette_scores.png",
+        "images/projects/customer-segmentation/screenshots/05_dendrogram.png",
+        "images/projects/customer-segmentation/screenshots/06_pca_explained_variance.png",
+        "images/projects/customer-segmentation/screenshots/07_clusters_2d.png",
+        "images/projects/customer-segmentation/screenshots/09_cluster_profiles.png",
+        "images/projects/customer-segmentation/screenshots/10_churn_by_cluster.png"
       ],
-      "videos": [],
+      "videos": [
+        "https://youtu.be/QYW8XCsb7SA"
+      ],
       "card_image": null,
       "repo_url": "https://github.com/xavier-oc-programming/customer-segmentation",
       "live_url": "https://customer-segmentation.azurewebsites.net",
