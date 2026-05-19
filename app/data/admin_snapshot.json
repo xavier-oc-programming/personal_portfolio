@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-18T18:27:23Z",
+  "snapshot_at": "2026-05-19T11:23:55Z",
   "projects": [
     {
       "id": 1,
@@ -2640,6 +2640,55 @@
       "repo_url": "https://github.com/xavier-oc-programming/spam-classifier",
       "live_url": "https://spam-classifier.azurewebsites.net",
       "demo_url": "https://spam-classifier.azurewebsites.net"
+    },
+    {
+      "id": 58,
+      "slug": "customer-segmentation",
+      "title": "Customer Segmentation — Telco Archetypes",
+      "primary_category": "data",
+      "short_description": "Unsupervised segmentation of 7,043 Telco customers into five behavioural archetypes using K-Means and Hierarchical Clustering. Input a customer profile to receive a segment label, a plain-English placement explanation, and a dynamically generated retention strategy.",
+      "full_description": "Starting from the IBM Telco Customer Churn dataset, this project identifies five natural customer archetypes through unsupervised clustering — without using the churn label as an input. PCA validates that the clusters are visually separable in reduced-dimensional space. Adjusted Rand Score of 0.72 between K-Means and Ward Hierarchical Clustering confirms structural agreement between two independent algorithms.\r\n\r\nThe Flask frontend goes beyond a simple \"cluster ID\" output. Each prediction triggers a dynamic retention strategy that branches on the customer's actual tenure, contract type, spend level, and add-on services — producing a specific recommendation rather than a generic paragraph. A \"why you're here\" explanation compares the customer's attributes to the cluster centroid to explain the placement in plain English.\r\n\r\nThe five segments discovered: At-Risk New Adopters (29.8%, 56.4% churn), Stable Budget Loyalists (21.6%, 7.4% churn), Uncommitted New Subscribers (17.4%, 28.2% churn), High-Value Long-Term Anchors (14.4%, 4.2% churn), and Established Premium Loyalists (16.8%, 16.0% churn). Each segment has a distinct spend profile, contract preference, and retention lever — the segmentation makes these differences visible before any predictive model is built.",
+      "featured": true,
+      "featured_order": null,
+      "date": "2026-05-19",
+      "problem": "Churn prediction models trained on a full customer population are distorted by the fact that different customer archetypes churn for completely different reasons. A model that treats a month-to-month Fiber optic subscriber the same as a two-year DSL contract holder will miss the specific dynamics driving each group's behaviour. Before asking \"who will churn?\", the business question should be \"who are our customers?\" — understanding the distinct archetypes is the analytical precursor to targeted retention.",
+      "solution": "K-Means clustering (k=5, selected via elbow method and silhouette analysis) segments customers in the full scaled feature space — tenure, monthly charges, contract type, internet service, payment method, and add-on services. Churn is deliberately excluded from features to avoid circular segmentation. Hierarchical Clustering (Ward linkage) validates the structure independently. PCA projects to 2D and 3D for visual confirmation of separability.\r\n\r\nA Flask web app serves the trained model. On prediction, the app runs the same preprocessing pipeline as training (manual one-hot encoding with consistent reference categories to avoid pd.get_dummies edge cases on single rows), assigns the cluster, then generates a contextual retention strategy and a \"why you're here\" sentence by comparing the customer's attributes to the cluster centroid.",
+      "challenges": "The most significant technical challenge was ensuring the single-row preprocessing in the Flask app was exactly consistent with the training pipeline. Using pd.get_dummies with drop_first=True on a single row causes a silent failure: when the only value present in a column is the reference category, pandas drops it and the one-hot columns collapse — making Fiber optic encode identically to DSL. The fix was manual one-hot encoding with hardcoded reference categories (Contract=Month-to-month, InternetService=DSL, PaymentMethod=Bank transfer) to guarantee column alignment regardless of input values.\r\n\r\nA second challenge was segment interpretability. Initial segment names referenced specific internet service types (e.g. \"DSL Switchers\") that conflicted with real predictions — a Fiber optic customer at $56/mo can land in a nominally \"DSL\" cluster because tenure and charges dominate the distance calculation at that value combination. Segment names and descriptions were revised to remove service-type specificity and use probabilistic framing throughout (\"tends to\", \"typically\", \"often\") rather than definitive statements.",
+      "results": "Five interpretable customer archetypes with clear churn differentiation: the highest-churn segment (At-Risk New Adopters) churns at 56.4% — more than 2.5× the dataset average — while the lowest (High-Value Long-Term Anchors) churns at 4.2% despite generating ~$5,500 average total charges. The K-Means / Hierarchical Clustering ARI of 0.72 confirms that the segment structure is robust and not an artefact of the algorithm.\r\n\r\nThe Flask app delivers segment assignments, dynamic retention strategies, and PCA scatter plot visualisation in under one second on Azure F1 free tier. The dynamic retention logic (branching on tenure, contract, charges, and add-ons per cluster) produces specific, actionable recommendations rather than generic segment-level paragraphs.",
+      "tags": [
+        "machine-learning",
+        "unsupervised-learning",
+        "clustering",
+        "customer-segmentation",
+        "churn-prediction",
+        "visualisation",
+        "flask",
+        "azure",
+        "data-analysis",
+        "scikit-learn",
+        "python",
+        "tabular-data",
+        "web-app",
+        "deployment",
+        "retention-strategy"
+      ],
+      "tech_stack": [
+        "Python",
+        "Flask",
+        "scikit-learn",
+        "pandas",
+        "numpy",
+        "Plotly",
+        "Chart.js",
+        "Azure App Service",
+        "gunicorn"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": "https://github.com/xavier-oc-programming/customer-segmentation",
+      "live_url": "https://customer-segmentation.azurewebsites.net",
+      "demo_url": null
     }
   ],
   "messages": []
