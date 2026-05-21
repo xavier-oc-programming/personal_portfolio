@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-21T16:50:24Z",
+  "snapshot_at": "2026-05-21T16:51:12Z",
   "projects": [
     {
       "id": 1,
@@ -2758,7 +2758,12 @@
         "Gunicorn",
         "Azure App Service"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "images/projects/stock-trend-sagemaker/screenshots/Screenshot_2026-05-21_at_17.57.34.png",
+        "images/projects/stock-trend-sagemaker/screenshots/Screenshot_2026-05-21_at_17.57.54.png",
+        "images/projects/stock-trend-sagemaker/screenshots/Screenshot_2026-05-21_at_18.00.58.png",
+        "images/projects/stock-trend-sagemaker/screenshots/Screenshot_2026-05-21_at_18.07.17.png"
+      ],
       "videos": [
         "https://youtu.be/QEzchNDewkA"
       ],
