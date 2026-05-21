@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-21T16:41:08Z",
+  "snapshot_at": "2026-05-21T16:41:19Z",
   "projects": [
     {
       "id": 1,
@@ -2759,7 +2759,9 @@
         "Azure App Service"
       ],
       "screenshots": [],
-      "videos": [],
+      "videos": [
+        "https://youtu.be/QEzchNDewkA"
+      ],
       "card_image": null,
       "repo_url": "https://github.com/xavier-oc-programming/stock-trend-sagemaker",
       "live_url": "https://stock-trend-sagemaker.azurewebsites.net",
