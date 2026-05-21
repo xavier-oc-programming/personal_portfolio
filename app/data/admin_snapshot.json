@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-21T16:51:12Z",
+  "snapshot_at": "2026-05-21T16:51:30Z",
   "projects": [
     {
       "id": 1,
@@ -2762,7 +2762,11 @@
         "images/projects/stock-trend-sagemaker/screenshots/Screenshot_2026-05-21_at_17.57.34.png",
         "images/projects/stock-trend-sagemaker/screenshots/Screenshot_2026-05-21_at_17.57.54.png",
         "images/projects/stock-trend-sagemaker/screenshots/Screenshot_2026-05-21_at_18.00.58.png",
-        "images/projects/stock-trend-sagemaker/screenshots/Screenshot_2026-05-21_at_18.07.17.png"
+        "images/projects/stock-trend-sagemaker/screenshots/Screenshot_2026-05-21_at_18.07.17.png",
+        "images/projects/stock-trend-sagemaker/screenshots/01_price_history.png",
+        "images/projects/stock-trend-sagemaker/screenshots/02_technical_indicators.png",
+        "images/projects/stock-trend-sagemaker/screenshots/03_label_distribution.png",
+        "images/projects/stock-trend-sagemaker/screenshots/04_feature_correlation.png"
       ],
       "videos": [
         "https://youtu.be/QEzchNDewkA"
