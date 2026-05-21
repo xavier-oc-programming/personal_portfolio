@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-21T16:56:23Z",
+  "snapshot_at": "2026-05-21T17:00:30Z",
   "projects": [
     {
       "id": 1,
@@ -2719,7 +2719,7 @@
       "featured_order": null,
       "date": "2026-05-21",
       "problem": "Demonstrating the gap between ad-hoc ML (local training, committed model files, Flask inference) and production MLOps (managed training jobs, model registry, dedicated inference endpoints) — and implementing both patterns on the same model so the architectural difference is clear.",
-      "solution": "Full SageMaker MLOps pipeline: prepare_data.py uploads training data to S3, run_training_job.py launches a managed Training Job, register_model.py versions the artefact in Model Registry, deploy_endpoint.py creates a Real-Time Endpoint, and a Flask app on Azure App Service calls it. A delete_endpoint.py script handles cleanup to prevent runaway charges. The UI shows both LSTM and MA crossover signals with full temporal context.",
+      "solution": "Full SageMaker MLOps pipeline: prepare_data.py uploads training data to S3, run_training_job.py launches a managed Training Job, register_model.py versions the artefact in Model Registry, deploy_endpoint.py creates a Real-Time Endpoint, and a Flask app on Azure App Service calls it. A delete_endpoint.py script handles cleanup to prevent runaway charges. The UI shows both LSTM and MA crossover signals with full temporal context. The trained model artefact remains in S3 permanently — the endpoint can be restored at any time without retraining. When the endpoint is offline, the app serves the last live prediction with a clear notice explaining it was shut down to avoid charges.",
       "challenges": "SageMaker Training Jobs require strict conventions that differ from local training: data paths from environment variables, hyperparameters via argparse, SavedModel format at SM_MODEL_DIR/1/, and Keras 3 (TF 2.16) requiring model.export() instead of model.save() for directory-format output. The multi-cloud authentication pattern — storing AWS credentials as Azure App Service environment variables — requires careful handling to avoid committing credentials to Git. Endpoint cost management (deleting after demo) is a production consideration absent from local deployments. Azure limits one Linux F1 plan per region per subscription, requiring Central US for this project as West Europe was already used by a prior project.",
       "results": "ROC-AUC: 0.574 — meaningfully above random (0.5) without the overfit that would indicate data leakage. Precision 66.3%: when the model predicts bullish, it is correct two-thirds of the time. Training completed in ~5 minutes on ml.m5.large. Endpoint latency ~100ms. Total AWS cost for development and portfolio demo under $1.",
       "tags": [
