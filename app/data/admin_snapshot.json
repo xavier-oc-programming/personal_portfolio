@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-21T16:41:19Z",
+  "snapshot_at": "2026-05-21T16:46:47Z",
   "projects": [
     {
       "id": 1,
@@ -2762,7 +2762,7 @@
       "videos": [
         "https://youtu.be/QEzchNDewkA"
       ],
-      "card_image": null,
+      "card_image": "images/projects/stock-trend-sagemaker/card/Screenshot_2026-05-21_at_18.46.29.png",
       "repo_url": "https://github.com/xavier-oc-programming/stock-trend-sagemaker",
       "live_url": "https://stock-trend-sagemaker.azurewebsites.net",
       "demo_url": "https://stock-trend-sagemaker.azurewebsites.net"
