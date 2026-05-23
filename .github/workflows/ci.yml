@@ -20,6 +20,7 @@ on:
       - "entrypoint.sh"
       - "railway.toml"
       - ".railwayignore"
+      - "app/data/admin_snapshot.json"
       - ".github/workflows/**"
       - "tests/**"
   pull_request:
