@@ -70,8 +70,16 @@ python -m app.seed_projects    # reads admin_snapshot.json and populates the dat
 After pulling new changes, sync the local SQLite database to match:
 
 ```bash
-python -m app.local_seed       # same as above but always targets local SQLite, never production
+python -m app.local_seed       # reads snapshot, targets local SQLite — never touches production
 ```
+
+Or use the convenience script that does both in one command:
+
+```bash
+bash app/sync_local.sh         # git pull --rebase, then local_seed
+```
+
+**Why this exists:** the `.db` file is gitignored and never tracked. The admin panel on Railway writes project changes to `admin_snapshot.json` and commits it to GitHub automatically. `sync_local.sh` pulls that snapshot and rebuilds the local database from it — keeping your local environment in sync with whatever was last saved in the admin panel.
 
 **Docker alternative — full stack in one command:**
 
@@ -346,7 +354,7 @@ app/
 │   ├── routes.py       GET /assistant, POST /assistant/chat
 │   └── rag.py          RAGEngine — ChromaDB indexing, retrieval, Groq LLM
 ├── data/
-│   ├── projects.py     Seed data — fallback for projects not in snapshot
+│   ├── projects.py     Seed data — fallback for projects not in snapshot (legacy)
 │   ├── admin_snapshot.json  Live source of truth — committed on every admin write
 │   ├── backup/         Timestamped JSON snapshots (last 25 kept)
 │   ├── chroma_db/      Persisted vector store (gitignored)
@@ -355,6 +363,7 @@ app/
 │   └── models.py       SQLAlchemy models — Project, ContactMessage
 ├── seed_projects.py    Database seeder — runs on every deploy (targets DATABASE_URL)
 ├── local_seed.py       Local-only seeder — syncs SQLite after git pull, ignores DATABASE_URL
+├── sync_local.sh       Convenience script — git pull --rebase + local_seed in one command
 ├── static/
 │   ├── css/
 │   ├── js/
