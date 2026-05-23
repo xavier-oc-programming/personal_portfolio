@@ -1,0 +1,21 @@
+name: Snapshot Deploy
+
+# Runs on admin_snapshot.json changes only.
+# No tests needed — just validates the snapshot is valid JSON so Railway
+# gets a green CI signal and deploys to reseed the production database.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "app/data/admin_snapshot.json"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate snapshot JSON
+        run: python3 -c "import json; json.load(open('app/data/admin_snapshot.json')); print('Snapshot is valid JSON')"
