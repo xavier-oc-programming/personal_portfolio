@@ -40,6 +40,8 @@
       {% set description = "Python data projects — cleaning and analysis with Pandas, visualization with Matplotlib and Seaborn, and predictive models with scikit-learn." %}
     {% elif active_category == "software" %}
       {% set description = "CLI tools, automation scripts, web scrapers, and desktop apps — modular Python with readable logic and clean structure." %}
+    {% elif active_category == "ai-ml" %}
+      {% set description = "RAG pipelines, deployed ML models, LLM benchmarking, and SageMaker MLOps — AI engineering built and shipped on AWS and Azure." %}
     {% elif active_tag %}
       {% set description = "Browse projects tagged with \"" ~ active_tag ~ "\"." %}
     {% else %}
@@ -114,6 +116,13 @@
                 data-category-btn="software"
               >
                 Software ({{ category_counts['software'] }})
+              </a>
+              <a
+                class="btn btn-sm {% if active_category == 'ai-ml' %}btn-dark{% else %}btn-outline-dark{% endif %}"
+                href="{{ url_for('projects_ai_ml', sort=active_sort, tag=active_tag) }}"
+                data-category-btn="ai-ml"
+              >
+                AI / ML ({{ category_counts['ai-ml'] }})
               </a>
             </div>
           </div>

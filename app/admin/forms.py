@@ -21,7 +21,7 @@ class ProjectForm(FlaskForm):
     slug = StringField("Slug", validators=[DataRequired(), Length(max=100)])
     primary_category = SelectField(
         "Category",
-        choices=[("web", "Web"), ("data", "Data"), ("software", "Software")],
+        choices=[("web", "Web"), ("data", "Data"), ("software", "Software"), ("ai-ml", "AI / ML")],
         validators=[DataRequired()],
     )
     short_description = StringField(

@@ -17,6 +17,7 @@ on:
       - "wsgi.py"
       - "entrypoint.sh"
       - "railway.toml"
+      - ".railwayignore"
       - ".github/workflows/**"
       - "tests/**"
   pull_request:

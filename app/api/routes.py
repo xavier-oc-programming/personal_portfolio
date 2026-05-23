@@ -20,7 +20,7 @@ from app.api import api_bp
 from app.api.utils import error_response, success_response
 from app.models.models import Project
 
-_ALLOWED_CATEGORIES = {"web", "data", "software"}
+_ALLOWED_CATEGORIES = {"web", "data", "software", "ai-ml"}
 
 
 @api_bp.get("/projects")

@@ -46,7 +46,7 @@ from app.config import get_config_class
 from app.forms import ContactForm, MAX_EMAIL_LENGTH, MAX_MESSAGE_LENGTH, MAX_NAME_LENGTH
 from app.models.models import ContactMessage, Project, db
 
-ALLOWED_CATEGORIES = {"web", "data", "software"}
+ALLOWED_CATEGORIES = {"web", "data", "software", "ai-ml"}
 ALLOWED_SORTS = {"az", "newest", "oldest"}
 
 MIN_FORM_FILL_SECONDS = 8
@@ -139,6 +139,7 @@ def _get_category_counts() -> dict[str, int]:
         "web": Project.query.filter_by(primary_category="web").count(),
         "data": Project.query.filter_by(primary_category="data").count(),
         "software": Project.query.filter_by(primary_category="software").count(),
+        "ai-ml": Project.query.filter_by(primary_category="ai-ml").count(),
     }
 
 
@@ -490,6 +491,19 @@ def create_app() -> Flask:
 
         context = _build_projects_page_context(
             category="software",
+            tag=tag,
+            sort_key=sort_key,
+        )
+
+        return render_template("projects.html", **context)
+
+    @app.get("/projects/ai-ml")
+    def projects_ai_ml():
+        tag = request.args.get("tag")
+        sort_key = request.args.get("sort")
+
+        context = _build_projects_page_context(
+            category="ai-ml",
             tag=tag,
             sort_key=sort_key,
         )
