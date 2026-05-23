@@ -1,7 +1,8 @@
 name: CI/CD
 
-# Runs the full test suite on code changes.
-# Railway deploys after this passes (Wait for CI enabled on Railway).
+# Tests run on every push to main (filtered paths).
+# Railway deploys automatically after CI passes — it pulls from GitHub directly.
+# No railway up needed; Railway is connected to this repo with "Wait for CI" enabled.
 
 on:
   workflow_dispatch:
@@ -19,6 +20,7 @@ on:
       - "entrypoint.sh"
       - "railway.toml"
       - ".railwayignore"
+      - "app/data/admin_snapshot.json"
       - ".github/workflows/**"
       - "tests/**"
   pull_request:
