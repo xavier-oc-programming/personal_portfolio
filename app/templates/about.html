@@ -4,10 +4,10 @@
 
 {% extends "base.html" %}
 
-{% block title %}About Xavier Ocon Capdeville | Python Developer{% endblock %}
-{% block meta_description %}Learn more about Xavier Ocon Capdeville (Xavier OC), a Python developer based in Madrid building web applications, data pipelines, and automation tools with Flask and Pandas.{% endblock %}
-{% block og_title %}About Xavier Ocon Capdeville | Python Developer{% endblock %}
-{% block og_description %}Learn more about Xavier Ocon Capdeville (Xavier OC), a Python developer based in Madrid building web applications, data pipelines, and automation tools with Flask and Pandas.{% endblock %}
+{% block title %}About Xavier Ocon Capdeville | AI & MLOps Engineer{% endblock %}
+{% block meta_description %}Learn more about Xavier Ocon Capdeville (Xavier OC), an AI practitioner and Python developer based in Madrid building ML systems, RAG pipelines, and cloud-deployed data applications.{% endblock %}
+{% block og_title %}About Xavier Ocon Capdeville | AI & MLOps Engineer{% endblock %}
+{% block og_description %}Learn more about Xavier Ocon Capdeville (Xavier OC), an AI practitioner and Python developer based in Madrid building ML systems, RAG pipelines, and cloud-deployed data applications.{% endblock %}
 {% block canonical_href %}{{ site_url ~ url_for('about') }}{% endblock %}
 
 {% block outer_container %}
@@ -20,8 +20,8 @@
       <div class="row g-4 align-items-end">
         <div class="col-12 col-lg-8">
           {% set eyebrow = "About" %}
-          {% set title = "Python developer based in Madrid. Here's my story." %}
-          {% set description = "I write Python — web backends, data pipelines, and automation tools. Over the past year I've built seriously across all three. Here's how I got here and where I'm going." %}
+          {% set title = "AI practitioner and Python developer based in Madrid. Here's my story." %}
+          {% set description = "I build ML systems, RAG pipelines, and data tools — and deploy them on AWS and Azure. Over the past 18 months I've gone from Python fundamentals to a full SageMaker MLOps pipeline. Here's how I got here and where I'm going." %}
           {% set centered = false %}
           {% include "components/section_header.html" %}
         </div>
@@ -30,7 +30,7 @@
           <div class="surface-card-muted p-4 h-100">
             <div class="status-badge mb-2">Currently</div>
             <p class="text-secondary mb-0">
-              Completed 100 Days of Code. Open to junior Python developer and data analyst roles — Madrid or remote.
+              Targeting AI engineering and MLOps roles — Madrid or remote. Available immediately.
             </p>
           </div>
         </div>
@@ -66,10 +66,9 @@
             </div>
             <h3 class="h5 mb-2">Data</h3>
             <p class="text-secondary mb-0">
-              I work with real datasets using Pandas for cleaning and transformation, and
-              Matplotlib and Seaborn for visualization. I've trained models with scikit-learn —
-              regression, classification, clustering — and done deep learning with TensorFlow
-              and Keras.
+              Pandas, scikit-learn, XGBoost, TensorFlow/Keras, and SHAP — from cleaning and
+              analysis through to deployed ML models. RAG pipelines with LangChain and ChromaDB,
+              Amazon Bedrock benchmarked across four task types, and SageMaker MLOps end to end.
             </p>
           </div>
         </div>
@@ -81,9 +80,9 @@
             </div>
             <h3 class="h5 mb-2">Software</h3>
             <p class="text-secondary mb-0">
-              I build modular Python programs: CLI tools, automation scripts, web scrapers,
-              and desktop apps. The focus is always clean structure, readable logic, and
-              code that does what it says.
+              I build modular Python programs: FastAPI services, CLI tools, automation scripts,
+              and Docker Compose multi-service stacks. The focus is always clean structure,
+              readable logic, and code that does what it says.
             </p>
           </div>
         </div>
@@ -115,7 +114,7 @@
               <p class="timeline-label">Pivot</p>
               <p class="timeline-title">Python & Algorithms Training</p>
               <div class="timeline-body">
-                <p>Code did it. I found Python and something clicked in a way audio engineering never quite had. The structure met the creativity, and it matched how I actually think. The transition wasn't casual — formal Python and algorithms training from the ground up.</p>
+                <p>Code did it. I found Python and something clicked in a way audio engineering never quite had. The structure met the creativity, and it matched how I actually think. The transition wasn't casual — formal Python and algorithms training from the ground up. I taught English during this period to support myself while self-studying Python full time.</p>
               </div>
             </div>
 
@@ -147,14 +146,14 @@
 
             <div class="info-block">
               <h5>Where I am Currently</h5>
-              <p>I write Python. Specifically: Flask web applications, SQL databases, data analysis with Pandas, and predictive models with scikit-learn. Over the past year I've put in 750+ hours of structured training across Python, AI, data science, and SQL — on top of coding three to four hours every day.</p>
-              <p>The projects on this portfolio are the result. Deployed applications, data analysis, automation tools — built to a real standard, not just submitted as exercises.</p>
+              <p>Over the past 18 months I've built and deployed ML systems end to end — RAG pipelines on AWS, a full SageMaker MLOps pipeline, Amazon Bedrock benchmarked across four task types, and Flask applications running in production on Railway. 750+ hours of structured training across Python, AI, data science, and SQL, on top of coding three to four hours every day.</p>
+              <p>The projects on this portfolio are the output — not exercises, not tutorials. Working, deployed systems.</p>
             </div>
 
             <div class="info-block">
               <h5>Where I am going</h5>
-              <p>I'm looking for a junior Python developer or data analyst role — ideally at a company working on something that matters, whether that's sustainability, inclusion, or just genuinely useful technology.</p>
-              <p>I'm early in my career, I code every day, and I improve fast. If you're hiring for someone who brings Python skills and a non-standard background — let's talk.</p>
+              <p>I'm targeting AI engineering and data science roles — building systems that combine Python, foundation models, and cloud infrastructure to solve real problems.</p>
+              <p>I code every day, I improve fast, and I bring a non-standard background that's turned out to be an asset: precision, deadline pressure, and an intolerance for sloppy output — all carried over directly from audio engineering.</p>
             </div>
 
           </div>
@@ -171,7 +170,7 @@
       <div class="row align-items-center g-4">
         <div class="col-md-8">
           <h2 class="mb-2">Want to get in touch?</h2>
-          <p>I'm open to junior roles in Python development and data analysis.</p>
+          <p>I'm open to AI engineering, data science, and MLOps roles — Madrid or remote.</p>
         </div>
         <div class="col-md-4 text-md-end">
           <a href="{{ url_for('contact') }}" class="btn btn-light btn-lg px-4 fw-semibold">Contact me</a>
