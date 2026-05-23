@@ -564,11 +564,6 @@ Defined in `.github/workflows/ci.yml`.
 2. Install dependencies
 3. Run the full test suite against the real database
 
-**On push to `main` only (after tests pass):**
-
-4. Pull the latest `admin_snapshot.json` from GitHub — ensures any admin changes made since the triggering commit are included
-5. Deploy to Railway via `railway up`
-
 A failed test blocks deployment. The pipeline will not ship broken code.
 
 **Path filters** — the workflow only triggers when these paths change:
@@ -584,11 +579,18 @@ Dockerfile                     # container definition
 wsgi.py                        # Gunicorn entry point
 entrypoint.sh                  # container startup script
 railway.toml                   # Railway config
+.railwayignore                 # Railway upload config
 .github/workflows/**           # CI/CD pipeline changes
 tests/**                       # test suite changes
 ```
 
 Data-only commits (snapshots, media uploads) include `[skip ci]` in the commit message and never trigger the workflow.
+
+**How deployment works**
+
+Railway is connected directly to the GitHub repo (`main` branch) with **Wait for CI** enabled. When a push triggers the workflow and all tests pass, Railway detects the green CI status and automatically pulls the latest code from GitHub to build and deploy — no file upload involved.
+
+Previously the pipeline used `railway up` to upload the source directly to Railway. This was replaced because the repo's static image assets (~436 MB tracked in git) exceeded Railway's upload size limit. The current approach — Railway pulling from GitHub — has no such limit and is faster.
 
 ### Manual deploy
 

@@ -1,6 +1,8 @@
 name: CI/CD
 
-# triggers deploy after tests pass - tag casing fix
+# Tests run on every push to main (filtered paths).
+# Railway deploys automatically after CI passes — it pulls from GitHub directly.
+# No railway up needed; Railway is connected to this repo with "Wait for CI" enabled.
 
 on:
   workflow_dispatch:
@@ -61,29 +63,3 @@ jobs:
           TESTING: 'true'
           GROQ_API_KEY: ""
         run: pytest -v
-
-  deploy:
-    needs: test
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Cache Railway CLI
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm-global
-          key: railway-cli-${{ runner.os }}
-
-      - name: Pull latest snapshot
-        run: git pull origin main
-
-      - name: Deploy to Railway
-        run: |
-          npm config set prefix ~/.npm-global
-          export PATH=~/.npm-global/bin:$PATH
-          npm install -g @railway/cli
-          railway up --detach --service personal_portfolio
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_PORTFOLIO_TOKEN }}
