@@ -79,4 +79,4 @@ jobs:
       - name: Deploy to Railway
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_PORTFOLIO_TOKEN }}
-        run: railway up --detach
+        run: railway up --detach --service personal_portfolio
