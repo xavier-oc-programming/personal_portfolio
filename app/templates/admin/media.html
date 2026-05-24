@@ -18,7 +18,7 @@
       <div class="card-header fw-semibold">Card Image</div>
       <div class="card-body">
         {% if project.card_image %}
-          <img src="{{ url_for('static', filename=project.card_image) }}"
+          <img src="{{ project.card_image | media_url }}"
                class="img-fluid rounded mb-3 w-100"
                style="max-height:200px;object-fit:cover;" alt="Card image">
           <form method="POST" action="{{ url_for('admin.media_delete', slug=project.slug) }}">
@@ -56,7 +56,7 @@
             {% for shot in project.screenshots %}
               <div class="col-6 col-sm-4 position-relative screenshot-item" data-path="{{ shot }}"
                    style="cursor:grab;">
-                <img src="{{ url_for('static', filename=shot) }}"
+                <img src="{{ shot | media_url }}"
                      class="img-fluid rounded w-100"
                      style="height:110px;object-fit:cover;pointer-events:none;" alt="Screenshot">
                 <form method="POST" action="{{ url_for('admin.media_delete', slug=project.slug) }}"

@@ -355,6 +355,18 @@ def create_app() -> Flask:
     def nl2br_filter(value: str) -> Markup:
         return Markup(escape(value).replace("\n\n", Markup("<br><br>")).replace("\n", Markup("<br>")))
 
+    @app.template_filter("media_url")
+    def media_url_filter(path: str) -> str:
+        """Return a usable URL for a project media value.
+        R2 URLs (https://...) are returned as-is; legacy relative static paths
+        are converted via url_for so old data continues to work."""
+        if not path:
+            return ""
+        if path.startswith("https://") or path.startswith("http://"):
+            return path
+        from flask import url_for as _url_for
+        return _url_for("static", filename=path)
+
     csrf = CSRFProtect(app)
     CORS(app, resources={r"/api/*": {"origins": "*"}})
 

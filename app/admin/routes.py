@@ -56,6 +56,7 @@ from werkzeug.utils import secure_filename
 from app.admin import admin_bp
 from app.admin.forms import CardImageForm, ProjectForm, ScreenshotForm, VideoForm, YouTubeForm
 from app.models.models import ContactMessage, Project, db
+from app import r2
 
 
 # ---------------------------------------------------------------------------
@@ -581,17 +582,17 @@ def media_upload_card(slug: str):
     form = CardImageForm()
 
     if form.validate_on_submit() and form.card_image.data:
-        dest = _get_project_static_dir(slug) / "card"
-        filename = _save_file(form.card_image.data, dest)
-        file_path = dest / filename
-        project.card_image = _static_rel(file_path)
-        db.session.commit()
-        _github_commit_files_async(
-            [file_path],
-            f"media: add card image for {project.title}",
-            current_app._get_current_object(),
-        )
-        flash("Card image uploaded — committing to GitHub in the background.", "success")
+        file = form.card_image.data
+        filename = secure_filename(file.filename)
+        key = f"images/projects/{slug}/card/{filename}"
+        try:
+            url = r2.upload_file(file.stream, key, content_type=file.content_type)
+            project.card_image = url
+            db.session.commit()
+            _github_commit_full_snapshot(f"media: add card image for {project.title}")
+            flash("Card image uploaded to R2.", "success")
+        except Exception as exc:
+            flash(f"Upload failed: {exc}", "danger")
     else:
         flash("No valid image file provided.", "danger")
 
@@ -611,31 +612,28 @@ def media_upload_screenshot(slug: str):
         return redirect(url_for("admin.project_media", slug=slug))
 
     allowed_exts = {"jpg", "jpeg", "png", "gif", "webp"}
-    dest = _get_project_static_dir(slug) / "screenshots"
     shots = project.screenshots
-    saved_paths: list[Path] = []
+    count = 0
 
     for file in valid_files:
         ext = Path(secure_filename(file.filename)).suffix.lstrip(".").lower()
         if ext not in allowed_exts:
             continue
-        filename = _save_file(file, dest)
-        file_path = dest / filename
-        rel_path = _static_rel(file_path)
-        if rel_path not in shots:
-            shots.append(rel_path)
-            saved_paths.append(file_path)
+        filename = secure_filename(file.filename)
+        key = f"images/projects/{slug}/screenshots/{filename}"
+        try:
+            url = r2.upload_file(file.stream, key, content_type=file.content_type)
+            if url not in shots:
+                shots.append(url)
+                count += 1
+        except Exception as exc:
+            flash(f"Failed to upload {filename}: {exc}", "danger")
 
-    count = len(saved_paths)
     if count:
         project.screenshots = shots
         db.session.commit()
-        _github_commit_files_async(
-            saved_paths,
-            f"media: add {count} screenshot(s) for {project.title}",
-            current_app._get_current_object(),
-        )
-        flash(f"{count} screenshot(s) uploaded — committing to GitHub in the background.", "success")
+        _github_commit_full_snapshot(f"media: add {count} screenshot(s) for {project.title}")
+        flash(f"{count} screenshot(s) uploaded to R2.", "success")
     else:
         flash("No valid image files provided.", "danger")
 
@@ -666,23 +664,20 @@ def media_upload_video(slug: str):
     form = VideoForm()
 
     if form.validate_on_submit() and form.video.data:
-        dest = _get_project_video_dir(slug)
-        filename = _save_file(form.video.data, dest)
-        file_path = dest / filename
-        rel_path = _static_rel(file_path)
-        vids = project.videos
-        if rel_path not in vids:
-            vids.append(rel_path)
-            project.videos = vids
-            db.session.commit()
-        file_committed = _github_commit_file(file_path)
-        backed_up = _github_commit_full_snapshot()
-        if file_committed and backed_up:
-            flash("Video uploaded and committed to GitHub.", "success")
-        elif not file_committed:
-            flash("Video uploaded but the file was NOT committed to GitHub — it will be lost on redeploy. Try again.", "danger")
-        else:
-            flash("Video committed but snapshot failed — use Force Sync on the dashboard.", "warning")
+        file = form.video.data
+        filename = secure_filename(file.filename)
+        key = f"videos/projects/{slug}/{filename}"
+        try:
+            url = r2.upload_file(file.stream, key, content_type=file.content_type)
+            vids = project.videos
+            if url not in vids:
+                vids.append(url)
+                project.videos = vids
+                db.session.commit()
+            _github_commit_full_snapshot(f"media: add video for {project.title}")
+            flash("Video uploaded to R2.", "success")
+        except Exception as exc:
+            flash(f"Upload failed: {exc}", "danger")
     else:
         flash("No valid video file provided.", "danger")
 
@@ -715,34 +710,39 @@ def media_add_youtube(slug: str):
 def media_delete(slug: str):
     project = Project.query.filter_by(slug=slug).first_or_404()
     media_type = request.form.get("type")
-    rel_path = request.form.get("path", "")
+    path_val = request.form.get("path", "")
 
-    static_dir = Path(current_app.root_path) / "static"
-    abs_path = static_dir / rel_path
+    def _remove_file(path: str) -> None:
+        if r2.is_r2_url(path):
+            key = r2.key_from_url(path)
+            if key:
+                r2.delete_key(key)
+        else:
+            static_dir = Path(current_app.root_path) / "static"
+            abs_path = static_dir / path
+            if abs_path.exists():
+                abs_path.unlink()
 
     if media_type == "card":
+        _remove_file(path_val)
         project.card_image = None
         db.session.commit()
-        if abs_path.exists():
-            abs_path.unlink()
         flash("Card image removed.", "success")
 
     elif media_type == "screenshot":
-        project.screenshots = [s for s in project.screenshots if s != rel_path]
+        project.screenshots = [s for s in project.screenshots if s != path_val]
         db.session.commit()
-        if abs_path.exists():
-            abs_path.unlink()
+        _remove_file(path_val)
         flash("Screenshot removed.", "success")
 
     elif media_type == "video":
-        project.videos = [v for v in project.videos if v != rel_path]
+        project.videos = [v for v in project.videos if v != path_val]
         db.session.commit()
-        if abs_path.exists():
-            abs_path.unlink()
+        _remove_file(path_val)
         flash("Video removed.", "success")
 
     elif media_type == "youtube":
-        project.videos = [v for v in project.videos if v != rel_path]
+        project.videos = [v for v in project.videos if v != path_val]
         db.session.commit()
         flash("YouTube video removed.", "success")
 

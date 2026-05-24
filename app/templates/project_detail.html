@@ -248,7 +248,7 @@
                 >
                   <div class="screenshot-frame">
                     <img
-                      src="{{ url_for('static', filename=screenshot) }}"
+                      src="{{ screenshot | media_url }}"
                       class="detail-media-image"
                       alt="{{ project.title }} screenshot {{ loop.index }}"
                       loading="lazy"
@@ -271,14 +271,14 @@
             class="detail-media-trigger w-100 mb-3"
             data-bs-toggle="modal"
             data-bs-target="#imagePreviewModal"
-            data-image-src="{{ url_for('static', filename=screenshots[0]) }}"
+            data-image-src="{{ screenshots[0] | media_url }}"
             data-image-alt="{{ project.title }} screenshot 1"
             data-gallery-index="0"
           >
             <div class="screenshot-frame screenshot-frame--hero">
               <img
                 id="screenshotHeroImg"
-                src="{{ url_for('static', filename=screenshots[0]) }}"
+                src="{{ screenshots[0] | media_url }}"
                 class="detail-media-image"
                 alt="{{ project.title }} screenshot 1"
                 decoding="async"
@@ -293,12 +293,12 @@
                 <button
                   type="button"
                   class="screenshot-thumb {% if loop.first %}screenshot-thumb--active{% endif %}"
-                  data-src="{{ url_for('static', filename=screenshot) }}"
+                  data-src="{{ screenshot | media_url }}"
                   data-alt="{{ project.title }} screenshot {{ loop.index }}"
                   data-index="{{ loop.index0 }}"
                 >
                   <img
-                    src="{{ url_for('static', filename=screenshot) }}"
+                    src="{{ screenshot | media_url }}"
                     alt="{{ project.title }} thumbnail {{ loop.index }}"
                     loading="lazy"
                     decoding="async"
@@ -324,7 +324,7 @@
       {% if project.media and project.media.videos %}
         <div class="d-flex flex-column gap-3">
           {% for video in project.media.videos %}
-            {% if video.startswith('http') %}
+            {% if 'youtube.com' in video or 'youtu.be' in video %}
               {% set yt_id = video.split('v=')[-1].split('&')[0] if 'v=' in video else video.split('/')[-1] %}
               <div class="ratio ratio-16x9 rounded overflow-hidden">
                 <iframe src="https://www.youtube.com/embed/{{ yt_id }}"
@@ -334,7 +334,7 @@
               </div>
             {% else %}
               <video class="w-100 rounded" controls preload="metadata">
-                <source src="{{ url_for('static', filename=video) }}" type="video/mp4">
+                <source src="{{ video | media_url }}" type="video/mp4">
                 Your browser does not support the video tag.
               </video>
             {% endif %}
@@ -378,7 +378,7 @@
                 {% for screenshot in screenshots %}
                   <div class="carousel-item {{ 'active' if loop.first else '' }}">
                     <img
-                      src="{{ url_for('static', filename=screenshot) }}"
+                      src="{{ screenshot | media_url }}"
                       class="d-block w-100"
                       alt="{{ project.title }} screenshot {{ loop.index }}"
                       loading="{{ 'eager' if loop.first else 'lazy' }}"
