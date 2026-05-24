@@ -1,8 +1,8 @@
 name: CI/CD
 
 # Tests run on every push to main (filtered paths).
-# Railway deploys automatically after CI passes — it pulls from GitHub directly.
-# No railway up needed; Railway is connected to this repo with "Wait for CI" enabled.
+# On success, railway up deploys to Railway.
+# Images are excluded from the upload via .railwayignore so the payload stays small.
 
 on:
   workflow_dispatch:
@@ -64,3 +64,19 @@ jobs:
           TESTING: 'true'
           GROQ_API_KEY: ""
         run: pytest -v
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Deploy to Railway
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_PORTFOLIO_TOKEN }}
+        run: railway up --detach
