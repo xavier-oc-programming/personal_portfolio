@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-24T10:00:46Z",
+  "snapshot_at": "2026-05-24T10:01:04Z",
   "projects": [
     {
       "id": 1,
@@ -2814,7 +2814,9 @@
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/faldfsjnk/screenshots/Screenshot_2026-05-24_at_11.38.58.png",
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/faldfsjnk/screenshots/Screenshot_2026-05-24_at_11.40.14.png"
       ],
-      "videos": [],
+      "videos": [
+        "https://youtu.be/A4sJv3RbJR4"
+      ],
       "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/faldfsjnk/card/Screenshot_2026-05-24_at_12.00.13.png",
       "repo_url": null,
       "live_url": null,
