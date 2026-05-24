@@ -597,7 +597,7 @@ def media_upload_card(slug: str):
                 f"media: add card image for {project.title}",
                 current_app._get_current_object(),
             )
-            flash("Card image uploaded to R2 and backed up to GitHub.", "success")
+            flash("Card image uploaded to R2. GitHub backup running in background.", "success")
         except Exception as exc:
             flash(f"Upload failed: {exc}", "danger")
     else:
@@ -647,7 +647,7 @@ def media_upload_screenshot(slug: str):
             f"media: add {count} screenshot(s) for {project.title}",
             current_app._get_current_object(),
         )
-        flash(f"{count} screenshot(s) uploaded to R2 and backed up to GitHub.", "success")
+        flash(f"{count} screenshot(s) uploaded to R2. GitHub backup running in background.", "success")
     else:
         flash("No valid image files provided.", "danger")
 
@@ -696,7 +696,7 @@ def media_upload_video(slug: str):
                 f"media: add video for {project.title}",
                 current_app._get_current_object(),
             )
-            flash("Video uploaded to R2 and backed up to GitHub.", "success")
+            flash("Video uploaded to R2. GitHub backup running in background.", "success")
         except Exception as exc:
             flash(f"Upload failed: {exc}", "danger")
     else:
