@@ -45,7 +45,7 @@
           <tr>
             <td>
               {% if project.card_image %}
-                <img src="{{ url_for('static', filename=project.card_image) }}"
+                <img src="{{ project.card_image | media_url }}"
                      style="width:36px;height:36px;object-fit:cover;border-radius:4px;" alt="">
               {% else %}
                 <div style="width:36px;height:36px;background:#e9ecef;border-radius:4px;"></div>
