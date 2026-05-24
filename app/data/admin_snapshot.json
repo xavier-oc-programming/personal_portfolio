@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-24T10:06:24Z",
+  "snapshot_at": "2026-05-24T10:06:41Z",
   "projects": [
     {
       "id": 1,
@@ -2775,52 +2775,6 @@
       "repo_url": "https://github.com/xavier-oc-programming/stock-trend-sagemaker",
       "live_url": "https://stock-trend-sagemaker.azurewebsites.net",
       "demo_url": "https://stock-trend-sagemaker.azurewebsites.net"
-    },
-    {
-      "id": 60,
-      "slug": "faldfsjnk",
-      "title": "exampleproj",
-      "primary_category": "web",
-      "short_description": "adfsljadfsljhfads",
-      "full_description": "fadljadfs;jdfas",
-      "featured": false,
-      "featured_order": null,
-      "date": "2026-04-13",
-      "problem": "fadljadfs;jdfas",
-      "solution": "fadljadfs;jdfas",
-      "challenges": "fadljadfs;jdfas",
-      "results": "fadljadfs;jdfas",
-      "tags": [
-        "cli",
-        "game",
-        "python",
-        "beginner",
-        "oop",
-        "terminal"
-      ],
-      "tech_stack": [
-        "Python",
-        "pandas",
-        "NumPy",
-        "Matplotlib",
-        "Seaborn",
-        "Jupyter Notebook",
-        "CSV"
-      ],
-      "screenshots": [
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/faldfsjnk/screenshots/Screenshot_2026-05-24_at_11.36.17.png",
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/faldfsjnk/screenshots/Screenshot_2026-05-24_at_11.37.04.png",
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/faldfsjnk/screenshots/Screenshot_2026-05-24_at_11.38.16.png",
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/faldfsjnk/screenshots/Screenshot_2026-05-24_at_11.38.58.png",
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/faldfsjnk/screenshots/Screenshot_2026-05-24_at_11.40.14.png"
-      ],
-      "videos": [
-        "https://youtu.be/A4sJv3RbJR4"
-      ],
-      "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/faldfsjnk/card/Screenshot_2026-05-24_at_12.00.13.png",
-      "repo_url": null,
-      "live_url": null,
-      "demo_url": null
     }
   ],
   "messages": []
