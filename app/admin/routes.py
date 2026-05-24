@@ -584,13 +584,20 @@ def media_upload_card(slug: str):
     if form.validate_on_submit() and form.card_image.data:
         file = form.card_image.data
         filename = secure_filename(file.filename)
+        dest = _get_project_static_dir(slug) / "card"
+        _save_file(file, dest)
+        file_path = dest / filename
         key = f"images/projects/{slug}/card/{filename}"
         try:
-            url = r2.upload_file(file.stream, key, content_type=file.content_type)
+            url = r2.upload_path(file_path, key)
             project.card_image = url
             db.session.commit()
-            _github_commit_full_snapshot(f"media: add card image for {project.title}")
-            flash("Card image uploaded to R2.", "success")
+            _github_commit_files_async(
+                [file_path],
+                f"media: add card image for {project.title}",
+                current_app._get_current_object(),
+            )
+            flash("Card image uploaded to R2 and backed up to GitHub.", "success")
         except Exception as exc:
             flash(f"Upload failed: {exc}", "danger")
     else:
@@ -612,28 +619,35 @@ def media_upload_screenshot(slug: str):
         return redirect(url_for("admin.project_media", slug=slug))
 
     allowed_exts = {"jpg", "jpeg", "png", "gif", "webp"}
+    dest = _get_project_static_dir(slug) / "screenshots"
     shots = project.screenshots
-    count = 0
+    saved_paths: list[Path] = []
 
     for file in valid_files:
         ext = Path(secure_filename(file.filename)).suffix.lstrip(".").lower()
         if ext not in allowed_exts:
             continue
-        filename = secure_filename(file.filename)
+        filename = _save_file(file, dest)
+        file_path = dest / filename
         key = f"images/projects/{slug}/screenshots/{filename}"
         try:
-            url = r2.upload_file(file.stream, key, content_type=file.content_type)
+            url = r2.upload_path(file_path, key)
             if url not in shots:
                 shots.append(url)
-                count += 1
+                saved_paths.append(file_path)
         except Exception as exc:
             flash(f"Failed to upload {filename}: {exc}", "danger")
 
+    count = len(saved_paths)
     if count:
         project.screenshots = shots
         db.session.commit()
-        _github_commit_full_snapshot(f"media: add {count} screenshot(s) for {project.title}")
-        flash(f"{count} screenshot(s) uploaded to R2.", "success")
+        _github_commit_files_async(
+            saved_paths,
+            f"media: add {count} screenshot(s) for {project.title}",
+            current_app._get_current_object(),
+        )
+        flash(f"{count} screenshot(s) uploaded to R2 and backed up to GitHub.", "success")
     else:
         flash("No valid image files provided.", "danger")
 
@@ -666,16 +680,23 @@ def media_upload_video(slug: str):
     if form.validate_on_submit() and form.video.data:
         file = form.video.data
         filename = secure_filename(file.filename)
+        dest = _get_project_video_dir(slug)
+        _save_file(file, dest)
+        file_path = dest / filename
         key = f"videos/projects/{slug}/{filename}"
         try:
-            url = r2.upload_file(file.stream, key, content_type=file.content_type)
+            url = r2.upload_path(file_path, key)
             vids = project.videos
             if url not in vids:
                 vids.append(url)
                 project.videos = vids
                 db.session.commit()
-            _github_commit_full_snapshot(f"media: add video for {project.title}")
-            flash("Video uploaded to R2.", "success")
+            _github_commit_files_async(
+                [file_path],
+                f"media: add video for {project.title}",
+                current_app._get_current_object(),
+            )
+            flash("Video uploaded to R2 and backed up to GitHub.", "success")
         except Exception as exc:
             flash(f"Upload failed: {exc}", "danger")
     else:
