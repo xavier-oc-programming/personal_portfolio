@@ -41,6 +41,7 @@ The portfolio itself is the proof of skill.
 - Docker + Docker Compose (optional — for the containerised local stack)
 - A [Railway](https://railway.app) account for production deployment
 - A [GitHub](https://github.com) account with this repo pushed (for CI/CD and snapshot auto-commits)
+- A [Cloudflare](https://cloudflare.com) account with an R2 bucket (for project image storage)
 - A custom domain (optional — if you want the site at `yourname.com` instead of the Railway-generated URL)
 
 A local PostgreSQL instance is not required — the app falls back to SQLite automatically when `DATABASE_URL` is not set.
@@ -187,6 +188,18 @@ Browser → /admin/* → password check → form validation → write to DB
                                                               └── write timestamped backup  (keeps last 25)
 ```
 
+**Admin media uploads (card images, screenshots, videos)**
+
+```
+Browser → /admin/*/media → save file locally → upload to Cloudflare R2
+                                                      │
+                                                      ├── R2 public URL stored in DB
+                                                      ├── file committed to GitHub as backup  [skip ci]
+                                                      └── snapshot updated on GitHub
+```
+
+Images are served from Cloudflare R2 in production. Files are also committed to the GitHub repo as a permanent backup. Railway excludes the images folder from builds via `.railwayignore` so deploy payloads stay small.
+
 The snapshot commit is what keeps the database recoverable — every admin save is backed up to GitHub automatically.
 
 ---
@@ -221,7 +234,7 @@ The snapshot commit is what keeps the database recoverable — every admin save 
 - Password-protected session auth
 - Full project CRUD — create, edit, delete with a rich form covering all content fields
 - **Fill Form Template** — paste a YAML block and auto-fill every project field instantly
-- Media manager per project — upload card images, screenshots (multi-file, drag-to-reorder), and video files; add YouTube embed URLs
+- Media manager per project — upload card images, screenshots (multi-file, drag-to-reorder), and video files; add YouTube embed URLs. All uploads go to Cloudflare R2 (served) and GitHub (backup)
 - Featured projects — drag-and-drop ordering
 - Tag management — create, rename, delete, bulk-assign across projects
 - Contact message inbox — view and delete submissions
@@ -364,14 +377,16 @@ app/
 ├── seed_projects.py    Database seeder — runs on every deploy (targets DATABASE_URL)
 ├── local_seed.py       Local-only seeder — syncs SQLite after git pull, ignores DATABASE_URL
 ├── sync_local.sh       Convenience script — git pull --rebase + local_seed in one command
+├── r2.py               Cloudflare R2 helper — upload, delete, URL helpers (boto3/S3-compatible)
+├── migrate_to_r2.py    One-time migration script — uploads existing images to R2, updates DB + snapshot
 ├── static/
 │   ├── css/
 │   ├── js/
 │   │   ├── main.js             Site-wide UI (navbar, scroll, image modal)
 │   │   ├── projects-filter.js  Live filtering engine (fetches /api/v1/projects)
 │   │   └── api-docs.js         Try It widget on API docs page
-│   ├── images/         Card images, screenshots per project
-│   └── videos/         Local video files per project (small clips only)
+│   ├── images/         Favicon, OG image, profile photo, and project images (backed up; excluded from Railway builds)
+│   └── videos/         Local video files (backed up; excluded from Railway builds)
 └── templates/
     ├── components/     Reusable partials (navbar, footer, cards, etc.)
     ├── admin/          Admin-only templates
@@ -485,9 +500,9 @@ wsgi.py                 Gunicorn entry point
 | `results` | Text | Narrative section |
 | `tags` | Text | JSON array of tag strings |
 | `tech_stack` | Text | JSON array of technology strings |
-| `screenshots` | Text | JSON array of relative static paths |
-| `videos` | Text | JSON array of static paths or YouTube URLs |
-| `card_image` | String(255) | Relative static path |
+| `screenshots` | Text | JSON array of Cloudflare R2 public URLs |
+| `videos` | Text | JSON array of R2 public URLs or YouTube URLs |
+| `card_image` | String(255) | Cloudflare R2 public URL |
 | `repo_url` | String(255) | GitHub URL |
 | `live_url` | String(255) | Live demo URL |
 | `demo_url` | String(255) | Additional demo URL |
@@ -520,6 +535,11 @@ wsgi.py                 Gunicorn entry point
 | `GITHUB_TOKEN` | No | Personal access token with repo write permission — enables snapshot auto-commits |
 | `GITHUB_REPO` | No | Repository in `owner/repo` format — required alongside `GITHUB_TOKEN` |
 | `GROQ_API_KEY` | No | Free Groq API key from console.groq.com — enables the AI assistant. If absent, assistant shows a "coming soon" page. |
+| `R2_ACCESS_KEY_ID` | Yes (production) | Cloudflare R2 Account API Token — Access Key ID |
+| `R2_SECRET_ACCESS_KEY` | Yes (production) | Cloudflare R2 Account API Token — Secret Access Key |
+| `R2_BUCKET_NAME` | Yes (production) | R2 bucket name (e.g. `xavieroc-portfolio`) |
+| `R2_ENDPOINT_URL` | Yes (production) | R2 S3-compatible endpoint (`https://<account-id>.r2.cloudflarestorage.com`) |
+| `R2_PUBLIC_URL` | Yes (production) | R2 public development URL (`https://pub-<id>.r2.dev`) |
 
 Copy `.env.example` to `.env` and fill in the values. Never commit `.env`.
 
@@ -542,10 +562,15 @@ Copy `.env.example` to `.env` and fill in the values. Never commit `.env`.
    | `GITHUB_TOKEN` | Personal access token with repo write permission |
    | `GITHUB_REPO` | `your-username/personal_portfolio` |
    | `GROQ_API_KEY` | Free key from console.groq.com — enables the AI assistant |
+   | `R2_ACCESS_KEY_ID` | From Cloudflare R2 → API Tokens → Account API Token |
+   | `R2_SECRET_ACCESS_KEY` | From the same token |
+   | `R2_BUCKET_NAME` | Your R2 bucket name |
+   | `R2_ENDPOINT_URL` | `https://<account-id>.r2.cloudflarestorage.com` |
+   | `R2_PUBLIC_URL` | `https://pub-<id>.r2.dev` |
 
 5. Railway reads `railway.toml` and builds using the `Dockerfile`. On every deploy, `entrypoint.sh` runs database migrations and the seeder before starting Gunicorn.
 
-6. **CI/CD** — deployments are triggered automatically by the GitHub Actions pipeline after tests pass. See [CI/CD pipeline](#12-cicd-pipeline).
+6. **Disable Railway auto-deploy** — go to the service → Settings → Source → set Auto Deploy to disabled. Deployments are controlled by the CI/CD pipeline via `railway up`. See [CI/CD pipeline](#12-cicd-pipeline).
 
 7. **(Optional) Custom domain** — if you own a domain and want the site at `yourname.com`:
    - Go to your Railway service → **Settings → Networking → Custom Domain**.
@@ -588,9 +613,9 @@ Data-only commits (snapshots, media uploads) include `[skip ci]` in the commit m
 
 **How deployment works**
 
-Railway is connected directly to the GitHub repo (`main` branch) with **Wait for CI** enabled. When a push triggers the workflow and all tests pass, Railway detects the green CI status and automatically pulls the latest code from GitHub to build and deploy — no file upload involved.
+After tests pass, the `deploy` job runs `railway up --detach --service personal_portfolio`. This uploads only the source code directly to Railway — project images and videos are excluded via `.railwayignore`, keeping the payload small (a few MB). Railway then builds from the Dockerfile and deploys.
 
-Previously the pipeline used `railway up` to upload the source directly to Railway. This was replaced because the repo's static image assets (~436 MB tracked in git) exceeded Railway's upload size limit. The current approach — Railway pulling from GitHub — has no such limit and is faster.
+Railway's GitHub auto-deploy is disabled on the service — `railway up` from CI is the only deploy trigger.
 
 ### Manual deploy
 
@@ -604,9 +629,13 @@ Useful after data-only changes (tag renames, snapshot updates) that don't touch 
 
 ### Snapshot commits and `[skip ci]`
 
-Every admin write automatically commits an updated `admin_snapshot.json` to GitHub with the message `data: update admin snapshot [skip ci]`. The `[skip ci]` flag skips the workflow entirely — no tests, no deploy. These commits are data backups, not code changes. When a real code change triggers the next deploy, the deploy step pulls the latest snapshot (including all admin changes since the last deploy) before uploading to Railway.
+Every admin write automatically commits an updated `admin_snapshot.json` to GitHub with the message `data: update admin snapshot [skip ci]`. The `[skip ci]` flag skips the workflow entirely — no tests, no deploy. These commits are data backups, not code changes.
 
-To add a `RAILWAY_PORTFOLIO_TOKEN` secret: GitHub repo → Settings → Secrets and variables → Actions → New repository secret. The token must be a **project-level** token from Railway's project settings.
+To add the required secrets: GitHub repo → Settings → Secrets and variables → Actions → New repository secret. Required secrets: `RAILWAY_PORTFOLIO_TOKEN` (project-level token from Railway settings).
+
+### Image storage and `.railwayignore`
+
+Project images are stored on **Cloudflare R2** and served via public R2 URLs. The same files are also committed to GitHub as permanent backups. The `app/static/images/projects/` and `app/static/videos/projects/` directories are listed in `.railwayignore` so they are excluded from `railway up` uploads — Railway builds from source code only, and images are fetched at runtime from R2.
 
 ---
 
@@ -664,3 +693,4 @@ The projects page fetches the full project list once from `/api/v1/projects` on 
 | `chromadb` | `assistant/rag.py` | Local persistent vector store |
 | `sentence-transformers` | `assistant/rag.py` | Local embedding model (`all-MiniLM-L6-v2`) |
 | `flask-limiter` | `assistant/` | Per-IP rate limiting on the chat endpoint |
+| `boto3` | `r2.py` | AWS S3-compatible client — used to upload and delete files on Cloudflare R2 |
