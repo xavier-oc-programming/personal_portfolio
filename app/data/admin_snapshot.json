@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-25T10:37:50Z",
+  "snapshot_at": "2026-05-25T10:38:12Z",
   "projects": [
     {
       "id": 1,
@@ -2839,7 +2839,17 @@
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/credit-risk-scorer/screenshots/Screenshot_2026-05-25_at_12.36.12.png",
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/credit-risk-scorer/screenshots/Screenshot_2026-05-25_at_12.36.47.png",
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/credit-risk-scorer/screenshots/Screenshot_2026-05-25_at_12.36.59.png",
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/credit-risk-scorer/screenshots/Screenshot_2026-05-25_at_12.37.30.png"
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/credit-risk-scorer/screenshots/Screenshot_2026-05-25_at_12.37.30.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/credit-risk-scorer/screenshots/01_class_distribution.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/credit-risk-scorer/screenshots/02_credit_amount_by_risk.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/credit-risk-scorer/screenshots/03_duration_by_risk.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/credit-risk-scorer/screenshots/04_age_by_risk.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/credit-risk-scorer/screenshots/05_feature_correlation.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/credit-risk-scorer/screenshots/06_categorical_features.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/credit-risk-scorer/screenshots/07_shap_summary.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/credit-risk-scorer/screenshots/08_shap_waterfall_highrisk.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/credit-risk-scorer/screenshots/09_shap_waterfall_lowrisk.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/credit-risk-scorer/screenshots/10_model_comparison.png"
       ],
       "videos": [],
       "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/credit-risk-scorer/card/Screenshot_2026-05-25_at_12.35.10.png",
