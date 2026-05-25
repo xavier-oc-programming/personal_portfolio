@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-25T10:35:28Z",
+  "snapshot_at": "2026-05-25T10:37:50Z",
   "projects": [
     {
       "id": 1,
@@ -2835,7 +2835,12 @@
         "GitHub Actions",
         "pytest"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/credit-risk-scorer/screenshots/Screenshot_2026-05-25_at_12.36.12.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/credit-risk-scorer/screenshots/Screenshot_2026-05-25_at_12.36.47.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/credit-risk-scorer/screenshots/Screenshot_2026-05-25_at_12.36.59.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/credit-risk-scorer/screenshots/Screenshot_2026-05-25_at_12.37.30.png"
+      ],
       "videos": [],
       "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/credit-risk-scorer/card/Screenshot_2026-05-25_at_12.35.10.png",
       "repo_url": "https://github.com/xavier-oc-programming/credit-risk-scorer",
