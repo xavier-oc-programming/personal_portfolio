@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-25T10:38:12Z",
+  "snapshot_at": "2026-05-25T10:38:34Z",
   "projects": [
     {
       "id": 1,
@@ -2792,7 +2792,7 @@
       "primary_category": "ai-ml",
       "short_description": "Credit risk scoring API on the German Credit dataset. Three classifiers benchmarked with MLflow; Logistic Regression wins by cost-weighted score. FastAPI serves predictions with SHAP explanations. Deployed on Azure App Service via GitHub Actions CI/CD.",
       "full_description": "A production-grade credit risk scoring API trained on the German Credit dataset (1,000 applicants, 20 features). Three classifiers are compared — Logistic Regression, Random Forest, and XGBoost — with every training run tracked in MLflow including hyperparameters, metrics, and model artefacts. Model selection uses a cost-weighted score that reflects the asymmetric business cost of credit lending: approving a bad loan costs 5x more than rejecting a good one. Logistic Regression wins with a cost-weighted score of 0.75, outperforming XGBoost (0.62) and Random Forest (0.55) despite lower raw accuracy — demonstrating why domain-appropriate metrics matter.\r\nThe winning model is served via FastAPI — chosen over Flask for its API-first design, Pydantic input validation, and auto-generated OpenAPI documentation at /docs. Every prediction returns a risk score (0-100), risk band (Low/Medium/High/Very High), business decision (Approve/Review/Decline), and plain-English SHAP explanations of the factors driving the score — legally relevant in jurisdictions requiring adverse action notices.\r\nThe project runs locally via Docker Compose with two services: the scoring API on port 8000 and the MLflow tracking server on port 5000. A GitHub Actions CI/CD pipeline runs pytest on every push and automatically retrains and deploys to Azure App Service on every merge to main.",
-      "featured": false,
+      "featured": true,
       "featured_order": null,
       "date": "2026-05-24",
       "problem": "Demonstrating a complete ML API lifecycle — experiment tracking, model selection by business metric, API-first serving with input validation, multi-container local development, and automated CI/CD deployment — in a finance domain where explainability is a legal requirement, not just a nice-to-have.",
