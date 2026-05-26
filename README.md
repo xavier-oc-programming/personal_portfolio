@@ -1,5 +1,11 @@
 # Xavier OC — Developer Portfolio
 
+[![CI/CD](https://github.com/xavier-oc-programming/personal_portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/xavier-oc-programming/personal_portfolio/actions/workflows/ci.yml)
+[![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Flask](https://img.shields.io/badge/Flask-3.1-000000?logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
+[![Deployed on Railway](https://img.shields.io/badge/Deployed%20on-Railway-7B2FBE?logo=railway&logoColor=white)](https://railway.app)
+[![Live Site](https://img.shields.io/badge/Live-xavieroc.dev-0A7EA4)](https://www.xavieroc.dev)
+
 A production-grade portfolio web application built entirely in Python and Flask. Fully deployed, database-backed, and maintained without touching code — through a custom admin dashboard. Exposes all project data through a versioned public REST API. Ships with an AI assistant powered by RAG, automated tests, and a CI/CD pipeline.
 
 **Live site → [xavieroc.dev](https://www.xavieroc.dev)**
