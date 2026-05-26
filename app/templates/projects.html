@@ -14,6 +14,8 @@
 
 {% block content %}
 
+  {% set category_endpoint = 'projects_' ~ active_category | replace('-', '_') if active_category else 'projects' %}
+
   <!-- Filter state — read by projects-filter.js to initialise without an extra API call -->
   <div
     id="projects-filter-state"
@@ -136,58 +138,18 @@
           <div class="p-3">
             <div class="d-flex flex-wrap justify-content-center gap-2">
 
-              {% if active_category == "web" %}
-                <a
-                  class="btn btn-sm {% if not active_tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
-                  href="{{ url_for('projects_web', sort=active_sort) }}"
-                  data-tag-btn=""
-                >All Tags</a>
-              {% elif active_category == "data" %}
-                <a
-                  class="btn btn-sm {% if not active_tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
-                  href="{{ url_for('projects_data', sort=active_sort) }}"
-                  data-tag-btn=""
-                >All Tags</a>
-              {% elif active_category == "software" %}
-                <a
-                  class="btn btn-sm {% if not active_tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
-                  href="{{ url_for('projects_software', sort=active_sort) }}"
-                  data-tag-btn=""
-                >All Tags</a>
-              {% else %}
-                <a
-                  class="btn btn-sm {% if not active_tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
-                  href="{{ url_for('projects', sort=active_sort) }}"
-                  data-tag-btn=""
-                >All Tags</a>
-              {% endif %}
+              <a
+                class="btn btn-sm {% if not active_tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
+                href="{{ url_for(category_endpoint, sort=active_sort) }}"
+                data-tag-btn=""
+              >All Tags</a>
 
               {% for tag in available_tags %}
-                {% if active_category == "web" %}
-                  <a
-                    class="btn btn-sm {% if active_tag == tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
-                    href="{{ url_for('projects_web', tag=tag, sort=active_sort) }}"
-                    data-tag-btn="{{ tag }}"
-                  >{{ tag }}</a>
-                {% elif active_category == "data" %}
-                  <a
-                    class="btn btn-sm {% if active_tag == tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
-                    href="{{ url_for('projects_data', tag=tag, sort=active_sort) }}"
-                    data-tag-btn="{{ tag }}"
-                  >{{ tag }}</a>
-                {% elif active_category == "software" %}
-                  <a
-                    class="btn btn-sm {% if active_tag == tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
-                    href="{{ url_for('projects_software', tag=tag, sort=active_sort) }}"
-                    data-tag-btn="{{ tag }}"
-                  >{{ tag }}</a>
-                {% else %}
-                  <a
-                    class="btn btn-sm {% if active_tag == tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
-                    href="{{ url_for('projects', tag=tag, sort=active_sort) }}"
-                    data-tag-btn="{{ tag }}"
-                  >{{ tag }}</a>
-                {% endif %}
+                <a
+                  class="btn btn-sm {% if active_tag == tag %}btn-dark{% else %}btn-outline-dark{% endif %}"
+                  href="{{ url_for(category_endpoint, tag=tag, sort=active_sort) }}"
+                  data-tag-btn="{{ tag }}"
+                >{{ tag }}</a>
               {% endfor %}
 
             </div>
@@ -203,17 +165,17 @@
             <div class="d-flex flex-wrap justify-content-center gap-2">
               <a
                 class="btn btn-sm {% if active_sort == 'az' %}btn-dark{% else %}btn-outline-dark{% endif %}"
-                href="{{ url_for('projects', sort='az', tag=active_tag) if not active_category else url_for('projects_' ~ active_category, sort='az', tag=active_tag) }}"
+                href="{{ url_for(category_endpoint, sort='az', tag=active_tag) }}"
                 data-sort-btn="az"
               >A–Z</a>
               <a
                 class="btn btn-sm {% if active_sort == 'newest' %}btn-dark{% else %}btn-outline-dark{% endif %}"
-                href="{{ url_for('projects', sort='newest', tag=active_tag) if not active_category else url_for('projects_' ~ active_category, sort='newest', tag=active_tag) }}"
+                href="{{ url_for(category_endpoint, sort='newest', tag=active_tag) }}"
                 data-sort-btn="newest"
               >Newest</a>
               <a
                 class="btn btn-sm {% if active_sort == 'oldest' %}btn-dark{% else %}btn-outline-dark{% endif %}"
-                href="{{ url_for('projects', sort='oldest', tag=active_tag) if not active_category else url_for('projects_' ~ active_category, sort='oldest', tag=active_tag) }}"
+                href="{{ url_for(category_endpoint, sort='oldest', tag=active_tag) }}"
                 data-sort-btn="oldest"
               >Oldest</a>
             </div>
