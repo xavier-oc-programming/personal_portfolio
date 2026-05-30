@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-30T15:55:05Z",
+  "snapshot_at": "2026-05-30T15:59:04Z",
   "projects": [
     {
       "id": 1,
@@ -2908,7 +2908,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/llm-document-summarizer/card/Screenshot_2026-05-30_at_17.58.50.png",
       "repo_url": "https://github.com/xavier-oc-programming/llm-document-summarizer",
       "live_url": "https://llm-document-summarizer.azurewebsites.net/demo",
       "demo_url": "https://llm-document-summarizer.azurewebsites.net/docs"
