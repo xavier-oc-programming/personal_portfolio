@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-01T11:08:16Z",
+  "snapshot_at": "2026-06-01T11:12:20Z",
   "projects": [
     {
       "id": 1,
@@ -2967,7 +2967,16 @@
         "GitHub Actions",
         "pytest"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/cv-gap-analyser/screenshots/Screenshot_2026-06-01_at_12.29.28.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/cv-gap-analyser/screenshots/Screenshot_2026-06-01_at_12.33.03.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/cv-gap-analyser/screenshots/Screenshot_2026-06-01_at_12.36.20.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/cv-gap-analyser/screenshots/Screenshot_2026-06-01_at_12.47.02.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/cv-gap-analyser/screenshots/Screenshot_2026-06-01_at_13.09.33.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/cv-gap-analyser/screenshots/Screenshot_2026-06-01_at_13.09.54.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/cv-gap-analyser/screenshots/Screenshot_2026-06-01_at_13.10.27.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/cv-gap-analyser/screenshots/Screenshot_2026-06-01_at_13.11.09.png"
+      ],
       "videos": [
         "https://youtu.be/0I8A3fNxz84"
       ],
