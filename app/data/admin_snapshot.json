@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-01T10:23:05Z",
+  "snapshot_at": "2026-06-01T11:08:16Z",
   "projects": [
     {
       "id": 1,
@@ -2968,7 +2968,9 @@
         "pytest"
       ],
       "screenshots": [],
-      "videos": [],
+      "videos": [
+        "https://youtu.be/0I8A3fNxz84"
+      ],
       "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/cv-gap-analyser/card/skill_gaps.png",
       "repo_url": "https://github.com/xavier-oc-programming/cv-gap-analyser",
       "live_url": "https://xavier-oc-machinelearn-cv-gap-analyser.hf.space",
