@@ -103,8 +103,11 @@
   }
 
   function buildCard(p) {
-    const img = p.card_image
-      ? `<img src="/static/${esc(p.card_image)}" class="card-img-top project-card-img" alt="${esc(p.title)} cover image" loading="lazy">`
+    const imgSrc = p.card_image
+      ? (p.card_image.startsWith('http') ? p.card_image : '/static/' + p.card_image)
+      : null;
+    const img = imgSrc
+      ? `<img src="${esc(imgSrc)}" class="card-img-top project-card-img" alt="${esc(p.title)} cover image" loading="lazy">`
       : '';
 
     const badge = p.category
