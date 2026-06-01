@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-01T11:12:20Z",
+  "snapshot_at": "2026-06-01T11:12:38Z",
   "projects": [
     {
       "id": 1,
@@ -2932,25 +2932,23 @@
       "featured": false,
       "featured_order": null,
       "date": "2026-05-27",
-      "problem": "Automating the manual process of comparing a CV against a job description to\r\nidentify specific skill gaps and produce actionable recommendations — using\r\nsemantic understanding rather than keyword counting, and accepting job\r\ndescriptions from text, PDF, or any career page URL.",
-      "solution": "HuggingFace all-MiniLM-L6-v2 for semantic embeddings, a curated keyword list for skill extraction, rouge-score for ATS keyword overlap, trafilatura for URL extraction with BeautifulSoup fallback, Pinecone for the job library. FastAPI serves six match routes covering all input combinations.",
+      "problem": "Automating the manual process of comparing a CV against a job description to identify specific skill gaps and produce actionable recommendations — using semantic understanding rather than keyword counting, and accepting job descriptions from text, PDF, or URL including LinkedIn.",
+      "solution": "HuggingFace all-MiniLM-L6-v2 for semantic embeddings, a curated keyword list (~150 terms) for skill extraction, rouge-score for ATS keyword overlap, LinkedIn guest API + trafilatura for URL extraction with BeautifulSoup fallback, Pinecone for the job library. FastAPI serves ten match routes covering all CV/JD input combinations. Deployed as a Docker Space on HuggingFace Spaces.",
       "challenges": "Skill extraction is keyword-only. An initial spaCy noun phrase implementation was removed after testing — it consistently extracted job description boilerplate, company names, benefit descriptions, and non-English phrases as false-positive skills. The current keyword list (~150 terms) is precise but cannot catch tools not on the list.\r\n\r\nLinkedIn URL extraction is fragile. The unauthenticated guest API endpoint works for direct job posting URLs but is undocumented, may break without notice, and returns varying HTML structure. The login wall blocks standard scrapers entirely on collection and search pages.\r\n\r\nNon-English job descriptions break skill extraction. The keyword list is English-only, so Spanish, French, or other-language JDs return few matched skills even when the underlying technologies are the same.\r\n\r\nHuggingFace Spaces free tier sleeps after inactivity, causing a cold start delay on the first request. The shared CPU tier can be slow under concurrent load.\r\n\r\nSemantic similarity scores are not calibrated against real hiring outcomes. A score of 72/100 does not mean a 72% chance of interview. The thresholds reflect linguistic similarity, not actual job fit.",
-      "results": "TBD — populate after running. Include: match score on sample CV vs\r\ndata-science-mlops-engineer role, skill coverage rate, top missing skills.",
+      "results": "Tested against the Data Science / MLOps Engineer target role. Xavier's CV scores Strong match (76/100) with Good skill coverage. Matched skills include Amazon Bedrock, Amazon SageMaker, AWS, Azure, CI/CD, Docker, FastAPI, GitHub Actions, LangChain, MLflow, MLOps, Pinecone, Python, RAG, and sentence-transformers. Missing skills flagged by the keyword analyser: Bedrock Guardrails, BigQuery, GCP, and Kubernetes — all consistent with the actual gap between the CV and the target role at the time of analysis.",
       "tags": [
         "NLP",
         "machine-learning",
         "LLM",
-        "benchmarking",
-        "azure",
         "deployment",
         "REST-API",
         "docker",
         "CI-CD",
         "jupyter",
         "web-app",
-        "feature-engineering",
-        "unsupervised-learning",
-        "classification"
+        "huggingface",
+        "vector-database",
+        "semantic-search"
       ],
       "tech_stack": [
         "Python",
