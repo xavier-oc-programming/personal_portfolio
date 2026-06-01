@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-05-30T16:06:53Z",
+  "snapshot_at": "2026-06-01T10:03:55Z",
   "projects": [
     {
       "id": 1,
@@ -2921,6 +2921,59 @@
       "repo_url": "https://github.com/xavier-oc-programming/llm-document-summarizer",
       "live_url": "https://llm-document-summarizer.azurewebsites.net/demo",
       "demo_url": "https://llm-document-summarizer.azurewebsites.net/docs"
+    },
+    {
+      "id": 62,
+      "slug": "cv-gap-analyser",
+      "title": "CV Gap Analyser — Semantic Job Matching with HuggingFace and Pinecone",
+      "primary_category": "ai-ml",
+      "short_description": "Semantic CV vs job description analysis identifying missing skills and producingactionable gap recommendations. HuggingFace embeddings for match scoring, Pineconefor a searchable job library, ROUGE for ATS keyword alignment. Accepts jobdescriptions as text, PDF, or URL via trafilatura extraction.",
+      "full_description": "A CV gap analysis system built to solve a real problem: preparing a job application and needing a systematic way to identify what to evidence. Compares CV and job description using cosine similarity between all-MiniLM-L6-v2 embeddings — capturing semantic alignment beyond shared keywords. A CV describing \"deploying models to production cloud infrastructure\" matches a role requiring \"MLOps and cloud-native deployment\" even when the exact words differ.\r\n\r\nA curated technology keyword list (~150 terms) identifies specific missing skills. ROUGE metrics flag keyword gaps relevant to ATS screening — a CV can score high semantically but fail automated screening if it uses different terminology. The combination gives a complete picture: conceptual alignment and keyword alignment.\r\n\r\nA built-in library of five realistic job descriptions is stored in Pinecone. Every CV analysis retrieves the most semantically similar roles, ranked by score. New job descriptions can be added via POST /api/add-job-url — fetching and indexing directly from a career page URL using trafilatura.",
+      "featured": false,
+      "featured_order": null,
+      "date": "2026-05-27",
+      "problem": "Automating the manual process of comparing a CV against a job description to\r\nidentify specific skill gaps and produce actionable recommendations — using\r\nsemantic understanding rather than keyword counting, and accepting job\r\ndescriptions from text, PDF, or any career page URL.",
+      "solution": "HuggingFace all-MiniLM-L6-v2 for semantic embeddings, a curated keyword list for skill extraction, rouge-score for ATS keyword overlap, trafilatura for URL extraction with BeautifulSoup fallback, Pinecone for the job library. FastAPI serves six match routes covering all input combinations.",
+      "challenges": "Skill extraction is keyword-only. An initial spaCy noun phrase implementation was removed after testing — it consistently extracted job description boilerplate, company names, benefit descriptions, and non-English phrases as false-positive skills. The current keyword list (~150 terms) is precise but cannot catch tools not on the list.\r\n\r\nLinkedIn URL extraction is fragile. The unauthenticated guest API endpoint works for direct job posting URLs but is undocumented, may break without notice, and returns varying HTML structure. The login wall blocks standard scrapers entirely on collection and search pages.\r\n\r\nNon-English job descriptions break skill extraction. The keyword list is English-only, so Spanish, French, or other-language JDs return few matched skills even when the underlying technologies are the same.\r\n\r\nThe F1 free tier imposes a 60 CPU-minute daily limit. The embedding model takes ~5–10 seconds to load on cold start and the app sleeps after ~20 minutes of inactivity, causing a 30+ second wake-up delay on the first request after idle.\r\n\r\nSemantic similarity scores are not calibrated against real hiring outcomes. A score of 72/100 does not mean a 72% chance of interview. The thresholds reflect linguistic similarity, not actual job fit.",
+      "results": "TBD — populate after running. Include: match score on sample CV vs\r\ndata-science-mlops-engineer role, skill coverage rate, top missing skills.",
+      "tags": [
+        "NLP",
+        "machine-learning",
+        "LLM",
+        "benchmarking",
+        "azure",
+        "deployment",
+        "REST-API",
+        "docker",
+        "CI-CD",
+        "jupyter",
+        "web-app",
+        "feature-engineering",
+        "unsupervised-learning",
+        "classification"
+      ],
+      "tech_stack": [
+        "Python",
+        "HuggingFace sentence-transformers",
+        "Pinecone",
+        "spaCy",
+        "trafilatura",
+        "rouge-score",
+        "PyMuPDF",
+        "BeautifulSoup4",
+        "FastAPI",
+        "Uvicorn",
+        "Docker",
+        "Azure App Service",
+        "GitHub Actions",
+        "pytest"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": "https://github.com/xavier-oc-programming/cv-gap-analyser",
+      "live_url": "https://cv-gap-analyser.azurewebsites.net",
+      "demo_url": "https://cv-gap-analyser.azurewebsites.net/docs"
     }
   ],
   "messages": []
