@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-03T11:35:47Z",
+  "snapshot_at": "2026-06-03T11:36:45Z",
   "projects": [
     {
       "id": 1,
@@ -2863,7 +2863,7 @@
       "id": 61,
       "slug": "llm-document-summarizer",
       "title": "LLM Document Summarizer — LLMOps with Amazon Bedrock",
-      "primary_category": "data",
+      "primary_category": "ai-ml",
       "short_description": "PDF document summarizer using Amazon Bedrock (Claude Haiku) with production LLMOps patterns: versioned YAML prompt templates, automated ROUGE evaluation, Bedrock Guardrails for PII redaction, and MLflow tracking of every inference call. Deployed on Azure App Service.",
       "full_description": "A production document summarization system demonstrating four LLMOps patterns: prompt versioning, automated evaluation, guardrails, and experiment tracking.\r\n\r\nPrompt templates are stored as versioned YAML files (v1, v2, v3) in a prompts/ directory. Switching the active version is a single config change — no code deployment required. An evaluation pipeline (evaluate.py) runs all prompt versions against a held-out set of documents with human-written reference summaries and computes ROUGE scores. Results are logged to MLflow alongside every production inference call — latency, prompt version, guardrails activity, and input/output length.\r\n\r\nBedrock Guardrails are applied to every response: PII (names, emails, phone numbers) is anonymised before the summary reaches the user, and harmful content is blocked. Every guardrail action is logged to MLflow for monitoring.\r\n\r\nServed via FastAPI with auto-generated OpenAPI docs at /docs. Runs locally via Docker Compose (API + MLflow tracking server). GitHub Actions CI runs pytest on every push.",
       "featured": true,
