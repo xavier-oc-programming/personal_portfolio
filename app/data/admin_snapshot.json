@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-03T17:47:02Z",
+  "snapshot_at": "2026-06-03T17:50:33Z",
   "projects": [
     {
       "id": 1,
@@ -3093,7 +3093,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/hypothesis-testing-explorer/card/Screenshot_2026-06-03_at_19.50.17.png",
       "repo_url": "https://github.com/xavier-oc-programming/hypothesis-testing-explorer",
       "live_url": "https://xavier-oc-machinelearn-hypothesis-testing-explorer.hf.space",
       "demo_url": "https://xavier-oc-machinelearn-hypothesis-testing-explorer.hf.space"
