@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-03T11:37:03Z",
+  "snapshot_at": "2026-06-03T11:39:49Z",
   "projects": [
     {
       "id": 1,
@@ -3040,7 +3040,9 @@
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/digit-recognizer/screenshots/05_confusion_matrix.png",
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/digit-recognizer/screenshots/06_misclassified.png"
       ],
-      "videos": [],
+      "videos": [
+        "https://youtu.be/TSAWukylNYg"
+      ],
       "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/digit-recognizer/card/Screenshot_2026-06-03_at_13.34.05.png",
       "repo_url": "https://github.com/xavier-oc-programming/digit-recognizer",
       "live_url": "https://digit-recognizer-xoc.azurewebsites.net",
