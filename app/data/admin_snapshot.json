@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-03T11:35:26Z",
+  "snapshot_at": "2026-06-03T11:35:47Z",
   "projects": [
     {
       "id": 1,
@@ -3032,7 +3032,13 @@
       "screenshots": [
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/digit-recognizer/screenshots/Screenshot_2026-06-03_at_13.34.44.png",
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/digit-recognizer/screenshots/Screenshot_2026-06-03_at_13.34.59.png",
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/digit-recognizer/screenshots/Screenshot_2026-06-03_at_13.35.09.png"
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/digit-recognizer/screenshots/Screenshot_2026-06-03_at_13.35.09.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/digit-recognizer/screenshots/01_sample_digits.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/digit-recognizer/screenshots/02_pixel_distribution.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/digit-recognizer/screenshots/03_class_distribution.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/digit-recognizer/screenshots/04_training_curves.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/digit-recognizer/screenshots/05_confusion_matrix.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/digit-recognizer/screenshots/06_misclassified.png"
       ],
       "videos": [],
       "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/digit-recognizer/card/Screenshot_2026-06-03_at_13.34.05.png",
