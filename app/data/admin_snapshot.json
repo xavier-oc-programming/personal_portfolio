@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-04T19:26:43Z",
+  "snapshot_at": "2026-06-04T19:27:56Z",
   "projects": [
     {
       "id": 1,
@@ -3157,13 +3157,14 @@
       ],
       "screenshots": [
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-detector/screenshots/Screenshot_2026-06-04_at_21.17.31.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-detector/screenshots/Screenshot_2026-06-04_at_21.17.44.png",
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-detector/screenshots/01_language_distribution.png",
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-detector/screenshots/02_text_length_by_language.png",
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-detector/screenshots/04_top_ngrams_per_language.png",
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-detector/screenshots/05_confusion_matrix.png",
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-detector/screenshots/06_model_comparison.png",
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-detector/screenshots/07_per_language_f1.png",
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-detector/screenshots/Screenshot_2026-06-04_at_21.17.44.png"
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-detector/screenshots/Screenshot_2026-06-04_at_21.27.42.png"
       ],
       "videos": [],
       "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-detector/card/Screenshot_2026-06-04_at_20.54.27.png",
