@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-04T18:54:51Z",
+  "snapshot_at": "2026-06-04T18:55:11Z",
   "projects": [
     {
       "id": 1,
@@ -3157,7 +3157,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-detector/card/Screenshot_2026-06-04_at_20.54.27.png",
       "repo_url": "https://github.com/xavier-oc-programming/language-detector",
       "live_url": "https://language-detector-xoc.azurewebsites.net",
       "demo_url": "https://language-detector-xoc.azurewebsites.net"
