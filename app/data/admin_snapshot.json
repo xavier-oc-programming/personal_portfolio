@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-04T12:20:33Z",
+  "snapshot_at": "2026-06-04T12:24:07Z",
   "projects": [
     {
       "id": 1,
@@ -3101,7 +3101,9 @@
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/hypothesis-testing-explorer/screenshots/Screenshot_2026-06-04_at_14.19.57.png",
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/hypothesis-testing-explorer/screenshots/Screenshot_2026-06-04_at_14.20.02.png"
       ],
-      "videos": [],
+      "videos": [
+        "https://youtu.be/BohFzOhRazE"
+      ],
       "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/hypothesis-testing-explorer/card/Screenshot_2026-06-03_at_19.50.17.png",
       "repo_url": "https://github.com/xavier-oc-programming/hypothesis-testing-explorer",
       "live_url": "https://xavier-oc-machinelearn-hypothesis-testing-explorer.hf.space",
