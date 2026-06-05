@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-05T17:26:43Z",
+  "snapshot_at": "2026-06-05T17:26:48Z",
   "projects": [
     {
       "id": 1,
@@ -2130,6 +2130,7 @@
         "Jupyter"
       ],
       "screenshots": [
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/boston-house-price-analysis/screenshots/Screenshot_2026-06-05_at_19.26.04.png",
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/boston-house-price-analysis/screenshots/Screenshot_2026-05-17_at_12.46.23.png",
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/boston-house-price-analysis/screenshots/actual_vs_predicted.png",
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/boston-house-price-analysis/screenshots/distance_distribution.png",
@@ -2151,7 +2152,6 @@
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/boston-house-price-analysis/screenshots/residuals_vs_predicted.png",
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/boston-house-price-analysis/screenshots/river_access_bar.png",
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/boston-house-price-analysis/screenshots/rooms_distribution.png",
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/boston-house-price-analysis/screenshots/Screenshot_2026-06-05_at_19.26.04.png",
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/boston-house-price-analysis/screenshots/Screenshot_2026-06-05_at_19.26.15.png"
       ],
       "videos": [],
