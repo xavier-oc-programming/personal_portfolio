@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-05T16:59:20Z",
+  "snapshot_at": "2026-06-05T17:26:43Z",
   "projects": [
     {
       "id": 1,
@@ -2150,7 +2150,9 @@
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/boston-house-price-analysis/screenshots/residual_distribution.png",
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/boston-house-price-analysis/screenshots/residuals_vs_predicted.png",
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/boston-house-price-analysis/screenshots/river_access_bar.png",
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/boston-house-price-analysis/screenshots/rooms_distribution.png"
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/boston-house-price-analysis/screenshots/rooms_distribution.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/boston-house-price-analysis/screenshots/Screenshot_2026-06-05_at_19.26.04.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/boston-house-price-analysis/screenshots/Screenshot_2026-06-05_at_19.26.15.png"
       ],
       "videos": [],
       "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/house-price-prediction/card/house.webp",
