@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-05T17:33:46Z",
+  "snapshot_at": "2026-06-05T17:42:39Z",
   "projects": [
     {
       "id": 1,
@@ -2159,8 +2159,8 @@
       ],
       "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/house-price-prediction/card/house.webp",
       "repo_url": "https://github.com/xavier-oc-programming/boston-house-price-analysis",
-      "live_url": "https://xavier-oc-programming.github.io/boston-house-price-analysis/notebook_web_render/",
-      "demo_url": "https://boston-house-price-xoc.azurewebsites.net"
+      "live_url": "https://boston-house-price-xoc.azurewebsites.net",
+      "demo_url": "https://xavier-oc-programming.github.io/boston-house-price-analysis/notebook_web_render/"
     },
     {
       "id": 49,
