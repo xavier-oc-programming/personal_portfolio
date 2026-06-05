@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-04T19:29:03Z",
+  "snapshot_at": "2026-06-05T16:59:20Z",
   "projects": [
     {
       "id": 1,
@@ -2085,32 +2085,49 @@
     {
       "id": 48,
       "slug": "boston-house-price-analysis",
-      "title": "Boston House Price Analysis",
-      "primary_category": "data",
-      "short_description": "Multivariable linear regression model predicting 1970s Boston house prices from 13 neighbourhood features, with residual diagnostics, log transformation, and a custom property valuation function.",
-      "full_description": "This project builds a multivariable linear regression model on the classic Boston Housing Dataset (506 census tracts, 13 features) to estimate median residential property values. It covers the full data science workflow: exploratory analysis and visualisation, train/test splitting, model fitting, residual diagnostics, and a working valuation function that returns a dollar estimate for any given property configuration. The log transformation step takes the model from r² 0.67 to 0.74 on held-out data — a concrete, measurable improvement that came from actually reading the residuals rather than just accepting the first fit.",
-      "featured": false,
+      "title": "Boston House Price Predictor",
+      "primary_category": "ai-ml",
+      "short_description": "1970s Boston house price predictor. Linear regression on 13 features with log-transformed target (test r²=0.74). Live slider UI on Azure; full analysis in rendered notebook.",
+      "full_description": "This project works through 506 Boston census tracts from the Harrison & Rubinfeld (1978) dataset, fitting a multivariable linear regression across 13 socio-economic and geographic features to explain median residential property values. The pipeline covers data cleaning, exploratory visualisation (distributions, pair plots, joint plots), an 80/20 train/test split, residual diagnostics, and a working valuation function.\r\n\r\nThe raw price distribution carries a positive skew (1.46) that inflates the residuals. Applying a log transformation to the target reduces residual skew to 0.09 and lifts test-set r² from 0.67 to 0.74. Number of rooms is the strongest positive predictor (each additional room adds ~$3,109). Nitric oxide pollution carries the largest negative coefficient (−0.70). River proximity raises estimated prices; poverty level and pupil-to-teacher ratio both depress them.\r\n\r\nThe deployed app exposes all 13 features as interactive sliders. Adjusting rooms, pollution, crime rate, or river proximity updates the estimated property value in real time. A feature impact panel shows which characteristics are currently pushing the price up or down — making the model's internal logic visible without showing raw coefficients.\r\n\r\nKey results: average Boston property estimated at ~$20,198; an 8-room river-front property in a low-poverty area estimates at ~$37,110. All prices are 1970s USD.",
+      "featured": true,
       "featured_order": 7,
       "date": "2026-04-13",
-      "problem": "Real estate valuation is rarely driven by a single factor — price is the result of many neighbourhood characteristics interacting at once. A simple \"price per square metre\" heuristic ignores crime rates, school quality, pollution, and proximity to employment, all of which the data shows matter significantly. Without a principled model that accounts for all 13 features simultaneously, any estimate is likely to be badly miscalibrated for properties at the extremes — highly desirable river-adjacent homes or crime-heavy districts. The challenge was to build something that could hold all those variables in mind at once and still produce an interpretable, trustworthy output.",
-      "solution": "I fit a multivariable OLS regression using scikit-learn's LinearRegression on an 80/20 train/test split (random_state=10 for reproducibility). Before modelling I explored the data visually with seaborn jointplots (DIS vs NOX, LSTAT vs PRICE, RM vs PRICE) and a full pairplot to understand which relationships were linear and which were curved. After the first model showed positive skew and a fan-shaped residual pattern, I applied a log transformation to the target variable — fitting the model on log(PRICE) and inverting with np.exp() at prediction time. The final valuation function takes a property's 13 feature values, feeds them through the log model, and returns a dollar estimate, making the model directly usable as a decision tool.",
-      "challenges": "The trickiest part was diagnosing *why* the first model underperformed rather than just accepting its r² of 0.67. The residual vs. predicted plot showed a clear cone shape — variance increasing with predicted price — which is a textbook sign of heteroscedasticity. Recognising that this pointed to a distributional problem with the target (not the features) was the key insight. Applying np.log(PRICE) compressed the high-end values disproportionately, normalised the residuals, and lifted test r² to 0.74. Getting the valuation function right also required careful column ordering to match the training DataFrame exactly, since sklearn's predict() is positional, not named.",
-      "results": "The log-transformed model achieves r² of 0.79 on training data and 0.74 on the held-out test set — a meaningful improvement over the naive first fit. Coefficient signs all make intuitive sense: rooms (RM) is the strongest positive predictor, adding roughly $3,000 per additional room, while poverty (LSTAT), crime (CRIM), and pollution (NOX) all suppress prices. The project taught me that residual analysis isn't a formality — it's the actual diagnostic that told me what to fix. Next time I'd also explore regularisation (Ridge/Lasso) to see whether shrinking noisy coefficients like B and ZN improves generalisation further.",
+      "problem": "Real estate valuation depends on dozens of overlapping factors — proximity to employment, school quality, crime, pollution, room count — and it is not obvious which factors matter most or by how much. The goal was to quantify these relationships for 1970s Boston and deploy the model as a live interactive tool rather than leaving it static in a notebook.",
+      "solution": "A multivariable OLS regression fitted on 13 features after an 80/20 train/test split (random_state=10). Log transformation applied to the target after residual diagnostics confirmed skew. Coefficients interpreted for sign and magnitude; np.exp() inverts the log transform at inference time. FastAPI wraps the trained model (StandardScaler + LinearRegression stored as joblib pkl files) and serves a single-page slider UI. Deployed to Azure App Service (F1 free tier) via zip deploy.",
+      "challenges": "The raw price distribution has a pronounced right skew (1.46), driven partly by a hard cap at $50,000. Validating that the log transformation genuinely helped — rather than just appearing to — required comparing residual distributions and both train and test r² across both models. The improvement in test r² (0.67 → 0.74) and residual skew (1.46 → 0.09) confirmed it was warranted. On the deployment side, the log transform must be reversed at inference (np.exp(prediction) × 1000) and the existing notebook CI workflow had to be preserved alongside the new API test workflow without conflict.",
+      "results": "- Log model test r²: 0.74 (vs. 0.67 raw)\r\n- Log model train r²: 0.79 (vs. 0.75 raw)\r\n- Residual skew reduced from 1.46 to 0.09\r\n- Each additional room adds ~$3,109 to estimated value\r\n- Pollution (NOX) is the strongest negative predictor (coefficient −0.70)\r\n- Average Boston property: ~$20,198 · Premium 8-room river-front property: ~$37,110\r\n- All prices are 1970s USD — not current market values\r\n- 35 of 506 properties border the Charles River",
       "tags": [
-        "data-analysis",
         "machine-learning",
+        "regression",
+        "data-analysis",
+        "scikit-learn",
+        "azure",
+        "deployment",
+        "REST-API",
+        "docker",
+        "CI-CD",
+        "jupyter",
+        "web-app",
+        "feature-engineering",
         "visualisation",
         "python"
       ],
       "tech_stack": [
         "Python",
+        "scikit-learn",
         "pandas",
         "NumPy",
-        "scikit-learn",
-        "seaborn",
         "Matplotlib",
+        "Seaborn",
         "Plotly",
-        "Jupyter Notebook"
+        "FastAPI",
+        "Uvicorn",
+        "Gunicorn",
+        "Docker",
+        "Azure App Service",
+        "GitHub Actions",
+        "pytest",
+        "Jupyter"
       ],
       "screenshots": [
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/boston-house-price-analysis/screenshots/Screenshot_2026-05-17_at_12.46.23.png",
@@ -2139,7 +2156,7 @@
       "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/house-price-prediction/card/house.webp",
       "repo_url": "https://github.com/xavier-oc-programming/boston-house-price-analysis",
       "live_url": "https://xavier-oc-programming.github.io/boston-house-price-analysis/notebook_web_render/",
-      "demo_url": "https://xavier-oc-programming.github.io/boston-house-price-analysis/notebook_web_render/"
+      "demo_url": "https://boston-house-price-xoc.azurewebsites.net"
     },
     {
       "id": 49,
