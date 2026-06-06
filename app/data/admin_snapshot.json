@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-05T17:42:39Z",
+  "snapshot_at": "2026-06-06T08:13:48Z",
   "projects": [
     {
       "id": 1,
@@ -3194,6 +3194,54 @@
       "repo_url": "https://github.com/xavier-oc-programming/language-detector",
       "live_url": "https://language-detector-xoc.azurewebsites.net",
       "demo_url": "https://language-detector-xoc.azurewebsites.net"
+    },
+    {
+      "id": 66,
+      "slug": "pyspark-local-pipeline",
+      "title": "NYC 311 PySpark ETL Pipeline",
+      "primary_category": "data",
+      "short_description": "Four-stage PySpark ETL pipeline on 40M+ NYC 311 service requests. Identical pandas pipeline for direct comparison. Benchmarked at 100k, 1M, and 10M rows — showing the exact crossover where Spark's parallelism overcomes its initialisation overhead.",
+      "full_description": "A production-pattern ETL pipeline built with PySpark on the NYC 311 Service Request dataset (40M+ rows, 2020–present). Four stages — ingest, clean, transform, aggregate — each a pure function returning a Spark DataFrame.\r\nThe transform stage computes response_time_hours via unix_timestamp arithmetic, extracts date components, and derives a noise complaint flag. Six aggregations answer real business questions: which boroughs generate the most complaints, which agencies respond fastest, how complaint volume has trended over time.\r\nAn identical pandas pipeline runs the same analytical logic for direct comparison. A benchmark module times both at 100k, 1M, and 10M rows using real data subsets — no synthetic resampling. At 10M rows Spark wins; below ~1M rows pandas wins due to JVM overhead.\r\nThe FastAPI app serves pre-computed results. This mirrors production patterns: scheduled batch jobs write to a data store, APIs serve from that store.",
+      "featured": false,
+      "featured_order": null,
+      "date": "2026-06-05",
+      "problem": "Demonstrating PySpark ETL pipeline patterns on a dataset large enough to make the distributed computing advantage real — with a benchmark that shows the exact crossover rather than theoretical claims.",
+      "solution": "Four-stage PySpark pipeline on 40M+ real NYC open data rows. Identical pandas pipeline for comparison. Benchmark at 100k/1M/10M rows using real data subsets. API serves pre-computed results from outputs/. Java installed in Dockerfile for PySpark JVM requirement.",
+      "challenges": "PySpark requires Java 17+ — must be installed in Dockerfile and GitHub Actions CI. The 13GB CSV requires careful memory management: inferSchema=False avoids the full-file scan, and spark.driver.memory is set to 4g. The benchmark samples real data rather than resampling — at sizes larger than the available dataset the benchmark skips gracefully.",
+      "results": "Analysed 20.1M NYC 311 service requests (2020–2026). Brooklyn leads with 6M complaints (30% of total). Top complaint types: Illegal Parking (2.74M), Noise - Residential (2.44M), HEAT/HOT WATER (1.62M). NYPD handles noise complaints in under 2 hours on average; housing agency HPD averages 379 hours. Benchmark crossover between 100k and 1M rows on Apple M-series: at 10M rows Spark is 3× faster than pandas (240s vs 748s). At 100k rows pandas wins (3.3s vs 6.7s) due to JVM overhead.",
+      "tags": [
+        "data-analysis",
+        "python",
+        "azure",
+        "deployment",
+        "REST-API",
+        "docker",
+        "CI-CD",
+        "jupyter",
+        "web-app",
+        "big-data",
+        "tabular-data"
+      ],
+      "tech_stack": [
+        "Python",
+        "PySpark",
+        "pandas",
+        "NumPy",
+        "Matplotlib",
+        "Seaborn",
+        "FastAPI",
+        "Uvicorn",
+        "Docker",
+        "Azure App Service",
+        "GitHub Actions",
+        "pytest"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": "https://github.com/xavier-oc-programming/pyspark-local-pipeline",
+      "live_url": "https://xoc-pyspark-pipeline.azurewebsites.net",
+      "demo_url": "https://xoc-pyspark-pipeline.azurewebsites.net"
     }
   ],
   "messages": []
