@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-06T08:13:48Z",
+  "snapshot_at": "2026-06-06T08:14:01Z",
   "projects": [
     {
       "id": 1,
@@ -3238,7 +3238,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/pyspark-local-pipeline/card/Screenshot_2026-06-06_at_10.13.01.png",
       "repo_url": "https://github.com/xavier-oc-programming/pyspark-local-pipeline",
       "live_url": "https://xoc-pyspark-pipeline.azurewebsites.net",
       "demo_url": "https://xoc-pyspark-pipeline.azurewebsites.net"
