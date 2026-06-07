@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-07T10:04:38Z",
+  "snapshot_at": "2026-06-07T10:05:09Z",
   "projects": [
     {
       "id": 1,
@@ -3286,7 +3286,13 @@
         "GitHub Actions",
         "pytest"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/anime-face-gan/screenshots/interpolation.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/anime-face-gan/screenshots/pixel_distribution.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/anime-face-gan/screenshots/sample_training_images.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/anime-face-gan/screenshots/training_loss.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/anime-face-gan/screenshots/training_stages.png"
+      ],
       "videos": [],
       "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/anime-face-gan/card/gan_anime.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/anime-face-gan",
