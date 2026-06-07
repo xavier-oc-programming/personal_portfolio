@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-06T08:14:01Z",
+  "snapshot_at": "2026-06-07T10:04:20Z",
   "projects": [
     {
       "id": 1,
@@ -3242,6 +3242,56 @@
       "repo_url": "https://github.com/xavier-oc-programming/pyspark-local-pipeline",
       "live_url": "https://xoc-pyspark-pipeline.azurewebsites.net",
       "demo_url": "https://xoc-pyspark-pipeline.azurewebsites.net"
+    },
+    {
+      "id": 67,
+      "slug": "anime-face-gan",
+      "title": "Anime Face GAN — DCGAN on 63,000 Training Images",
+      "primary_category": "ai-ml",
+      "short_description": "Generates anime faces using a DCGAN trained on 63,000 images. Every face is produced from random noise — none of them exist. Trained on Azure ML Compute Instance. Includes latent space interpolation showing smooth morphing between faces.",
+      "full_description": "A Deep Convolutional GAN trained on 63,000 anime face images at 64x64 pixels. The generator\r\nlearns to produce anime faces from random noise vectors; the discriminator learns to distinguish\r\nreal from generated images. Both networks improve through adversarial training until the generator\r\nproduces convincing faces the discriminator cannot reliably identify as fake.\r\n\r\nThe architecture follows the DCGAN paper: transposed convolutions for upsampling in the generator,\r\nstrided convolutions for downsampling in the discriminator, BatchNormalization throughout,\r\nLeakyReLU activations, and Adam with BETA_1=0.5. Training ran on Azure ML Compute Instance —\r\nthe only project in the portfolio where Azure is used for training rather than just inference\r\ndeployment.\r\n\r\nThe demo includes latent space interpolation: a smooth morphing sequence between two randomly\r\nchosen faces that demonstrates the generator has learned a continuous, structured latent space\r\nrather than memorising training images.",
+      "featured": false,
+      "featured_order": null,
+      "date": "2026-06-06",
+      "problem": "Proving the GAN architecture claimed in the CV with working portfolio evidence, and demonstrating Azure ML Compute Instance for cloud training — separate from the Azure App Service deployment pattern used across all other projects.",
+      "solution": "DCGAN with two conv blocks in the discriminator and a symmetric upsampling path in the generator. Trained on Azure ML Compute Instance with subprocess shutdown at training end to control costs. Generator committed to the repository for zero-retraining inference deployment on Azure App Service.",
+      "challenges": "GAN training instability — mode collapse, discriminator dominance, and oscillating losses are all failure modes addressed by specific architectural choices. The subprocess shutdown line must be removed for local training. The generator.keras file (~50MB) is committed to the repository so inference deployment requires no retraining. Colab auto-save corrupts the portfolio notebook by scrambling cell types — solved by separating training into a dedicated colab_train.ipynb so Colab never touches the main notebook. The Kaggle dataset contains a small number of corrupt image files that crash PIL on load — handled by wrapping each file open in a try/except and skipping bad files.",
+      "results": "Two training runs on Google Colab T4 GPU (100 epochs each). Baseline (equal learning rates) showed discriminator dominance by epoch 20 — D loss near 0, G loss rising to 5. v2 run with LEARNING_RATE_D=0.0001 and label smoothing=0.9 kept training competitive through epoch ~40 (D ~0.92, G ~1.78). Best face quality in epoch 30–60 checkpoints. No mode collapse — 16 distinct faces in every sample grid. Latent space interpolation produces smooth morphing between faces. Late-epoch D dominance remains (D ~0.59, G ~3.21 at epoch 100) — further improvement possible with a full 63,000-image dataset run.",
+      "tags": [
+        "deep-learning",
+        "neural-network",
+        "computer-vision",
+        "azure",
+        "deployment",
+        "REST-API",
+        "docker",
+        "CI-CD",
+        "jupyter",
+        "web-app",
+        "generative-ai"
+      ],
+      "tech_stack": [
+        "Python",
+        "TensorFlow",
+        "Keras",
+        "DCGAN",
+        "NumPy",
+        "Matplotlib",
+        "Pillow",
+        "FastAPI",
+        "Uvicorn",
+        "Docker",
+        "Azure ML Compute Instance",
+        "Azure App Service",
+        "GitHub Actions",
+        "pytest"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": "https://github.com/xavier-oc-programming/anime-face-gan",
+      "live_url": "https://anime-face-gan-xoc.azurewebsites.net",
+      "demo_url": "https://anime-face-gan-xoc.azurewebsites.net"
     }
   ],
   "messages": []
