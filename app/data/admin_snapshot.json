@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-07T10:04:20Z",
+  "snapshot_at": "2026-06-07T10:04:38Z",
   "projects": [
     {
       "id": 1,
@@ -3288,7 +3288,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/anime-face-gan/card/gan_anime.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/anime-face-gan",
       "live_url": "https://anime-face-gan-xoc.azurewebsites.net",
       "demo_url": "https://anime-face-gan-xoc.azurewebsites.net"
