@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-07T10:27:05Z",
+  "snapshot_at": "2026-06-07T10:32:05Z",
   "projects": [
     {
       "id": 1,
@@ -3347,7 +3347,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/email-subject-generator/card/Screenshot_2026-06-07_at_12.31.48.png",
       "repo_url": "https://github.com/xavier-oc-programming/email-subject-generator",
       "live_url": "https://email-subject-gen-xoc.azurewebsites.net",
       "demo_url": "https://email-subject-gen-xoc.azurewebsites.net"
