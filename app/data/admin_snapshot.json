@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-07T10:48:33Z",
+  "snapshot_at": "2026-06-07T10:51:00Z",
   "projects": [
     {
       "id": 1,
@@ -3301,7 +3301,7 @@
       "videos": [
         "https://youtu.be/ElyXJwRgx4k"
       ],
-      "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/anime-face-gan/card/gan_anime.jpg",
+      "card_image": null,
       "repo_url": "https://github.com/xavier-oc-programming/anime-face-gan",
       "live_url": "https://xavier-oc-machinelearn-anime-face-gan.hf.space",
       "demo_url": "https://xavier-oc-machinelearn-anime-face-gan.hf.space"
