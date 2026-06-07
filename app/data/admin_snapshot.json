@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-07T10:17:23Z",
+  "snapshot_at": "2026-06-07T10:19:33Z",
   "projects": [
     {
       "id": 1,
@@ -3297,7 +3297,9 @@
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/anime-face-gan/screenshots/training_loss.png",
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/anime-face-gan/screenshots/training_stages.png"
       ],
-      "videos": [],
+      "videos": [
+        "https://youtu.be/ElyXJwRgx4k"
+      ],
       "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/anime-face-gan/card/gan_anime.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/anime-face-gan",
       "live_url": "https://anime-face-gan-xoc.azurewebsites.net",
