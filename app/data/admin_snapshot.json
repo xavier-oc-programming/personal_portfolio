@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-08T14:49:29Z",
+  "snapshot_at": "2026-06-08T14:52:36Z",
   "projects": [
     {
       "id": 1,
@@ -3476,7 +3476,9 @@
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/databricks-etl-pipeline/screenshots/payment_breakdown.png",
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/databricks-etl-pipeline/screenshots/speed_by_hour.png"
       ],
-      "videos": [],
+      "videos": [
+        "https://youtu.be/XTb4uUDG50I"
+      ],
       "card_image": null,
       "repo_url": "https://github.com/xavier-oc-programming/databricks-etl-pipeline",
       "live_url": "https://databricks-etl-xoc.azurewebsites.net",
