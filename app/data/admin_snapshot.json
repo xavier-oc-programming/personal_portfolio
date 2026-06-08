@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-08T14:49:10Z",
+  "snapshot_at": "2026-06-08T14:49:29Z",
   "projects": [
     {
       "id": 1,
@@ -3469,7 +3469,12 @@
       ],
       "screenshots": [
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/databricks-etl-pipeline/screenshots/Screenshot_2026-06-08_at_16.48.45.png",
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/databricks-etl-pipeline/screenshots/Screenshot_2026-06-08_at_16.48.54.png"
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/databricks-etl-pipeline/screenshots/Screenshot_2026-06-08_at_16.48.54.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/databricks-etl-pipeline/screenshots/airport_trips.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/databricks-etl-pipeline/screenshots/daily_summary.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/databricks-etl-pipeline/screenshots/hourly_demand.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/databricks-etl-pipeline/screenshots/payment_breakdown.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/databricks-etl-pipeline/screenshots/speed_by_hour.png"
       ],
       "videos": [],
       "card_image": null,
