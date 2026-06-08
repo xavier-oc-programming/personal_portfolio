@@ -120,6 +120,10 @@
         ).join('')}</div>`
       : '';
 
+    const warningBadge = p.loading_warning
+      ? `<span class="badge text-bg-warning" title="This demo may take a minute or two to wake up">⏳ Slow start</span>`
+      : '';
+
     const githubBtn = p.github_url
       ? `<a class="btn btn-outline-dark btn-sm" href="${esc(p.github_url)}" target="_blank" rel="noopener">GitHub</a>`
       : `<button class="btn btn-outline-dark btn-sm" disabled>GitHub</button>`;
@@ -142,7 +146,7 @@
       </div>
       <p class="text-secondary mb-3">${esc(p.summary) || ''}</p>
       ${tags}
-      <div class="mt-auto d-flex gap-2">${githubBtn}${liveBtn}${detailsBtn}</div>
+      <div class="mt-auto d-flex flex-wrap gap-2">${githubBtn}${liveBtn}${detailsBtn}${warningBadge}</div>
     </div>
   </div>
 </div>`;

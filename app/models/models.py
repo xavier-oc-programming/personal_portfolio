@@ -49,6 +49,7 @@ class Project(db.Model):
 
     featured = db.Column(db.Boolean, default=False, nullable=False)
     featured_order = db.Column(db.Integer, nullable=True)
+    loading_warning = db.Column(db.Boolean, default=False, nullable=False)
     date = db.Column(db.String(20), nullable=True)
 
     problem = db.Column(db.Text, nullable=True)
@@ -181,6 +182,7 @@ class Project(db.Model):
             "live_url": self.live_url,
             "demo_url": self.demo_url,
             "featured": self.featured,
+            "loading_warning": self.loading_warning,
             "card_image": self.card_image,
             "screenshots": self.screenshots,
             "videos": self.videos,

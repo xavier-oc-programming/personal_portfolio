@@ -34,6 +34,8 @@ def _upsert_from_snapshot(existing: Project | None, data: dict) -> Project:
     p.live_url = data.get("live_url")
     p.demo_url = data.get("demo_url")
 
+    p.loading_warning = data.get("loading_warning", False)
+
     if existing is None:
         p.featured = data.get("featured", False)
         p.featured_order = data.get("featured_order")

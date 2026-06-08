@@ -287,6 +287,7 @@ def _build_snapshot_blob() -> bytes:
                 "short_description": p.short_description,
                 "full_description": p.full_description,
                 "featured": p.featured, "featured_order": p.featured_order,
+                "loading_warning": p.loading_warning,
                 "date": p.date, "problem": p.problem, "solution": p.solution,
                 "challenges": p.challenges, "results": p.results,
                 "tags": p.tags, "tech_stack": p.tech_stack,
@@ -337,6 +338,7 @@ def _populate_project_from_form(project: Project, form: ProjectForm) -> None:
     project.short_description = form.short_description.data.strip()
     project.full_description = form.full_description.data.strip()
     project.featured = form.featured.data
+    project.loading_warning = form.loading_warning.data
     project.date = (form.date.data or "").strip() or None
     project.problem = (form.problem.data or "").strip() or None
     project.solution = (form.solution.data or "").strip() or None
@@ -356,6 +358,7 @@ def _populate_form_from_project(form: ProjectForm, project: Project) -> None:
     form.short_description.data = project.short_description
     form.full_description.data = project.full_description
     form.featured.data = project.featured
+    form.loading_warning.data = project.loading_warning
     form.date.data = project.date or ""
     form.problem.data = project.problem or ""
     form.solution.data = project.solution or ""
@@ -916,6 +919,7 @@ def restore_from_snapshot():
         project.full_description  = record["full_description"]
         project.featured          = record.get("featured", False)
         project.featured_order    = record.get("featured_order")
+        project.loading_warning   = record.get("loading_warning", False)
         project.date              = record.get("date")
         project.problem           = record.get("problem")
         project.solution          = record.get("solution")

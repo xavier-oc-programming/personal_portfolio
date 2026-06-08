@@ -29,6 +29,7 @@ class ProjectForm(FlaskForm):
     )
     full_description = TextAreaField("Full Description", validators=[DataRequired()])
     featured = BooleanField("Featured")
+    loading_warning = BooleanField("Loading Warning")
     date = StringField("Date (YYYY-MM-DD)", validators=[Optional(), Length(max=20)])
     problem = TextAreaField("Problem", validators=[Optional()])
     solution = TextAreaField("Solution", validators=[Optional()])
