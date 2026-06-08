@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-07T10:51:12Z",
+  "snapshot_at": "2026-06-08T14:15:26Z",
   "projects": [
     {
       "id": 1,
@@ -10,6 +10,7 @@
       "full_description": "A terminal-based Hangman game that selects a random word and challenges the player to guess it letter by letter before running out of lives. Demonstrates string manipulation, list operations, and basic control flow in Python.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2024-09-15",
       "problem": "I wanted a first portfolio project that honestly represented where I started, not just where I ended up. Most developers hide their early work — I wanted to show the full arc.",
       "solution": "Built the game twice. The original stays exactly as written during the course — no cleanup. The advanced rebuild introduces a richer, more capable version of the same game: a HangmanGame class managing the full game logic, a WordBank class with JSON-persisted custom categories, animated ASCII art, color-coded letter tracking, difficulty levels, a hint system, and a play stats tracker saved between sessions.",
@@ -55,6 +56,7 @@
       "full_description": "A dual-version Caesar cipher terminal app built as the Day 8 project of 100 Days of Code. The original beginner version (2024)          \r\n  demonstrates core Python fundamentals. The advanced rebuild (2025) adds a Vigenère cipher, brute-force cracking, frequency analysis,    \r\n  file encryption, ANSI color UI, typewriter animations, and raw arrow-key navigation — all using only the Python standard library.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2025-09-17",
       "problem": "The Day 8 exercise produces a simple working cipher in ~40 lines. That version works, but doesn't reflect what Python engineering       \r\n  actually looks like — no structure, no reusability, no real UX.",
       "solution": "Kept the original version intact as a snapshot of where the journey started, then rebuilt the project from scratch with proper          \r\n  architecture: OOP dataclasses, enums for type safety, a cryptanalysis engine, modular separation of concerns, and a polished terminal UI\r\n   with color, animation, and keyboard-driven navigation.",
@@ -87,7 +89,7 @@
       "demo_url": null
     },
     {
-      "id": 3,
+      "id": 4,
       "slug": "number-guessing-game",
       "title": "Number Guessing Game",
       "primary_category": "software",
@@ -95,6 +97,7 @@
       "full_description": "I built this as the Day 12 project for 100 Days of Code, where the focus was Python scope and namespaces. The game picks a random number between 1 and 100 and gives you Easy (10 turns) or Hard (5 turns) to guess it — simple premise, but I used it as an excuse to build something properly rather than just get it working. The repo ships two versions side by side: the original close to the course solution, and a rebuilt OOP version I'm actually proud of.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-04-02",
       "problem": "This project was my first dive in to the concept of scope — the LEGB rule, why the global keyword is a trap, and why Python doesn't have block scope like most other languages. The problem with just doing the exercise as given is that you can write a working solution while completely missing the point. I wanted to build something that made those concepts visible in the structure of the code itself, not just in a comment explaining what the lesson was about.",
       "solution": "I built two versions so the contrast is concrete and inspectable. The original stays close to the course — procedural, one file, global constants in ALL_CAPS, helper functions that return values instead of mutating globals. The advanced version enforces one hard rule: the game logic layer (a GameState dataclass) has zero UI imports. display.py owns every print() call. main.py only orchestrates — collect input, call logic, call display. GuessResult and Difficulty enums replace every magic string and bare boolean, and a shared menu.py at the root launches either version via subprocess.",
@@ -126,7 +129,7 @@
       "demo_url": null
     },
     {
-      "id": 4,
+      "id": 9,
       "slug": "turtle-crossing",
       "title": "Turtle Crossing",
       "primary_category": "software",
@@ -134,6 +137,7 @@
       "full_description": "An arcade game where the player guides a turtle across a busy road while avoiding cars. Difficulty increases with each successful crossing as cars speed up. Built with Turtle graphics and OOP — separate classes for player, car manager, and scoreboard.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2025-10-23",
       "problem": null,
       "solution": null,
@@ -164,7 +168,7 @@
       "demo_url": null
     },
     {
-      "id": 5,
+      "id": 10,
       "slug": "higher-lower-web-game",
       "title": "Higher / Lower Web Game",
       "primary_category": "web",
@@ -172,6 +176,7 @@
       "full_description": "Higher/Lower is a Flask web game where the entire interface is the URL bar -- type /5 to guess 5, and the server tells you if you're too low, too high, or spot on. It ships as two builds: the original verbatim course version, and an advanced modular rebuild that fixes a real concurrency bug present in the original. The project is launched through a terminal menu that lets you pick which build to run, with the menu reappearing automatically when the server stops.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-01-28",
       "problem": "The course version of this game stores the secret number as a Python module-level global: SECRET_NUMBER = random.randint(0, 9). That number is picked once when the server starts and never changes -- meaning every user hitting the same server shares the same secret. If one player finds it, the game is effectively broken for everyone else until the server restarts. On top of that, all HTML lives as raw strings inside route functions, magic numbers are scattered throughout, and there is no way to test the game logic without spinning up a Flask server. None of these are catastrophic for a course exercise, but they are real problems worth understanding and fixing.",
       "solution": "The advanced build replaces the module-level global with Flask's signed cookie session, so each browser tab gets its own independent secret that resets every time the home page is visited. Game logic was extracted into a pure game.py module with zero Flask imports -- pick_secret() and check_guess() can be called and tested without a running server. HTML moved into Jinja2 templates, and every constant (number range, port, GIF URLs) was centralised in config.py. The terminal menu uses subprocess.run with cwd=path.parent so that relative imports inside each build resolve correctly regardless of where the menu is launched from.",
@@ -211,7 +216,7 @@
       "demo_url": null
     },
     {
-      "id": 6,
+      "id": 12,
       "slug": "miles-to-km-converter",
       "title": "Miles ⇄ Km Converter",
       "primary_category": "software",
@@ -219,6 +224,7 @@
       "full_description": "A bidirectional miles-to-kilometers converter built with Python's tkinter. The original build covers the core Day 27 exercise — one-way conversion with a minimal grid layout. The advanced build refactors everything into a clean OOP architecture with a pure-logic Converter class, a Display class that owns all widgets, and a config module with zero magic numbers. Both builds launch from a shared terminal menu.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-04-06",
       "problem": "Learning tkinter for the first time, the natural instinct is to mix UI code, business logic, and constants all in one file — which is exactly what the course exercise does. That works fine for a 50-line script, but it means you can't reuse the conversion logic, test it independently, or change the UI without touching the maths. There's also the problem of magic numbers scattered across widget constructors: change the window size or the conversion factor and you're hunting through the whole file. I wanted to see what the same app looked like when those concerns were properly separated.",
       "solution": "I built two versions side by side. The original lives verbatim in original/ — exactly as the course intended. The advanced build separates everything: Converter handles the maths with no tkinter dependency, Display owns the root window and every widget, and main.py wires them together by injecting callbacks into Display via its constructor. All constants — window dimensions, the conversion factor, mode strings — live in config.py as the single source of truth. Both builds launch from a shared menu.py terminal launcher using subprocess.run with cwd= so sibling imports resolve correctly whether you run from the menu or directly.",
@@ -248,7 +254,7 @@
       "demo_url": null
     },
     {
-      "id": 7,
+      "id": 16,
       "slug": "gui-quiz-app",
       "title": "GUI Quiz App",
       "primary_category": "software",
@@ -256,6 +262,7 @@
       "full_description": "Quizzler is a True/False trivia quiz app that pulls live questions from the Open Trivia Database API across 15 topic categories — from General Knowledge to Video Games to History. Built with Python and Tkinter, it gives instant colour feedback on each answer and tracks your running score as you go. The project ships two builds: a faithful original and a fully refactored advanced version featuring a Tkinter category selector, centralised config, and strict UI/logic separation.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-04-14",
       "problem": "Most beginner Tkinter projects work with hardcoded or local data, which sidesteps the interesting challenge of coordinating a live network call with a GUI event loop. The original course build fetched questions at import time and hardcoded a single category — fine for learning, but it meant the quiz always felt the same and the fetch happened silently whether you wanted it or not. Beyond that, the original tangled UI code and quiz logic together in a single class, making it hard to reason about or extend. I wanted to see what the same project looked like when those concerns were properly pulled apart.",
       "solution": "The advanced build splits the app into dedicated modules: `QuizBrain` handles all quiz state with zero tkinter imports, `data.py` exposes a `fetch_questions(category)` function that only fires when explicitly called, and `Display` owns every widget while knowing nothing about quiz rules. `main.py` acts as the orchestrator, wiring the two sides together via constructor callbacks. For category selection I built a Tkinter `Listbox` selector directly inside the main window — no terminal prompt, no separate dialog — that swaps out for the quiz layout once the user makes a choice. All constants (colours, fonts, timing, API parameters, selector sizing) live in a single `config.py` so there are zero magic numbers anywhere else in the codebase.",
@@ -291,7 +298,7 @@
       "demo_url": null
     },
     {
-      "id": 8,
+      "id": 19,
       "slug": "iss-overhead-notifier",
       "title": "ISS Overhead Notifier",
       "primary_category": "software",
@@ -299,6 +306,7 @@
       "full_description": "The ISS Overhead Notifier is a Python automation that emails you whenever the International Space Station is passing overhead and it's dark enough to see it. It pulls live ISS coordinates from the Open Notify API and cross-references them with real-time sunrise/sunset data to make sure the alert is actually useful. The project ships in two versions: the original course build as a reference point, and a refactored advanced build that runs serverlessly on GitHub Actions every five minutes — no Raspberry Pi, no VPS, nothing to maintain.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2025-11-17",
       "problem": "ISS passes are short — typically two to six minutes — and happen at unpredictable times across the day and night. The only way to catch one is to either check a tracking site constantly or set up something that watches for you. Manual checking is tedious enough that most people just miss passes entirely, and the common suggestion of \"run it on a Raspberry Pi\" adds hardware, power, and maintenance overhead that most beginners don't want to deal with. There's also a real credential-safety problem with course exercises like this one: the original code stores email passwords as plain string literals, which can easily end up in a public git repo without the developer realising.",
       "solution": "The advanced build is a single-run Python script that checks two public APIs — Open Notify for the ISS's current lat/lon, and Sunrise-Sunset for the current day/night window at the observer's location — then fires a Gmail SMTP notification if both conditions are met. Because it exits cleanly after one check, it plugs directly into a GitHub Actions cron workflow that triggers every five minutes for free on any public repository. The OOP refactor splits concerns into an ISSClient class (all API logic), an EmailNotifier class (all SMTP logic), and a thin orchestrator in main.py — each module is independently testable and replaceable without touching the others. Credentials are loaded from environment variables, either via a local .env file or GitHub Actions repository secrets, using the same os.environ calls in both contexts.",
@@ -332,7 +340,7 @@
       "demo_url": null
     },
     {
-      "id": 9,
+      "id": 21,
       "slug": "stock-trading-news-alert",
       "title": "Stock Trading News Alert",
       "primary_category": "software",
@@ -340,6 +348,7 @@
       "full_description": "Stock Trading News Alert watches a ticker (default: TSLA) every morning, fetches the two most recent closing prices from Alpha Vantage, and calculates the percentage change overnight. If the move clears a threshold, it pulls the top three related headlines from NewsAPI and fires one WhatsApp message per article through Twilio. The advanced build refactors the course script into three single-responsibility classes — StockClient, NewsClient, and SmsSender — wired together by a clean orchestrator, with every constant centralised in config.py and a GitHub Actions workflow running the whole thing on a weekday schedule automatically.",
       "featured": true,
       "featured_order": 23,
+      "loading_warning": false,
       "date": "2025-11-26",
       "problem": "Keeping up with stock movements manually means either staring at a ticker all day or missing a big move entirely. Most retail investors want a simple \"something happened, here's why\" nudge — not a dashboard to babysit. The course exercise surfaced an extra wrinkle: Twilio trial accounts restrict outbound SMS to a verified number tied to that specific account, so the alert would silently fail for anyone who hadn't pre-registered their number. There also wasn't a guard against hammering the daily message cap, which on a trial account sits at around nine SMS — easy to blow through if you're testing or if the threshold is set to zero.",
       "solution": "The original build chains three REST APIs in a single script: Alpha Vantage for OHLCV data, NewsAPI for recent headlines, and Twilio for delivery. The advanced build splits this into three classes — StockClient handles the Alpha Vantage fetch and returns a (perc_diff, abs_diff) tuple; NewsClient queries NewsAPI and returns a list of article dicts; SmsSender wraps Twilio, enforces a local daily quota via a small JSON file in advanced/data/, and exposes a build_body() classmethod for formatting. The channel switch (SMS vs WhatsApp) lives in config.py as a single CHANNEL constant — main.py reads it and picks the right environment variables and character limit, so flipping between delivery modes is a one-line change. A GitHub Actions workflow runs the script on weekdays at 06:00 UTC with all credentials loaded from repository secrets.",
@@ -370,7 +379,7 @@
       "demo_url": null
     },
     {
-      "id": 10,
+      "id": 28,
       "slug": "internet-speed-twitter-bot",
       "title": "Internet Speed Twitter Complaint Bot",
       "primary_category": "software",
@@ -378,6 +387,7 @@
       "full_description": "Ever feel like your internet is slower than what you're actually paying for? This bot does something about it. It opens M-Lab's NDT7 speed test in a real Chrome browser, waits for the download and upload results, and fires off a tweet at your ISP if the numbers fall below your contracted speeds. Built as Day 51 of the 100 Days of Code bootcamp, it ships in two versions: the original course solution using Chrome remote debugging, and a cleaner advanced build with separated modules and undetected-chromedriver for seamless repeat runs.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-01-15",
       "problem": "ISPs routinely advertise headline speeds they don't consistently deliver, but most people never bother complaining because the process is genuinely tedious. You have to run a speed test, note the results, open Twitter, write a coherent tweet, and send it -- and that's assuming you even noticed your connection was slow in the first place. The friction means it almost never happens, which is exactly how ISPs prefer it. There's also no straightforward way to automatically cross-reference your measured speed against your contract speed and trigger a complaint only when it's actually warranted, without signing up for paid APIs or third-party monitoring services.",
       "solution": "The bot chains two Selenium-driven browser flows in sequence. First, it opens M-Lab's NDT7 speed test page, accepts the data policy consent, clicks Begin, and waits up to three minutes for the results section to become visible before extracting download and upload figures directly from the results table. It then compares those figures against configurable thresholds in config.py, and only if either falls short does it navigate to Twitter/X, paste a formatted complaint into the tweet box via clipboard injection, and click Post. undetected-chromedriver handles bot-detection fingerprinting, and a persistent Chrome profile stores the Twitter session after the first manual login -- so every subsequent run is fully automatic with no credentials flying around.",
@@ -417,7 +427,7 @@
       "demo_url": null
     },
     {
-      "id": 11,
+      "id": 29,
       "slug": "instagram-follower-bot",
       "title": "Instagram Follower Bot",
       "primary_category": "software",
@@ -425,6 +435,7 @@
       "full_description": "Growing an Instagram audience through the follow-for-follow strategy means clicking Follow on hundreds of individual users one by one -- something that is basically impossible at scale. I built a bot that handles the entire flow: log in to an Instagram account, navigate to any target account's followers modal, scroll through it to load entries, and click Follow on each user while waiting for state confirmation before moving on. It also ships a companion unfollow cleanup script that opens your own Following list and systematically reverses the whole thing. The advanced build uses undetected-chromedriver so Instagram doesn't fingerprint and block the session before it even gets started.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-01-18",
       "problem": "Growing an Instagram following through the follow-for-follow strategy requires visiting a similar account, opening their followers modal, scrolling through it, and clicking Follow on each person individually. At any meaningful scale -- say 100-200 follows per session -- this is completely impractical by hand. The modal lazy-loads entries as you scroll, so you can't just scrape a static page -- you have to actually drive the browser. Instagram also fingerprints standard Selenium WebDriver and restricts automated sessions before they can do anything useful. There's no official API for this kind of growth strategy, so the only viable path is browser automation that looks genuinely human.",
       "solution": "I built an InstaBot class powered by undetected-chromedriver -- a patched Selenium driver that strips the automation signatures Instagram scans for at the browser binary level. The bot keeps a persistent Chrome profile on disk so login sessions and dismissed popups survive restarts, meaning you only have to do the first login once. It navigates to the target account's profile, opens the followers modal, and runs a scroll loop with stagnation detection and progressive backoff to load all visible entries before following anyone. Each Follow click then waits for the button to flip to \"Following\" or go stale before moving to the next entry, preventing double-clicks and keeping pace with Instagram's client-side state updates. Every XPath and tunable -- delays, scroll cycles, the unfollow cap -- lives in config.py, so a broken selector after an Instagram DOM update is a one-line fix.",
@@ -455,7 +466,7 @@
       "demo_url": null
     },
     {
-      "id": 12,
+      "id": 36,
       "slug": "top-10-movies",
       "title": "Top 10 Movies",
       "primary_category": "web",
@@ -463,6 +474,7 @@
       "full_description": "A personal movie ranking web app built with Flask and SQLAlchemy 2.0. Users search for films by title through the TMDB API, which auto-populates the poster, release year, and description. Each movie gets a personal rating and review, and rankings (1 = best) are recalculated automatically on every home-page load. The flip-card UI uses CSS 3D transforms to display the collection in a visually engaging way.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2025-12-10",
       "problem": "Keeping track of your favourite movies usually means a notes app, a spreadsheet, or relying on an existing service — none of which let you build a fully custom ranked list with your own ratings and reviews in a web UI you control. Building something from scratch means wrestling with database setup, form handling, and third-party API integration all at once. For a Day 64 project, the real challenge is pulling those pieces together cleanly while learning SQLAlchemy's newer 2.0 ORM syntax for the first time.",
       "solution": "I built a Flask app with five routes (home, add, select, edit, delete) backed by SQLite via SQLAlchemy 2.0's DeclarativeBase and Mapped typed column syntax. Movie metadata is fetched from the TMDB search and movie-detail endpoints — the user types a title, picks from results, and the app auto-fills the poster, year, and description. Flask-WTF handles form rendering and CSRF protection, Bootstrap-Flask provides responsive layout, and rankings are assigned dynamically on every home load by sorting the rating column and re-numbering. All secrets load from a .env file via config.py, keeping the codebase fully credential-free.",
@@ -504,7 +516,7 @@
       "demo_url": null
     },
     {
-      "id": 13,
+      "id": 42,
       "slug": "lego-dataset-analysis",
       "title": "LEGO Dataset Analysis",
       "primary_category": "data",
@@ -512,6 +524,7 @@
       "full_description": "LEGO posted its first annual loss in 1998 and was reportedly days from being acquired by Mattel by 2003. The turnaround coincided almost exactly with the Star Wars deal in 1999 and Harry Potter in 2001. I wanted to go beyond the business school narrative and actually measure what changed at the product level — not just whether LEGO released more sets, but whether the nature of what they were building shifted.\r\n\r\nMy intention with this project was to answer one question: did licensed IP transform what LEGO makes, or just how much of it? I joined six relational tables across Rebrickable's complete product history — 15,710 sets, 596 themes, 135 colours, and 25,000 minifigure inventory records — and ran six analyses to build the case.\r\n\r\nI found that the answer is both. Licensed share grew from 0% to 31.5%. Average parts per set grew 8×. Minifigure density rose 57% between the 1970s and 2010s. The colour palette tripled in the 2000s alone. Those trends don't move independently — they move together, and they move from 1999. In conclusion, the franchise deals didn't just add licensed sets to the catalogue; they changed the economics and character of the entire product line.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-01-16",
       "problem": "The business narrative around LEGO's turnaround is well documented, but I couldn't find anyone who had actually quantified the product-level shift. I wanted to know: did Star Wars and Harry Potter change what LEGO builds — complexity, colour, character focus — or did they simply add volume to a catalogue that was otherwise unchanged? Answering that meant joining a six-table relational schema across 70 years of data and measuring multiple dimensions simultaneously.",
       "solution": "I built six analyses to triangulate the answer. The analytical work involved:\r\n\r\n- Joined six relational tables across 70 years of product history to connect sets, themes, colours, inventories, and minifigure records\r\n- Manually audited all 596 themes to build a ground-truth licensed IP classification — rejected automated string matching because licensed themes appear scattered under non-licensed roots in the hierarchy, making any automated approach silently unreliable\r\n- Recursive function to resolve a self-referential parent/child theme hierarchy, walking each theme to its root before aggregating set counts across all descendants\r\n- K-Means clustering segmenting 15,710 sets into four complexity tiers (Starter, Standard, Advanced, Expert) using part count and era-relative complexity\r\n- Minifigure density measured as unique character types per set — not raw quantity, which is inflated by bulk packs\r\n- 122MB inventory file handled with gzip decompression at runtime, reading only the columns needed to keep memory manageable\r\n\r\nThe ground-truth CSV for licensed IP classification is a fully auditable, versioned data asset committed to the repository — every claim in the analysis traces back to it.",
@@ -553,7 +566,7 @@
       "demo_url": null
     },
     {
-      "id": 14,
+      "id": 44,
       "slug": "android-app-store-analysis",
       "title": "Android App Store Analysis",
       "primary_category": "data",
@@ -561,6 +574,7 @@
       "full_description": "I analysed a Kaggle dataset of 10,841 Google Play Store apps scraped in 2018, cleaning and transforming the raw data to answer six concrete market intelligence questions. The analysis covers category competition, content rating distribution, genre popularity, the free-vs-paid download gap, revenue estimates, and pricing strategy — all visualised with interactive Plotly charts. It's the kind of work that companies like App Annie and Sensor Tower do professionally, and a great hands-on way to practise a full pandas pipeline from messy CSV to polished insight.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-04-15",
       "problem": "App store market intelligence is genuinely hard to come by without paid tools. When you're deciding whether to build a free or paid app, or which category to target, you're largely guessing unless you can get your hands on real data. The raw Kaggle scrape arrives with dirty types — install counts stored as \"10,000+\" strings with commas, prices as \"$0.99\" with dollar signs, NaN-riddled rating columns, and duplicate entries that skew every calculation. Without a clean, methodical pipeline, none of the downstream analysis is trustworthy, and the questions that actually matter — \"which categories are oversaturated?\" or \"will a paid app ever recoup development costs?\" — stay unanswered.",
       "solution": "I built a step-by-step pandas pipeline that takes the raw CSV through cleaning (dropping unused columns, removing NaN rows, deduplicating on App/Type/Price), type conversion (stripping symbols and casting Installs and Price to numeric), and then a series of aggregations to answer each business question. For genre analysis, I used .str.split(';').stack().value_counts() to flatten semi-colon-separated genre strings into a single countable Series. For competitive analysis, I ran .groupby('Category').agg() twice — once for app count, once for total installs — then merged the two frames into a scatter plot showing concentration vs popularity. All seven final charts use Plotly Express for interactive, export-ready output.",
@@ -587,7 +601,7 @@
       "demo_url": null
     },
     {
-      "id": 15,
+      "id": 51,
       "slug": "professional-portfolio-site",
       "title": "Professional Portfolio Site",
       "primary_category": "web",
@@ -595,6 +609,7 @@
       "full_description": "This is the portfolio you're looking at right now — built entirely in Flask, backed by PostgreSQL, and deployed on Railway with a custom domain. It's not a template or a no-code builder; it's a real web application designed and built from scratch.\r\n\r\nThe whole thing is maintained through a custom admin dashboard — adding or updating projects never means touching the codebase. Project images are stored on Cloudflare R2 and backed up to GitHub. An AI assistant powered by RAG answers questions about the portfolio using LangChain, ChromaDB, and Groq. It's the kind of system I'd build professionally — and that's exactly the point.",
       "featured": true,
       "featured_order": 21,
+      "loading_warning": false,
       "date": "2026-03-01",
       "problem": "Most developer portfolios are static HTML pages thrown together with a CSS template. That gets the job done, but it doesn't actually demonstrate anything about how the developer writes software. I wanted my portfolio to be the proof of skill, not just a holder for links to other projects. Beyond that, maintaining a static site gets tedious fast — every update means editing HTML by hand, pushing manually, and hoping nothing breaks. I needed something I could actually run like a real product.",
       "solution": "I built a full-stack Flask application structured around four blueprints: public routes, an admin blueprint, a REST API, and an AI assistant. All project data lives in PostgreSQL via SQLAlchemy. The admin dashboard handles full CRUD on projects, media uploads to Cloudflare R2, tag management, contact messages, and automated JSON backups before every write. A GitHub Actions CI/CD pipeline runs the full test suite on every push and deploys to Railway via railway up only when tests pass. The AI assistant uses RAG — LangChain, ChromaDB, and local sentence-transformers embeddings — to answer questions about the portfolio, with Groq's Llama 3 as the LLM.",
@@ -647,50 +662,7 @@
       "demo_url": null
     },
     {
-      "id": 16,
-      "slug": "morse-code-converter",
-      "title": "Morse Code Converter",
-      "primary_category": "software",
-      "short_description": "A Python CLI that converts plain text (A-Z, 0-9) into Morse code. Ships two builds: a course-original and an OOP refactor with raw keystroke navigation, Ctrl+C handling, and a polished terminal launcher.",
-      "full_description": "Morse Code Converter is a Python CLI project built as Day 82 of 100 Days of Code. It ships two builds side-by-side: the original course submission using a functional style, and an OOP-refactored advanced version with a polished terminal experience. A shared menu launcher ties them together, clearing the screen, printing an ASCII logo, and handing off to whichever build you choose. The project is a deliberate comparison of the same feature designed at two different levels of software craft.",
-      "featured": false,
-      "featured_order": null,
-      "date": "2026-04-13",
-      "problem": "Learning resources often give you a working script and call it done — but a working script and a well-designed program are very different things. The original course assignment produces code that works, but it buries magic strings throughout the codebase, mixes input and output with business logic, and gives the user no clean way to exit or navigate between tools. There was no way to compare both approaches side-by-side in a single repo, and no launcher to make the experience feel like a real application. Running individual scripts directly also meant import paths broke the moment files moved around, which is a quiet but very real source of friction.",
-      "solution": "I built a two-build repository with a shared menu.py launcher that uses subprocess.run() with cwd= to solve the import-path problem cleanly — no installed packages or relative imports needed. The advanced build separates all I/O into a Display class, all constants into config.py, and all conversion logic into a MorseConverter class, so none of the three have any knowledge of each other. The launcher clears the screen, prints the ASCII logo, and hands off to the chosen build, which then runs as its own isolated process. The original build stays completely verbatim — a deliberate constraint that makes the two-build comparison honest.",
-      "challenges": "The trickiest part was detecting the up arrow key as a return-to-menu signal without pulling in any third-party library. Normal input() never sees arrow keys — readline intercepts them before Python does. Switching the terminal to raw mode with termios and tty meant I had to manually handle everything: echoing typed characters, backspace, Enter (which arrives as \\r in raw mode, not \\n), and Ctrl+C. The up arrow is a three-byte escape sequence (\\x1b[A), so I had to read one character at a time and branch accordingly. The final wrinkle was that tcgetattr crashes when stdin is a pipe rather than a real TTY, which I only discovered during smoke testing — so I added an isatty() check that falls back to plain readline automatically.",
-      "results": "This project shows I can take a course exercise and extend it into a structured, portfolio-worthy piece of software without losing sight of what made the original worth building. I got genuinely hands-on with how raw terminal input works under the hood — something most developers never need to touch — and got comfortable with Python's subprocess module for multi-script orchestration. The two-build structure works well as a teaching artefact: flip between the original and the refactor and the design decisions become self-evident. If I were to keep going, I'd add punctuation to the Morse dictionary and a reverse mode that converts Morse back to text.",
-      "tags": [
-        "CLI",
-        "OOP",
-        "python",
-        "scripting",
-        "terminal",
-        "terminal-ux"
-      ],
-      "tech_stack": [
-        "Python 3.10+",
-        "subprocess",
-        "termios",
-        "tty",
-        "pathlib",
-        "os",
-        "sys"
-      ],
-      "screenshots": [
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/morse-code-converter/screenshots/Screenshot_2026-05-17_at_12.48.11.png",
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/morse-code-converter/screenshots/Screenshot_2026-05-17_at_12.48.27.png"
-      ],
-      "videos": [
-        "https://youtu.be/k146oyFPQpg"
-      ],
-      "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/morse-code-converter/card/morse3.webp",
-      "repo_url": "https://github.com/xavier-oc-programming/morse-code-converter_mk1",
-      "live_url": null,
-      "demo_url": null
-    },
-    {
-      "id": 17,
+      "id": 52,
       "slug": "blackjack-python",
       "title": "Blackjack",
       "primary_category": "software",
@@ -698,6 +670,7 @@
       "full_description": "A Day 11 project from the 100 Days of Code bootcamp, built in two versions to show architectural growth. The original follows the course spec closely in ~75 lines of procedural Python. The advanced version is a complete rebuild with a four-file modular architecture, a 4-deck shoe, a chip-based betting system, casino-style side bets (split, double down, insurance), three difficulty modes, an animated terminal UI with ASCII card art, and a session statistics screen. Both versions launch from a shared root menu and share a single ASCII logo asset.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-04-13",
       "problem": "The Day 11 course brief produces a minimal working game — cards dealt, hit or stand, result printed — but nothing that feels like a real product or demonstrates meaningful Python depth. There is no sense of stakes without chips, no replay incentive, no visual feedback beyond raw score printouts, and no architectural separation between game logic and output. A single flat file with hardcoded print statements is not a portfolio piece, and it doesn't exercise the Python features introduced across the first eleven days of the course in any cohesive way.",
       "solution": "Two versions were built and shipped side by side so the contrast is visible. The original implements the course spec as written. The advanced version enforces a strict four-file separation: config.py holds every constant, blackjack.py contains pure game logic with zero I/O using dataclasses and enums, display.py owns all terminal rendering and animations, and main.py orchestrates the round loop. Chip accounting uses a pre-deduction model — the bet is removed upfront and chip_delta returns what to add back — which keeps split-hand accounting clean. A finite 4-deck shoe with automatic reshuffle replaces the course's infinite random sampling, more closely modelling real casino play.",
@@ -743,7 +716,7 @@
       "demo_url": null
     },
     {
-      "id": 18,
+      "id": 53,
       "slug": "higher-or-lower",
       "title": "Higher or Lower",
       "primary_category": "software",
@@ -751,6 +724,7 @@
       "full_description": "Higher or Lower is a terminal game where two Instagram accounts are shown side by side and you guess which has more followers. A correct guess keeps your streak alive and the chain continues; a wrong guess ends the game. The repo ships two complete versions of the same game: the original single-file procedural solution written during the course, and a ground-up advanced rebuild with modular architecture, ANSI color UI, and raw-mode keypress input.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-04-02",
       "problem": "The course exercise produces a working game, but everything — data, helpers, game loop, and screen output — lives in one file. That's fine for a first pass, but it means the display logic is tangled with game logic: you can't test the rules without triggering print() calls, and restyling the UI means editing the same file as the core mechanic. The screen-clear was 25 blank lines, input required pressing Enter after every guess, and there was no way to navigate back to a menu. It worked, but it wasn't something I'd point to as a piece of work.",
       "solution": "I rebuilt the game from scratch with a strict three-layer architecture: config.py holds all constants and raw data, higher_lower.py contains pure game logic with zero UI imports, and display.py owns all terminal output and input. A frozen dataclass (Account) replaces raw dicts for typed, immutable, hashable account objects. The display layer uses ANSI escape codes for color and tty/termios raw mode for single-keypress input — no Enter needed. A MODES dict dispatcher in main.py means adding a new game variant only requires a new entry and a run_*() function; nothing else changes. A root menu.py launches either version via subprocess so both can coexist cleanly.",
@@ -785,7 +759,7 @@
       "demo_url": null
     },
     {
-      "id": 19,
+      "id": 54,
       "slug": "quiz-game-python",
       "title": "Quiz Game",
       "primary_category": "software",
@@ -793,6 +767,7 @@
       "full_description": "Built as part of 100 Days of Code (Day 17), this is a True/False trivia quiz that exists in two versions inside the same repo. The original preserves the course exercise exactly as taught — one file, procedural, minimal abstraction. The advanced version is a complete rebuild with strictly separated logic, display, and config layers, three distinct game modes, and a polished terminal experience — all without a single external dependency.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-04-13",
       "problem": "The course exercise produced a working quiz but everything lived in one file — data, models, UI, and game loop all tangled together. There was no way to add questions without digging through logic code, and no separation between what the program knew and what it showed. The terminal experience was bare: no color, no animation, no real navigation — just raw input() calls. As a learning milestone it was fine, but as a portfolio piece it didn't reflect what I actually know how to build.",
       "solution": "I built two parallel versions launchable from a single root menu.py that uses subprocess to launch each version cleanly. The original is preserved intact as a reference point. The advanced version separates into four strict layers: quiz.py for pure logic with zero print() calls, display.py for all terminal output, config.py for constants, and main.py as the thin orchestrator. A shared art.py and questions.py at the project root are imported by both versions using a sys.path insert that walks up from __file__, keeping shared assets centralized without needing a package structure. Three game modes — Classic, Sudden Death, and Lightning — are dispatched through a MODES dict keyed by the Mode enum.",
@@ -840,7 +815,7 @@
       "demo_url": null
     },
     {
-      "id": 20,
+      "id": 55,
       "slug": "snake-game-python",
       "title": "Snake Game",
       "primary_category": "software",
@@ -848,6 +823,7 @@
       "full_description": "This project is a two-version implementation of the classic Snake game, built as part of 100 Days of Code (Day 24). The original version stays close to the course state for reference, while the advanced version is a full modular OOP rebuild where logic, rendering, and I/O are cleanly separated. A shared terminal menu with ASCII art lets you pick which version to launch, and it loops back automatically when the game exits.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2025-10-12",
       "problem": "Most course implementations of Snake are monolithic scripts that mix rendering, game logic, and I/O in a single file. When you revisit the code later it's hard to understand, extend, or isolate any individual part. There's also no persistence — your high score vanishes every session — and no real UX: the game just drops you back to the terminal when it ends with no feedback. The course solution works, but it doesn't feel like a finished piece of software.",
       "solution": "I built two versions side by side under a shared terminal menu launcher. The original stays close to the course state for honest reference. The advanced version separates concerns cleanly: paddle and food logic live in their own files with zero UI imports, display.py owns all turtle rendering including a line-by-line animated welcome screen and a frozen game-over overlay, scores.py handles file I/O for persistent high scores, and config.py centralises every constant. The root menu.py launches either version via subprocess with the correct working directory, clears the console, and loops back automatically when the game exits.",
@@ -883,7 +859,7 @@
       "demo_url": null
     },
     {
-      "id": 21,
+      "id": 56,
       "slug": "pong-python-turtle",
       "title": "Pong Game",
       "primary_category": "software",
@@ -891,6 +867,7 @@
       "full_description": "This is my Day 22 project from the 100 Days of Code course: a classic two-player Pong game built entirely with Python's turtle module and zero third-party dependencies. The repo ships two builds side by side — the original course version preserved exactly as written, and a full OOP rebuild I designed myself. The advanced build separates all game logic from the display layer entirely, meaning the ball, paddles, and score tracker have zero UI imports and can be reasoned about independently. It also features a terminal version-selector launcher, a persistent score HUD strip, a pause system, an animated title screen, and an in-window navigation flow where R always returns to the title screen without ever closing the window.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2025-10-20",
       "problem": "The course version of Pong gets the game working, but everything lives tangled in one place: game logic, display code, and screen state are all mixed together. Magic numbers are scattered across files, and the game ends by calling screen.clear() which wipes everything — there's no real game-over experience, no way to pause mid-rally, and no way to replay without restarting the script entirely. As something I wanted to show in a portfolio, it also needed a clean entry point, a readable architecture that someone else could follow, and a README that explains the why behind the code, not just the what.",
       "solution": "I restructured the project into a standard portfolio layout: a terminal menu launches either the original or the advanced build as a subprocess with cwd set to the build's directory so relative imports resolve correctly. The advanced build separates concerns strictly across dedicated modules — ball.py and paddle.py are pure logic with no UI imports, display.py owns every turtle object and every overlay, and main.py is purely an orchestrator wiring input to logic to display. All constants live in config.py so there are no magic numbers anywhere else. The main loop uses two nested while loops: an outer one that re-shows the title screen on R without closing the window, and an inner game loop that breaks cleanly to trigger that return.",
@@ -929,7 +906,7 @@
       "demo_url": null
     },
     {
-      "id": 22,
+      "id": 57,
       "slug": "coffee-machine-python",
       "title": "Coffee Machine — Command-Line Simulator",
       "primary_category": "software",
@@ -937,6 +914,7 @@
       "full_description": "I built this as Day 15 of my 100 Days of Code journey -- a fully functional coffee machine simulator that runs entirely in the terminal. The machine tracks ingredient resources, processes coin-by-coin payments, calculates change, and even refills ingredients on command. What makes it interesting is that the repo ships two builds side by side: the original procedural script from the course, and a complete OOP refactor I wrote right after to see how the same problem looks when concerns are properly separated.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-04-05",
       "problem": "The course exercise does a great job teaching Python fundamentals through something tangible -- dictionaries, loops, modules, f-strings all come together in a way that actually makes sense. But the end result is a single flat script where data, logic, and terminal output all live in the same place, and commands like off and report aren't discoverable unless you read the source. For a portfolio that's meant to show what I actually know, a procedural script with no structure and no documentation doesn't tell the full story. I also genuinely wanted to know what this same program looks like when you apply OOP and separation of concerns -- and building both versions back to back seemed like the most honest way to find out.",
       "solution": "I restructured the repo around two builds: original/ preserves the course code verbatim as a reference point, and advanced/ is a full OOP refactor built on top of it. A root-level menu.py launcher uses subprocess.run with cwd= set to each build's directory, so both versions are accessible from a single entry point without touching any code. In the advanced build, all business logic lives in three pure classes -- CoffeeMachine, DrinkMenu, and CoinProcessor -- with zero print() or input() calls anywhere in them. Every terminal interaction is owned exclusively by a Display class, every constant lives in config.py, and lifetime revenue is persisted to data.txt across sessions.",
@@ -971,7 +949,7 @@
       "demo_url": null
     },
     {
-      "id": 23,
+      "id": 58,
       "slug": "pomodoro-app-python",
       "title": "Pomodoro Timer",
       "primary_category": "software",
@@ -979,6 +957,7 @@
       "full_description": "I built this Pomodoro timer as Day 28 of the 100 Days of Code course — a classic productivity tool that automates the 25/5/20-minute work-break rhythm without any manual session management. The original build is a clean procedural tkinter script using root.after() for non-blocking countdowns, global state, and direct widget mutations. The advanced build refactors it into a proper OOP architecture with a pure-logic PomodoroTimer class, a callback-driven Display, and a single-source-of-truth config.py — so the UI and the sequencing logic are completely decoupled and independently testable.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2025-11-04",
       "problem": "The Pomodoro Technique is one of the simplest and most effective focus tools around, but sticking to it manually is surprisingly hard — you either forget to take breaks or lose count of how many sessions you've done. Most people fall back on a phone timer, which means picking up the exact device you're trying to stay away from. A dedicated desktop timer that tracks sessions automatically and advances on its own removes that friction entirely. The course exercise was also a great opportunity to explore what \"good structure\" looks like once something is working procedurally — the procedural version works fine, but the patterns it uses (global state, direct widget mutation from logic functions) don't scale well as complexity grows.",
       "solution": "The app uses tkinter's root.after() for a non-blocking countdown that ticks every second without freezing the UI — no threads, no time.sleep(). Session sequencing logic lives entirely in PomodoroTimer, a pure Python class with no tkinter dependency: it tracks reps, derives the current session type, computes the checkmark string, and returns everything the UI needs via a single advance() call. Display owns every widget and the countdown loop, but contains zero application logic — it exposes render methods and fires injected callbacks when the user clicks Start or Reset, or when the countdown hits zero. main.py is the only place where timer state and UI updates connect, making the data flow easy to follow in one read.",
@@ -1011,7 +990,7 @@
       "demo_url": null
     },
     {
-      "id": 24,
+      "id": 59,
       "slug": "password-manager-app",
       "title": "Password Manager",
       "primary_category": "software",
@@ -1019,6 +998,7 @@
       "full_description": "Password Manager is a desktop GUI app built with Python and tkinter that takes the pain out of creating and storing strong passwords. You type a website and email, hit Generate, and a shuffled mix of letters, symbols, and digits lands in the field and copies straight to your clipboard. Hit Add and it's saved to a local JSON file — no cloud, no account, no subscription. The project ships as two builds: the original procedural version from the course, and a refactored OOP/MVC advanced build that separates logic, display, and configuration into dedicated modules.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-04-14",
       "problem": "Registering on a new website and defaulting to a weak, reused password because generating something better feels like too much effort is a genuinely common failure mode. Browser autofill helps but it ties you to one machine and one browser. I wanted a dead-simple desktop tool that would generate a strong password on demand and persist it locally in a format I could read and search without installing anything. The secondary problem was more personal: the course version works, but everything is tangled together — the password generator reaches directly into the widget, the file paths are hardcoded, and there's no way to test any of the logic in isolation. That felt worth fixing.",
       "solution": "The original build is a single procedural file — a tkinter window with three entry fields, a generator that randomly picks from letters, symbols, and digits and shuffles the result, and a JSON file as the datastore. The save flow reads the full JSON, merges the new entry, and writes it back, so no existing credential is ever overwritten accidentally. The advanced build splits this into three layers: PasswordManager handles all logic (generation, file read/write, search) with zero tkinter imports so it can be tested in isolation; Display owns every widget and accepts on_generate, on_save, and on_search callbacks injected at construction time; and app.py wires the two together and calls mainloop() once at the end. A config.py holds every constant — window padding, entry widths, generation ranges — so no magic numbers appear anywhere in the logic or display code.",
@@ -1058,7 +1038,7 @@
       "demo_url": null
     },
     {
-      "id": 25,
+      "id": 60,
       "slug": "flash-card-tkinter",
       "title": "Flash Card App",
       "primary_category": "software",
@@ -1066,6 +1046,7 @@
       "full_description": "This is a French-to-English flashcard app built with Python and tkinter as part of Day 31 of 100 Days of Code. It displays random French words on a card, auto-flips to the English translation after 3 seconds, and tracks which words you've already learned between sessions. The repo ships two builds: a verbatim course solution and a refactored advanced version with clean OOP architecture, zero magic numbers, and no third-party dependencies.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-04-06",
       "problem": "Learning vocabulary from a flat list is tedious — there's no way to skip words you already know, and every session starts from scratch. A flashcard app solves the \"what do I study next?\" problem by randomly surfacing words from a shrinking remaining deck. Without persistence, you'd restart from the full 100-word list every time, making it impossible to feel real progress. The auto-flip timer also removes the temptation to peek immediately — you have to attempt the recall first before the answer appears.",
       "solution": "The app loads a CSV of French/English word pairs and displays them one at a time on a tkinter Canvas with a card graphic. A root.after() timer flips the card automatically after 3 seconds; clicking the card cancels the timer and flips it manually. Marking a word as known removes it from the in-memory list and immediately persists the remaining words to a separate CSV file, which is loaded on the next launch so known words are permanently skipped. The advanced build separates all word-list logic into a FlashCard class and all UI into a Display class, with main.py wiring them together via injected callbacks — making the logic fully testable without a display and the UI swappable without touching business logic.",
@@ -1097,7 +1078,7 @@
       "demo_url": null
     },
     {
-      "id": 26,
+      "id": 61,
       "slug": "mail-merge-python",
       "title": "Mail Merge",
       "primary_category": "software",
@@ -1105,6 +1086,7 @@
       "full_description": "Mail Merge is a Python automation script that reads a letter template and a list of names, then produces one personalized file per recipient by swapping out a [name] placeholder. It was built as the Day 24 capstone for the File I/O section of 100 Days of Code. The repo ships two builds side by side: the original procedural solution and an advanced OOP refactor that separates concerns across a config module, a pure-logic MailMerger class, and a thin orchestrating main — all launchable from a single terminal menu.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2025-10-25",
       "problem": "When you need to send the same letter to a dozen people, the manual approach is to open your document, find-and-replace the name, save a copy, and repeat. With eight recipients that's manageable but tedious; with fifty it becomes a real source of errors — wrong names, missed replacements, inconsistently formatted files. The friction compounds when you want a clean record of exactly what was sent: without automation you're left with a folder of manually edited files and no clear process to reproduce them. What this project needed was a repeatable, scriptable routine that reads from a single source of truth and produces a correct output for every name in the list.",
       "solution": "The script reads a plain-text template containing a [name] placeholder and a names file with one recipient per line, then writes one output file per name into an output directory. The advanced build introduces a MailMerger class whose generate() method is intentionally pure — it takes a template string and a name string and returns a string, never touching the filesystem — keeping the substitution logic independently verifiable. All file paths and string tokens live in config.py so nothing is hardcoded outside a single place. A menu.py launcher using subprocess.run() with cwd= lets you pick between the original and advanced builds without leaving the terminal, and a pause after each run keeps any output visible before the screen clears.",
@@ -1142,7 +1124,7 @@
       "demo_url": null
     },
     {
-      "id": 27,
+      "id": 62,
       "slug": "birthday-email-bot",
       "title": "Birthday Email Bot",
       "primary_category": "software",
@@ -1150,6 +1132,7 @@
       "full_description": "Birthday Email Bot is a Python automation that reads a CSV of names, emails, and birthdays, checks whether today matches any entry, and fires off a personalised email via Gmail SMTP. It comes in two builds: a course-original single-file script and a fully refactored OOP version with separated concerns and centralised config. A GitHub Actions workflow runs it every day at 08:00 UTC so no local machine needs to stay on.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2025-11-15",
       "problem": "Remembering birthdays is one thing — actually sending a personalised message on the right day is another. Most people rely on calendar reminders that still require manual action: you see the notification, think you'll send something later, and then forget. There is no friction-free way to guarantee a heartfelt birthday email lands in someone's inbox on their actual birthday without opening a client and writing something from scratch. Scaling this across many people makes it worse — each birthday becomes another item to track and act on manually, and the cognitive load quietly compounds.",
       "solution": "I built a Python script that reads a CSV of birthdays, compares each row's month and day against today's date, randomly picks from a pool of letter templates with a personalised name substitution, and sends a plain-text email via Gmail SMTP with STARTTLS. The advanced build separates this into two classes — BirthdayLoader for all CSV and date logic, and EmailSender for template selection and SMTP delivery — wired together by a thin orchestrator in main.py. All constants live in a single config.py so there are no magic numbers scattered through the code. A GitHub Actions workflow runs the advanced build every day using encrypted repository secrets, making the whole thing fully hands-off once deployed.",
@@ -1189,7 +1172,7 @@
       "demo_url": null
     },
     {
-      "id": 28,
+      "id": 63,
       "slug": "rain-alert-sms",
       "title": "Rain Alert SMS Bot",
       "primary_category": "software",
@@ -1197,6 +1180,7 @@
       "full_description": "Rain Alert SMS Bot is a Python automation that checks the next 12 hours of weather for Madrid and sends a personalised WhatsApp or SMS message via Twilio if rain is on the way. It was built as Day 35 of 100 Days of Code, covering API authentication and environment variables. The project ships in two versions: a clean course solution and a refactored OOP build with a config module, separated fetcher and notifier classes, and a GitHub Actions workflow that fires every morning at 7am.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2025-11-23",
       "problem": "Checking the weather app every morning and still getting caught without an umbrella is exactly the kind of low-stakes but genuinely annoying problem that automation is perfect for. The real friction isn't laziness — it's context switching: you're rushing out the door and the last thing on your mind is opening an app. A push notification that arrives before you leave, with no action required on your part, completely removes that friction. The course introduced API keys and environment variables at Day 35, so this was also the first project where credential management and secret isolation became a real concern rather than an afterthought.",
       "solution": "The bot calls the OpenWeatherMap /forecast endpoint, requesting four 3-hour intervals to cover the next 12 hours. Any interval with a condition code below 700 — the OWM threshold for precipitation — triggers a \"bring an umbrella\" message; otherwise it sends a clear skies confirmation. The original build is a clean procedural script that loads credentials from a .env file via python-dotenv and sends a single Twilio message. The advanced build refactors this into a WeatherFetcher class (all OWM logic) and a Notifier class (all Twilio logic), with a config.py that centralises every constant including a condition_label() helper that maps raw OWM codes to colloquial descriptions. A GitHub Actions workflow runs the advanced build daily at 6:00 UTC, reading credentials from repository secrets so no .env file is needed in CI.",
@@ -1229,7 +1213,7 @@
       "demo_url": null
     },
     {
-      "id": 29,
+      "id": 64,
       "slug": "habit-tracker-pixela",
       "title": "Habit Tracker — Pixela",
       "primary_category": "software",
@@ -1237,6 +1221,7 @@
       "full_description": "A two-build CLI habit tracker built around the Pixela pixel graph API. The original build walks through all six API operations sequentially, while the advanced build wraps everything in a PixelaClient class with an interactive menu, input validation, and graceful error handling. Built as Day 37 of 100 Days of Code, it covers REST API fundamentals — custom headers, JSON payloads, and HTTP verbs beyond GET.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2025-11-29",
       "problem": "Tracking habits manually is inconsistent — without a system, it's easy to forget to log or lose historical data. Pixela solves this with a minimalist pixel graph, but it's API-only: there's no app or UI, so you need code to interact with it. The course exercise only shows how to make a single hardcoded POST request, which means re-editing the script every time you want to log something different. And if you run it more than once, it crashes on the create-user and create-graph steps because they've already been done — making it impractical to use as a real daily tool.",
       "solution": "I built two builds on top of the course exercise. The original stays close to the course material but adds a quantity prompt and handles 409 responses gracefully, so it can be re-run safely every day. The advanced build refactors everything into a PixelaClient class that wraps all API calls in a shared requests.Session, attaching the X-USER-TOKEN header automatically to every request. An interactive menu loop lets you log today's activity, update a past entry, delete one, or view the graph URL — all without touching the code. Credentials are loaded from a .env file, and both username and token are validated against Pixela's own rules before any network request is made.",
@@ -1272,7 +1257,7 @@
       "demo_url": null
     },
     {
-      "id": 30,
+      "id": 65,
       "slug": "workout-tracking-google-sheets",
       "title": "Workout Tracker",
       "primary_category": "software",
@@ -1280,6 +1265,7 @@
       "full_description": "I built a natural language workout logger that writes directly to Google Sheets. You type a plain-English description of your session and the app handles the rest — a locally-running LLM (llama3.2 via Ollama) parses the exercise name and duration, calories are computed using the standard MET formula, and each exercise is logged as a timestamped row via the Sheety REST API. Built as Day 38 of 100 Days of Code, then significantly extended after the original API dependency was discontinued mid-development.",
       "featured": true,
       "featured_order": 25,
+      "loading_warning": false,
       "date": "2025-12-05",
       "problem": "Tracking workouts manually is tedious enough that most people stop doing it. You finish a session, open a spreadsheet, try to remember how long each exercise took, estimate the calories, type it all in — and after a few sessions you've already given up. The course solution used Nutritionix for natural language parsing, but Nutritionix discontinued its free tier during development, breaking the core feature entirely and forcing me to rethink the architecture from scratch.",
       "solution": "I replaced Nutritionix with a locally-running LLM via Ollama — no API key, no account, no cost, works offline. The user types a free-form workout description; llama3.2 extracts the exercise name and duration as structured JSON; a built-in MET table calculates calories deterministically; and the Sheety API writes each exercise as a new row in Google Sheets with Basic Auth. I added a synonym map to normalise variant names (jogging → Running, swam → Swimming), a disambiguation prompt for vague inputs like \"went to the gym\", and a session loop so an entire workout can be logged without returning to the menu.",
@@ -1321,7 +1307,7 @@
       "demo_url": null
     },
     {
-      "id": 31,
+      "id": 66,
       "slug": "amazon-price-tracker-automation",
       "title": "Amazon Price Tracker Automation",
       "primary_category": "software",
@@ -1329,6 +1315,7 @@
       "full_description": "Amazon Price Tracker Automation watches a product page on amazon.es and emails you the moment the price drops below a threshold you set. It handles the full automation lifecycle — scheduling, status checks, and removal — through a clean interactive terminal menu so you never have to touch a crontab manually. There are two builds: the original course script (single flat file) and an advanced OOP version with separate modules for scraping, notification, and configuration. The advanced build is the one that runs automatically every day and sends you confirmation emails with the live price whenever you install or remove the schedule.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-01-02",
       "problem": "Manually checking Amazon for a price drop on something you want to buy is the kind of thing you tell yourself you'll remember to do and then forget completely. Browser extensions exist but they tie you to a specific browser being open, and most price-tracking services don't cover regional Amazon stores like amazon.es. I wanted something that would just run in the background on my own machine, check the price once a day, and email me if it was worth buying — no third-party accounts, no subscriptions, no browser dependency. The harder part was that amazon.es returns prices in a different format than amazon.com (currency codes and non-breaking spaces instead of the € symbol), and running the check from a cloud server like GitHub Actions turns out to be basically useless because Amazon detects datacenter IPs and serves a bot-detection page instead of the real product.",
       "solution": "The scraper uses requests with a full set of browser-spoofing headers (matching a real Firefox session on macOS) to fetch the product page, then BeautifulSoup to locate the price element and a regex to extract and normalise the price across every format Amazon uses by region — €59,99, $129.99, EUR\\xa068.30 — all handled cleanly. If the price is below the target, smtplib sends an alert email via Gmail SMTP over STARTTLS. The advanced build separates this into three independent modules (AmazonScraper, EmailNotifier, config.py) wired by a main.py orchestrator, with all constants in one place so changing the product or target price is a one-line edit. Three bash shell scripts (setup_cron.sh, check_cron.sh, remove_cron.sh) handle the full cron lifecycle and are surfaced as options 3–5 in the interactive menu, so the whole thing is usable without ever manually editing a crontab. When you install or remove the schedule, the script fetches the current live price and includes it in the confirmation email so you always know where things stand.",
@@ -1370,7 +1357,7 @@
       "demo_url": null
     },
     {
-      "id": 32,
+      "id": 67,
       "slug": "cookie-clicker-bot",
       "title": "Cookie Clicker Bot—Selenium",
       "primary_category": "software",
@@ -1378,6 +1365,7 @@
       "full_description": "This is a Selenium-powered bot that plays Cookie Clicker automatically — clicking the big cookie as fast as possible, snatching golden cookies for their timed buffs, and making smart purchasing decisions in the shop every few seconds. It ships in two builds: a procedural course script that captures the Day 48 exercise as written, and a refactored OOP version with a config module, threading event coordination, and a runtime console interface. Both builds use CDP-level browser fingerprint spoofing to pass Cloudflare's bot-detection check on the live game site.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-01-05",
       "problem": "Cookie Clicker is designed to run forever, and clicking a cookie thousands of times per second while making optimal shop decisions is clearly a job for a machine. The tricky part isn't just clicking — it's making intelligent buying decisions: knowing when to unlock a new building type for the first time (discovery rule), when to prioritise payback ratio instead, and when to skip the shop entirely because a golden cookie buff is active and every click is worth a multiplier. On top of the game logic, the live site runs Cloudflare bot detection, which blocks vanilla Selenium sessions before the game even loads. There's also a subtle threading problem: hovering over shop items to read tooltip CPS values breaks silently if the click thread is still moving the mouse at the same time, which stops the bot from growing its CPS.",
       "solution": "The advanced build separates concerns into three modules: clicker.py holds the CookieClicker class with all DOM interaction; config.py centralises every CSS selector and timing constant; main.py orchestrates two daemon threads (click loop and command listener) plus the main store-check loop. A threading.Event (click_allowed) coordinates the click thread and store-check loop — it's cleared before hovering begins and set in a finally block after, guaranteeing the mouse is free for tooltip reads. Bot detection is bypassed with three ChromeOptions flags plus a CDP Page.addScriptToEvaluateOnNewDocument call that hides navigator.webdriver before the page's own JavaScript runs. The store check implements three purchase strategies in priority order: most expensive available upgrade first, then a discovery buy for any unowned building, then lowest price-to-CPS payback ratio.",
@@ -1418,7 +1406,7 @@
       "demo_url": null
     },
     {
-      "id": 33,
+      "id": 68,
       "slug": "gym-booking-bot",
       "title": "Gym Booking Bot",
       "primary_category": "software",
@@ -1426,6 +1414,7 @@
       "full_description": "A Selenium automation bot that takes the weekly chore of booking gym classes off your plate entirely. It logs in, scans the class schedule, targets every Tuesday and Thursday 6 PM session, and clicks Book Class or Join Waitlist for each one without any manual input. Built as Day 49 of 100 Days of Code, the project ships in two versions: the original single-file course script and a refactored OOP build with separate modules for browser management and booking logic. It includes a retry wrapper for network resilience, a persistent Chrome profile, and a GitHub Actions workflow for scheduled weekly runs.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-01-08",
       "problem": "Booking gym classes manually means opening the site every week, logging in, scanning the schedule, and clicking the right buttons before spots fill up. Miss a week and you lose your slot, or end up scrambling to join a waitlist. The practice site even simulates real-world chaos by randomly failing network requests at a 50% rate, which is exactly the kind of flakiness that would cause a naive bot to silently fail mid-run. On top of that, Chrome's built-in password breach detector would pop up a blocking dialog partway through the login sequence and halt the whole automation. These weren't hypothetical edge cases but actual friction I had to solve before the bot could run reliably end to end.",
       "solution": "I built a Selenium bot around a persistent Chrome profile so sessions, cookies, and login state carry over between runs. The core flow is: log in as admin to enable network simulation and clear previous bookings, then log in as the user account and scan all class cards using CSS selector patterns. To find which day each card belongs to, the bot traverses the DOM upward with an XPath ancestor query to read the parent day-group heading. Each booking attempt is wrapped in a configurable retry function that catches Selenium exceptions and retries up to seven times with a 0.5 s delay. The advanced build separates concerns into GymBrowser for all driver logic and ClassBooker for all booking decisions, with every constant in config.py and credentials loaded from .env.",
@@ -1462,7 +1451,7 @@
       "demo_url": null
     },
     {
-      "id": 34,
+      "id": 69,
       "slug": "tinder-bot-automation",
       "title": "Tinder Bot Automation",
       "primary_category": "software",
@@ -1470,6 +1459,7 @@
       "full_description": "Built as Day 50 of 100 Days of Code, this browser automation bot opens Tinder, handles phone number login with SMS verification, dismisses post-login popups, and runs a continuous left-swipe loop. It's structured as an OOP advanced build alongside the original course script, both launchable from a terminal menu. What started as a straightforward course exercise turned into a real debugging project as I adapted to Tinder's changing login flows, popup landscape, and bot detection systems.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-01-12",
       "problem": "Tinder's web UI requires multiple manual login steps, popup dismissals, and repetitive swiping — all of which are tedious to do by hand at scale. The original course approach used Facebook OAuth, but Tinder removed that option entirely, so the whole login strategy needed rethinking around phone number authentication and SMS verification codes. Even once logged in, mid-session overlays like \"Add to home screen\" and location permission prompts block swiping silently — standard Selenium exception handling misses them because send_keys() doesn't raise when a popup is in the way. On top of that, browser automation detection systems immediately flag standard ChromeDriver, rejecting the Google sign-in before it even starts.",
       "solution": "The bot uses undetected-chromedriver to patch ChromeDriver's automation signatures at the binary level, bypassing Tinder and Google's bot detection where standard selenium.webdriver.Chrome would be blocked outright. Phone login is automated end-to-end — clicking through the \"Get Started\" modal, entering the phone number, and hitting Next — with a manual pause that lets the user enter the SMS code in the browser before typing 'resume' to hand control back to the bot. All Selenium interactions go through a TinderBot class with a JS click fallback (_js_click) for every button, handling overlapping elements and disabled-button edge cases that normal clicks can't reach. XPaths, CSS selectors, and timing constants are centralised in config.py so when Tinder's DOM changes, fixing a broken selector means changing exactly one line.",
@@ -1508,7 +1498,7 @@
       "demo_url": null
     },
     {
-      "id": 35,
+      "id": 70,
       "slug": "zillow-scraper-form-bot",
       "title": "Zillow Web Scraper & Form Bot",
       "primary_category": "software",
@@ -1516,6 +1506,7 @@
       "full_description": "I built this as a two-stage automation pipeline for Day 53 of the 100 Days of Code bootcamp. Stage one uses requests and BeautifulSoup to scrape rental listings from a static Zillow clone, pulling addresses, prices, and property links from each card on the page. Stage two hands those tuples to a Selenium bot running on undetected-chromedriver, which opens the Google Form for each listing, fills all three fields, and submits — turning what would be minutes of manual copy-pasting into a script that runs end-to-end without touching the keyboard. The repo ships two builds: the original single-file course solution and a refactored advanced version split across ZillowScraper and FormBot classes with all selectors centralised in config.py.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-01-22",
       "problem": "When you're aggregating listing data from a property page, manually transferring each record into a form is the kind of work that feels fine for five entries and unbearable for fifty. The Zillow Clone exercise makes this friction concrete: you're handed a page of rental cards and a Google Form with three fields per entry, and the only path without automation is to open each card, copy three values, paste them into the form, submit, and repeat. With 44 listings that's 132 individual copy-paste operations — and zero tolerance for typos, because a miscopied price or address poisons the form data permanently. The missing piece is a script that can read the whole page at once and drive the form exactly as a human would, just without the fatigue.",
       "solution": "The pipeline splits cleanly into a scraping stage and a submission stage. ZillowScraper uses requests with a spoofed User-Agent header — necessary because a bare request without headers returns a 403 — then BeautifulSoup CSS selectors targeting data-test attributes pull links, prices, and addresses from each card. Raw text gets cleaned by splitting on \"/\" and \"+\" to strip \"/mo\" and fee suffixes, and on \"|\" to drop neighbourhood label prefixes before the street address. FormBot takes those tuples and drives Chrome through undetected-chromedriver, which patches the binary to remove Chromium's automation fingerprint for more reliable access to Google's own UI. Every XPath and CSS selector lives in config.py, so when Google or Zillow changes a DOM element, the fix is a single line in one file rather than a hunt through the codebase.",
@@ -1554,7 +1545,7 @@
       "demo_url": null
     },
     {
-      "id": 36,
+      "id": 71,
       "slug": "ron-swanson-quotes",
       "title": "Ron Swanson Quotes App",
       "primary_category": "software",
@@ -1562,6 +1553,7 @@
       "full_description": "This is a desktop GUI app I built using Python's tkinter library that pulls random Ron Swanson quotes from a public REST API and displays them on a canvas. Click the photo of Ron, get a quote -- it's as simple as that. I built two versions: the original course solution as a single-file script, and an advanced refactor that wraps everything in a QuoteApp class with all constants centralised in config.py. It's a small project, but it's a solid first exercise in connecting a live API response to a real GUI event.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2025-11-17",
       "problem": "Most introductory tkinter examples use static, hardcoded data -- you build a to-do list, a calculator, a timer. The moment you want your GUI to show something live from the internet, the tutorial ends and you're on your own. The specific friction here is understanding how to fire an HTTP request inside a button callback, parse the response, and update a canvas text item in place -- all without blocking the GUI or reloading the window. The course exercise exists precisely to bridge that gap: here is a real API, now wire it up to a button.",
       "solution": "The app uses tkinter's Canvas widget as the main display surface -- a background PNG is drawn onto it, and a text item is created on top. When the user clicks the Ron Swanson button, requests.get() fires against the quotes endpoint, the JSON response (a single-element array) is unpacked, and canvas.itemconfig() swaps the text in place with no flicker or redraw. The advanced build wraps all of this in a QuoteApp class and moves every magic number and string into config.py, so the UI and the logic are easy to reason about separately.",
@@ -1593,7 +1585,7 @@
       "demo_url": null
     },
     {
-      "id": 37,
+      "id": 72,
       "slug": "flight-club",
       "title": "Flight Club",
       "primary_category": "software",
@@ -1601,6 +1593,7 @@
       "full_description": "Flight Club is an automated flight deal scanner that watches a list of destinations and their price thresholds, then notifies you the moment a fare drops below your target. It queries Google Flights via SerpApi, reads destination data from a Google Sheet through Sheety, and delivers alerts over WhatsApp (Twilio) and email (Gmail SMTP). The project ships in two builds: an original version faithful to the course exercise, and a refactored advanced build with all constants in config.py, a clean Notifier class, and launch-directory-independent path handling.",
       "featured": false,
       "featured_order": 5,
+      "loading_warning": false,
       "date": "2025-12-05",
       "problem": "Flight prices fluctuate constantly and checking manually across multiple destinations is tedious and unreliable — you either check too late or miss the window entirely. The course exercise that inspired this project originally used the Amadeus test API, which was decommissioned in early 2026, leaving the project non-functional out of the box. Beyond that, most flight alert tools are web apps with account friction; what I wanted was a lightweight script I could run locally, pointed at my own Google Sheet, with no subscription required. The challenge was finding a replacement API that was actually working, free at a useful tier, and didn't require an OAuth2 flow just to get started.",
       "solution": "The app reads destination cities, IATA codes, and price thresholds from a Google Sheet via Sheety, which wraps the sheet as a REST API. For each destination it queries SerpApi's Google Flights engine, first searching for direct flights and falling back to connections if none are found. Results are parsed into FlightData objects, the cheapest is identified, and if it beats the threshold a formatted alert is sent via Twilio's WhatsApp sandbox and Gmail SMTP. The advanced build separates concerns cleanly: DataManager owns Sheety I/O, FlightSearch owns SerpApi, Notifier is a pure I/O class that accepts plain strings, and all magic numbers live in config.py.",
@@ -1640,7 +1633,7 @@
       "demo_url": null
     },
     {
-      "id": 38,
+      "id": 73,
       "slug": "spotify-musical-time-machine",
       "title": "Spotify Musical Time Machine",
       "primary_category": "software",
@@ -1648,6 +1641,7 @@
       "full_description": "Pick any date in history and this tool travels back in time through music. It scrapes that week's Billboard Hot 100, runs each song through a multi-stage fuzzy-matching pipeline against Spotify's catalogue, and creates a private playlist on your account. The OOP refactor splits the logic across BillboardScraper and SpotifyClient classes, with a central config module for all constants and credentials loaded from a .env file.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2025-12-20",
       "problem": "Spotify doesn't have a built-in way to reconstruct what was actually popular on a specific date in history. If you want a playlist of the Billboard Hot 100 from the week you graduated or the month a particular album dropped, you'd have to look up the chart manually and search for every song one by one — which for 100 tracks is genuinely tedious. Billboard and Spotify don't share a direct integration, so there's no shortcut built into either platform. On top of that, Billboard artist strings are messy — they use different separators (\"Featuring\", \"&\", \"feat.\") depending on the era and chart position — and Spotify has its own catalogue quirks like remaster suffixes and compilation editions. A naive exact-match approach would miss a large chunk of the chart.",
       "solution": "The tool scrapes billboard.com directly using requests and BeautifulSoup CSS selectors, then runs each (title, artist) pair through a multi-stage Spotify search pipeline via the spotipy library. Each search starts specific — track + artist + year — and falls back progressively to track + artist, then track only, and finally a broad title-only query with year-bonus scoring to avoid false positives. All fuzzy matching uses rapidfuzz.partial_ratio with a weighted composite score: title at 80% and artist at 20%, since title stability is higher across catalogue versions and reissues. The advanced build packages this into BillboardScraper and SpotifyClient classes with all constants centralised in config.py, keeping every threshold and URL in one place.",
@@ -1686,7 +1680,7 @@
       "demo_url": null
     },
     {
-      "id": 39,
+      "id": 74,
       "slug": "first-blog-project",
       "title": "Xavier's Blog",
       "primary_category": "web",
@@ -1694,6 +1688,7 @@
       "full_description": "A fully deployed Flask blog where users can register, log in, and leave rich-text comments on posts. The first registered account becomes the permanent admin with exclusive rights to create, edit, and delete posts. Built with Flask-Login, SQLAlchemy, and CKEditor, then deployed to Render backed by PostgreSQL and served by Gunicorn.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-01-06",
       "problem": "Most early Flask projects stay on localhost and never make it to the web — which means the deployment gap never gets bridged. Getting a database-backed, authenticated web app from a local SQLite dev environment to a live production server involves a surprisingly large number of moving parts: WSGI servers, environment variables, managed databases, and hosting configuration. Without working through this end-to-end, it's easy to assume deployment \"just works\" and get stuck when it doesn't. Day 71 was specifically about closing that gap and understanding what actually changes between local and production.",
       "solution": "I built the blog on Flask with SQLAlchemy models for users, posts, and comments — all wired together with foreign key relationships and back-references. Flask-Login handles session management, Werkzeug hashes passwords, and Flask-WTF validates every form with CSRF protection. For deployment, I added a Procfile pointing Render to Gunicorn, swapped the database connection to pull from a DB_URI environment variable (falling back to SQLite locally), and configured all secrets through Render's environment tab. The same main.py runs in both contexts — the only difference is which environment variables are set.",
@@ -1744,7 +1739,7 @@
       "demo_url": null
     },
     {
-      "id": 40,
+      "id": 75,
       "slug": "day-62-coffee-wifi",
       "title": "Coffee & Wifi",
       "primary_category": "web",
@@ -1752,6 +1747,7 @@
       "full_description": "Coffee & Wifi is a crowd-sourced cafe finder built with Flask and WTForms. Users browse a table of rated cafes — each entry includes a Google Maps link, opening hours, and three emoji ratings for coffee, wifi, and power sockets — and can submit new entries through a validated form. It's a clean, self-contained web app with no database required: all data lives in a CSV file. The project demonstrates full request-response cycle handling in Flask, including form validation, POST-redirect-GET, and Jinja2 template inheritance.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2024-08-2",
       "problem": "Working remotely from a cafe sounds great until you show up and the wifi is down, there are two power outlets for the whole place, and the coffee is instant. There's no centralised, lightweight way to share that kind of on-the-ground intel — Google Maps reviews exist but they don't surface the specifics that actually matter to someone with a laptop. I wanted something dead simple: a table of honest ratings from people who actually sat there and tried to get work done.",
       "solution": "I built a Flask web app with three routes: a home page, a cafe table, and a submission form. The form is a WTForms FlaskForm with select fields for emoji ratings and a URL validator on the Maps link field — so you can't submit garbage. On a valid POST the row is appended to a CSV file with csv.writer, and the user is redirected to the cafes table (POST-redirect-GET pattern). Reading uses csv.DictReader so templates access columns by name rather than positional index. All constants — form choices, the CSV path, the port — live in config.py, and the Flask SECRET_KEY is loaded from a .env file via python-dotenv.",
@@ -1786,7 +1782,7 @@
       "demo_url": null
     },
     {
-      "id": 41,
+      "id": 76,
       "slug": "cafe-wifi-api",
       "title": "REST API — Cafe & Wifi",
       "primary_category": "web",
@@ -1794,6 +1790,7 @@
       "full_description": "Cafe & Wifi API is a fully functional RESTful backend built with Flask and SQLAlchemy that lets clients discover, add, update, and remove cafes with wifi. It exposes nine endpoints covering every standard HTTP method, with responses serialised to JSON and a simple home page linking out to the published Postman documentation. Built as a Day 66 project in the 100 Days of Code bootcamp, it's a clean demonstration of REST principles, SQLAlchemy 2.0 models, and API-key-protected routes.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-04-11",
       "problem": "Most beginners building their first API run into the same wall: they know how to return a string from a Flask route, but they don't know how to model data, serialise it to JSON, or design endpoints that behave the way clients actually expect. GET, POST, PATCH, PUT, and DELETE are easy to define individually, but understanding when to use each — and what a well-formed response looks like for each one — takes a concrete working example. There's also the practical question of how to protect a destructive endpoint (like DELETE) without a full authentication system. I wanted a project that answered all of these questions in one place.",
       "solution": "I built a Flask app backed by a SQLite database managed through SQLAlchemy 2.0's typed declarative model. Every cafe row is a `Cafe` model instance with a `to_dict()` method that serialises it straight into a `jsonify()`-friendly dict — no manual column mapping needed. The `/search` endpoint builds queries dynamically from whichever query parameters the client sends, so a single route handles filtering by location, amenities, seats, or price in any combination. For the DELETE endpoint I added a simple API-key check via query parameter, which keeps things testable in Postman without needing sessions or JWT. A `to_bool()` helper normalises Postman's form-encoded strings (`\"1\"`, `\"true\"`, `\"yes\"`) and native JSON booleans into Python bools, so both content types work transparently on every write endpoint.",
@@ -1836,7 +1833,7 @@
       "demo_url": null
     },
     {
-      "id": 42,
+      "id": 77,
       "slug": "us-states-game-tkinter",
       "title": "U.S. States Geography Quiz",
       "primary_category": "software",
@@ -1844,6 +1841,7 @@
       "full_description": "This is a U.S. States Geography Quiz where the goal is simple: name all 50 states and watch them appear on a blank map at their correct geographic positions. It ships as two builds in one repo — the original turtle script from the course exercise, preserved as-is, and an advanced tkinter rewrite that separates quiz logic, UI, and orchestration into distinct modules. The advanced version adds inline input, colour-coded feedback, a live score counter, and a Play Again flow — all without ever closing the main window. It's a hands-on demonstration of how to take a working procedural script and refactor it into a clean, callback-driven architecture.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-04-11",
       "problem": "The course exercise produces a single flat turtle script that works perfectly well as a learning exercise, but breaks the moment you move it to a different folder — all the file paths are hardcoded relative to wherever you happen to run it from. Beyond that, once you finish a round there's no way to play again without quitting and relaunching, and every guess interrupts the flow by popping up a modal dialog. As a study tool for U.S. geography, the vanilla version is a bit too awkward to actually want to sit down and use repeatedly. The original code also mixes data loading, game logic, and display into one flat script, which makes it hard to extend or understand once you step away from it.",
       "solution": "The project ships two builds side by side so the original course work is always available as a reference point. The advanced rewrite splits everything into three modules: `quiz.py` handles all guessing logic with zero tkinter imports, `display.py` owns every widget and the canvas, and `main.py` wires them together by injecting callbacks at construction time. State coordinate data from the CSV drives both builds — the original uses turtle's native coordinate system, while the advanced build transforms those coordinates to tkinter canvas space at render time. A `config.py` centralises every constant (canvas dimensions, colours, fonts, timing) so there's a single place to tune the app's behaviour.",
@@ -1871,7 +1869,106 @@
       "demo_url": null
     },
     {
-      "id": 43,
+      "id": 78,
+      "slug": "college-major-salary-pandas",
+      "title": "College Major vs Your Salary — Data Exploration with Pandas",
+      "primary_category": "data",
+      "short_description": "Does picking STEM actually guarantee better earnings? This analysis of 1.2M graduate salaries across 51 majors says it's more complicated. STEM leads on starting salary — but growth rates are nearly identical to HASS, and Economics' earnings ceiling beats every engineering field.",
+      "full_description": "The standard advice is \"pick STEM.\" This analysis uses a WSJ/PayScale survey of 1.2 million Americans to stress-test that claim across 51 undergraduate majors. By engineering salary risk scores, growth trajectories, earnings ceilings, and rank-change metrics, the data reveals a more nuanced picture: STEM leads on starting salary, but HASS majors grow at nearly the same rate. Math more than doubles in salary by mid-career. Economics' top earners out-earn every engineering field. And the safest long-term bet by earnings predictability isn't engineering at all — it's Nursing. The analysis surfaces 8 concrete findings through a full EDA pipeline, correlation analysis, and 7 charts, all committed to the repo and visible without running code.",
+      "featured": false,
+      "featured_order": null,
+      "loading_warning": false,
+      "date": "2026-04-13",
+      "problem": "When thinking about what to study, salary data exists — but it's buried in flat files with no way to quickly answer the questions that actually matter: which majors pay off fastest, which are the safest long-term bets, and how do broad degree categories really compare? Raw CSVs don't surface those patterns on their own. Without programmatic sorting, filtering, and aggregation, you end up eyeballing rows manually and missing the bigger picture entirely. The real friction is turning a flat table into meaningful salary rankings, risk scores, and group comparisons.",
+      "solution": "Loaded the dataset into a pandas DataFrame and ran a structured EDA pipeline: shape inspection, null detection (caught a silent NaN footer row with .tail() and .isna()), cleaning with .dropna(), then index-based lookups via .idxmax() / .idxmin() to surface salary extremes by major name. Engineered seven derived columns — Spread (P90 − P10 as an earnings-risk proxy), Growth % ((Mid − Start) / Start × 100), Safety score (Start / Spread), Start and Mid ranks, Rank_Change, Salary_Band (pd.cut), and Group_Avg_Start (groupby transform). Ranked majors across four lenses, ran a pairwise Pearson correlation matrix with upper-triangle masking, and generated seven publication-quality charts (bar, grouped bar, scatter + regression, heatmap, boxplot, rank-change bar). Results exported to CSV and JSON. A live stats DataFrame built from pre-computed variables surfaces all key findings in a single table that updates automatically on every run.",
+      "challenges": "The most significant challenge was data integrity — not technical, but analytical. Early findings confidently claimed that HASS majors beat the average STEM starting salary, and that Philosophy was the biggest rank climber. Both were wrong. Economics is categorised as Business in this dataset, not HASS. Nursing is also Business. Catching these errors required auditing every static claim against actual computed output and rebuilding the findings from scratch. The corrected version — Journalism as the biggest climber, STEM edging HASS on growth 70.40% vs 68.86% — is a better story precisely because it came from verifying the data rather than assuming the obvious interpretation.",
+      "results": "60+ pandas operations demonstrated across inspection, cleaning, feature engineering, multi-condition filtering, aggregation, groupby, reshaping, apply/map, correlation analysis, styling, and export. Seven charts committed to plots/ and visible without running code. Key findings: Chemical Engineering highest mid-career median at $107,000; Math biggest salary grower at 103.52%; Nursing lowest earnings risk with a $50,700 spread; Economics highest P90 ceiling at $210,000; starting salary predicts mid-career salary (Pearson r = 0.848); STEM out-earns HASS by ~$27,844 at mid-career; HASS and STEM have nearly identical growth trajectories (68.86% vs 70.40%).",
+      "tags": [
+        "data-analysis",
+        "python",
+        "feature-engineering",
+        "statistical-analysis",
+        "visualisation"
+      ],
+      "tech_stack": [
+        "Python",
+        "pandas",
+        "NumPy",
+        "Matplotlib",
+        "Seaborn",
+        "Jupyter Notebook",
+        "CSV"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/college-major-salary-analysis/card/salary.jpg",
+      "repo_url": "https://github.com/xavier-oc-programming/college-salary-data-analysis",
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 79,
+      "slug": "language-market-index",
+      "title": "Programming Language Workforce Strategy — Data Analysis",
+      "primary_category": "data",
+      "short_description": "Stack Overflow lost 97.7% of its post volume since 2016 — and its momentum now anti-correlates with hiring demand. This project proves the signal is broken, then builds a four-source replacement index to answer which languages to hire for.",
+      "full_description": "Stack Overflow was the de facto measure of developer activity for over a decade. But by December 2025 it had lost 97.7% of its peak post volume — and a Pearson correlation of −0.26 between SO momentum and job market demand reveals something worse than noise: the signal is inverted. Languages declining fastest on SO are the ones employers are most actively hiring for. Any workforce strategy built on raw SO counts points in the wrong direction.\r\n\r\nThe first notebook establishes this forensically. Seven analytical lenses — platform velocity, pre/post ChatGPT window comparisons, language share, momentum scoring, lifecycle classification, and OLS regression against job data — converge on the same conclusion: ChatGPT didn't break Stack Overflow, it accelerated a structural decline already underway since 2017, and it did so hardest in the ecosystems where AI tooling is strongest. Python's SO count fell 59.9% precisely because Python developers were the earliest adopters of AI-assisted coding.\r\n\r\nThe second notebook builds the replacement. The Language Market Index (LMI) aggregates four independent signals — Adzuna job postings (35%), GitHub Octoverse activity (30%), SO Developer Survey usage (25%), and TIOBE ratings (10%) — normalised to a common 0–100 scale before weighting. Python leads at 88.4/100 across every weighting scenario tested. The index and its methodology are exposed through an interactive Flask dashboard where stakeholders can adjust weights in real time and watch the rankings respond.",
+      "featured": true,
+      "featured_order": 19,
+      "loading_warning": false,
+      "date": "2026-01-10",
+      "problem": "Technology consultancies routinely use Stack Overflow post volume as a proxy for language relevance and developer demand. The question this project set out to answer was whether that signal was still trustworthy after the widespread adoption of AI coding assistants — and if not, what should replace it.\r\n\r\nThe business stakes are concrete: hiring and training investment decisions made on a flawed signal produce misallocated capability. If a consultancy ranks languages by SO momentum, it would currently prioritise Assembly and Delphi over Python and JavaScript — an inversion of actual market demand that would cost real money in the wrong hires.",
+      "solution": "Project 1 treats SO data as a forensic investigation rather than a dashboard. Monthly post counts for 14 languages from 2008 to 2025 are analysed through rolling averages, window comparisons, share normalisation, momentum scoring, and percentile-based lifecycle classification. The anti-correlation with Adzuna job data is tested via scipy's linregress and Pearson r — confirming the signal isn't just noisy but directionally wrong.\r\n\r\nProject 2 replaces it. A four-source ingestion pipeline fetches and caches job postings (Adzuna REST API), developer activity (GitHub Octoverse public dataset), self-reported usage (SO Developer Survey CSVs), and industry ratings (TIOBE scraper with hardcoded fallback). Each source is min-max normalised independently before weighting — removing scale differences between a job count of 50,000 and a GitHub pusher count of 2 million. The composite index is stress-tested across four weighting scenarios including extremes (60% single-source) to verify the top-tier ranking is robust to methodology disagreements.\r\n\r\nAll chart data is computed server-side at page load and injected into the Flask template as a single JSON object, eliminating page-load fetch calls. Two endpoints remain live: one for real-time weight recalculation, one for per-language detail on click.",
+      "challenges": "The hardest methodological problem was distinguishing between \"SO is declining\" and \"SO is declining as a signal.\" A platform losing traffic could still produce a reliable relative ranking. The anti-correlation finding (r = −0.26) required careful construction: comparing SO momentum to Adzuna job counts directly is confounded by language popularity, so the momentum metric was built as a self-referential measure (recent 24 months vs prior 24 months) to control for absolute scale before running the regression.\r\n\r\nThe TIOBE scraper was a persistent practical problem. tiobe.com blocks automated requests at the WAF level, returning valid HTTP responses but with no data. The solution was a two-stage approach: attempt the live scrape, validate against a set of key languages that must be present, and fall back to a manually sourced dataset when the check fails. This is fragile by design — the fallback will go stale — but it surfaces the fragility explicitly rather than silently returning zeros.\r\n\r\nNormalising four sources with fundamentally different units and distributions into a single comparable scale meant that the choice of normalisation method had real consequences. Min-max scaling was chosen over z-score because it preserves the 0–100 interpretability that makes the index legible to non-technical stakeholders, but it means a new language entering the tracked set can shift every other language's score — a limitation documented in the sensitivity analysis.",
+      "results": "Stack Overflow post volume peaked at 103,077 posts/month in June 2016 and reached 2,338/month by December 2025 — a 97.7% collapse. The post-ChatGPT acceleration is 15× the pre-ChatGPT decline rate (−7.6%/month vs −0.5%/month). SO momentum anti-correlates with Adzuna job demand at r = −0.26: the five languages with the worst SO momentum scores are the five most-hired languages in the job market.\r\n\r\nThe Language Market Index ranks Python first (88.4/100) across every weighting scenario tested. JavaScript (68.0), TypeScript (42.5), and Java (24.9) form the stable Dominant tier — the only four languages where all four independent signals simultaneously agree. The top-5 composition is unchanged whether job postings carry 35% or 60% of the weight. Rust and Kotlin are identified as leading-indicator languages: strong developer survey scores with weak current job counts, signalling early-adoption curves that the index will capture as they mature.",
+      "tags": [
+        "data-analysis",
+        "data-pipeline",
+        "visualisation",
+        "flask",
+        "web-app",
+        "REST-API",
+        "web-scraping",
+        "python",
+        "automation"
+      ],
+      "tech_stack": [
+        "Python",
+        "Pandas",
+        "NumPy",
+        "Matplotlib",
+        "SciPy",
+        "Flask",
+        "Chart.js",
+        "Jupyter",
+        "BeautifulSoup",
+        "Adzuna API",
+        "GitHub Octoverse"
+      ],
+      "screenshots": [
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-market-index/screenshots/Screenshot_2026-05-09_at_13.32.01.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-market-index/screenshots/Screenshot_2026-05-09_at_13.31.55.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-market-index/screenshots/composite_scores.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-market-index/screenshots/score_breakdown_by_source.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-market-index/screenshots/language_momentum_score.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-market-index/screenshots/language_share_over_time.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-market-index/screenshots/lifecycle_matrix_volume_vs_momentum.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-market-index/screenshots/month_over_month_velocity.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-market-index/screenshots/monthly_posts_per_language.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-market-index/screenshots/pre_post_chatgpt_drop_per_language.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-market-index/screenshots/so_momentum_vs_job_demand.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-market-index/screenshots/total_monthly_posts_decline.png"
+      ],
+      "videos": [
+        "https://youtu.be/UYg5XsEEMUA"
+      ],
+      "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/programming-languages-visualisation/card/languages2.jpg",
+      "repo_url": "https://github.com/xavier-oc-programming/programming-language-trends-analysis",
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 80,
       "slug": "google-trends-time-series-analysis",
       "title": "Google Trends Time Series Analysis",
       "primary_category": "data",
@@ -1879,6 +1976,7 @@
       "full_description": "This project asks whether public search interest — measured by Google Trends — reflects, anticipates, or follows real-world financial and economic outcomes. Three signal pairs are examined: Tesla stock price against web search popularity, Bitcoin market price against news search volume, and the official US unemployment rate against search interest in \"unemployment benefits.\" The core analytical challenge is frequency mismatch: Bitcoin price data is daily, while search data and unemployment figures arrive monthly. Resolving this requires resampling daily Bitcoin prices to month-end values before any comparison is valid. Rolling average smoothing is applied to unemployment search data to separate structural trend from seasonal noise.\r\nThe most striking result is the COVID-19 unemployment shock in 2020. Search interest for \"unemployment benefits\" and the official FRED unemployment rate spiked simultaneously — compressing a pattern that normally unfolds over quarters into a matter of weeks. Adding 2020 data also exposes a data integrity issue: Google Trends normalises index values to 100 within the selected period, so extending the range rescales the entire historical baseline. For Bitcoin, search volume leads price in several cycles — interest peaks one to two months before price does during speculative runs, then diverges during consolidation. Tesla search volume correlates more strongly with news events and product announcements than with earnings, with price movements often producing no visible search response while public controversies produce clear spikes.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-01-15",
       "problem": "The three datasets operate at incompatible time frequencies: Bitcoin price is daily, Google Trends search data is monthly, and unemployment figures are monthly but seasonally noisy. Direct comparison is not possible until all signals share a common timeline and resolution. A secondary problem is the Google Trends normalisation behaviour — adding a new time period rescales all existing values, which affects how historical charts read and requires awareness when interpreting any cross-period comparison.",
       "solution": "Daily Bitcoin prices are resampled to month-end frequency using pandas `.resample('ME').last()`, producing a monthly series that aligns directly with the search data. All date columns are parsed from strings to datetime objects to enable time-axis operations. A 6-month rolling average is applied to unemployment search data to smooth seasonal spikes and expose the underlying structural trend. Dual-axis Matplotlib charts with `twinx()` allow metrics on different scales — price in USD and search index 0–100 — to be compared visually on a single chart without distortion.",
@@ -1915,7 +2013,7 @@
       "demo_url": null
     },
     {
-      "id": 44,
+      "id": 81,
       "slug": "numpy-ndarray-computation",
       "title": "NumPy NDArray Computation",
       "primary_category": "data",
@@ -1923,6 +2021,7 @@
       "full_description": "At its core, this project asks a deceptively simple question: what actually is a digital image? The answer turns out to be a rank-3 tensor of integers — and once that's established, every image transformation becomes a straightforward array operation. The analysis works through NumPy's ndarray from the ground up, covering 1D vectors, 2D matrices, and 3D tensors, then applies the same ideas to real image data loaded from both SciPy's built-in datasets and a custom photograph.\r\n\r\nThe findings are concrete. A 768 × 1024 colour photograph contains 2,359,296 individual integer values. Converting it to greyscale requires a single dot product against three luminance weights — `sRGB_array @ [0.2126, 0.7152, 0.0722]` — collapsing the `(768, 1024, 3)` array to `(768, 1024)` in one step. Colour inversion is `255 - img`, applied simultaneously to all pixels via broadcasting. Spatial transforms — flipping, rotating — operate directly on array axes, with no pixel loop in sight.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-04-15",
       "problem": "Image processing libraries abstract away the underlying data structure, making it easy to apply transforms without understanding what they actually compute. The analytical problem is to make that structure explicit: represent images as raw numerical arrays and implement every transformation — normalisation, greyscale conversion, spatial flips, colour inversion — as a direct mathematical operation on the array values, so the relationship between the computation and the visual result is transparent.",
       "solution": "Each image transformation is implemented as a NumPy array operation. Normalisation divides pixel values by 255 to map the range [0, 255] to [0, 1]. Greyscale conversion uses a dot product with ITU-R BT.709 luminance weights (0.2126 R, 0.7152 G, 0.0722 B), which weights green more heavily because human vision is most sensitive to it. Spatial transforms use `np.flip()` and `np.rot90()`, which return array views rather than copies, avoiding memory allocation. Colour inversion uses broadcasting: subtracting the entire array from 255 in a single vectorised operation.",
@@ -1951,7 +2050,7 @@
       "demo_url": null
     },
     {
-      "id": 45,
+      "id": 82,
       "slug": "movie-budget-linear-regression-analysis",
       "title": "Movie Budget Linear Regression Analysis",
       "primary_category": "data",
@@ -1959,6 +2058,7 @@
       "full_description": "Does spending more on a film reliably produce more revenue? This analysis fits a scikit-learn LinearRegression model on production budget versus worldwide gross for 5,384 released films spanning over a century of cinema. Before modelling, the pipeline cleans a currency-formatted dataset, removes 7 unreleased titles dated after the May 2018 data-collection cut-off, and creates decade buckets to enable era-level comparison.\r\n\r\nThe model explains 55.77% of the variance in worldwide revenue for films from 1970 onwards, with a slope of 3.12 — suggesting each additional dollar of budget is associated with roughly $3.12 in global box-office return. Despite this, 37.28% of all released films never recouped their production costs. The analysis also identifies 155 international releases (positive worldwide gross, zero domestic) and 357 films with no recorded revenue at all, including several carrying budgets above $60M.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-04-13",
       "problem": "The film industry routinely allocates hundreds of millions of dollars to productions with uncertain returns. Understanding whether and to what degree production budget predicts box-office performance is a foundational question for any quantitative analysis of film economics. It also requires confronting a dataset that is riddled with data-quality issues — currency strings, unreported revenues, and future-dated entries — before any modelling can begin.",
       "solution": "Data was loaded from a scraped CSV of 5,391 films and cleaned using a nested-loop approach to strip currency symbols from three monetary columns, followed by type conversion to float. Release dates were parsed to datetime and films dated on or after the May 2018 collection date were dropped. A decade column was derived via floor division to split the dataset into pre- and post-1970 cohorts. Linear regression was fitted using scikit-learn on the modern cohort, with Seaborn regplot overlays used to visualise the fit. The same regression was repeated on old films to surface differences in slope and R² across eras.",
@@ -1992,7 +2092,7 @@
       "demo_url": null
     },
     {
-      "id": 46,
+      "id": 83,
       "slug": "nobel-prize-data-analysis",
       "title": "Nobel Prize Data Analysis",
       "primary_category": "data",
@@ -2000,6 +2100,7 @@
       "full_description": "I dug into a dataset of Nobel Prize laureates going back to 1901 to answer questions about the famous prize and its history: how many women have actually won, which countries dominate, and whether scientists are getting older when they finally receive the prize. The analysis spans gender breakdowns, country rankings, research institution hotspots, and age distributions across all six prize categories. It uses Plotly for interactive charts, Matplotlib for trend overlays with rolling averages, and Seaborn for statistical visualisations. It's a thorough end-to-end pandas project — from raw CSV to interactive insight.",
       "featured": false,
       "featured_order": 3,
+      "loading_warning": false,
       "date": "2026-04-13",
       "problem": "A raw dataset of 1,000+ Nobel laureate records going back to 1901 doesn't tell you much on its own — the interesting patterns are buried across decades, categories, and geographies. I wanted to answer specific questions: when did the US start dominating, which organisations produce the most laureates, are prizes going to older scientists now than a century ago? Without proper aggregation and visualisation, those questions are impossible to answer by eye. The dataset also has quirks — birth countries that no longer exist, missing dates, organisations only relevant to certain categories — that need careful handling before any analysis is meaningful.",
       "solution": "I loaded the CSV with pandas and worked through a cleaning pass: converting birth dates to datetime, parsing the fractional prize share into a float percentage, and computing each laureate's age at the time of the award. Aggregations used groupby with various functions, cumulative sums for the country race chart, and 5-year rolling averages for the trend overlays. Plotly Express handled the interactive charts (donut, bar, choropleth, sunburst, line), Matplotlib added dual-axis scatter and line charts, and Seaborn produced the statistical visualisations (histplot, regplot with LOWESS, boxplot, lmplot). Keeping everything in a single practice notebook made it easy to follow the full analysis from start to finish.",
@@ -2039,7 +2140,7 @@
       "demo_url": null
     },
     {
-      "id": 47,
+      "id": 84,
       "slug": "semmelweis-handwashing-data-analysis",
       "title": "Semmelweis Handwashing Data Analysis",
       "primary_category": "data",
@@ -2047,6 +2148,7 @@
       "full_description": "This project re-examines the original hospital records published by Dr Ignaz Semmelweis in 1861. The data covers 98 monthly observations across two maternity clinics at Vienna General Hospital from 1841 to 1849, with yearly aggregates that reveal a stark gap between Clinic 1 (staffed by doctors who also performed autopsies) and Clinic 2 (staffed by midwives with no autopsy contact). The pipeline runs from raw CSV ingestion through death-rate computation, clinic comparison, time-series splitting, distributional analysis, and a formal hypothesis test.\r\n\r\nMandatory chlorine handwashing, introduced in June 1846, cut the average monthly death rate from 10.5% to 5.0% — an absolute reduction of roughly 5.5 percentage points and approximately a twofold improvement in survival odds. Clinic 1 carried a death rate around three times higher than Clinic 2, isolating contamination from the autopsy room as the mechanism without the need for a controlled experiment. An independent-samples t-test yields t = 3.80, p = 0.00025, rejecting the null hypothesis at the 99% confidence level: the improvement is not due to random variation.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-04-13",
       "problem": "In the 1840s, childbed fever killed roughly one in ten women who gave birth at Vienna General Hospital. The cause was unknown and the mortality gap between the hospital's two clinics — one dramatically more lethal than the other — had no accepted explanation. The analytical problem is to determine whether a single procedural change (mandatory handwashing) caused the observed drop in deaths, or whether the improvement could be attributed to chance and natural variation.",
       "solution": "The analysis splits the monthly dataset at June 1846 and computes a normalised death rate (deaths / births) for each period. Distributional differences between the two periods are visualised using Plotly box plots and histograms (with histnorm='percent' to correct for unequal period lengths) and a Seaborn KDE clipped to [0, 1] to avoid the physically impossible negative-rate tail produced by default kernel estimation. An independent-samples t-test from scipy.stats formalises whether the difference in means exceeds what random variation could explain.",
@@ -2083,7 +2185,7 @@
       "demo_url": null
     },
     {
-      "id": 48,
+      "id": 85,
       "slug": "boston-house-price-analysis",
       "title": "Boston House Price Predictor",
       "primary_category": "ai-ml",
@@ -2091,6 +2193,7 @@
       "full_description": "This project works through 506 Boston census tracts from the Harrison & Rubinfeld (1978) dataset, fitting a multivariable linear regression across 13 socio-economic and geographic features to explain median residential property values. The pipeline covers data cleaning, exploratory visualisation (distributions, pair plots, joint plots), an 80/20 train/test split, residual diagnostics, and a working valuation function.\r\n\r\nThe raw price distribution carries a positive skew (1.46) that inflates the residuals. Applying a log transformation to the target reduces residual skew to 0.09 and lifts test-set r² from 0.67 to 0.74. Number of rooms is the strongest positive predictor (each additional room adds ~$3,109). Nitric oxide pollution carries the largest negative coefficient (−0.70). River proximity raises estimated prices; poverty level and pupil-to-teacher ratio both depress them.\r\n\r\nThe deployed app exposes all 13 features as interactive sliders. Adjusting rooms, pollution, crime rate, or river proximity updates the estimated property value in real time. A feature impact panel shows which characteristics are currently pushing the price up or down — making the model's internal logic visible without showing raw coefficients.\r\n\r\nKey results: average Boston property estimated at ~$20,198; an 8-room river-front property in a low-poverty area estimates at ~$37,110. All prices are 1970s USD.",
       "featured": true,
       "featured_order": 11,
+      "loading_warning": false,
       "date": "2026-04-13",
       "problem": "Real estate valuation depends on dozens of overlapping factors — proximity to employment, school quality, crime, pollution, room count — and it is not obvious which factors matter most or by how much. The goal was to quantify these relationships for 1970s Boston and deploy the model as a live interactive tool rather than leaving it static in a notebook.",
       "solution": "A multivariable OLS regression fitted on 13 features after an 80/20 train/test split (random_state=10). Log transformation applied to the target after residual diagnostics confirmed skew. Coefficients interpreted for sign and magnitude; np.exp() inverts the log transform at inference time. FastAPI wraps the trained model (StandardScaler + LinearRegression stored as joblib pkl files) and serves a single-page slider UI. Deployed to Azure App Service (F1 free tier) via zip deploy.",
@@ -2163,7 +2266,51 @@
       "demo_url": "https://xavier-oc-programming.github.io/boston-house-price-analysis/notebook_web_render/"
     },
     {
-      "id": 49,
+      "id": 86,
+      "slug": "morse-code-converter",
+      "title": "Morse Code Converter",
+      "primary_category": "software",
+      "short_description": "A Python CLI that converts plain text (A-Z, 0-9) into Morse code. Ships two builds: a course-original and an OOP refactor with raw keystroke navigation, Ctrl+C handling, and a polished terminal launcher.",
+      "full_description": "Morse Code Converter is a Python CLI project built as Day 82 of 100 Days of Code. It ships two builds side-by-side: the original course submission using a functional style, and an OOP-refactored advanced version with a polished terminal experience. A shared menu launcher ties them together, clearing the screen, printing an ASCII logo, and handing off to whichever build you choose. The project is a deliberate comparison of the same feature designed at two different levels of software craft.",
+      "featured": false,
+      "featured_order": null,
+      "loading_warning": false,
+      "date": "2026-04-13",
+      "problem": "Learning resources often give you a working script and call it done — but a working script and a well-designed program are very different things. The original course assignment produces code that works, but it buries magic strings throughout the codebase, mixes input and output with business logic, and gives the user no clean way to exit or navigate between tools. There was no way to compare both approaches side-by-side in a single repo, and no launcher to make the experience feel like a real application. Running individual scripts directly also meant import paths broke the moment files moved around, which is a quiet but very real source of friction.",
+      "solution": "I built a two-build repository with a shared menu.py launcher that uses subprocess.run() with cwd= to solve the import-path problem cleanly — no installed packages or relative imports needed. The advanced build separates all I/O into a Display class, all constants into config.py, and all conversion logic into a MorseConverter class, so none of the three have any knowledge of each other. The launcher clears the screen, prints the ASCII logo, and hands off to the chosen build, which then runs as its own isolated process. The original build stays completely verbatim — a deliberate constraint that makes the two-build comparison honest.",
+      "challenges": "The trickiest part was detecting the up arrow key as a return-to-menu signal without pulling in any third-party library. Normal input() never sees arrow keys — readline intercepts them before Python does. Switching the terminal to raw mode with termios and tty meant I had to manually handle everything: echoing typed characters, backspace, Enter (which arrives as \\r in raw mode, not \\n), and Ctrl+C. The up arrow is a three-byte escape sequence (\\x1b[A), so I had to read one character at a time and branch accordingly. The final wrinkle was that tcgetattr crashes when stdin is a pipe rather than a real TTY, which I only discovered during smoke testing — so I added an isatty() check that falls back to plain readline automatically.",
+      "results": "This project shows I can take a course exercise and extend it into a structured, portfolio-worthy piece of software without losing sight of what made the original worth building. I got genuinely hands-on with how raw terminal input works under the hood — something most developers never need to touch — and got comfortable with Python's subprocess module for multi-script orchestration. The two-build structure works well as a teaching artefact: flip between the original and the refactor and the design decisions become self-evident. If I were to keep going, I'd add punctuation to the Morse dictionary and a reverse mode that converts Morse back to text.",
+      "tags": [
+        "CLI",
+        "OOP",
+        "python",
+        "scripting",
+        "terminal",
+        "terminal-ux"
+      ],
+      "tech_stack": [
+        "Python 3.10+",
+        "subprocess",
+        "termios",
+        "tty",
+        "pathlib",
+        "os",
+        "sys"
+      ],
+      "screenshots": [
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/morse-code-converter/screenshots/Screenshot_2026-05-17_at_12.48.11.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/morse-code-converter/screenshots/Screenshot_2026-05-17_at_12.48.27.png"
+      ],
+      "videos": [
+        "https://youtu.be/k146oyFPQpg"
+      ],
+      "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/morse-code-converter/card/morse3.webp",
+      "repo_url": "https://github.com/xavier-oc-programming/morse-code-converter_mk1",
+      "live_url": null,
+      "demo_url": null
+    },
+    {
+      "id": 87,
       "slug": "ai-portfolio-assistant",
       "title": "AI Portfolio Assistant",
       "primary_category": "web",
@@ -2171,6 +2318,7 @@
       "full_description": "The assistant lives at /assistant and lets anyone have a real conversation about my background. It knows about my CV, my skills, my personal story, and every single project in my portfolio. Ask it whether I'd be a good fit for a backend Python role, what games I've built, or whether I have CI/CD experience — it retrieves the relevant information from my actual documents and gives you a grounded, cited answer.\r\n\r\nThe architecture is a full RAG pipeline built as a Flask blueprint. At startup, it indexes two types of knowledge: static Markdown files (my CV, skills breakdown, and personal narrative) and live project records queried straight from the PostgreSQL portfolio database. That second part was a deliberate design choice — it means the assistant always reflects the current state of my portfolio. Every time I add or update a project through the admin dashboard, it's automatically available to the assistant on the next deploy, with no manual knowledge base maintenance required.\r\n\r\nEmbeddings run entirely locally using sentence-transformers/all-MiniLM-L6-v2 — no API key, no cost, no latency from an external call. ChromaDB stores the vector index on disk so it only rebuilds when needed. At query time, the four most semantically relevant chunks are retrieved and injected into the prompt alongside the conversation history before the request goes to Llama 3.3 70B on Groq.\r\n\r\nOne of the details I'm most pleased with is the smart source citations. When the assistant answers, it doesn't just say \"source: projects\" — it links somewhere specific. A question about a particular project links straight to that project's detail page. A question about Flask links to /projects?tag=flask. A question about data work links to /projects/data. A broad question falls back to /projects. This required building a tag frequency system across retrieved chunks and a GENERIC_TAGS exclusion list to stop tags like \"python\" or \"programming\" from winning over meaningful ones like \"flask\" or \"machine-learning\".\r\n\r\nThe chat UI is built with Bootstrap 5 — no page reloads, everything via fetch(). It renders Markdown, persists the full conversation in localStorage with a clear and restore flow, and ships with twelve starter prompts covering the range of questions a recruiter might actually ask. Rate limiting is enforced per IP at 15 requests per minute and 1,500 per day using flask-limiter, with context-aware error messages depending on which limit was hit.",
       "featured": true,
       "featured_order": 1,
+      "loading_warning": false,
       "date": "2026-05-01",
       "problem": "My portfolio was a static site — a recruiter landing on it had to click through every project page manually to work out whether I'd be a good fit. There was no way to ask a direct question. Generic AI chatbots didn't know anything about me specifically, and if you asked one to describe my projects it would just hallucinate plausible-sounding nonsense. I needed something that could have a real, specific, honest conversation about my work on my behalf.",
       "solution": "I built a RAG pipeline so the assistant only ever answers from verified source documents — it cannot invent information it wasn't given. Instead of a static knowledge file for projects, I wired it directly to the portfolio database so it always reflects live data. Source citations link to the actual relevant pages on the site, so the assistant becomes a navigation layer as much as a Q&A tool — it answers the question and then hands the visitor off to the right place to learn more.",
@@ -2216,7 +2364,7 @@
       "demo_url": null
     },
     {
-      "id": 50,
+      "id": 88,
       "slug": "numpy-pandas-benchmark",
       "title": "NumPy vs Pandas Performance Benchmark",
       "primary_category": "data",
@@ -2224,6 +2372,7 @@
       "full_description": "I kept hearing that NumPy is faster than Pandas — and in a lot of cases that's true. But I wanted to know by how much, and whether it's actually a fair universal claim. Turns out it isn't. So I built this project to get real numbers. I benchmarked seven operations across three dataset sizes using time.perf_counter() with 5 runs averaged per measurement. All data is generated synthetically with a fixed seed so the results are fully reproducible. Everything is explored in a Jupyter notebook with four chart types, and the raw numbers are exported to results.json.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-05-01",
       "problem": "I'd been told that NumPy is faster overall, but that felt too broad to be useful. Faster at what, exactly? And by how much? I wanted to know whether the advice held across different operations and dataset sizes, or whether it was really just true in specific situations that people had generalised a bit too confidently.",
       "solution": "I generated a synthetic dataset with four columns — price, quantity, category, score — and timed seven operations for both libraries at 100k, 1M, and 10M rows. NumPy uses a structured array with named fields; Pandas uses a DataFrame built from the same seed so the values are identical. I used time.perf_counter() over 5 runs for each measurement, then visualised the results across four chart types to make the patterns easy to read.",
@@ -2259,7 +2408,7 @@
       "demo_url": null
     },
     {
-      "id": 51,
+      "id": 89,
       "slug": "cnn-food-classifier",
       "title": "CNN Food Classifier",
       "primary_category": "ai-ml",
@@ -2267,6 +2416,7 @@
       "full_description": "The model lives at Hugging Face Spaces and lets anyone upload a food photo to get instant predictions across 101 categories — from apple pie to waffles. It identifies the most likely dish and surfaces the top 3 predictions with confidence scores.\r\n\r\nThe architecture is built on MobileNetV2 pretrained on ImageNet, which already knows how to detect edges, textures, and shapes from 1.2M images. Rather than training from scratch — which would require far more data and compute — I reused those learned features and trained only what needed to be food-specific.\r\n\r\nStage 1 freezes the entire MobileNetV2 base and trains a lightweight classification head on top: GlobalAveragePooling → Dense(256, ReLU) → Dropout(0.3) → Dense(101, softmax). This converges quickly and reaches ~62% validation accuracy in 20 epochs at lr=0.0001.\r\n\r\nStage 2 unfreezes the top 30 layers of the base and fine-tunes the full model end-to-end at lr=1e-5 — gentle enough to refine the pretrained weights toward food-specific features without overwriting them. This pushes validation accuracy to ~68.3%.\r\n\r\nThe training pipeline uses tf.data with mixed float16 precision throughout for ~30% faster throughput on Apple M1 Metal GPU. The app is deployed as a Gradio interface on Hugging Face Spaces — users upload a photo, the model preprocesses it to 224×224, normalises pixel values, and returns the top 3 predicted classes with confidence scores.",
       "featured": true,
       "featured_order": 3,
+      "loading_warning": true,
       "date": "2026-05-03",
       "problem": "Training a food classifier from scratch across 101 categories requires far more data, compute, and time than the Food-101 dataset alone can support — especially for visually similar pairs like beef tartare vs tuna tartare or spaghetti bolognese vs carbonara where even humans struggle.",
       "solution": "Transfer learning from MobileNetV2 gave the model a head start — 1.2M ImageNet images worth of visual knowledge, frozen and reused as a feature extractor. Fine-tuning only the top layers in Stage 2 let me specialise those features for food without losing what was already learned.",
@@ -2315,104 +2465,7 @@
       "demo_url": "https://huggingface.co/spaces/xavier-oc-machinelearn/cnn-food-classifier"
     },
     {
-      "id": 52,
-      "slug": "college-major-salary-pandas",
-      "title": "College Major vs Your Salary — Data Exploration with Pandas",
-      "primary_category": "data",
-      "short_description": "Does picking STEM actually guarantee better earnings? This analysis of 1.2M graduate salaries across 51 majors says it's more complicated. STEM leads on starting salary — but growth rates are nearly identical to HASS, and Economics' earnings ceiling beats every engineering field.",
-      "full_description": "The standard advice is \"pick STEM.\" This analysis uses a WSJ/PayScale survey of 1.2 million Americans to stress-test that claim across 51 undergraduate majors. By engineering salary risk scores, growth trajectories, earnings ceilings, and rank-change metrics, the data reveals a more nuanced picture: STEM leads on starting salary, but HASS majors grow at nearly the same rate. Math more than doubles in salary by mid-career. Economics' top earners out-earn every engineering field. And the safest long-term bet by earnings predictability isn't engineering at all — it's Nursing. The analysis surfaces 8 concrete findings through a full EDA pipeline, correlation analysis, and 7 charts, all committed to the repo and visible without running code.",
-      "featured": false,
-      "featured_order": null,
-      "date": "2026-04-13",
-      "problem": "When thinking about what to study, salary data exists — but it's buried in flat files with no way to quickly answer the questions that actually matter: which majors pay off fastest, which are the safest long-term bets, and how do broad degree categories really compare? Raw CSVs don't surface those patterns on their own. Without programmatic sorting, filtering, and aggregation, you end up eyeballing rows manually and missing the bigger picture entirely. The real friction is turning a flat table into meaningful salary rankings, risk scores, and group comparisons.",
-      "solution": "Loaded the dataset into a pandas DataFrame and ran a structured EDA pipeline: shape inspection, null detection (caught a silent NaN footer row with .tail() and .isna()), cleaning with .dropna(), then index-based lookups via .idxmax() / .idxmin() to surface salary extremes by major name. Engineered seven derived columns — Spread (P90 − P10 as an earnings-risk proxy), Growth % ((Mid − Start) / Start × 100), Safety score (Start / Spread), Start and Mid ranks, Rank_Change, Salary_Band (pd.cut), and Group_Avg_Start (groupby transform). Ranked majors across four lenses, ran a pairwise Pearson correlation matrix with upper-triangle masking, and generated seven publication-quality charts (bar, grouped bar, scatter + regression, heatmap, boxplot, rank-change bar). Results exported to CSV and JSON. A live stats DataFrame built from pre-computed variables surfaces all key findings in a single table that updates automatically on every run.",
-      "challenges": "The most significant challenge was data integrity — not technical, but analytical. Early findings confidently claimed that HASS majors beat the average STEM starting salary, and that Philosophy was the biggest rank climber. Both were wrong. Economics is categorised as Business in this dataset, not HASS. Nursing is also Business. Catching these errors required auditing every static claim against actual computed output and rebuilding the findings from scratch. The corrected version — Journalism as the biggest climber, STEM edging HASS on growth 70.40% vs 68.86% — is a better story precisely because it came from verifying the data rather than assuming the obvious interpretation.",
-      "results": "60+ pandas operations demonstrated across inspection, cleaning, feature engineering, multi-condition filtering, aggregation, groupby, reshaping, apply/map, correlation analysis, styling, and export. Seven charts committed to plots/ and visible without running code. Key findings: Chemical Engineering highest mid-career median at $107,000; Math biggest salary grower at 103.52%; Nursing lowest earnings risk with a $50,700 spread; Economics highest P90 ceiling at $210,000; starting salary predicts mid-career salary (Pearson r = 0.848); STEM out-earns HASS by ~$27,844 at mid-career; HASS and STEM have nearly identical growth trajectories (68.86% vs 70.40%).",
-      "tags": [
-        "data-analysis",
-        "python",
-        "feature-engineering",
-        "statistical-analysis",
-        "visualisation"
-      ],
-      "tech_stack": [
-        "Python",
-        "pandas",
-        "NumPy",
-        "Matplotlib",
-        "Seaborn",
-        "Jupyter Notebook",
-        "CSV"
-      ],
-      "screenshots": [],
-      "videos": [],
-      "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/college-major-salary-analysis/card/salary.jpg",
-      "repo_url": "https://github.com/xavier-oc-programming/college-salary-data-analysis",
-      "live_url": null,
-      "demo_url": null
-    },
-    {
-      "id": 53,
-      "slug": "language-market-index",
-      "title": "Programming Language Workforce Strategy — Data Analysis",
-      "primary_category": "data",
-      "short_description": "Stack Overflow lost 97.7% of its post volume since 2016 — and its momentum now anti-correlates with hiring demand. This project proves the signal is broken, then builds a four-source replacement index to answer which languages to hire for.",
-      "full_description": "Stack Overflow was the de facto measure of developer activity for over a decade. But by December 2025 it had lost 97.7% of its peak post volume — and a Pearson correlation of −0.26 between SO momentum and job market demand reveals something worse than noise: the signal is inverted. Languages declining fastest on SO are the ones employers are most actively hiring for. Any workforce strategy built on raw SO counts points in the wrong direction.\r\n\r\nThe first notebook establishes this forensically. Seven analytical lenses — platform velocity, pre/post ChatGPT window comparisons, language share, momentum scoring, lifecycle classification, and OLS regression against job data — converge on the same conclusion: ChatGPT didn't break Stack Overflow, it accelerated a structural decline already underway since 2017, and it did so hardest in the ecosystems where AI tooling is strongest. Python's SO count fell 59.9% precisely because Python developers were the earliest adopters of AI-assisted coding.\r\n\r\nThe second notebook builds the replacement. The Language Market Index (LMI) aggregates four independent signals — Adzuna job postings (35%), GitHub Octoverse activity (30%), SO Developer Survey usage (25%), and TIOBE ratings (10%) — normalised to a common 0–100 scale before weighting. Python leads at 88.4/100 across every weighting scenario tested. The index and its methodology are exposed through an interactive Flask dashboard where stakeholders can adjust weights in real time and watch the rankings respond.",
-      "featured": true,
-      "featured_order": 19,
-      "date": "2026-01-10",
-      "problem": "Technology consultancies routinely use Stack Overflow post volume as a proxy for language relevance and developer demand. The question this project set out to answer was whether that signal was still trustworthy after the widespread adoption of AI coding assistants — and if not, what should replace it.\r\n\r\nThe business stakes are concrete: hiring and training investment decisions made on a flawed signal produce misallocated capability. If a consultancy ranks languages by SO momentum, it would currently prioritise Assembly and Delphi over Python and JavaScript — an inversion of actual market demand that would cost real money in the wrong hires.",
-      "solution": "Project 1 treats SO data as a forensic investigation rather than a dashboard. Monthly post counts for 14 languages from 2008 to 2025 are analysed through rolling averages, window comparisons, share normalisation, momentum scoring, and percentile-based lifecycle classification. The anti-correlation with Adzuna job data is tested via scipy's linregress and Pearson r — confirming the signal isn't just noisy but directionally wrong.\r\n\r\nProject 2 replaces it. A four-source ingestion pipeline fetches and caches job postings (Adzuna REST API), developer activity (GitHub Octoverse public dataset), self-reported usage (SO Developer Survey CSVs), and industry ratings (TIOBE scraper with hardcoded fallback). Each source is min-max normalised independently before weighting — removing scale differences between a job count of 50,000 and a GitHub pusher count of 2 million. The composite index is stress-tested across four weighting scenarios including extremes (60% single-source) to verify the top-tier ranking is robust to methodology disagreements.\r\n\r\nAll chart data is computed server-side at page load and injected into the Flask template as a single JSON object, eliminating page-load fetch calls. Two endpoints remain live: one for real-time weight recalculation, one for per-language detail on click.",
-      "challenges": "The hardest methodological problem was distinguishing between \"SO is declining\" and \"SO is declining as a signal.\" A platform losing traffic could still produce a reliable relative ranking. The anti-correlation finding (r = −0.26) required careful construction: comparing SO momentum to Adzuna job counts directly is confounded by language popularity, so the momentum metric was built as a self-referential measure (recent 24 months vs prior 24 months) to control for absolute scale before running the regression.\r\n\r\nThe TIOBE scraper was a persistent practical problem. tiobe.com blocks automated requests at the WAF level, returning valid HTTP responses but with no data. The solution was a two-stage approach: attempt the live scrape, validate against a set of key languages that must be present, and fall back to a manually sourced dataset when the check fails. This is fragile by design — the fallback will go stale — but it surfaces the fragility explicitly rather than silently returning zeros.\r\n\r\nNormalising four sources with fundamentally different units and distributions into a single comparable scale meant that the choice of normalisation method had real consequences. Min-max scaling was chosen over z-score because it preserves the 0–100 interpretability that makes the index legible to non-technical stakeholders, but it means a new language entering the tracked set can shift every other language's score — a limitation documented in the sensitivity analysis.",
-      "results": "Stack Overflow post volume peaked at 103,077 posts/month in June 2016 and reached 2,338/month by December 2025 — a 97.7% collapse. The post-ChatGPT acceleration is 15× the pre-ChatGPT decline rate (−7.6%/month vs −0.5%/month). SO momentum anti-correlates with Adzuna job demand at r = −0.26: the five languages with the worst SO momentum scores are the five most-hired languages in the job market.\r\n\r\nThe Language Market Index ranks Python first (88.4/100) across every weighting scenario tested. JavaScript (68.0), TypeScript (42.5), and Java (24.9) form the stable Dominant tier — the only four languages where all four independent signals simultaneously agree. The top-5 composition is unchanged whether job postings carry 35% or 60% of the weight. Rust and Kotlin are identified as leading-indicator languages: strong developer survey scores with weak current job counts, signalling early-adoption curves that the index will capture as they mature.",
-      "tags": [
-        "data-analysis",
-        "data-pipeline",
-        "visualisation",
-        "flask",
-        "web-app",
-        "REST-API",
-        "web-scraping",
-        "python",
-        "automation"
-      ],
-      "tech_stack": [
-        "Python",
-        "Pandas",
-        "NumPy",
-        "Matplotlib",
-        "SciPy",
-        "Flask",
-        "Chart.js",
-        "Jupyter",
-        "BeautifulSoup",
-        "Adzuna API",
-        "GitHub Octoverse"
-      ],
-      "screenshots": [
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-market-index/screenshots/Screenshot_2026-05-09_at_13.32.01.png",
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-market-index/screenshots/Screenshot_2026-05-09_at_13.31.55.png",
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-market-index/screenshots/composite_scores.png",
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-market-index/screenshots/score_breakdown_by_source.png",
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-market-index/screenshots/language_momentum_score.png",
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-market-index/screenshots/language_share_over_time.png",
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-market-index/screenshots/lifecycle_matrix_volume_vs_momentum.png",
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-market-index/screenshots/month_over_month_velocity.png",
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-market-index/screenshots/monthly_posts_per_language.png",
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-market-index/screenshots/pre_post_chatgpt_drop_per_language.png",
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-market-index/screenshots/so_momentum_vs_job_demand.png",
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/language-market-index/screenshots/total_monthly_posts_decline.png"
-      ],
-      "videos": [
-        "https://youtu.be/UYg5XsEEMUA"
-      ],
-      "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/programming-languages-visualisation/card/languages2.jpg",
-      "repo_url": "https://github.com/xavier-oc-programming/programming-language-trends-analysis",
-      "live_url": null,
-      "demo_url": null
-    },
-    {
-      "id": 54,
+      "id": 90,
       "slug": "imdb-sentiment-classifier",
       "title": "AWS Lambda & Amazon Bedrock: Benchmarking TF-IDF, LSTM, and Zero-Shot LLM Sentiment Analysis",
       "primary_category": "ai-ml",
@@ -2420,6 +2473,7 @@
       "full_description": "For this project I built a complete sentiment analysis pipeline from scratch, training and benchmarking three approaches on the IMDb Movie Reviews dataset — 50,000 labelled reviews split evenly between positive and negative. The goal was not just to get a working model, but to rigorously compare classical NLP, deep learning, and foundation model inference, and then deploy the result as a production-grade serverless API on AWS.\r\n\r\nI trained two models locally: a TF-IDF + Logistic Regression baseline using scikit-learn, and a Keras LSTM sequence model using TensorFlow. Both were evaluated on the same 25,000-review held-out test set across accuracy, precision, recall, F1, AUC, and confidence calibration. I also integrated Amazon Bedrock to call Claude Haiku 4.5 for zero-shot inference, gaining hands-on experience with the Bedrock platform — navigating model access approval, IAM permissions, and the boto3 API in a real AWS environment.\r\n\r\nThe winning model (TF-IDF + Logistic Regression, F1 = 0.8945) was deployed as a containerised Flask app on AWS Lambda using Docker and ECR, fronted by an API Gateway HTTP API. I used the AWS Lambda Web Adapter to bridge Lambda's invocation model to Flask's standard HTTP server without writing any Lambda-specific handler code. The frontend includes a live demo with example reviews, a confidence bar, and a model comparison view.",
       "featured": true,
       "featured_order": 9,
+      "loading_warning": false,
       "date": "2026-05-04",
       "problem": "For this project I wanted to answer a question that comes up constantly in production ML: when is a trained model actually better than calling a foundation model API? I chose sentiment analysis on IMDb reviews as the benchmark task because it is well-understood, has a standard dataset and evaluation split, and is representative of real text classification workloads. I also wanted to go beyond just training models — I wanted to deploy something live and encounter the real constraints that come with serverless ML inference.",
       "solution": "For this project I took a three-pronged approach. First, I trained a TF-IDF + Logistic Regression model — the classical NLP baseline — using scikit-learn with unigrams and bigrams to capture local negation patterns. Second, I trained a Keras LSTM with an embedding layer and dropout to learn sequential dependencies in the text. Third, I integrated Amazon Bedrock to run Claude Haiku 4.5 zero-shot on sample reviews, exploring the tradeoff between training cost, inference cost, and generalisation.\r\n\r\nFor deployment I initially investigated Zappa for Lambda zip packaging, but the deployment package exceeded Lambda's 250 MB limit due to TensorFlow's size. I moved to Docker container images on ECR, which support up to 10 GB — solving the size constraint. I then discovered that TensorFlow's ~50-second cold-start time exceeded API Gateway's hard 30-second timeout, so I excluded TensorFlow from the Lambda image and deployed the Logistic Regression model only. The LSTM is fully available in the local environment. I documented the alternative deployment paths (ONNX Runtime, TFLite, Provisioned Concurrency, ECS Fargate) and the tradeoffs behind each in the README.",
@@ -2477,7 +2531,7 @@
       "demo_url": "https://5llpfbqfph.execute-api.eu-west-1.amazonaws.com"
     },
     {
-      "id": 55,
+      "id": 91,
       "slug": "nyc-airbnb-data-pipeline",
       "title": "Data Preprocessing Pipeline — NYC Airbnb",
       "primary_category": "data",
@@ -2485,6 +2539,7 @@
       "full_description": "This pipeline takes one of the messiest real-world datasets available — the NYC Airbnb Open Data — and transforms it into a clean, analysis-ready form through a fully modular, reusable architecture. The codebase is structured around four independent classes (DataLoader, DataCleaner, DataVisualizer, PipelineReport) that can each be imported individually into any downstream data project.\r\n\r\nThe pipeline runs eight deterministic steps: load, inspect, handle missing values, remove duplicates, cap outliers via IQR fencing, label-encode categoricals, MinMax-scale numerics, and print a full transformation report. Every decision is logged internally, and five auto-generated charts make each transformation visible and explainable — from raw missing-value bands to before/after price distributions and a Pearson correlation heatmap on the cleaned data.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-05-15",
       "problem": "Raw data is rarely clean. Real-world tabular datasets arrive with missing cells, extreme outliers, inconsistently typed categoricals, and numeric features on wildly different scales. Processing this ad-hoc in a flat script leads to code that is hard to test, impossible to reuse, and that silently discards valid data. The NYC Airbnb dataset is an ideal stress test: 20.56% of rows have null review fields, price ranges from $0 to $10,000, and minimum_nights contains values of 365+ — all structurally different problems that need principled, documented solutions.",
       "solution": "A class-based pipeline separates each concern into a dedicated, independently importable component. DataLoader handles I/O and observation only (no mutations). DataCleaner chains all transformations — null imputation, deduplication, IQR capping, label encoding, MinMax scaling — and logs every step into a report dict. DataVisualizer generates five before/after diagnostic charts saved to ./plots/. PipelineReport formats and prints the full transformation summary to stdout. The architecture means any class can be swapped, extended, or tested in isolation without touching the others, and the whole pipeline runs with a single `python pipeline.py`.",
@@ -2526,7 +2581,7 @@
       "demo_url": null
     },
     {
-      "id": 56,
+      "id": 92,
       "slug": "telco-churn-predictor",
       "title": "Telco Customer Churn Predictor",
       "primary_category": "ai-ml",
@@ -2534,6 +2589,7 @@
       "full_description": "A production-grade churn prediction system trained on the IBM Telco Customer Churn dataset (7,043 customers, 26.5% churn rate). The system goes beyond a standard classifier — every prediction is accompanied by the top 3 risk factors and top 3 protective factors derived from SHAP values and expressed in plain English that a retention manager can act on without reading a confusion matrix.\r\n\r\nThree models were trained and compared: Logistic Regression, Random Forest, and XGBoost. Logistic Regression won by ROC-AUC (0.8362), outperforming XGBoost (0.8196) — a result explained by the fact that one-hot encoding of contract type, payment method, and internet service creates a largely linear feature space that benefits a linear classifier.\r\n\r\nA separate benchmarking script calls Amazon Bedrock (Claude Haiku 4.5) with plain-English customer summaries and no task-specific training. On a balanced 20-customer sample, Bedrock tied the trained XGBoost classifier at 70% accuracy — demonstrating both the ceiling of zero-shot LLM classification and the value of a trained model for production use.\r\n\r\nThe Flask API accepts customer attributes, preprocesses them to match the training pipeline exactly (manual one-hot encoding to avoid a single-row pd.get_dummies bug), runs the trained model, computes SHAP values, and returns the probability, risk tier, and natural-language factors in a single JSON response. Deployed on Azure App Service with gunicorn and a 600-second timeout to keep the SHAP explainer warm between requests.",
       "featured": true,
       "featured_order": 15,
+      "loading_warning": false,
       "date": "2026-05-18",
       "problem": "Telecom companies lose 15–25% of customers annually to churn. Identifying at-risk customers before they cancel is worth millions in retained revenue — but a classifier score alone is not actionable. A retention team needs to know not just who is at risk, but why, and what specific intervention to offer.\r\n\r\nThe secondary problem: understanding where foundation models (LLMs) can replace a trained classifier versus where they fall short. For teams without labelled training data, knowing Bedrock's zero-shot ceiling on this task is a concrete, reproducible answer.",
       "solution": "A three-stage pipeline: train, explain, serve.\r\n\r\nTraining: three classifiers evaluated by ROC-AUC on a stratified 80/20 split. The winning model (Logistic Regression) and its scaler are serialised with joblib and versioned in a model registry CSV.\r\n\r\nExplanation: SHAP LinearExplainer computes feature contributions for each prediction. A custom shap_to_language.py module maps every SHAP value to a human-readable sentence — e.g. \"two-year contract strongly reduces churn risk\" — sorted by magnitude and surfaced as top risk and protective factors.\r\n\r\nServing: a Flask REST API with a single /predict endpoint. Manual one-hot encoding replicates the training pipeline on a single row without the pd.get_dummies baseline-dropping bug. A model registry endpoint exposes training metadata. The frontend demo lets users adjust 9 customer attributes and see predictions update in real time.\r\n\r\nBenchmarking: a standalone script samples 10 churned and 10 retained customers from the test set, generates plain-English customer profiles, calls Amazon Bedrock one call per customer, and produces a side-by-side confusion matrix plot comparing zero-shot LLM vs trained classifier.",
@@ -2610,7 +2666,7 @@
       "demo_url": "https://telco-churn-predictor.azurewebsites.net"
     },
     {
-      "id": 57,
+      "id": 93,
       "slug": "spam-classifier",
       "title": "SMS Spam Classifier",
       "primary_category": "ai-ml",
@@ -2618,6 +2674,7 @@
       "full_description": "The SMS Spam Collection dataset contains 5,572 messages with an 87/13 ham/spam split — a class imbalance that makes raw accuracy a misleading metric. This project trains two classical models (ComplementNB and LinearSVC) on TF-IDF features with bigrams, compares them against Amazon Bedrock zero-shot classification using Claude Haiku, and deploys the result as a Flask web app. The core narrative is the comparison across three fundamentally different classification paradigms: probabilistic, geometric, and generative. Every prediction from every model is accompanied by a ranked list of the words that drove the decision, extracted directly from model internals rather than a post-hoc approximation.",
       "featured": true,
       "featured_order": 17,
+      "loading_warning": false,
       "date": "2026-05-18",
       "problem": "Spam detection looks simple until you account for class imbalance (87% ham). A model that predicts ham for every message scores 87% accuracy while catching zero spam. The challenge is building a classifier that achieves high recall on the minority class without flooding the inbox with false positives — and explaining its decisions in terms a user can actually verify.",
       "solution": "Trained ComplementNB (designed for imbalanced text) and LinearSVC (standard for high-dimensional sparse TF-IDF) with bigram features capturing phrase-level spam signals like \"free prize\" and \"call now\". Compared class_weight settings empirically and kept whichever improved F1. Added a third comparator — Claude Haiku via Amazon Bedrock — running zero-shot on a 40-message balanced sample. Built a word-level explanation module (text_explainer.py) that extracts log-probability ratios from NB and coefficient weights from SVM to surface the exact tokens driving each prediction.",
@@ -2672,7 +2729,7 @@
       "demo_url": "https://spam-classifier.azurewebsites.net"
     },
     {
-      "id": 58,
+      "id": 94,
       "slug": "customer-segmentation",
       "title": "Customer Segmentation — Telco Archetypes",
       "primary_category": "ai-ml",
@@ -2680,6 +2737,7 @@
       "full_description": "Starting from the IBM Telco Customer Churn dataset, this project identifies five natural customer archetypes through unsupervised clustering — without using the churn label as an input. PCA validates that the clusters are visually separable in reduced-dimensional space. Adjusted Rand Score of 0.72 between K-Means and Ward Hierarchical Clustering confirms structural agreement between two independent algorithms.\r\n\r\nThe Flask frontend goes beyond a simple \"cluster ID\" output. Each prediction triggers a dynamic retention strategy that branches on the customer's actual tenure, contract type, spend level, and add-on services — producing a specific recommendation rather than a generic paragraph. A \"why you're here\" explanation compares the customer's attributes to the cluster centroid to explain the placement in plain English.\r\n\r\nThe five segments discovered: At-Risk New Adopters (29.8%, 56.4% churn), Stable Budget Loyalists (21.6%, 7.4% churn), Uncommitted New Subscribers (17.4%, 28.2% churn), High-Value Long-Term Anchors (14.4%, 4.2% churn), and Established Premium Loyalists (16.8%, 16.0% churn). Each segment has a distinct spend profile, contract preference, and retention lever — the segmentation makes these differences visible before any predictive model is built.",
       "featured": true,
       "featured_order": 13,
+      "loading_warning": false,
       "date": "2026-05-19",
       "problem": "Churn prediction models trained on a full customer population are distorted by the fact that different customer archetypes churn for completely different reasons. A model that treats a month-to-month Fiber optic subscriber the same as a two-year DSL contract holder will miss the specific dynamics driving each group's behaviour. Before asking \"who will churn?\", the business question should be \"who are our customers?\" — understanding the distinct archetypes is the analytical precursor to targeted retention.",
       "solution": "K-Means clustering (k=5, selected via elbow method and silhouette analysis) segments customers in the full scaled feature space — tenure, monthly charges, contract type, internet service, payment method, and add-on services. Churn is deliberately excluded from features to avoid circular segmentation. Hierarchical Clustering (Ward linkage) validates the structure independently. PCA projects to 2D and 3D for visual confirmation of separability.\r\n\r\nA Flask web app serves the trained model. On prediction, the app runs the same preprocessing pipeline as training (manual one-hot encoding with consistent reference categories to avoid pd.get_dummies edge cases on single rows), assigns the cluster, then generates a contextual retention strategy and a \"why you're here\" sentence by comparing the customer's attributes to the cluster centroid.",
@@ -2739,7 +2797,7 @@
       "demo_url": null
     },
     {
-      "id": 59,
+      "id": 95,
       "slug": "stock-trend-sagemaker",
       "title": "Stock Trend Pattern Recognition — Amazon SageMaker MLOps",
       "primary_category": "ai-ml",
@@ -2747,6 +2805,7 @@
       "full_description": "A production MLOps pipeline built on Amazon SageMaker for stock trend pattern detection. The model architecture — a stacked LSTM trained on 60-day sequences of 25 technical indicators across AAPL, MSFT, and GOOGL — classifies whether the next 5 trading days are likely to trend up or down.\r\n\r\nTraining runs as a managed SageMaker Training Job on ml.m5.large, with hyperparameters passed via argparse and the model saved in TensorFlow SavedModel format to S3. The trained model is registered in SageMaker Model Registry with full versioning and approval status tracking — the production equivalent of the manual model_registry.csv pattern used in telco-churn-predictor. Inference is served via a SageMaker Real-Time Endpoint, eliminating cold starts and enabling sub-100ms latency.\r\n\r\nThe Flask frontend runs on Azure App Service and calls the SageMaker endpoint via boto3 — a deliberate multi-cloud architecture that mirrors enterprise deployments where Azure handles application infrastructure and AWS handles the ML backend. AWS credentials are stored as Azure App Service environment variables, never in code. CI/CD is intentionally omitted — each pipeline run is a manual, deliberate decision to control costs on a personal AWS account.\r\n\r\nThe UI displays two independent signals side by side: the LSTM prediction (probability from the SageMaker endpoint) and a classic MA crossover signal (golden cross / death cross based on SMA 20 vs SMA 50). The prediction date range and model training date are surfaced on every result for transparency.\r\n\r\nIncludes Amazon Bedrock (Claude Haiku) zero-shot pattern interpretation as a comparator, completing the four-project cross-task benchmark: tabular classification (churn), short text (spam), long text (sentiment), and time series (trend).",
       "featured": true,
       "featured_order": 5,
+      "loading_warning": false,
       "date": "2026-05-21",
       "problem": "Demonstrating the gap between ad-hoc ML (local training, committed model files, Flask inference) and production MLOps (managed training jobs, model registry, dedicated inference endpoints) — and implementing both patterns on the same model so the architectural difference is clear.",
       "solution": "Full SageMaker MLOps pipeline: prepare_data.py uploads training data to S3, run_training_job.py launches a managed Training Job, register_model.py versions the artefact in Model Registry, deploy_endpoint.py creates a Real-Time Endpoint, and a Flask app on Azure App Service calls it. A delete_endpoint.py script handles cleanup to prevent runaway charges. The UI shows both LSTM and MA crossover signals with full temporal context. The trained model artefact remains in S3 permanently — the endpoint can be restored at any time without retraining. When the endpoint is offline, the app serves the last live prediction with a clear notice explaining it was shut down to avoid charges.",
@@ -2807,7 +2866,7 @@
       "demo_url": "https://stock-trend-sagemaker.azurewebsites.net"
     },
     {
-      "id": 60,
+      "id": 97,
       "slug": "credit-risk-scorer",
       "title": "Credit Risk Scoring API — MLflow, FastAPI, Azure",
       "primary_category": "ai-ml",
@@ -2815,6 +2874,7 @@
       "full_description": "A production-grade credit risk scoring API trained on the German Credit dataset (1,000 applicants, 20 features). Three classifiers are compared — Logistic Regression, Random Forest, and XGBoost — with every training run tracked in MLflow including hyperparameters, metrics, and model artefacts. Model selection uses a cost-weighted score that reflects the asymmetric business cost of credit lending: approving a bad loan costs 5x more than rejecting a good one. Logistic Regression wins with a cost-weighted score of 0.75, outperforming XGBoost (0.62) and Random Forest (0.55) despite lower raw accuracy — demonstrating why domain-appropriate metrics matter.\r\nThe winning model is served via FastAPI — chosen over Flask for its API-first design, Pydantic input validation, and auto-generated OpenAPI documentation at /docs. Every prediction returns a risk score (0-100), risk band (Low/Medium/High/Very High), business decision (Approve/Review/Decline), and plain-English SHAP explanations of the factors driving the score — legally relevant in jurisdictions requiring adverse action notices.\r\nThe project runs locally via Docker Compose with two services: the scoring API on port 8000 and the MLflow tracking server on port 5000. A GitHub Actions CI/CD pipeline runs pytest on every push and automatically retrains and deploys to Azure App Service on every merge to main.",
       "featured": true,
       "featured_order": 7,
+      "loading_warning": false,
       "date": "2026-05-24",
       "problem": "Demonstrating a complete ML API lifecycle — experiment tracking, model selection by business metric, API-first serving with input validation, multi-container local development, and automated CI/CD deployment — in a finance domain where explainability is a legal requirement, not just a nice-to-have.",
       "solution": "Logistic Regression pipeline (ColumnTransformer preprocessor + classifier) selected by cost-weighted score across three MLflow-tracked training runs. FastAPI serves POST /score and POST /score/batch with Pydantic validation and SHAP explanations via risk_explainer.py. Docker Compose runs API + MLflow server locally. GitHub Actions retrains the model and deploys to Azure App Service on every push to main.",
@@ -2881,7 +2941,7 @@
       "demo_url": "https://credit-risk-scorer.azurewebsites.net/docs"
     },
     {
-      "id": 61,
+      "id": 98,
       "slug": "llm-document-summarizer",
       "title": "LLM Document Summarizer — LLMOps with Amazon Bedrock",
       "primary_category": "ai-ml",
@@ -2889,6 +2949,7 @@
       "full_description": "A production document summarization system demonstrating four LLMOps patterns: prompt versioning, automated evaluation, guardrails, and experiment tracking.\r\n\r\nPrompt templates are stored as versioned YAML files (v1, v2, v3) in a prompts/ directory. Switching the active version is a single config change — no code deployment required. An evaluation pipeline (evaluate.py) runs all prompt versions against a held-out set of documents with human-written reference summaries and computes ROUGE scores. Results are logged to MLflow alongside every production inference call — latency, prompt version, guardrails activity, and input/output length.\r\n\r\nBedrock Guardrails are applied to every response: PII (names, emails, phone numbers) is anonymised before the summary reaches the user, and harmful content is blocked. Every guardrail action is logged to MLflow for monitoring.\r\n\r\nServed via FastAPI with auto-generated OpenAPI docs at /docs. Runs locally via Docker Compose (API + MLflow tracking server). GitHub Actions CI runs pytest on every push.",
       "featured": true,
       "featured_order": 29,
+      "loading_warning": false,
       "date": "2026-05-26",
       "problem": "Demonstrating the gap between an LLM wrapper (call an API, return the result) and a production LLMOps system (version prompts, evaluate quality, enforce guardrails, track everything) — and implementing all four production patterns in a single deployable application.",
       "solution": "Three versioned prompt templates in prompts/. evaluate.py runs ROUGE scoring across all versions on a committed eval set and logs to MLflow. bedrock_client.py applies Bedrock Guardrails to every call and logs all metadata. FastAPI serves POST /summarize (PDF upload) and POST /summarize/text. Docker Compose runs API + MLflow server.",
@@ -2944,7 +3005,7 @@
       "demo_url": "https://llm-document-summarizer.azurewebsites.net/demo"
     },
     {
-      "id": 62,
+      "id": 99,
       "slug": "cv-gap-analyser",
       "title": "CV Gap Analyser — Semantic Job Matching with HuggingFace and Pinecone",
       "primary_category": "ai-ml",
@@ -2952,6 +3013,7 @@
       "full_description": "A CV gap analysis system built to solve a real problem: preparing a job application and needing a systematic way to identify what to evidence. Compares CV and job description using cosine similarity between all-MiniLM-L6-v2 embeddings — capturing semantic alignment beyond shared keywords. A CV describing \"deploying models to production cloud infrastructure\" matches a role requiring \"MLOps and cloud-native deployment\" even when the exact words differ.\r\n\r\nA curated technology keyword list (~150 terms) identifies specific missing skills. ROUGE metrics flag keyword gaps relevant to ATS screening — a CV can score high semantically but fail automated screening if it uses different terminology. The combination gives a complete picture: conceptual alignment and keyword alignment.\r\n\r\nA built-in library of five realistic job descriptions is stored in Pinecone. Every CV analysis retrieves the most semantically similar roles, ranked by score. New job descriptions can be added via POST /api/add-job-url — fetching and indexing directly from a career page URL using trafilatura.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-05-27",
       "problem": "Automating the manual process of comparing a CV against a job description to identify specific skill gaps and produce actionable recommendations — using semantic understanding rather than keyword counting, and accepting job descriptions from text, PDF, or URL including LinkedIn.",
       "solution": "HuggingFace all-MiniLM-L6-v2 for semantic embeddings, a curated keyword list (~150 terms) for skill extraction, rouge-score for ATS keyword overlap, LinkedIn guest API + trafilatura for URL extraction with BeautifulSoup fallback, Pinecone for the job library. FastAPI serves ten match routes covering all CV/JD input combinations. Deployed as a Docker Space on HuggingFace Spaces.",
@@ -3006,7 +3068,7 @@
       "demo_url": "https://xavier-oc-machinelearn-cv-gap-analyser.hf.space/docs"
     },
     {
-      "id": 63,
+      "id": 100,
       "slug": "digit-recognizer",
       "title": "Digit Recognizer — CNN on MNIST",
       "primary_category": "ai-ml",
@@ -3014,6 +3076,7 @@
       "full_description": "A handwritten digit recognition system built around an interactive canvas demo. The user draws a digit with their mouse or finger and the model returns the predicted digit, confidence score, and a probability distribution across all 10 classes — updated in real time as they draw.\r\nThe model is a two-block CNN: each block applies two Conv2D layers with BatchNormalization and MaxPooling, followed by Dropout regularisation. A 512-unit Dense layer and softmax output complete the classifier. Trained on 60,000 MNIST images with EarlyStopping on validation accuracy.\r\nTwo silent preprocessing bugs were diagnosed and fixed during deployment. First: MNIST convention is white digits on black background; the canvas produces the opposite. Second: training on Apple M1 with tensorflow-metal produces BatchNormalization statistics that differ from CPU inference — causing confident misclassifications on Linux servers with no error or warning. Both fixes are documented in the codebase and README.\r\nServed via FastAPI with auto-generated OpenAPI docs at /docs. Deployed to both Azure App Service and HuggingFace Spaces, with the trained model committed to the repository.",
       "featured": true,
       "featured_order": 27,
+      "loading_warning": false,
       "date": "2026-06-03",
       "problem": "Demonstrating CNN image classification with an interactive real-time demo — and handling two training-inference mismatches: MNIST convention (white-on-black) vs canvas convention (black-on-white), and Apple Metal GPU training vs CPU-only Linux deployment.",
       "solution": "Two-block CNN trained on CPU (TF_METAL_DEVICE_ENABLE=0) for portable BatchNorm statistics. FastAPI serves POST /predict accepting base64-encoded PNG from the canvas. Pixel inversion (1.0 - pixel) applied before inference to match MNIST format. MNIST-style size normalisation and centre-of-mass centering applied so digit scale matches training data. EarlyStopping prevents overfitting. Model committed to repository for zero-retraining deployment on Azure App Service and HuggingFace Spaces.",
@@ -3070,7 +3133,7 @@
       "demo_url": "https://digit-recognizer-xoc.azurewebsites.net"
     },
     {
-      "id": 64,
+      "id": 101,
       "slug": "hypothesis-testing-explorer",
       "title": "Hypothesis Testing Explorer — scipy and PySpark",
       "primary_category": "data",
@@ -3078,6 +3141,7 @@
       "full_description": "An interactive hypothesis testing tool that translates statistical results into plain English. Upload two CSV columns, select one of five tests, and get a verdict any non-statistician can act on — \"There IS a statistically significant difference\" or \"There IS NOT\" — alongside the p-value, test statistic, assumption check results, and a distribution plot.\r\n\r\nFive tests are supported: independent t-test, Welch's t-test, paired t-test, Mann-Whitney U, and chi-square. Before running any parametric test the app checks normality (Shapiro-Wilk) and equal variance (Levene's test) and recommends an alternative if assumptions are violated.\r\n\r\nThe routing logic is the portfolio centrepiece: datasets below 50,000 rows use pandas and scipy; above that threshold the computation routes through PySpark in local[*] mode. The statistical question is identical — only the engine changes. PySpark reads the data and computes descriptive statistics across all rows; scipy computes the test statistic on a 10,000-row representative sample. This mirrors the standard production pattern: distributed data preparation, established statistical libraries for the test itself.\r\n\r\nThe app accepts CSV file uploads or raw JSON arrays via a REST API. Every result generates a two-panel distribution plot — overlapping KDE curves and histograms on the left, side-by-side box plots on the right. The frontend includes a plain-English glossary covering 25 statistical terms, a \"Which test should I use?\" decision guide for all five tests, and a \"What are we testing for?\" primer on hypothesis testing fundamentals. Deployed on Hugging Face Spaces via Docker with Java pre-installed in the image for PySpark.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-06-03",
       "problem": "Statistics tools typically return raw numbers — p-values, test statistics, confidence intervals — and leave interpretation to the user. For non-statisticians this creates a gap between running an analysis and knowing what to do with the result.\r\n\r\nMost Python data science portfolios demonstrate either pandas/scipy or PySpark, rarely both on the same problem. The goal was to close both gaps: translate statistical output into plain-English conclusions a non-statistician can act on, and demonstrate that the same statistical question can be answered at any data scale by choosing the right computational tool.",
       "solution": "The plain-English verdict is generated from the p-value and alpha threshold using consistent sentence templates so the conclusion is always unambiguous. Assumption checking runs automatically before every parametric test and surfaces recommendations when violated — mirroring what a careful statistician does before reporting results.\r\n\r\nThe 50,000-row routing threshold is documented in config.py and in the UI: below it, Spark's JVM initialisation overhead makes pandas faster; above it, Spark's parallelism across all CPU cores pays off. PySpark handles all data ingestion and descriptive statistics; scipy handles the test statistic on a sampled subset — an honest split that reflects how production pipelines actually work.\r\n\r\nThe app is served via FastAPI, containerised with Docker (Java installed via apt-get for PySpark), and deployed on Hugging Face Spaces with a GitHub Actions CI pipeline running pytest on every push.",
@@ -3131,7 +3195,7 @@
       "demo_url": "https://xavier-oc-machinelearn-hypothesis-testing-explorer.hf.space"
     },
     {
-      "id": 65,
+      "id": 102,
       "slug": "language-detector",
       "title": "Language Detector — Character N-gram Classification",
       "primary_category": "ai-ml",
@@ -3139,6 +3203,7 @@
       "full_description": "A language detection system trained on 22,000 text samples across 22 languages using TF-IDF character n-grams (analyzer=char_wb, ngram_range=(1,3)). Character-level features capture script patterns, morphological patterns, and character combinations that are language-specific regardless of vocabulary.\r\n\r\nThree classifiers are compared — LinearSVC, LogisticRegression, and ComplementNB — consistent with the approach in the spam classifier project. The best model is selected by macro F1 across all 22 languages.\r\n\r\nEvery detection response includes a plain-English explanation of the top character n-grams driving the result. This follows the same translation-layer pattern used in shap_to_language.py (telco churn), text_explainer.py (spam classifier), and risk_explainer.py (credit risk).",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-06-04",
       "problem": "Building a language classifier that not only identifies the language but explains which character patterns drove the decision — making the model's internal logic visible to non-technical users.",
       "solution": "TF-IDF character n-grams (char_wb, unigrams to trigrams) vectorize the text. Three classifiers are trained and compared by macro F1. explainer.py extracts the top-weighted n-grams from the model's coefficient matrix for the predicted language and translates them into plain English.",
@@ -3196,7 +3261,7 @@
       "demo_url": "https://language-detector-xoc.azurewebsites.net"
     },
     {
-      "id": 66,
+      "id": 103,
       "slug": "pyspark-local-pipeline",
       "title": "NYC 311 PySpark ETL Pipeline",
       "primary_category": "data",
@@ -3204,6 +3269,7 @@
       "full_description": "A production-pattern ETL pipeline built with PySpark on the NYC 311 Service Request dataset (40M+ rows, 2020–present). Four stages — ingest, clean, transform, aggregate — each a pure function returning a Spark DataFrame.\r\nThe transform stage computes response_time_hours via unix_timestamp arithmetic, extracts date components, and derives a noise complaint flag. Six aggregations answer real business questions: which boroughs generate the most complaints, which agencies respond fastest, how complaint volume has trended over time.\r\nAn identical pandas pipeline runs the same analytical logic for direct comparison. A benchmark module times both at 100k, 1M, and 10M rows using real data subsets — no synthetic resampling. At 10M rows Spark wins; below ~1M rows pandas wins due to JVM overhead.\r\nThe FastAPI app serves pre-computed results. This mirrors production patterns: scheduled batch jobs write to a data store, APIs serve from that store.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-06-05",
       "problem": "Demonstrating PySpark ETL pipeline patterns on a dataset large enough to make the distributed computing advantage real — with a benchmark that shows the exact crossover rather than theoretical claims.",
       "solution": "Four-stage PySpark pipeline on 40M+ real NYC open data rows. Identical pandas pipeline for comparison. Benchmark at 100k/1M/10M rows using real data subsets. API serves pre-computed results from outputs/. Java installed in Dockerfile for PySpark JVM requirement.",
@@ -3244,7 +3310,7 @@
       "demo_url": "https://xoc-pyspark-pipeline.azurewebsites.net"
     },
     {
-      "id": 67,
+      "id": 104,
       "slug": "anime-face-gan",
       "title": "Anime Face GAN — DCGAN on 63,000 Training Images",
       "primary_category": "ai-ml",
@@ -3252,6 +3318,7 @@
       "full_description": "A Deep Convolutional GAN trained on 63,000 anime face images at 64x64 pixels. The generator\r\nlearns to produce anime faces from random noise vectors; the discriminator learns to distinguish\r\nreal from generated images. Both networks improve through adversarial training until the generator\r\nproduces convincing faces the discriminator cannot reliably identify as fake.\r\n\r\nThe architecture follows the DCGAN paper: transposed convolutions for upsampling in the generator,\r\nstrided convolutions for downsampling in the discriminator, BatchNormalization throughout,\r\nLeakyReLU activations, and Adam with BETA_1=0.5. Training ran on Google Colab T4 GPU (free tier),\r\nwith checkpoints saved to Google Drive every 10 epochs.\r\n\r\nThe trained checkpoint is exported to ONNX for serving. ONNX Runtime is ~10MB vs TensorFlow's\r\n~500MB, eliminating cold-start overhead. Inference is deployed on Hugging Face Spaces, which runs\r\nthe Docker container continuously with no CPU quota.\r\n\r\nThe demo includes latent space interpolation: a smooth morphing sequence between two randomly\r\nchosen faces that demonstrates the generator has learned a continuous, structured latent space\r\nrather than memorising training images.",
       "featured": false,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-06-06",
       "problem": "Proving the GAN architecture claimed in the CV with working portfolio evidence. Demonstrates the full ML workflow — cloud GPU training, model export, containerised inference deployment.",
       "solution": "DCGAN with asymmetric learning rates (D=0.0001, G=0.0002) and label smoothing to delay discriminator dominance. Trained on Colab T4 GPU with Drive checkpointing. Trained checkpoint exported to ONNX and committed for zero-retraining inference deployment on Hugging Face Spaces.",
@@ -3307,7 +3374,7 @@
       "demo_url": "https://xavier-oc-machinelearn-anime-face-gan.hf.space"
     },
     {
-      "id": 68,
+      "id": 105,
       "slug": "email-subject-generator",
       "title": "Email Subject Generator — T5 Transformer",
       "primary_category": "ai-ml",
@@ -3315,6 +3382,7 @@
       "full_description": "An email subject line generator built around Google's T5-small (60M parameters), fine-tuned for 3 epochs on the Annotated Enron Subject Line Corpus (AESLC) — 14k real email body/subject pairs. The model frames generation as a text-to-text task: input is prefixed with \"generate subject: \" and the model learns to produce a concise, relevant subject line.\r\nAn encoder-decoder LSTM baseline (character-level, single context vector) is kept in the notebook for direct comparison — demonstrating exactly where attention-based architectures outperform RNN bottlenecks on content-grounded generation tasks.\r\nThe FastAPI app calls the fine-tuned T5 model and returns five subject suggestions per request, spanning a temperature range from 0.5 (beam search, conservative) to 0.9 (top-p sampling, creative). The frontend displays each suggestion with its style label so users can pick the tone that fits.",
       "featured": true,
       "featured_order": null,
+      "loading_warning": false,
       "date": "2026-06-05",
       "problem": "Generating subject lines that actually reflect the content of the email body — not just plausible-sounding generic phrases. A character-level LSTM compresses 200 characters into a single context vector with no way to look back at the input during decoding, producing Enron-flavored suggestions unrelated to what the user typed.",
       "solution": "Replaced the LSTM with T5-small fine-tuned on AESLC. T5's encoder-decoder attention lets the decoder attend to all input tokens at every generation step, grounding each subject line in the actual email content. Beam search handles conservative suggestions; nucleus sampling (top-p=0.92) handles creative ones. The LSTM remains in the notebook as a documented baseline.",
@@ -3354,5 +3422,41 @@
       "demo_url": "https://email-subject-gen-xoc.azurewebsites.net"
     }
   ],
-  "messages": []
+  "messages": [
+    {
+      "id": 5,
+      "name": "Xavier Ocon Capdeville",
+      "email": "xocap@icloud.com",
+      "message": "dsfsdjlaadf",
+      "created_at": "2026-03-16T14:45:58Z"
+    },
+    {
+      "id": 4,
+      "name": "Xavier O",
+      "email": "xavierleisure@gmail.com",
+      "message": "hello this is test for phase 6",
+      "created_at": "2026-03-16T14:42:59Z"
+    },
+    {
+      "id": 3,
+      "name": "Xavier Ocon Capdeville",
+      "email": "xocap@icloud.com",
+      "message": "hello this is a tester message for phase 4.2.3",
+      "created_at": "2026-03-16T11:16:20Z"
+    },
+    {
+      "id": 2,
+      "name": "Xavier Ocon Capdeville",
+      "email": "xocap@icloud.com",
+      "message": "second message?",
+      "created_at": "2026-03-16T10:55:50Z"
+    },
+    {
+      "id": 1,
+      "name": "Xavier Ocon Capdeville",
+      "email": "xocap@icloud.com",
+      "message": "hey testing first message of phase 4",
+      "created_at": "2026-03-16T10:50:58Z"
+    }
+  ]
 }
