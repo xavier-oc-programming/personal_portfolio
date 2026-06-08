@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-08T14:46:37Z",
+  "snapshot_at": "2026-06-08T14:47:40Z",
   "projects": [
     {
       "id": 1,
@@ -3422,6 +3422,57 @@
       "repo_url": "https://github.com/xavier-oc-programming/email-subject-generator",
       "live_url": "https://email-subject-gen-xoc.azurewebsites.net",
       "demo_url": "https://email-subject-gen-xoc.azurewebsites.net"
+    },
+    {
+      "id": 69,
+      "slug": "databricks-etl-pipeline",
+      "title": "Databricks ETL Pipeline — NYC Taxi, Delta Lake, Medallion Architecture",
+      "primary_category": "data",
+      "short_description": "Four-stage ETL pipeline on NYC Yellow Taxi data using Databricks Community Edition and Delta Lake. Bronze → Silver → Gold medallion architecture. ACID transactions, time travel, and schema enforcement demonstrated. Results served via FastAPI on Azure App Service.",
+      "full_description": "A production-pattern data lakehouse pipeline built on Databricks Community Edition. Four stages — ingest, clean, transform, aggregate — process ~3 million NYC Yellow Taxi trips through a Bronze/Silver/Gold medallion architecture, with each stage written as a Delta Lake table. Delta Lake provides ACID transaction guarantees, time travel (query any historical version of the data), schema enforcement (rejects writes that don't match the table schema), and OPTIMIZE for file compaction.\r\nThe pipeline demonstrates the architecture Accenture implements for enterprise clients migrating from legacy data warehouses to cloud-native data lakehouses. The Bronze layer stores raw ingested data as an immutable record. The Silver layer applies data quality rules and derives business metrics. The Gold layer aggregates to analysis-ready outputs consumed by the FastAPI dashboard.\r\nThis project extends the pyspark-local-pipeline from local[*] mode to a managed cloud platform. The PySpark API is identical — only the execution environment changes. Delta Lake features are demonstrated explicitly in delta_demo.py: time travel rollback, schema enforcement rejection, and OPTIMIZE file compaction.",
+      "featured": false,
+      "featured_order": null,
+      "loading_warning": false,
+      "date": "2026-06-06",
+      "problem": "Demonstrating Databricks as a managed Spark platform and Delta Lake as a transactional storage layer — extending the local PySpark pipeline to the cloud-native architecture used in enterprise data engineering at scale.",
+      "solution": "Four-stage pipeline in Databricks notebooks (Bronze → Silver → Gold). Delta Lake for all writes. delta_demo.py demonstrates time travel, schema enforcement, and OPTIMIZE. Pre-computed JSON results committed to outputs/ and served by FastAPI on Azure App Service. No Java required in the serving layer.",
+      "challenges": "Databricks Community Edition has a single-node cluster limit — sufficient for the dataset size but not representative of production scale. Results must be downloaded from Databricks and committed to the repo manually — there is no automated pipeline from Databricks to GitHub in the Community Edition. The API serves static pre-computed results rather than live Databricks queries. Databricks Free Edition disables the public DBFS root, so all Delta tables must be written as Unity Catalog managed tables (saveAsTable) rather than to raw DBFS paths — this is actually the correct modern approach for production Databricks workspaces, but required adapting the pipeline from path-based writes to catalog-based writes. The sample dataset only contains data up to December 2019 (CSV format, not Parquet), requiring the pipeline to be adapted accordingly.",
+      "results": "TBD — populate after running the pipeline on Databricks. Include row counts at each stage, retention rate, and top 3 findings from the NYC Taxi analysis.",
+      "tags": [
+        "data-analysis",
+        "python",
+        "azure",
+        "deployment",
+        "REST-API",
+        "docker",
+        "CI-CD",
+        "jupyter",
+        "web-app",
+        "tabular-data",
+        "feature-engineering"
+      ],
+      "tech_stack": [
+        "Python",
+        "PySpark",
+        "Delta Lake",
+        "Databricks",
+        "pandas",
+        "Matplotlib",
+        "Seaborn",
+        "Plotly",
+        "FastAPI",
+        "Uvicorn",
+        "Docker",
+        "Azure App Service",
+        "GitHub Actions",
+        "pytest"
+      ],
+      "screenshots": [],
+      "videos": [],
+      "card_image": null,
+      "repo_url": "https://github.com/xavier-oc-programming/databricks-etl-pipeline",
+      "live_url": "https://databricks-etl-xoc.azurewebsites.net",
+      "demo_url": "https://databricks-etl-xoc.azurewebsites.net"
     }
   ],
   "messages": []
