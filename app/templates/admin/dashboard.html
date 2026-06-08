@@ -71,7 +71,10 @@
                 <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:{{ colors[cat] }};flex-shrink:0;"></span>
                 <span class="text-capitalize">{{ cat if cat != 'ai-ml' else 'AI / ML' }}</span>
               </span>
-              <span class="badge bg-secondary">{{ count }}</span>
+              <span class="d-flex align-items-center gap-2">
+                <span class="text-muted small">{{ ((count / total_projects) * 100) | round | int }}%</span>
+                <span class="badge bg-secondary">{{ count }}</span>
+              </span>
             </div>
           {% endfor %}
         </div>
@@ -135,7 +138,18 @@
     },
     options: {
       cutout: '65%',
-      plugins: { legend: { display: false } },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(ctx) {
+              const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+              const pct = total ? Math.round(ctx.parsed / total * 100) : 0;
+              return ' ' + ctx.label + ': ' + ctx.parsed + ' (' + pct + '%)';
+            }
+          }
+        }
+      },
     }
   });
 </script>
