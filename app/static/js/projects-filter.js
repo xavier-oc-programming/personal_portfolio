@@ -121,7 +121,7 @@
       : '';
 
     const warningBadge = p.loading_warning
-      ? `<span class="badge text-bg-warning" title="This demo may take a minute or two to wake up">⏳ Slow start</span>`
+      ? `<span class="badge text-bg-warning" title="This demo may take a minute or two to wake up">⏳ Loading Period</span>`
       : '';
 
     const githubBtn = p.github_url
