@@ -416,6 +416,7 @@ def dashboard():
         "web": Project.query.filter_by(primary_category="web").count(),
         "data": Project.query.filter_by(primary_category="data").count(),
         "software": Project.query.filter_by(primary_category="software").count(),
+        "ai-ml": Project.query.filter_by(primary_category="ai-ml").count(),
     }
     projects_with_card = Project.query.filter(Project.card_image.isnot(None)).count()
 
