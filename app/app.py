@@ -346,6 +346,16 @@ def create_app() -> Flask:
 
     with app.app_context():
         db.create_all()
+        # Add columns introduced after initial deploy — safe to run on every startup
+        with db.engine.connect() as conn:
+            for col, definition in [
+                ("loading_warning", "BOOLEAN NOT NULL DEFAULT FALSE"),
+            ]:
+                try:
+                    conn.execute(db.text(f"ALTER TABLE projects ADD COLUMN {col} {definition}"))
+                    conn.commit()
+                except Exception:
+                    conn.rollback()  # column already exists — ignore
         if app.config.get("DEBUG"):
             _sync_from_snapshot(app)
         elif Project.query.count() == 0:
