@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-08T14:47:40Z",
+  "snapshot_at": "2026-06-08T14:49:10Z",
   "projects": [
     {
       "id": 1,
@@ -3467,7 +3467,10 @@
         "GitHub Actions",
         "pytest"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/databricks-etl-pipeline/screenshots/Screenshot_2026-06-08_at_16.48.45.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/databricks-etl-pipeline/screenshots/Screenshot_2026-06-08_at_16.48.54.png"
+      ],
       "videos": [],
       "card_image": null,
       "repo_url": "https://github.com/xavier-oc-programming/databricks-etl-pipeline",
