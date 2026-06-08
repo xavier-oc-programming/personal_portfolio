@@ -44,30 +44,15 @@
     {% endif %}
 
     {% if project.tags %}
+      {% set cat_ep = 'projects_' ~ project.primary_category | replace('-', '_') if project.primary_category else 'projects' %}
       <div class="d-flex flex-wrap gap-2 mb-4">
         {% for tag in project.tags %}
-          {% if project.primary_category == "web" %}
-            <a class="badge text-bg-secondary" href="{{ url_for('projects_web', tag=tag) }}">
-              {{ tag }}
-            </a>
-          {% elif project.primary_category == "data" %}
-            <a class="badge text-bg-secondary" href="{{ url_for('projects_data', tag=tag) }}">
-              {{ tag }}
-            </a>
-          {% elif project.primary_category == "software" %}
-            <a class="badge text-bg-secondary" href="{{ url_for('projects_software', tag=tag) }}">
-              {{ tag }}
-            </a>
-          {% else %}
-            <a class="badge text-bg-secondary" href="{{ url_for('projects', tag=tag) }}">
-              {{ tag }}
-            </a>
-          {% endif %}
+          <a class="badge text-bg-secondary" href="{{ url_for(cat_ep, tag=tag) }}">{{ tag }}</a>
         {% endfor %}
       </div>
     {% endif %}
 
-    <div class="mt-auto d-flex gap-2">
+    <div class="mt-auto d-flex flex-wrap gap-2">
       {% if project.links and project.links.repo %}
         <a
           class="btn btn-outline-dark btn-sm"
@@ -123,6 +108,10 @@
         <button class="btn btn-dark btn-sm" type="button" disabled>
           Details
         </button>
+      {% endif %}
+
+      {% if project.loading_warning %}
+        <span class="badge text-bg-warning" title="This demo may take a minute or two to wake up">⏳ Slow start</span>
       {% endif %}
     </div>
   </div>
