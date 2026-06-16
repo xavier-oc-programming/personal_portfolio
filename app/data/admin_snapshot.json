@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-16T19:18:53Z",
+  "snapshot_at": "2026-06-16T19:18:59Z",
   "projects": [
     {
       "id": 1,
@@ -3493,7 +3493,7 @@
       "full_description": "A Python pipeline built on the LogHub Hadoop corpus — 180,896 real YARN container log entries from a research cluster with labeled injected failures (machine down, disk full, network disconnection). hadoop_loader.py parses the Hadoop log format and maps Java levels to standard severity names. log_parser.py converts entries to a pandas DataFrame with derived minute_window and is_error columns for spike detection. analyser.py groups by 5-minute window and flags any window where error_count / total_entries exceeds 5% (critical at 10%), with a minimum window size filter to eliminate sparse windows. Two genuine anomalies are detected: a machine-down event at 11% error rate and a disk-full event at 6% — both 20-35x above the 0.3% baseline. Results are delivered three ways: a FastAPI dashboard with four Matplotlib charts, a scheduled HTML email via Gmail STARTTLS, and a Slack Block Kit alert with state-machine deduplication that fires only on status transitions. Deployed to Azure App Service via GitHub Actions zipdeploy.",
       "featured": false,
       "featured_order": null,
-      "loading_warning": false,
+      "loading_warning": true,
       "date": "2026-06-16",
       "problem": "Demonstrating production log monitoring skills relevant to a DevOps or data engineering role — real data ingestion, statistical anomaly detection, multi-channel alerting, and alert deduplication to prevent fatigue during sustained incidents.",
       "solution": "Rate-based spike detection (error_count / total_entries per 5-minute window) makes detection scale-invariant across varying log volumes. State machine via state.json fires Slack alerts only on HEALTHY/WARNING/CRITICAL transitions, not on every check. Three independent delivery paths (dashboard, email, Slack) share the same analysis pipeline. All credentials come from environment variables; config.yaml is gitignored.",
