@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-16T19:21:01Z",
+  "snapshot_at": "2026-06-16T19:21:49Z",
   "projects": [
     {
       "id": 1,
@@ -3501,6 +3501,7 @@
       "results": "Two genuine anomalies detected matching the LogHub labeled failure scenarios. 20 tests passing in CI with no dependency on the sample dataset. Daily cron downloads the Hadoop corpus, runs analysis, emails report, and posts Slack alert. Deployed and live on Azure App Service.",
       "tags": [
         "python",
+        "hadoop",
         "log-analysis",
         "anomaly-detection",
         "fastapi",
