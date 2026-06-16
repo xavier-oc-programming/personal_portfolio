@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-16T19:18:59Z",
+  "snapshot_at": "2026-06-16T19:19:29Z",
   "projects": [
     {
       "id": 1,
@@ -3524,7 +3524,7 @@
       ],
       "screenshots": [],
       "videos": [],
-      "card_image": null,
+      "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/log-monitor-health-check/card/app_error1.jpg",
       "repo_url": "https://github.com/xavier-oc-programming/log-monitor-health-check",
       "live_url": "https://log-monitor-health-check.azurewebsites.net",
       "demo_url": "https://log-monitor-health-check.azurewebsites.net"
