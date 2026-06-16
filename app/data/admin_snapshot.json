@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-16T19:20:25Z",
+  "snapshot_at": "2026-06-16T19:20:47Z",
   "projects": [
     {
       "id": 1,
@@ -3524,7 +3524,9 @@
       ],
       "screenshots": [
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/log-monitor-health-check/screenshots/Screenshot_2026-06-16_at_21.19.46.png",
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/log-monitor-health-check/screenshots/Screenshot_2026-06-16_at_21.20.04.png"
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/log-monitor-health-check/screenshots/Screenshot_2026-06-16_at_21.20.04.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/log-monitor-health-check/screenshots/email_preview.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/log-monitor-health-check/screenshots/slack-screenshot.png"
       ],
       "videos": [],
       "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/log-monitor-health-check/card/app_error1.jpg",
