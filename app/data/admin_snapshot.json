@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-19T11:25:42Z",
+  "snapshot_at": "2026-06-19T11:25:50Z",
   "projects": [
     {
       "id": 1,
@@ -2935,7 +2935,7 @@
       "videos": [
         "https://youtu.be/EYeAMwGhxfA"
       ],
-      "card_image": null,
+      "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/credit-risk-scorer/card/Screenshot_2026-06-19_at_13.25.18.png",
       "repo_url": "https://github.com/xavier-oc-programming/credit-risk-scorer",
       "live_url": "https://credit-risk-scorer.azurewebsites.net",
       "demo_url": "https://credit-risk-scorer.azurewebsites.net/docs"
