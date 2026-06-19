@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-19T10:54:18Z",
+  "snapshot_at": "2026-06-19T10:58:18Z",
   "projects": [
     {
       "id": 1,
@@ -3459,7 +3459,12 @@
         "Azure App Service",
         "pytest"
       ],
-      "screenshots": [],
+      "screenshots": [
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/log-monitor-health-check/screenshots/error_timeline.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/log-monitor-health-check/screenshots/hourly_activity.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/log-monitor-health-check/screenshots/severity_distribution.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/log-monitor-health-check/screenshots/top_errors.png"
+      ],
       "videos": [],
       "card_image": null,
       "repo_url": "https://github.com/xavier-oc-programming/log-monitor-health-check",
