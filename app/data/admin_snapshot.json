@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-06-19T11:00:46Z",
+  "snapshot_at": "2026-06-19T11:00:48Z",
   "projects": [
     {
       "id": 1,
@@ -3462,11 +3462,11 @@
       "screenshots": [
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/log-monitor-health-check/screenshots/Screenshot_2026-06-19_at_12.59.08.png",
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/log-monitor-health-check/screenshots/email_preview.png",
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/log-monitor-health-check/screenshots/slack-screenshot.png",
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/log-monitor-health-check/screenshots/error_timeline.png",
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/log-monitor-health-check/screenshots/hourly_activity.png",
         "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/log-monitor-health-check/screenshots/severity_distribution.png",
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/log-monitor-health-check/screenshots/top_errors.png",
-        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/log-monitor-health-check/screenshots/slack-screenshot.png"
+        "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/log-monitor-health-check/screenshots/top_errors.png"
       ],
       "videos": [],
       "card_image": "https://pub-20e2e9269bcc460884efb7a3ac6f7786.r2.dev/images/projects/log-monitor-health-check/card/error2.jpg",
